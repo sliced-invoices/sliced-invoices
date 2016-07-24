@@ -253,7 +253,7 @@ class Sliced_Invoice {
 
 		$args = array(
 			'post_type'      => 'sliced_invoice',
-			'post_status'    => array( 'publish', 'future' ),
+			'post_status'    => array( 'publish', 'future'  ),
 			'posts_per_page' => -1,
 			'fields'         => 'ids',
 			// 'meta_query' => array(

@@ -4,8 +4,8 @@ Contributors: SlicedInvoices
 Donate link: http://slicedinvoices.com/  
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
-Tested up to: 4.5.2  
-Stable tag: 2.83 
+Tested up to: 4.5.3  
+Stable tag: 2.84 
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -144,6 +144,9 @@ Quotes could be renamed to Estimate, Proposal, Tender, Bid or anything else.
 
 
 ## Changelog
+##  2.84
+* UPDATE: Compatibility update with Recurring Invoices Extension v2.1.4
+
 ##  2.83
 * FIX: Issue with sorting users by Business Name
 * FIX: Issue with 'Decline Quote' reason not being sent in admin notification
