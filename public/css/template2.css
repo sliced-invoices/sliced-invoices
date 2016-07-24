@@ -1,0 +1,30 @@
+.sliced-wrap {border:2px solid #222;}
+.sliced-wrap .table th, .sliced-wrap .table td, .sliced-wrap .table-bordered {border:none;}
+.sliced-wrap .table th, .sliced-wrap .table-active td {
+  background:#222 none repeat scroll 0 0;
+  color:#fff;
+  border:none;
+}
+.sliced-wrap .sliced-items .row_even, .sliced-wrap .sliced-items .row_odd {background:transparent;}
+.sliced-wrap .sliced-line-items td, .sliced-wrap .row-sub-total .rate, .sliced-wrap .row-sub-total .total {border-top:1px solid #ccc;}
+.sliced-wrap .sliced-totals {margin-top:40px;}
+
+.sliced-to-address {
+  padding:0;
+  margin:-20px 0 0 0;
+}
+.sliced-payments {
+  background:#f4f4f4 none repeat scroll 0 0;
+  margin:60px 0;
+  padding:20px 30px;
+}
+.sliced-payments h4 {
+  padding:0 0 10px;
+}
+.sliced-payments h4 .fa {
+  margin:0 5px 0 0;
+}
+.bank, .generic {
+  float:left;
+  width:50%;
+}

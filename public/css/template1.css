@@ -1,0 +1,30 @@
+.sliced-to-address {
+  padding: 0;
+  margin: 0;
+}
+.sliced-payments {
+  background: #ededed none repeat scroll 0 0;
+  margin: 60px 0;
+  padding: 20px 30px;
+}
+.sliced-payments h4 {
+  padding: 0 0 10px;
+}
+.sliced-payments h4 .fa {
+  margin: 0 5px 0 0;
+}
+.bank, .generic {
+  float: left;
+  width: 50%;
+}
+.sliced-wrap .table th, .sliced-wrap .table td, .sliced-wrap .table-bordered {
+  border: 1px solid #ccc;
+  vertical-align: top;
+}
+.terms-text {
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  font-size: 85%;
+  margin: 0 0 30px;
+  padding: 10px 0 0;
+}

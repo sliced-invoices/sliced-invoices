@@ -1,0 +1,2294 @@
+# Copyright (C) 2016 Sliced Invoices
+# This file is distributed under the same license as the Sliced Invoices package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Sliced Invoices 2.14\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sliced-invoices\n"
+"POT-Creation-Date: 2016-03-31 11:39+0300\n"
+"PO-Revision-Date: 2016-03-31 11:48+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ro_RO\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.4\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
+"2:1));\n"
+
+#: admin/class-sliced-admin.php:103
+msgid "Are you sure you want to convert from %1s to %2s"
+msgstr "Suntei sigur ca doriti sa convertiti din %1s in %2s"
+
+#: admin/class-sliced-admin.php:437
+msgid "Settings saved successfully."
+msgstr "Setarile au fost salvate cu succes."
+
+#: admin/class-sliced-admin.php:446
+msgid "Email was sent successfully."
+msgstr "Emailul a fost trimis cu succes."
+
+#: admin/class-sliced-admin.php:454
+msgid "Successfully converted %1s to %2s"
+msgstr "Sa- convertit cu succes %1s la %2s"
+
+#: admin/class-sliced-admin.php:462
+msgid ""
+"Your WordPress version may not be compatible with the Sliced Invoices plugin. "
+"If you are having issues with the plugin, we recommend making a backup of your "
+"site and upgrading to the latest version of WordPress."
+msgstr ""
+"Versiunea dvs de Wordpress s-ar putea sa nu fie compatibila cu pluginul Sliced "
+"Invoices. Daca aveti probleme cvu pluginul, va recomandam sa faceti un backup "
+"al site-ului dvs si sa upgradati la ultima versiune de Wordpress."
+
+#: admin/class-sliced-admin.php:467
+msgid ""
+"Your PHP version may not be compatible with the Sliced Invoices plugin. We "
+"recommend contacting your server administrator and getting them to upgrade to "
+"a newer version of PHP."
+msgstr ""
+"Versiunea dvs de PHP s-ar putea sa nu fie compatibila cu pluginul Sliced "
+"Invoices. Va recomandam sa contactati administratorul serverului dumneavoastra "
+"si sa il determinati sa il upgradeze la o versiunea mai noua de PHP."
+
+#: admin/class-sliced-admin.php:472
+msgid ""
+"You do not have the cURL extension installed on your server. This extension is "
+"required for some tasks. Please contact your server administrator to have them "
+"install this on your server."
+msgstr ""
+"Nu aveti instalat extensia cURL pe server. Aceasta extensie este necesara "
+"pentru unele sarcini. Va rog contactati administratorul serverului pentru a o "
+"instala pe serverul dev."
+
+#: admin/class-sliced-admin.php:496 admin/class-sliced-admin.php:499
+msgid "%s updated."
+msgstr "%s a fost modificata."
+
+#. translators: %s: date and time of the revision
+#: admin/class-sliced-admin.php:501
+msgid "%1s restored to revision from %2s"
+msgstr "%1s a fost restaurat la versiunea din %2s"
+
+#: admin/class-sliced-admin.php:502
+msgid "%s published."
+msgstr "%s publicata."
+
+#: admin/class-sliced-admin.php:503
+msgid "%s saved."
+msgstr "%s a fost salvata."
+
+#: admin/class-sliced-admin.php:504
+msgid "%s submitted."
+msgstr "%s trimisa."
+
+#: admin/class-sliced-admin.php:506
+msgid "%s draft updated."
+msgstr "Draftul %s a fost modificat."
+
+#: admin/class-sliced-admin.php:542 admin/class-sliced-admin.php:545
+msgid "Enter %s title"
+msgstr "Introduce % titlu"
+
+#: admin/class-sliced-admin.php:559
+msgid "Settings"
+msgstr "Setari"
+
+#: admin/class-sliced-admin.php:560
+msgid "Extensions"
+msgstr "Extensii"
+
+#: admin/class-sliced-admin.php:579
+msgid ""
+"If you like <strong>Sliced Invoices</strong> please leave us a %s&#9733;&#9733;"
+"&#9733;&#9733;&#9733;%s rating. A huge thank you in advance!"
+msgstr ""
+"Daca va place <strong>Sliced Invoices</strong> va rog sa lasati un  %s&#9733;"
+"&#9733;&#9733;&#9733;&#9733;%s rating. Un mare multumesc in avans!"
+
+#: admin/class-sliced-admin.php:621
+msgid "Convert %1s to %2s"
+msgstr "Converteste %1s in %2s"
+
+#: admin/class-sliced-admin.php:621
+msgid "Convert to %s"
+msgstr "Converteste la %s"
+
+#: admin/class-sliced-admin.php:751
+msgid "Choose client"
+msgstr "Alege client"
+
+#: admin/class-sliced-admin.php:813
+msgid "Username"
+msgstr "Username"
+
+#: admin/class-sliced-admin.php:817
+msgid "E-mail"
+msgstr "E-mail"
+
+#: admin/class-sliced-admin.php:823
+#: admin/includes/sliced-admin-metaboxes.php:501
+#: admin/includes/sliced-admin-metaboxes.php:557
+msgid "Business/Client Name"
+msgstr "Afacere/Nume client"
+
+#: admin/class-sliced-admin.php:830
+#: admin/includes/sliced-admin-metaboxes.php:508
+#: admin/includes/sliced-admin-metaboxes.php:564
+#: admin/includes/sliced-admin-options.php:268
+msgid "Address"
+msgstr "Adresa"
+
+#: admin/class-sliced-admin.php:837
+#: admin/includes/sliced-admin-metaboxes.php:518
+#: admin/includes/sliced-admin-metaboxes.php:574
+#: includes/vendor/metabox/example-functions.php:475
+msgid "Extra Info"
+msgstr "Informatii suplimentare"
+
+#: admin/class-sliced-admin.php:843
+msgid "First Name"
+msgstr "Prenume"
+
+#: admin/class-sliced-admin.php:847
+msgid "Last Name"
+msgstr "Nume"
+
+#: admin/class-sliced-admin.php:851 admin/includes/sliced-admin-options.php:282
+msgid "Website"
+msgstr "Site"
+
+#: admin/class-sliced-admin.php:858
+msgid "Password"
+msgstr "Parola"
+
+#: admin/class-sliced-admin.php:859 admin/class-sliced-admin.php:883
+#: admin/includes/sliced-admin-notifications.php:357
+#: admin/includes/sliced-admin-notifications.php:363
+#: admin/includes/sliced-admin-notifications.php:369
+msgid "(required)"
+msgstr "(obligatoriu)"
+
+#: admin/class-sliced-admin.php:864
+msgid "Show password"
+msgstr "Arata parola"
+
+#: admin/class-sliced-admin.php:870
+msgid "Hide password"
+msgstr "Ascude Parola"
+
+#: admin/class-sliced-admin.php:872
+msgid "Hide"
+msgstr "Ascunde"
+
+#: admin/class-sliced-admin.php:874
+msgid "Cancel password change"
+msgstr "Anuleaza schimbarea parolei"
+
+#: admin/class-sliced-admin.php:875
+msgid "Cancel"
+msgstr "Anuleaza"
+
+#: admin/class-sliced-admin.php:883
+msgid "Repeat Password"
+msgstr "Repeta Parola"
+
+#: admin/class-sliced-admin.php:889
+msgid "Confirm Password"
+msgstr "Confirma Parola"
+
+#: admin/class-sliced-admin.php:893
+msgid "Confirm use of weak password"
+msgstr "Confirma folosirea unei parole slabe"
+
+#: admin/class-sliced-admin.php:901
+msgid "Add New User "
+msgstr "Adauga Nou Utilizator"
+
+#: admin/class-sliced-admin.php:903
+msgid "Please wait..."
+msgstr "Va rugam asteptati..."
+
+#: admin/class-sliced-admin.php:924
+msgid "Cheatin&#8217; uh?"
+msgstr "Cheatin&#8217; uh?"
+
+#: admin/class-sliced-admin.php:994
+msgid "Clone this item"
+msgstr "Duplica acest element"
+
+#: admin/class-sliced-admin.php:994
+msgid "Clone"
+msgstr "Duplica"
+
+#: admin/class-sliced-admin.php:1121
+msgid "Add a pre-defined line item"
+msgstr "Adauga o linie de elemente predefinite."
+
+#: admin/class-sliced-admin.php:1212 admin/includes/sliced-admin-columns.php:78
+msgid "Number"
+msgstr "Numar"
+
+#: admin/class-sliced-admin.php:1213 admin/includes/sliced-admin-columns.php:77
+msgid "Title"
+msgstr "Titlu"
+
+#: admin/class-sliced-admin.php:1214 admin/includes/sliced-admin-columns.php:79
+#: admin/includes/sliced-admin-metaboxes.php:276
+#: admin/includes/sliced-admin-metaboxes.php:389
+#: admin/includes/sliced-admin-quick-edit.php:116
+msgid "Client"
+msgstr "Client"
+
+#: admin/class-sliced-admin.php:1215
+#: admin/includes/sliced-admin-metaboxes.php:286
+#: admin/includes/sliced-admin-metaboxes.php:399
+#: admin/includes/sliced-admin-quick-edit.php:135
+msgid "Status"
+msgstr "Stare"
+
+#: admin/class-sliced-admin.php:1216 admin/includes/sliced-admin-columns.php:95
+#: admin/includes/sliced-admin-quick-edit.php:153
+msgid "Created"
+msgstr "Creat"
+
+#: admin/class-sliced-admin.php:1217
+#: includes/template-tags/sliced-tags-display-modules.php:159
+#: includes/template-tags/sliced-tags-display-modules.php:218
+#: includes/template-tags/sliced-tags-display-modules.php:252
+#: includes/template-tags/sliced-tags-general.php:190
+msgid "Sub Total"
+msgstr "Subtotal"
+
+#: admin/class-sliced-admin.php:1218 includes/class-sliced-shared.php:172
+msgid "Tax"
+msgstr "TVA"
+
+#: admin/class-sliced-admin.php:1219 admin/includes/sliced-admin-columns.php:96
+#: includes/template-tags/sliced-tags-display-modules.php:131
+#: includes/template-tags/sliced-tags-display-modules.php:228
+#: includes/template-tags/sliced-tags-display-modules.php:260
+#: includes/template-tags/sliced-tags-general.php:192
+msgid "Total"
+msgstr "Total"
+
+#: admin/includes/sliced-admin-columns.php:97
+msgid "Actions"
+msgstr "Actiuni"
+
+#: admin/includes/sliced-admin-columns.php:151
+msgid "Valid Until: %s"
+msgstr "Valid Pana la: %s"
+
+#: admin/includes/sliced-admin-columns.php:156
+msgid "Due: %s"
+msgstr "Scadenta: %s"
+
+#: admin/includes/sliced-admin-columns.php:167
+#: admin/includes/sliced-admin-columns.php:171
+msgid "Total: %s"
+msgstr "Total: %s"
+
+#: admin/includes/sliced-admin-columns.php:198
+msgid "View or download as a PDF (extension required)"
+msgstr "Vedeti sau Downloadati ca PDF (o extensie este necesara)"
+
+#: admin/includes/sliced-admin-columns.php:198
+msgid "PDF"
+msgstr "PDF"
+
+#: admin/includes/sliced-admin-columns.php:348
+msgid "View all statuses"
+msgstr "Vedeti toate starile"
+
+#: admin/includes/sliced-admin-columns.php:363
+msgid "Export as CSV"
+msgstr "Export ca si CSV"
+
+#: admin/includes/sliced-admin-columns.php:449
+#: admin/includes/sliced-admin-options.php:246
+msgid "Business"
+msgstr "Afacere"
+
+#: admin/includes/sliced-admin-help.php:56
+#: admin/includes/sliced-admin-help.php:117
+msgid "Overview"
+msgstr "Imagine de ansamblu"
+
+#: admin/includes/sliced-admin-help.php:57
+msgid ""
+"This screen allows you to add/edit a single %s. You can customize the display "
+"of this screen to suit your workflow by using the Screen Options tab."
+msgstr ""
+"Ecranul va permite sa adaugati/editati o singura %s. Puteti personaliza "
+"afisarea pe ecran pentru a se potrivi stilului dvs. utilizand eticheta de "
+"Optiuni Ecran."
+
+#: admin/includes/sliced-admin-help.php:58
+msgid "Some Quick Tips:"
+msgstr "Unele Sfaturi Rapide:"
+
+#: admin/includes/sliced-admin-help.php:60
+msgid "Title, Client, Status and Created Date are required fields."
+msgstr "Titlu, CLient, Stare si Data de Creare sunt campuri obligatorii."
+
+#: admin/includes/sliced-admin-help.php:61
+msgid ""
+"If Payment Methods is empty, you need to add a payment method in Sliced "
+"Invoices --> Payment."
+msgstr ""
+"Daca metoda de plata este necompletata, trebuie sa adaugati o metoda de plata "
+"in Sliced Invoices -> Plata."
+
+#: admin/includes/sliced-admin-help.php:62
+msgid ""
+"If there are no Pre-Defined Line Items, you you can add these in Sliced "
+"Invoices --> General."
+msgstr ""
+"Daca nu exista linii de elemente predefinite, puteti sa adaugati acestea in "
+"Sliced Invoices -> Infromatii Generale."
+
+#: admin/includes/sliced-admin-help.php:63
+msgid ""
+"All fields that are filled in will be shown to the client on the %s, except "
+"for the Title field. The title is only used in the admin area."
+msgstr ""
+"Toate campurile care sunt completate vor fi afisate clientului pe %s, "
+"exceptand campul Titlu. Titlul este folosit doar in zona de administrare."
+
+#: admin/includes/sliced-admin-help.php:65
+msgid "Click on the help tabs to your left to find out more info."
+msgstr "Apasa pe etichetele din stanga ta pentru a afla mai multe informatii."
+
+#: admin/includes/sliced-admin-help.php:69
+msgid "Title and Description"
+msgstr "Titlu si Descriere"
+
+#: admin/includes/sliced-admin-help.php:71
+msgid ""
+"<strong>Title</strong> &mdash; Enter a title for your %1s. After you enter a "
+"title, you&#8217;ll see the permalink below, which you can edit. The title is "
+"not visible to your client on the %2s, it is only used in your admin area."
+msgstr ""
+"<strong>Titlu</strong> &mdash; Introdu un titlul pentru %1s. Dupa ce "
+"introduceti un titlul, veti vedea un permalink dedesubt, pe care il puteti "
+"edita. Titlul nu este vizibil pentru client pe %2s, va fi folosit doar in zona "
+"de administrare."
+
+#: admin/includes/sliced-admin-help.php:72
+msgid ""
+"<strong>Description</strong> &mdash; An optional field to add a description to "
+"the %s."
+msgstr ""
+"<strong>Descriere</strong> &mdash; Un camp optional pentru adaugarea unei "
+"descrieri la %s."
+
+#: admin/includes/sliced-admin-help.php:76
+#: admin/includes/sliced-admin-metaboxes.php:73
+msgid "Line Items"
+msgstr "Linie Elemente"
+
+#: admin/includes/sliced-admin-help.php:78
+msgid ""
+"Each line item is grouped and labelled per Item #. Each line item group "
+"contains 5 fields, with Qty and Rate being the only required fields."
+msgstr ""
+"Fiecare linie este grupata si etichetata perntru fiecare numar de element. "
+"Fiecare grup al unui element contine 5 campuri, cu Cantitate si Valoarea fiind "
+"sigurele campuri necesare. "
+
+#: admin/includes/sliced-admin-help.php:79
+msgid ""
+"<strong>Qty</strong> &mdash; Add the quantity of your line item in this field."
+msgstr ""
+"<strong>Cantitate</strong> &mdash; Adauga cantitatea elementului de pe linie "
+"in acest camp."
+
+#: admin/includes/sliced-admin-help.php:80
+msgid "<strong>Title</strong> &mdash; Add a title for this line item."
+msgstr ""
+"<strong>Titlu</strong> &mdash; Adauga un titlul pentru elementul de pe linie."
+
+#: admin/includes/sliced-admin-help.php:81
+msgid ""
+"<strong>Adjust</strong> &mdash; This can be used as an extra Tax field by "
+"adding a positive number, or as a discount field by adding a negative number. "
+"The line item amount will be adjusted by the number (in percentage %) that is "
+"input into this field."
+msgstr ""
+"<strong>Ajustare</strong> &mdash; Acesta poate fi utilizat ca si un camp extra "
+"pentru Taxe adaugand un numar pozitiv, sau ca si un discount adaugand un numar "
+"negativ. Valoarea elementului de pe linie va fi ajustata de catre numar (in "
+"procente %) care este in acest camp."
+
+#: admin/includes/sliced-admin-help.php:82
+msgid ""
+"<strong>Rate</strong> &mdash; Add the rate or price of your line item in this "
+"field."
+msgstr ""
+"<strong>Pretul</strong> &mdash; Adauga pretul elementului de pe linie in acest "
+"camp."
+
+#: admin/includes/sliced-admin-help.php:83
+msgid ""
+"<strong>Description</strong> &mdash; You can add a description to each line "
+"item in this field."
+msgstr ""
+"<strong>Descriere</strong> &mdash; Puteti adauga o descriere pentru fiecare "
+"linie de element, in acest camp."
+
+#: admin/includes/sliced-admin-help.php:87
+#: admin/includes/sliced-admin-metaboxes.php:270
+#: admin/includes/sliced-admin-metaboxes.php:382
+msgid "%s Details"
+msgstr "Detalii %s"
+
+#: admin/includes/sliced-admin-help.php:89
+msgid ""
+"<strong>Client</strong> &mdash; Choose the client or click on the Add New "
+"Client button to add a new client. Once added, the client will immediately "
+"appear in the dropdown for you to choose."
+msgstr ""
+"<strong>Client</strong> &mdash; Alegeti clientul sau selectati butonul de "
+"Adauga Client Nou pentru a adauga un client nou. Odata adaugat, clientul va "
+"apare imediat in dropdown pentru a fi selectat."
+
+#: admin/includes/sliced-admin-help.php:90
+msgid "<strong>Status</strong> &mdash; Add a status."
+msgstr "<strong>Stare</strong> &mdash; Adauga o stare."
+
+#: admin/includes/sliced-admin-help.php:91
+msgid ""
+"<strong>%1s Number</strong> &mdash; The prefix that is set in Sliced Invoices "
+"--> %2s is automatically added to the front of the number. If you have auto "
+"increment setup, then the next number should appear in this field."
+msgstr ""
+"<strong>Numar %1s</strong> &mdash; Prefixul care este setat in Sliced Invoices "
+"--> %2s este adaugat automat la inceputul numarului. Daca aveti un setup cu "
+"auto-increment, atunci urmatorul numar ar trebui sa apara in acest camp."
+
+#: admin/includes/sliced-admin-help.php:92
+msgid "<strong>Created Date</strong> &mdash; This field is required."
+msgstr "<strong>Data crearii</strong> &mdash; Acest camp este obligatoriu."
+
+#: admin/includes/sliced-admin-help.php:118
+msgid ""
+"This screen provides access to all of your %s. You can customize the display "
+"of this screen to suit your workflow."
+msgstr ""
+"Ecranul va permite sa accesati toare %s. Puteti personaliza afisarea pe ecran "
+"pentru a se potrivi stilului dvs."
+
+#: admin/includes/sliced-admin-help.php:119
+msgid "Click on the help tabs to your left to find out what can be done here."
+msgstr "Apasa pe etichetele din stanga ta pentru a afla ce poate fi facut aici."
+
+#: admin/includes/sliced-admin-help.php:123
+msgid "Screen Content"
+msgstr "Continut Ecran"
+
+#: admin/includes/sliced-admin-help.php:125
+msgid ""
+"You can customize the display of this screen&#8217;s contents in a number of "
+"ways:"
+msgstr ""
+"Puteti sa personalizati afisarea in continutul acestui ecran&#8217;s intr-un "
+"numar de moduri:"
+
+#: admin/includes/sliced-admin-help.php:127
+msgid ""
+"<strong>Hide/Display Columns</strong> and decide how many %s to list per "
+"screen by using the Screen Options tab."
+msgstr ""
+"<strong>Ascunde/Afiseaza Coloanele</strong> si decide cate %s sa se afiseze pe "
+"ecran folosind tab-ul Optiuni ecran."
+
+#: admin/includes/sliced-admin-help.php:128
+msgid ""
+"<strong>Filter</strong> the list of %1s by their status using the text links "
+"in the upper left. You can show All, Published, Draft, Cancelled, Overdue, "
+"Paid and Unpaid %2s. The default view is to show all %3s."
+msgstr ""
+"<strong>Filter</strong> lista de %1s dupa status folosind linkurile text din "
+"partea stanga sus. Puteti sa Afisati Toate, Emise, Draft, Anulate, Cu Scadenta "
+"Depasita, Platite si Neplatite  %2s. Vederea implicita este sa vedeti toate "
+"%3s."
+
+#: admin/includes/sliced-admin-help.php:129
+msgid ""
+"<strong>Refine</strong> the list to show only %1s from specific dats, specific "
+"clients or specific statuses by using the dropdown menus above the %2s list. "
+"Click the Filter button after making your selection."
+msgstr ""
+"<strong>Filtreaza</strong> lista pentru a afisa doar %1s din anumite date, "
+"clienti anume sau stari specifice utilizand meniurile de drop-down de "
+"dedesubtul listei de %2s. Apasati butonul de Filtrare dupa ce faceti o "
+"selectie."
+
+#: admin/includes/sliced-admin-help.php:130
+msgid ""
+"<strong>Export</strong> a list of %s in CSV format by clicking the Export to "
+"CSV button."
+msgstr ""
+"<strong>Export</strong> o lista de %s in format CSV dand click pe butonul "
+"Export la CSV."
+
+#: admin/includes/sliced-admin-help.php:135
+msgid "Available Actions"
+msgstr "Actiuni Disponibile"
+
+#: admin/includes/sliced-admin-help.php:137
+msgid ""
+"Hovering over a row in the %1s list will display action links that allow you "
+"to manage your %2s. You can perform the following actions:"
+msgstr ""
+"Miscarea peste o linie in lista de %1s va afisa linkuri cu actiuni care permit "
+"sa se gestioneze %2s. Puteti sa efectuati urmatoarele actiuni:"
+
+#: admin/includes/sliced-admin-help.php:139
+msgid ""
+"<strong>Edit</strong> takes you to the editing screen for that %1s. You can "
+"also reach that screen by clicking on the %2s title."
+msgstr ""
+"<strong>Modifica</strong> va duce la ecranul de editare pentru acea %1s. "
+"Puteti de asemenea sa ajungeti la acel ecran dand click pe titlul %2s."
+
+#: admin/includes/sliced-admin-help.php:140
+msgid ""
+"<strong>Quick Edit</strong> provides inline access to the metadata of your "
+"%1s, allowing you to update the %2s details without leaving this screen."
+msgstr ""
+"<strong>Editare Rapida</strong> ofera acces in text la metadatele %1s, "
+"permitand sa modificati detaliile %2s fara a parasi acest ecran."
+
+#: admin/includes/sliced-admin-help.php:141
+msgid ""
+"<strong>Trash</strong> removes your %s from this list and places it in the "
+"trash, from which you can permanently delete it."
+msgstr ""
+"<strong>Delete</strong> sterge %s din lista si o plaseaza in Trash, de unde o "
+"puteti sterge permanent."
+
+#: admin/includes/sliced-admin-help.php:142
+msgid "<strong>View</strong> will take you to your live site to view the %s."
+msgstr ""
+"<strong>Vizualizeaza</strong> va va trimite catre site pentru a vedea %s."
+
+#: admin/includes/sliced-admin-help.php:143
+msgid "<strong>Clone</strong> will clone (or duplicate) the %s. "
+msgstr "<strong>Duplica</strong> va duplica %s. "
+
+#: admin/includes/sliced-admin-logs.php:278
+msgid "%1s on %2s"
+msgstr "%1s pe %2s"
+
+#: admin/includes/sliced-admin-logs.php:279
+msgid "by %s"
+msgstr "dupa %s"
+
+#: admin/includes/sliced-admin-logs.php:284
+#: admin/includes/sliced-admin-logs.php:287
+msgid "%s was created."
+msgstr "%s a fost creata."
+
+#: admin/includes/sliced-admin-logs.php:290
+msgid "Status changed from %1s to %2s."
+msgstr "Starea s-a schimbat din %1$ in %2s."
+
+#: admin/includes/sliced-admin-logs.php:293
+msgid "%1s was declined. Reason: %2s"
+msgstr "%1s a fost respinsa. Motivul: %2s"
+
+#: admin/includes/sliced-admin-logs.php:296
+msgid "%s was accepted by client."
+msgstr "%s a fost acceptata de catre client."
+
+#: admin/includes/sliced-admin-logs.php:299
+msgid "Payment was made via %s."
+msgstr "Plata a fost facuta folosind %s."
+
+#: admin/includes/sliced-admin-logs.php:302
+msgid "%s was marked as Paid."
+msgstr "%s a fost marcata ca si Platita."
+
+#: admin/includes/sliced-admin-logs.php:305
+msgid "Converted from %1s to %2s."
+msgstr "Convertit din %1s in %2s."
+
+#: admin/includes/sliced-admin-metaboxes.php:50
+#: admin/includes/sliced-admin-metaboxes.php:140
+#: includes/vendor/metabox/example-functions.php:434
+msgid "Description"
+msgstr "Descriere"
+
+#: admin/includes/sliced-admin-metaboxes.php:83
+msgid "Item {#}"
+msgstr "Element {#}"
+
+#: admin/includes/sliced-admin-metaboxes.php:84
+msgid "Add Another Item"
+msgstr "Adauga un alt Element"
+
+#: admin/includes/sliced-admin-metaboxes.php:85
+msgid "Remove Item"
+msgstr "Sterge Element"
+
+#: admin/includes/sliced-admin-metaboxes.php:91
+msgid "Qty"
+msgstr "Cantitate"
+
+#: admin/includes/sliced-admin-metaboxes.php:105
+msgid "Item Title"
+msgstr "Titlu Element"
+
+#: admin/includes/sliced-admin-metaboxes.php:112
+msgid "Adjust (%)"
+msgstr "Ajusteaza (%)"
+
+#: admin/includes/sliced-admin-metaboxes.php:126
+msgid "Rate (%s)"
+msgstr "Rata (%s)"
+
+#: admin/includes/sliced-admin-metaboxes.php:126
+msgid "Amount (%s)"
+msgstr "Valoare (%s)"
+
+#: admin/includes/sliced-admin-metaboxes.php:145
+msgid "Brief description of the work carried out for this line item (optional)"
+msgstr ""
+"Descriere scurta a muncii depuse pentru indeplinirea acestui element (optional)"
+
+#: admin/includes/sliced-admin-metaboxes.php:167
+#: admin/includes/sliced-admin-metaboxes.php:193
+#: admin/includes/sliced-admin-options.php:337
+#: admin/includes/sliced-admin-options.php:439
+msgid "Terms & Conditions"
+msgstr "Termeni si Conditii"
+
+#: admin/includes/sliced-admin-metaboxes.php:233
+msgid "Convert %s"
+msgstr "Converteste %s"
+
+#: admin/includes/sliced-admin-metaboxes.php:252
+#: admin/includes/sliced-admin-metaboxes.php:363
+msgid "%s Notes"
+msgstr "Note %s"
+
+#: admin/includes/sliced-admin-metaboxes.php:276
+#: admin/includes/sliced-admin-metaboxes.php:389
+msgid "Add New Client"
+msgstr "Adauga Client Nou"
+
+#: admin/includes/sliced-admin-metaboxes.php:302
+#: admin/includes/sliced-admin-metaboxes.php:415
+#: admin/includes/sliced-admin-quick-edit.php:102
+#: includes/payments/sliced-shared-payments.php:96
+#: includes/payments/sliced-shared-payments.php:191
+msgid "%s Number"
+msgstr "Numar %s"
+
+#: admin/includes/sliced-admin-metaboxes.php:310
+#: admin/includes/sliced-admin-metaboxes.php:429
+msgid "Created Date"
+msgstr "Data crearii"
+
+#: admin/includes/sliced-admin-metaboxes.php:321
+msgid "Valid Until Date"
+msgstr "Valid Pana la Data"
+
+#: admin/includes/sliced-admin-metaboxes.php:329
+#: admin/includes/sliced-admin-metaboxes.php:448
+msgid "Tax Rate"
+msgstr "Procentul Taxei"
+
+#: admin/includes/sliced-admin-metaboxes.php:423
+#: admin/includes/sliced-admin-quick-edit.php:107
+#: includes/template-tags/sliced-tags-display-modules.php:70
+msgid "Order Number"
+msgstr "Numar Comanda"
+
+#: admin/includes/sliced-admin-metaboxes.php:440
+#: admin/includes/sliced-admin-options.php:422
+#: admin/includes/sliced-admin-quick-edit.php:157
+#: includes/template-tags/sliced-tags-display-modules.php:84
+msgid "Due Date"
+msgstr "Data Scadentei"
+
+#: admin/includes/sliced-admin-metaboxes.php:461
+#: admin/includes/sliced-admin-options.php:578
+msgid "Payment Methods"
+msgstr "Metode de plata"
+
+#: admin/includes/sliced-admin-metaboxes.php:488
+#: admin/includes/sliced-admin-metaboxes.php:544
+msgid "Client Information"
+msgstr "Informatie Client"
+
+#: admin/includes/sliced-admin-metaboxes.php:494
+#: admin/includes/sliced-admin-metaboxes.php:550
+msgid "Sliced Invoices Client"
+msgstr "Client Sliced Invoices"
+
+#: admin/includes/sliced-admin-metaboxes.php:495
+msgid "Add a Business/Client Name below to activate this user as a Client."
+msgstr ""
+"Adauga un nume de Afacere/Client mai jos pentru a activa acest utilizator ca "
+"si Client."
+
+#: admin/includes/sliced-admin-metaboxes.php:558
+msgid "Adding a Business/Client Name will activate this user as a Client."
+msgstr ""
+"Adaugand un Nume de Afacere/Client va activa acest utilizator ca si Client."
+
+#: admin/includes/sliced-admin-metaboxes.php:565
+msgid ""
+"Enter the address of the client. Format the Address any way you like. HTML is "
+"allowed."
+msgstr ""
+"Introdu adresa clientului. Formateaza adresa in ce mod doresti tu. HTML este "
+"permis."
+
+#: admin/includes/sliced-admin-metaboxes.php:575
+msgid ""
+"Any extra client info such as phone number or business number. HTML is allowed."
+msgstr ""
+"Orice informatie suplimentara despre client cum ar fi numar de telefon sau "
+"numarul de inregistrare. HTML este permis."
+
+#: admin/includes/sliced-admin-notifications.php:149
+msgid "Your %s has been accepted"
+msgstr "%s a fost acceptata"
+
+#: admin/includes/sliced-admin-notifications.php:152
+msgid "Your %s has been declined"
+msgstr "%s a fost refuzata"
+
+#: admin/includes/sliced-admin-notifications.php:155
+#: admin/includes/sliced-admin-notifications.php:183
+msgid "You've received a payment!"
+msgstr "Ati primit o plata"
+
+#: admin/includes/sliced-admin-notifications.php:171
+msgid "%1s has accepted your %2s of %3s."
+msgstr "%1s a acceptat %2s ta de %3s."
+
+#: admin/includes/sliced-admin-notifications.php:173
+msgid "An %1s has automatically been created (%2s)."
+msgstr "O %1s a fost creata automat (%2s)."
+
+#: admin/includes/sliced-admin-notifications.php:177
+msgid "%1s has declined your %2s of %3s."
+msgstr "%1s a respins %2s ta de %3s."
+
+#: admin/includes/sliced-admin-notifications.php:185
+msgid "%1s has made a payment for %2s on %3s %4s."
+msgstr "%1s a facut o plata pentru %2s pe %3s %4s."
+
+#: admin/includes/sliced-admin-notifications.php:317
+msgid "Loading the email preview...."
+msgstr "Se incarca o pre-vizualizare a emailului..."
+
+#: admin/includes/sliced-admin-notifications.php:320
+msgid "Send The Email"
+msgstr "Trimite catre Email"
+
+#: admin/includes/sliced-admin-notifications.php:357
+msgid "Send To"
+msgstr "Trimite Catre"
+
+#: admin/includes/sliced-admin-notifications.php:363
+#: admin/includes/sliced-admin-options.php:652
+#: admin/includes/sliced-admin-options.php:681
+#: admin/includes/sliced-admin-options.php:710
+#: admin/includes/sliced-admin-options.php:756
+msgid "Subject"
+msgstr "Subiect"
+
+#: admin/includes/sliced-admin-notifications.php:369
+msgid "Email Content"
+msgstr "Continut Email"
+
+#: admin/includes/sliced-admin-notifications.php:558
+msgid "Email to client"
+msgstr "Email catre client"
+
+#: admin/includes/sliced-admin-notifications.php:558
+msgid "Email"
+msgstr "Email"
+
+#: admin/includes/sliced-admin-notifications.php:585
+msgctxt "sliced-invoices"
+msgid "%s ago"
+msgstr "%s inainte"
+
+#: admin/includes/sliced-admin-notifications.php:587
+msgid "Sent "
+msgstr "Trimis"
+
+#: admin/includes/sliced-admin-notifications.php:620
+msgid "was"
+msgstr "a fost"
+
+#: admin/includes/sliced-admin-notifications.php:620
+msgid "is"
+msgstr "este"
+
+#: admin/includes/sliced-admin-notifications.php:718
+msgid "View this %s online"
+msgstr "Vezi aceasta %s online"
+
+#. Plugin Name of the plugin/theme
+#. Author of the plugin/theme
+#: admin/includes/sliced-admin-options.php:52
+#: admin/includes/sliced-admin-options.php:53
+msgid "Sliced Invoices"
+msgstr "Sliced Invoices"
+
+#: admin/includes/sliced-admin-options.php:175
+msgid "General"
+msgstr "General"
+
+#: admin/includes/sliced-admin-options.php:176
+msgid "General Settings"
+msgstr "Setari Generale"
+
+#: admin/includes/sliced-admin-options.php:183
+msgid "Year Start"
+msgstr "Sfarsitul Anului"
+
+#: admin/includes/sliced-admin-options.php:185
+msgid "Please select the start date of the fiscal year"
+msgstr "Va rugam selectati data de inceput a anului fiscal"
+
+#: admin/includes/sliced-admin-options.php:188
+msgid "01 Jan"
+msgstr "01 Ian"
+
+#: admin/includes/sliced-admin-options.php:189
+msgid "01 Feb"
+msgstr "01 Feb"
+
+#: admin/includes/sliced-admin-options.php:190
+msgid "01 Mar"
+msgstr "01 Mar"
+
+#: admin/includes/sliced-admin-options.php:191
+msgid "01 Apr"
+msgstr "01 Apr"
+
+#: admin/includes/sliced-admin-options.php:192
+msgid "01 May"
+msgstr "01 Mai"
+
+#: admin/includes/sliced-admin-options.php:193
+msgid "01 Jun"
+msgstr "01 Iun"
+
+#: admin/includes/sliced-admin-options.php:194
+msgid "01 Jul"
+msgstr "01 Iul"
+
+#: admin/includes/sliced-admin-options.php:195
+msgid "01 Aug"
+msgstr "01 Aug"
+
+#: admin/includes/sliced-admin-options.php:196
+msgid "01 Sep"
+msgstr "01 Sep"
+
+#: admin/includes/sliced-admin-options.php:197
+msgid "01 Oct"
+msgstr "01 Oct"
+
+#: admin/includes/sliced-admin-options.php:198
+msgid "01 Nov"
+msgstr "01 Noi"
+
+#: admin/includes/sliced-admin-options.php:199
+msgid "01 Dec"
+msgstr "01 Dec"
+
+#: admin/includes/sliced-admin-options.php:203
+msgid "Year End"
+msgstr "Inceputul Anului"
+
+#: admin/includes/sliced-admin-options.php:205
+msgid "Please select the end date of the fiscal year"
+msgstr "Va rugam selectati data de sfarsit a anului fiscal"
+
+#: admin/includes/sliced-admin-options.php:208
+msgid "31 Jan"
+msgstr "31 Ian"
+
+#: admin/includes/sliced-admin-options.php:209
+msgid "28 Feb"
+msgstr "28 Feb"
+
+#: admin/includes/sliced-admin-options.php:210
+msgid "31 Mar"
+msgstr "31 Mar"
+
+#: admin/includes/sliced-admin-options.php:211
+msgid "30 Apr"
+msgstr "30 Apr"
+
+#: admin/includes/sliced-admin-options.php:212
+msgid "31 May"
+msgstr "31 Mai"
+
+#: admin/includes/sliced-admin-options.php:213
+msgid "30 Jun"
+msgstr "30 Iun"
+
+#: admin/includes/sliced-admin-options.php:214
+msgid "31 Jul"
+msgstr "31 Iul"
+
+#: admin/includes/sliced-admin-options.php:215
+msgid "31 Aug"
+msgstr "31 Aug"
+
+#: admin/includes/sliced-admin-options.php:216
+msgid "30 Sep"
+msgstr "30 Sep"
+
+#: admin/includes/sliced-admin-options.php:217
+msgid "31 Oct"
+msgstr "31 Oct"
+
+#: admin/includes/sliced-admin-options.php:218
+msgid "30 Nov"
+msgstr "30 Noi"
+
+#: admin/includes/sliced-admin-options.php:219
+msgid "31 Dec"
+msgstr "31 Dec"
+
+#: admin/includes/sliced-admin-options.php:223
+msgid "Pre-Defined Line Items"
+msgstr "Linie Elemente Predefinite"
+
+#: admin/includes/sliced-admin-options.php:224
+msgid ""
+"Add 1 line item per line. <br/>Quantity, title, price and description should "
+"each be seperated with a | symbol. Price should be numbers only, no currency "
+"symbol."
+msgstr ""
+"Adauga 1 element de linie pe linie. <br/>Cantitatea, titlul, pretul si "
+"descrierea trebuie sa fie separate fiecare de caracterul | . Pretul trebuie sa "
+"fie doar numere, fara simbolul monetar."
+
+#: admin/includes/sliced-admin-options.php:233
+msgid "Footer"
+msgstr "Footer"
+
+#: admin/includes/sliced-admin-options.php:234
+msgid "The footer will be displayed at the bottom of each quote and invoice."
+msgstr "Footerul va fi afisat in partea de jos a fiecarei oferte si facturi."
+
+#: admin/includes/sliced-admin-options.php:247
+msgid "Business Settings"
+msgstr "Setari Afacere"
+
+#: admin/includes/sliced-admin-options.php:248
+msgid "All of the Business Details below will be displayed on the %1s & %2s."
+msgstr "Toate Detaliile Afacerii au fost afisate in %1s & %2s."
+
+#: admin/includes/sliced-admin-options.php:254
+msgid "Logo"
+msgstr "Logo"
+
+#: admin/includes/sliced-admin-options.php:255
+msgid ""
+"Logo of your business. If no logo is added, the name of your business will be "
+"used instead."
+msgstr ""
+"Logo al afacerii tale. Daca nici un logo nu este adaugat, numele afacerii va "
+"fi folosit."
+
+#: admin/includes/sliced-admin-options.php:261
+msgid "Business Name"
+msgstr "Numele Afacerii"
+
+#: admin/includes/sliced-admin-options.php:269
+msgid ""
+"Add your full address and format it anyway you like. Basic HTML is allowed."
+msgstr ""
+"Adauga adresa ta completa si formatul care iti place. HTML de baza este permis."
+
+#: admin/includes/sliced-admin-options.php:275
+msgid "Extra Business Info"
+msgstr "Informatii Suplimentare Afacere"
+
+#: admin/includes/sliced-admin-options.php:276
+msgid ""
+"Add any extra business info such as your business number, phone number or "
+"email address and format it anyway you like. Basic HTML is allowed."
+msgstr ""
+"Adauga orice informatie suplimentara despre afacere cum ar fi numarul de "
+"inregistrare sau adresa de email si formateaza cum iti doresti. HTML de baza "
+"este permis."
+
+#: admin/includes/sliced-admin-options.php:293
+#: admin/includes/sliced-admin-options.php:395
+msgid "%s Settings"
+msgstr "Setari %s"
+
+#: admin/includes/sliced-admin-options.php:294
+msgid "Here you wil find all of the settings for Quotes."
+msgstr "Aici veti gasi toate setarile pentru Oferte."
+
+#: admin/includes/sliced-admin-options.php:300
+#: admin/includes/sliced-admin-options.php:402
+msgid "Prefix"
+msgstr "Prefix"
+
+#: admin/includes/sliced-admin-options.php:301
+msgid "Prefix of each quote."
+msgstr "Prefixul fiecarei oferte."
+
+#: admin/includes/sliced-admin-options.php:307
+#: admin/includes/sliced-admin-options.php:409
+msgid "Auto Increment"
+msgstr "Auto Incrementare"
+
+#: admin/includes/sliced-admin-options.php:308
+msgid "Yes, increment quote numbers by one. Recommended."
+msgstr "Da, incrementeaza numarul ofertei cu unu. Recomandat."
+
+#: admin/includes/sliced-admin-options.php:313
+#: admin/includes/sliced-admin-options.php:415
+msgid "Next Number"
+msgstr "Urmatorul Numar"
+
+#: admin/includes/sliced-admin-options.php:314
+#: admin/includes/sliced-admin-options.php:416
+msgid "The next number to use for auto incrementing."
+msgstr "Urmatorul numar care va fi folosit pentru auto-increment"
+
+#: admin/includes/sliced-admin-options.php:320
+#: admin/includes/sliced-admin-options.php:433
+msgid "Hide Adjust Field"
+msgstr "Ascunde Campul de Ajustare"
+
+#: admin/includes/sliced-admin-options.php:321
+#: admin/includes/sliced-admin-options.php:434
+msgid "Yes, hide the Adjust field on line items, I won't need this field"
+msgstr ""
+"Da, ascunde campul de Ajustare din linia elementelor, nu o sa am nevoie de "
+"acest camp"
+
+#: admin/includes/sliced-admin-options.php:326
+msgid "Quotes Valid For"
+msgstr "Oferte Valide Pentru"
+
+#: admin/includes/sliced-admin-options.php:327
+msgid ""
+"Number of days each quote is valid for. This will automatically set the date "
+"in the 'Valid Until' field for each quote.<br>Can be overriden on individual "
+"quotes."
+msgstr ""
+"Numarul de zile fiecare ofera este valabila. Aceasta va ajusta automat data in "
+"campul de \"Valida pana la\" pentru fiecare oferta.<br />Poate fi suprascrisa "
+"in fiecare oferta."
+
+#: admin/includes/sliced-admin-options.php:338
+msgid ""
+"Terms and conditions displayed on the quote..<br>Can be overriden on "
+"individual quotes."
+msgstr ""
+"Termeni si conditii afisate pe oferta.<br>Poate fi suprascrisa in fiecare "
+"oferta."
+
+#: admin/includes/sliced-admin-options.php:344
+msgid "Accept Quotes"
+msgstr "Oferte Acceptate"
+
+#: admin/includes/sliced-admin-options.php:350
+msgid "Accept Quote Button"
+msgstr "Buton Oferte Acceptate"
+
+#: admin/includes/sliced-admin-options.php:351
+msgid ""
+"Yes, show the 'Accept Quote' button on quotes. Invoice will be auto created."
+msgstr ""
+"Da, afiseaza butonul de \"Accept Oferta\" pe oferte. Factura va fi creata "
+"automat."
+
+#: admin/includes/sliced-admin-options.php:356
+msgid "Accept Quote Text"
+msgstr "Text Oferte Acceptate"
+
+#: admin/includes/sliced-admin-options.php:357
+msgid ""
+"Text to add on the 'Accept Quote' popup.<br />Should provide some indication "
+"to your client of what happens after accepting the quote."
+msgstr ""
+"Text de adaugat in popupul 'Accepta Oferta'.<br />Trebuie sa ofere o indicatie "
+"catre clientul dvs legata de ce se intampla dupa ce accepta oferta."
+
+#: admin/includes/sliced-admin-options.php:363
+msgid "Quote Design"
+msgstr "Design Oferta."
+
+#: admin/includes/sliced-admin-options.php:369
+#: admin/includes/sliced-admin-options.php:452
+msgid "Template"
+msgstr "Template"
+
+#: admin/includes/sliced-admin-options.php:381
+#: admin/includes/sliced-admin-options.php:464
+msgid "Custom CSS"
+msgstr "CSS Personalizat"
+
+#: admin/includes/sliced-admin-options.php:382
+msgid "Add custom CSS to your quotes"
+msgstr "Adauga CSS personalizat la ofertele tale."
+
+#: admin/includes/sliced-admin-options.php:396
+msgid "Here you wil find all of the settings for Invoices."
+msgstr "Aici veti gasi toate setarile pentru Facturi."
+
+#: admin/includes/sliced-admin-options.php:403
+msgid "Prefix of each invoice."
+msgstr "Prefixul fiecarei facturi."
+
+#: admin/includes/sliced-admin-options.php:410
+msgid "Yes, increment invoice numbers by one. Recommended."
+msgstr "Da, incrementeaza numarul facturi cu unu. Recomandat."
+
+#: admin/includes/sliced-admin-options.php:423
+msgid ""
+"Number of days each invoice is due after the invoice created date. This will "
+"automatically set the date in the 'Due Date' field for each invoice.<br>Can be "
+"overriden on individual invoices. Leave blank for no default."
+msgstr ""
+"Numarul de zile fiecare factura este scadenta dupa data emiterii. Aceasta va "
+"ajusta automat data in campul de \"Data Scadentei\" pentru fiecare factura."
+"<br />Poate fi suprascrisa in fiecare factura. Lasati liber pentru nici o "
+"valoarea implicita."
+
+#: admin/includes/sliced-admin-options.php:440
+msgid ""
+"Terms and conditions displayed on the invoice.<br>Can be overriden on "
+"individual quotes."
+msgstr ""
+"Termeni si conditii afisate pe factura.<br>Poate fi suprascrisa in fiecare "
+"factura."
+
+#: admin/includes/sliced-admin-options.php:446
+msgid "Invoice Design"
+msgstr "Design Factura"
+
+#: admin/includes/sliced-admin-options.php:465
+msgid "Add custom CSS to your invoices."
+msgstr "Adauga CSS personalizat la facturile tale."
+
+#: admin/includes/sliced-admin-options.php:478
+msgid "Payments"
+msgstr "Plati"
+
+#: admin/includes/sliced-admin-options.php:479
+msgid "Payment Settings"
+msgstr "Setari de Plata"
+
+#: admin/includes/sliced-admin-options.php:486
+msgid "Currency Symbol"
+msgstr "Simbol monetar"
+
+#: admin/includes/sliced-admin-options.php:497
+msgid "Currency Position"
+msgstr "Pozitia Monedei"
+
+#: admin/includes/sliced-admin-options.php:509
+msgid "Thousand Separator"
+msgstr "Separator de mii"
+
+#: admin/includes/sliced-admin-options.php:520
+msgid "Decimal Separator"
+msgstr "Separator Zecimal"
+
+#: admin/includes/sliced-admin-options.php:531
+msgid "Number of Decimals"
+msgstr "Numarul de zecimale"
+
+#: admin/includes/sliced-admin-options.php:544
+msgid "Tax Percentage"
+msgstr "Procent taxa"
+
+#: admin/includes/sliced-admin-options.php:545
+msgid "Global tax percentage. Set to 0 or leave blank for no tax."
+msgstr "Procentul global de taxare. Lasati pe 0 sau liber pentru nici o taxa."
+
+#: admin/includes/sliced-admin-options.php:557
+msgid "Tax Name"
+msgstr "Numa taxa"
+
+#: admin/includes/sliced-admin-options.php:558
+msgid "The name of the tax for your country/region. GST, VAT, Tax etc"
+msgstr "Numele taxei pentru tara/regiunea ta. GST, TVA, Taxa, etc"
+
+#: admin/includes/sliced-admin-options.php:567
+msgid "Payment Page"
+msgstr "Pagina de Plata"
+
+#: admin/includes/sliced-admin-options.php:568
+msgid ""
+"Choose a page to use as the default page for PayPal and other <a target="
+"\"_blank\" href=\"https://slicedinvoices.com/extensions/\">available payment "
+"gateway</a> payments.<br>A blank page named Payments would be perfect."
+msgstr ""
+"Alege o pagina implicita care poate fi folsita ca si pagina PayPal si alta "
+"pentru <a target=\"_blank\" href=\"https://slicedinvoices.com/extensions/"
+"\">modalitati de plata disponibile</a> payments.<br>O pagina necompletata "
+"numita Plati ar fi perfecta."
+
+#: admin/includes/sliced-admin-options.php:585
+msgid "Bank"
+msgstr "Banca"
+
+#: admin/includes/sliced-admin-options.php:585
+#: admin/includes/sliced-admin-options.php:592
+msgid "Will be displayed on the %s"
+msgstr "Va fi afisat pe %s"
+
+#: admin/includes/sliced-admin-options.php:586
+msgid ""
+"Add your bank account details if you wish to allow direct bank deposits. HTML "
+"is allowed."
+msgstr ""
+"Adaugati detaliile contului bancar daca doriti sa permiteti depuneri bancare "
+"directe. HTML este permis."
+
+#: admin/includes/sliced-admin-options.php:592
+msgid "Generic Payment"
+msgstr "Plata Generica"
+
+#: admin/includes/sliced-admin-options.php:593
+msgid ""
+"Set a generic message or include further instructions for the user on how to "
+"pay. HTML is allowed."
+msgstr ""
+"Seteaza un mesaj generic sau include instructiuni suplimentare pentru "
+"utilizator legate de cum sa plateasca. HTML este permis."
+
+#: admin/includes/sliced-admin-options.php:605
+msgid "Emails"
+msgstr "Emailuri"
+
+#: admin/includes/sliced-admin-options.php:606
+msgid "Email Settings"
+msgstr "Setari Email"
+
+#: admin/includes/sliced-admin-options.php:613
+msgid "Email Address"
+msgstr "Adresa de Email"
+
+#: admin/includes/sliced-admin-options.php:614
+msgid ""
+"The email address to send and receive notifications (probably your business "
+"email)."
+msgstr ""
+"Adresa de email pentru a trimite si primi notificari (probabil adresa de "
+"emaila afacerii)."
+
+#: admin/includes/sliced-admin-options.php:620
+msgid "Email Name"
+msgstr "Nume pentru Email"
+
+#: admin/includes/sliced-admin-options.php:621
+msgid ""
+"The name on emails to send and receive notifications (probably your business "
+"name)."
+msgstr ""
+"Numele de pe emailurile pentru trinitere si primire notificari (probabil "
+"numele afacerii tale)."
+
+#: admin/includes/sliced-admin-options.php:627
+msgid "Wildcards For Emails"
+msgstr "Wildcarduri pentru Emailuri"
+
+#: admin/includes/sliced-admin-options.php:628
+msgid ""
+"The following wildcards can be used in email subjects and email content:<br>\n"
+"                        %client_first_name% : Clients first name<br>\n"
+"                        %client_last_name% : Clients last name<br>\n"
+"                        %client_business% : Clients business<br>\n"
+"                        %client_email% : Clients email address<br>\n"
+"                        %link% : URL to the quote<br>\n"
+"                        %number% : The quote or invoice number<br>\n"
+"                        %created% : The quote or invoice created date<br>\n"
+"                        %total% : The quote or invoice total<br>\n"
+"                        %valid_until% : The date the quote is valid until<br>\n"
+"                        %due_date% : The date the invoice is due<br>\n"
+"                        %order_number% : The order number of the invoice<br>\n"
+"                        %is_was% : If due date of invoice is past, displays "
+"\"was\" otherwise displays \"is\"<br>\n"
+"                        "
+msgstr ""
+"Urmatoarele wildcard-uri pot fi folosite in subiectul si cotinutul emailului:"
+"<br>\n"
+"                        %client_first_name% : Clients first name<br>\n"
+"                        %client_last_name% : Clients last name<br>\n"
+"                        %client_business% : Clients business<br>\n"
+"                        %client_email% : Clients email address<br>\n"
+"                        %link% : URL to the quote<br>\n"
+"                        %number% : The quote or invoice number<br>\n"
+"                        %created% : The quote or invoice created date<br>\n"
+"                        %total% : The quote or invoice total<br>\n"
+"                        %valid_until% : The date the quote is valid until<br>\n"
+"                        %due_date% : The date the invoice is due<br>\n"
+"                        %order_number% : The order number of the invoice<br>\n"
+"                        %is_was% : If due date of invoice is past, displays "
+"\"was\" otherwise displays \"is\"<br>\n"
+"                        "
+
+#: admin/includes/sliced-admin-options.php:646
+msgid "Quote Available"
+msgstr "Oferta Emisa"
+
+#: admin/includes/sliced-admin-options.php:653
+#: admin/includes/sliced-admin-options.php:682
+#: admin/includes/sliced-admin-options.php:711
+#: admin/includes/sliced-admin-options.php:757
+msgid "The subject of the email (wildcards are allowed)."
+msgstr "Subiectul emailului (wildcardurile sunt acceptate)."
+
+#: admin/includes/sliced-admin-options.php:659
+#: admin/includes/sliced-admin-options.php:688
+#: admin/includes/sliced-admin-options.php:717
+#: admin/includes/sliced-admin-options.php:763
+msgid "Content"
+msgstr "Continut"
+
+#: admin/includes/sliced-admin-options.php:660
+#: admin/includes/sliced-admin-options.php:689
+#: admin/includes/sliced-admin-options.php:718
+#: admin/includes/sliced-admin-options.php:764
+msgid "The content of the email (wildcards and HTML are allowed)."
+msgstr "Continutul emailului (wildcards si HTML sunt permise)."
+
+#: admin/includes/sliced-admin-options.php:675
+msgid "Invoice Available"
+msgstr "Factura Emisa"
+
+#: admin/includes/sliced-admin-options.php:704
+msgid "Payment Received"
+msgstr "Plata Primita"
+
+#: admin/includes/sliced-admin-options.php:733
+msgid "Payment Reminder"
+msgstr "Reamintire plata"
+
+#: admin/includes/sliced-admin-options.php:739
+msgid "When to Send"
+msgstr "Cand sa trimiti"
+
+#: admin/includes/sliced-admin-options.php:740
+msgid "Check when you would like payment reminders sent out."
+msgstr "Bifati cand doriti sa fie trimise reamintiri de plata."
+
+#: admin/includes/sliced-admin-options.php:784
+msgid "Translate"
+msgstr "Tradu"
+
+#: admin/includes/sliced-admin-options.php:785
+msgid "Translate Settings"
+msgstr "Setari Traduceri"
+
+#: admin/includes/sliced-admin-options.php:791
+msgid "Quote Label"
+msgstr "Eticheta Oferta"
+
+#: admin/includes/sliced-admin-options.php:792
+msgid ""
+"You can change this from Quote to Estimate or Proposal (or any other word you "
+"like)."
+msgstr ""
+"Puteti sa schimbati aceasta din Oferta in Estimare sau Propunere (sau alt "
+"cuvant care va place)."
+
+#: admin/includes/sliced-admin-options.php:798
+msgid "Quote Label Plural"
+msgstr "Eticheta Plural Oferta"
+
+#: admin/includes/sliced-admin-options.php:799
+#: admin/includes/sliced-admin-options.php:813
+msgid "The plural of the above"
+msgstr "Pluralul de mai sus"
+
+#: admin/includes/sliced-admin-options.php:805
+msgid "Invoice Label"
+msgstr "Eticheta Factura"
+
+#: admin/includes/sliced-admin-options.php:806
+msgid ""
+"You can change this from Invoice to Tax Invoice (or any other word you like)."
+msgstr ""
+"Puteti sa schimbati aceasta din Factura in Factura Fiscala (sau alt cuvant "
+"care va place)."
+
+#: admin/includes/sliced-admin-options.php:812
+msgid "Invoice Label Plural"
+msgstr "Plural Eticheta Factura"
+
+#: admin/includes/sliced-admin-options.php:823
+#: admin/includes/sliced-admin-options.php:824
+msgid "Extras"
+msgstr "Suplimentare"
+
+#: admin/includes/sliced-admin-options.php:830
+msgid "We'd Love Your Support"
+msgstr "Iubim Suportul Dumneavoastra"
+
+#: admin/includes/sliced-admin-options.php:840
+msgid "Extend Sliced Invoices"
+msgstr "Extinde Sliced Invoices"
+
+#: admin/includes/sliced-admin-quick-edit.php:165
+msgid "Terms"
+msgstr "Termeni"
+
+#: admin/includes/sliced-admin-reports.php:39
+#: admin/includes/sliced-admin-reports.php:40
+msgid "%s Report"
+msgstr "Raport %s"
+
+#: admin/includes/sliced-admin-reports.php:42
+msgid "%1s and %2s"
+msgstr "%1s si %2s"
+
+#: admin/includes/sliced-admin-reports.php:43
+#: admin/includes/sliced-admin-reports.php:44
+msgid "Current %s Statuses"
+msgstr "Starile actuale ale %s"
+
+#: admin/includes/sliced-admin-reports.php:60
+msgid "Reports"
+msgstr "Rapoarte"
+
+#: admin/includes/sliced-admin-reports.php:290
+msgid "(Does not include Cancelled or Draft statuses)"
+msgstr "(Nu include statusurile de Anulat sau Draft)"
+
+#: admin/includes/sliced-admin-reports.php:293
+msgid "Total %s"
+msgstr "Total %"
+
+#: admin/includes/sliced-admin-reports.php:295
+#: admin/includes/sliced-admin-reports.php:340
+msgid "Year to Date:"
+msgstr "Anul in curs:"
+
+#: admin/includes/sliced-admin-reports.php:296
+#: admin/includes/sliced-admin-reports.php:341
+msgid "This Month:"
+msgstr "Aceasta Luna:"
+
+#: admin/includes/sliced-admin-reports.php:297
+#: admin/includes/sliced-admin-reports.php:342
+msgid "This Week:"
+msgstr "Saptamana aceasta:"
+
+#: admin/includes/sliced-admin-reports.php:301
+#: admin/includes/sliced-admin-reports.php:346
+msgid "Last Year:"
+msgstr "Ultimul an:"
+
+#: admin/includes/sliced-admin-reports.php:302
+#: admin/includes/sliced-admin-reports.php:347
+msgid "Last Month:"
+msgstr "Ultima luna:"
+
+#: admin/includes/sliced-admin-reports.php:303
+#: admin/includes/sliced-admin-reports.php:348
+msgid "Last Week:"
+msgstr "Ultima saptamana:"
+
+#: admin/includes/sliced-admin-reports.php:334
+msgid "(Shows current Sent %s)"
+msgstr "(Afiseaza %s trimise in prezent)"
+
+#: admin/includes/sliced-admin-reports.php:338
+msgid "Outstanding %s"
+msgstr "%s Neachitata"
+
+#: admin/includes/sliced-admin-tools.php:82
+msgid "System Info"
+msgstr "Informatii Sistem"
+
+#: admin/includes/sliced-admin-tools.php:83
+msgid "CSV Importer"
+msgstr "Import din CSV"
+
+#: core/class-sliced-activator.php:136
+msgid ""
+"**Please Note: After accepting this %1s an %2s will be automatically "
+"generated. This will then become a legally binding contract."
+msgstr ""
+"**Nota: Dupa acceptarea acestei %1s o %2s va fi generata automat. Aceasta va "
+"deveni un contract legal."
+
+#: includes/gateways/sliced-gateway-paypal.php:68
+msgid "PayPal Currency"
+msgstr "Moneda PayPal"
+
+#: includes/gateways/sliced-gateway-paypal.php:69
+msgid ""
+"3 letter code - <a href=\"https://developer.paypal.com/docs/classic/api/"
+"currency_codes/\" target=\"_blank\">Full list of accepted currencies here</a>"
+msgstr ""
+"Cod de 3 caractere - <a href=\"https://developer.paypal.com/docs/classic/api/"
+"currency_codes/\" target=\"_blank\">Lista completa de monede aici</a>"
+
+#: includes/gateways/sliced-gateway-paypal.php:76
+msgid "PayPal API Username"
+msgstr "Nume utilizator API PayPal"
+
+#: includes/gateways/sliced-gateway-paypal.php:77
+msgid ""
+"You will find your API Username under \"Profile\" and then \"Request API "
+"credentials\"."
+msgstr ""
+"Veti gasi username-ul pentru API in \"Profil\" si dupa aceea \"Cereti date de "
+"logare API\""
+
+#: includes/gateways/sliced-gateway-paypal.php:83
+msgid "PayPal API Password"
+msgstr "Parola API PayPal"
+
+#: includes/gateways/sliced-gateway-paypal.php:84
+msgid ""
+"You will find your API Password under \"Profile\" and then \"Request API "
+"credentials\"."
+msgstr ""
+"Veti gasi parola pentru API in \"Profil\" si dupa aceea \"Cereti date de "
+"logare API\""
+
+#: includes/gateways/sliced-gateway-paypal.php:90
+msgid "PayPal Signature"
+msgstr "Semnatura PayPal"
+
+#: includes/gateways/sliced-gateway-paypal.php:91
+msgid ""
+"You will find your Signature under \"Profile\" and then \"Request API "
+"credentials\"."
+msgstr ""
+"Puteti sa gasiti Semnatura in \"Profil\" si dupa aceea \"Cereti date de logare "
+"API\""
+
+#: includes/gateways/sliced-gateway-paypal.php:97
+msgid "PayPal Mode"
+msgstr "Mod PayPal"
+
+#: includes/gateways/sliced-gateway-paypal.php:98
+msgid ""
+"Set to Sandbox for testing purposes (you must have a <a href=\"https://"
+"developer.paypal.com/docs/classic/lifecycle/ug_sandbox/\">Sandbox account</a> "
+"for this and be using the Sandbox API credentials).<br />Set to Live to accept "
+"payments from clients."
+msgstr ""
+"Setat ca si Sandbox pentru scop de testare (trebuie sa aveti un <a href="
+"\"https://developer.paypal.com/docs/classic/lifecycle/ug_sandbox/\">Cont "
+"Sandbox</a> pentru aceasta si sa utilizati datele de logare ale API-ului "
+"Sandbox).<br />Setati Live pentru a accepta plati de la clienti."
+
+#: includes/gateways/sliced-gateway-paypal.php:265
+msgid "There was an error with the form submission, please try again."
+msgstr "A fost o eroare cu salvarea formularului, va rugam incercati din nou."
+
+#: includes/gateways/sliced-gateway-paypal.php:387
+msgid "This invoice has already been paid."
+msgstr "Factura a fost deja platita."
+
+#: includes/gateways/sliced-gateway-paypal.php:409
+#: includes/payments/sliced-shared-payments.php:364
+msgid "Success"
+msgstr "Succes"
+
+#: includes/gateways/sliced-gateway-paypal.php:417
+msgid "Payment has been received!"
+msgstr "Plata a fost receptionata!"
+
+#: includes/gateways/sliced-gateway-paypal.php:421
+msgid "Transaction complete, however payment is still pending."
+msgstr "Tranzactie finalizata, dar plata inca este in asteptare."
+
+#: includes/gateways/sliced-gateway-paypal.php:423
+msgid ""
+"You need to manually authorize this payment in your <a target=\"_new\" href="
+"\"http://www.paypal.com\">PayPal Account</a>"
+msgstr ""
+"Trebuie sa autorizati manual aceasta plata in <a target=\"_new\" href=\"http://"
+"www.paypal.com\">contul de PayPal</a>"
+
+#: includes/gateways/sliced-gateway-paypal.php:427
+msgid "Your PayPal Transaction ID is: "
+msgstr "ID-ul Tranzactiei dvs PayPal este: "
+
+#: includes/invoice/class-sliced-invoice.php:236
+msgid "Paid"
+msgstr "Platit"
+
+#: includes/invoice/class-sliced-invoice.php:239
+msgid "Cancelled"
+msgstr "Anulat"
+
+#: includes/payments/sliced-shared-payments.php:70
+msgid "Pay with"
+msgstr "Plateste cu"
+
+#: includes/payments/sliced-shared-payments.php:97
+msgid "Amount Payable"
+msgstr "Valoare de Platit"
+
+#: includes/payments/sliced-shared-payments.php:98
+msgid "Payment Method"
+msgstr "Metoda de plata"
+
+#: includes/payments/sliced-shared-payments.php:107
+msgid "Pay Now"
+msgstr "Plateste acum"
+
+#: includes/payments/sliced-shared-payments.php:164
+msgid "Accept This %s"
+msgstr "Accept aceasta %s"
+
+#: includes/payments/sliced-shared-payments.php:164
+#: includes/payments/sliced-shared-payments.php:200
+msgid "Accept %s"
+msgstr "Accept %s"
+
+#: includes/payments/sliced-shared-payments.php:166
+msgid "Decline This %s"
+msgstr "Refuz aceasta %s"
+
+#: includes/payments/sliced-shared-payments.php:166
+#: includes/payments/sliced-shared-payments.php:238
+msgid "Decline %s"
+msgstr "Refuz %s"
+
+#: includes/payments/sliced-shared-payments.php:192
+msgid "%s Amount"
+msgstr "Cantitate %s"
+
+#: includes/payments/sliced-shared-payments.php:236
+msgid "Reason for declining*"
+msgstr "Motiv pentru refuz*"
+
+#: includes/payments/sliced-shared-payments.php:307
+msgid "Bummer"
+msgstr "Pacat"
+
+#: includes/template-tags/sliced-tags-display-modules.php:24
+msgid "From:"
+msgstr "Furnizor:"
+
+#: includes/template-tags/sliced-tags-display-modules.php:40
+msgid "To:"
+msgstr "Client:"
+
+#: includes/template-tags/sliced-tags-display-modules.php:63
+msgctxt "invoice number"
+msgid "%s Number"
+msgstr "Numar %s"
+
+#: includes/template-tags/sliced-tags-display-modules.php:77
+msgctxt "invoice date"
+msgid "%s Date"
+msgstr "Data %s"
+
+#: includes/template-tags/sliced-tags-display-modules.php:90
+msgid "Total Due"
+msgstr "Total Datorat"
+
+#: includes/template-tags/sliced-tags-display-modules.php:109
+msgctxt "quote number"
+msgid "%s Number"
+msgstr "Numar %s"
+
+#: includes/template-tags/sliced-tags-display-modules.php:118
+msgctxt "quote date"
+msgid "%s Date"
+msgstr "Data %s"
+
+#: includes/template-tags/sliced-tags-display-modules.php:125
+msgid "Valid Until"
+msgstr "Valid Pana la"
+
+#: includes/template-tags/sliced-tags-display-modules.php:153
+msgid "Hrs/Qty"
+msgstr "Cantitate/Ore"
+
+#: includes/template-tags/sliced-tags-display-modules.php:154
+msgid "Service"
+msgstr "Serviciu"
+
+#: includes/template-tags/sliced-tags-display-modules.php:155
+msgid "Rate/Price"
+msgstr "Pret"
+
+#: includes/template-tags/sliced-tags-display-modules.php:157
+msgid "Adjust"
+msgstr "Ajustare"
+
+#: includes/template-tags/sliced-tags-general.php:189
+msgid "%s Totals"
+msgstr "Total %s"
+
+#: includes/template-tags/sliced-tags-invoice.php:10
+msgid "Invoice"
+msgstr "Factura"
+
+#: includes/template-tags/sliced-tags-invoice.php:20
+msgid "Invoices"
+msgstr "Facturi"
+
+#: includes/template-tags/sliced-tags-quote.php:10
+msgid "Quote"
+msgstr "Oferta"
+
+#: includes/template-tags/sliced-tags-quote.php:20
+msgid "Quotes"
+msgstr "Oferte"
+
+#: includes/vendor/metabox/example-functions.php:82
+msgid "Test Metabox"
+msgstr "Test Metabox"
+
+#: includes/vendor/metabox/example-functions.php:93
+#: includes/vendor/metabox/example-functions.php:380
+msgid "Test Text"
+msgstr "Text de Test"
+
+#: includes/vendor/metabox/example-functions.php:94
+#: includes/vendor/metabox/example-functions.php:106
+#: includes/vendor/metabox/example-functions.php:114
+#: includes/vendor/metabox/example-functions.php:122
+#: includes/vendor/metabox/example-functions.php:131
+#: includes/vendor/metabox/example-functions.php:139
+#: includes/vendor/metabox/example-functions.php:153
+#: includes/vendor/metabox/example-functions.php:160
+#: includes/vendor/metabox/example-functions.php:168
+#: includes/vendor/metabox/example-functions.php:185
+#: includes/vendor/metabox/example-functions.php:194
+#: includes/vendor/metabox/example-functions.php:202
+#: includes/vendor/metabox/example-functions.php:209
+#: includes/vendor/metabox/example-functions.php:216
+#: includes/vendor/metabox/example-functions.php:230
+#: includes/vendor/metabox/example-functions.php:243
+#: includes/vendor/metabox/example-functions.php:256
+#: includes/vendor/metabox/example-functions.php:268
+#: includes/vendor/metabox/example-functions.php:277
+#: includes/vendor/metabox/example-functions.php:285
+#: includes/vendor/metabox/example-functions.php:294
+#: includes/vendor/metabox/example-functions.php:301
+#: includes/vendor/metabox/example-functions.php:315
+#: includes/vendor/metabox/example-functions.php:381
+#: includes/vendor/metabox/example-functions.php:476
+#: includes/vendor/metabox/example-functions.php:484
+#: includes/vendor/metabox/example-functions.php:491
+#: includes/vendor/metabox/example-functions.php:498
+#: includes/vendor/metabox/example-functions.php:505
+#: includes/vendor/metabox/example-functions.php:512
+#: includes/vendor/metabox/example-functions.php:519
+#: includes/vendor/metabox/example-functions.php:557
+msgid "field description (optional)"
+msgstr "camp descriere (optional)"
+
+#: includes/vendor/metabox/example-functions.php:105
+msgid "Test Text Small"
+msgstr "Text de Test Mic"
+
+#: includes/vendor/metabox/example-functions.php:113
+msgid "Test Text Medium"
+msgstr "Zona de Text Medie"
+
+#: includes/vendor/metabox/example-functions.php:121
+msgid "Website URL"
+msgstr "URL Site"
+
+#: includes/vendor/metabox/example-functions.php:130
+msgid "Test Text Email"
+msgstr "Zona de Text Email"
+
+#: includes/vendor/metabox/example-functions.php:138
+msgid "Test Time"
+msgstr "Timp de Test"
+
+#: includes/vendor/metabox/example-functions.php:145
+#: includes/vendor/metabox/example-functions.php:146
+msgid "Time zone"
+msgstr "Fus orar"
+
+#: includes/vendor/metabox/example-functions.php:152
+msgid "Test Date Picker"
+msgstr "Test Alegere Data"
+
+#: includes/vendor/metabox/example-functions.php:159
+msgid "Test Date Picker (UNIX timestamp)"
+msgstr "Test Alegere Data (Timestamp Unix)"
+
+#: includes/vendor/metabox/example-functions.php:167
+msgid "Test Date/Time Picker Combo (UNIX timestamp)"
+msgstr "Test Combobox (Unix Timestamp) Alegere Data/Timp"
+
+#: includes/vendor/metabox/example-functions.php:184
+msgid "Test Money"
+msgstr "Test Bani"
+
+#: includes/vendor/metabox/example-functions.php:193
+msgid "Test Color Picker"
+msgstr "Test Alegere Culoare"
+
+#: includes/vendor/metabox/example-functions.php:201
+msgid "Test Text Area"
+msgstr "Zona de Text de Test"
+
+#: includes/vendor/metabox/example-functions.php:208
+msgid "Test Text Area Small"
+msgstr "Zona de Text Mica"
+
+#: includes/vendor/metabox/example-functions.php:215
+msgid "Test Text Area for Code"
+msgstr "Zona de Text de Test pentru Cod"
+
+#: includes/vendor/metabox/example-functions.php:222
+msgid "Test Title Weeeee"
+msgstr "Titilu de Test Weeeee"
+
+#: includes/vendor/metabox/example-functions.php:223
+msgid "This is a title description"
+msgstr "Aceasta este o descriere din titlu"
+
+#: includes/vendor/metabox/example-functions.php:229
+msgid "Test Select"
+msgstr "Test Select"
+
+#: includes/vendor/metabox/example-functions.php:235
+#: includes/vendor/metabox/example-functions.php:248
+#: includes/vendor/metabox/example-functions.php:260
+msgid "Option One"
+msgstr "Prima optiune"
+
+#: includes/vendor/metabox/example-functions.php:236
+#: includes/vendor/metabox/example-functions.php:249
+#: includes/vendor/metabox/example-functions.php:261
+msgid "Option Two"
+msgstr "A doua optiune"
+
+#: includes/vendor/metabox/example-functions.php:237
+#: includes/vendor/metabox/example-functions.php:250
+#: includes/vendor/metabox/example-functions.php:262
+msgid "Option Three"
+msgstr "A treia optiune"
+
+#: includes/vendor/metabox/example-functions.php:242
+msgid "Test Radio inline"
+msgstr "Test Buton Radio in continut"
+
+#: includes/vendor/metabox/example-functions.php:255
+msgid "Test Radio"
+msgstr "Test Buton Radio"
+
+#: includes/vendor/metabox/example-functions.php:267
+msgid "Test Taxonomy Radio"
+msgstr "Test Buton Radio Taxonomie"
+
+#: includes/vendor/metabox/example-functions.php:276
+msgid "Test Taxonomy Select"
+msgstr "Test Camp de Selectie Taxonomie"
+
+#: includes/vendor/metabox/example-functions.php:284
+msgid "Test Taxonomy Multi Checkbox"
+msgstr "Test Buton de selectie multipla Taxonomie"
+
+#: includes/vendor/metabox/example-functions.php:293
+msgid "Test Checkbox"
+msgstr "Test de Checkbox"
+
+#: includes/vendor/metabox/example-functions.php:300
+msgid "Test Multi Checkbox"
+msgstr "Test Buton de Selectie Multipla"
+
+#: includes/vendor/metabox/example-functions.php:306
+msgid "Check One"
+msgstr "Bifeaza unul"
+
+#: includes/vendor/metabox/example-functions.php:307
+msgid "Check Two"
+msgstr "Bifeaza doi"
+
+#: includes/vendor/metabox/example-functions.php:308
+msgid "Check Three"
+msgstr "Bifeaza trei"
+
+#: includes/vendor/metabox/example-functions.php:314
+msgid "Test wysiwyg"
+msgstr "Test wysiwyg"
+
+#: includes/vendor/metabox/example-functions.php:322
+msgid "Test Image"
+msgstr "Test Imagine"
+
+#: includes/vendor/metabox/example-functions.php:323
+msgid "Upload an image or enter a URL."
+msgstr "Uploadeaza o imagine sau introdu un URL."
+
+#: includes/vendor/metabox/example-functions.php:329
+msgid "Multiple Files"
+msgstr "Fisiere Multiple"
+
+#: includes/vendor/metabox/example-functions.php:330
+msgid "Upload or add multiple images/attachments."
+msgstr "Uploadeaza sau adauga imagini/atasamente multiple."
+
+#: includes/vendor/metabox/example-functions.php:337
+msgid "oEmbed"
+msgstr "oEmbed"
+
+#: includes/vendor/metabox/example-functions.php:338
+msgid ""
+"Enter a youtube, twitter, or instagram URL. Supports services listed at <a "
+"href=\"http://codex.wordpress.org/Embeds\">http://codex.wordpress.org/Embeds</"
+"a>."
+msgstr ""
+"Introdu URL YouTube, Twitter sau Instagram. Sunt permise servicii listate la "
+"<a href=\"http://codex.wordpress.org/Embeds\">http://codex.wordpress.org/"
+"Embeds</a>."
+
+#: includes/vendor/metabox/example-functions.php:371
+msgid "About Page Metabox"
+msgstr "Pagina Despre Metabox"
+
+#: includes/vendor/metabox/example-functions.php:402
+msgid "Repeating Field Group"
+msgstr "Repetati campul Grup"
+
+#: includes/vendor/metabox/example-functions.php:410
+msgid "Generates reusable form entries"
+msgstr "Genereaza un formular reutilizabil pentru inregistrari"
+
+#: includes/vendor/metabox/example-functions.php:412
+msgid "Entry {#}"
+msgstr "Inregistrare {#}"
+
+#: includes/vendor/metabox/example-functions.php:413
+msgid "Add Another Entry"
+msgstr "Adauga o noua Inregistrare"
+
+#: includes/vendor/metabox/example-functions.php:414
+msgid "Remove Entry"
+msgstr "Sterge Inregistrare"
+
+#: includes/vendor/metabox/example-functions.php:427
+msgid "Entry Title"
+msgstr "Titlu Inregistrare"
+
+#: includes/vendor/metabox/example-functions.php:435
+msgid "Write a short description for this entry"
+msgstr "Scrieti o scurta descriere pentru aceasta inregistrare"
+
+#: includes/vendor/metabox/example-functions.php:441
+msgid "Entry Image"
+msgstr "Imagine Inregistrare"
+
+#: includes/vendor/metabox/example-functions.php:447
+msgid "Image Caption"
+msgstr "Numele Imaginii"
+
+#: includes/vendor/metabox/example-functions.php:468
+msgid "User Profile Metabox"
+msgstr "Profil utilizator Metabox"
+
+#: includes/vendor/metabox/example-functions.php:483
+msgid "Avatar"
+msgstr "Avatar"
+
+#: includes/vendor/metabox/example-functions.php:490
+msgid "Facebook URL"
+msgstr "URL Facebook"
+
+#: includes/vendor/metabox/example-functions.php:497
+msgid "Twitter URL"
+msgstr "URL Twitter"
+
+#: includes/vendor/metabox/example-functions.php:504
+msgid "Google+ URL"
+msgstr "URL Google_+"
+
+#: includes/vendor/metabox/example-functions.php:511
+msgid "Linkedin URL"
+msgstr "URL Linkedin"
+
+#: includes/vendor/metabox/example-functions.php:518
+msgid "User Field"
+msgstr "Camp Utilizator"
+
+#: includes/vendor/metabox/example-functions.php:541
+msgid "Theme Options Metabox"
+msgstr "Tema Opțiuni Metabox"
+
+#: includes/vendor/metabox/example-functions.php:556
+msgid "Site Background Color"
+msgstr "Culoare de fundal a Site-ului"
+
+#: includes/vendor/metabox/includes/CMB2.php:120
+msgid "Metabox configuration is required to have an ID parameter"
+msgstr "Configurarea Metabox este necesara pentru a avea un parametru ID"
+
+#: includes/vendor/metabox/includes/CMB2.php:332
+msgid "Click to toggle"
+msgstr "Faceți clic pentru a comuta"
+
+#: includes/vendor/metabox/includes/CMB2_Ajax.php:40
+msgid "Please Try Again"
+msgstr "Va rugam incercati din nou"
+
+#: includes/vendor/metabox/includes/CMB2_Ajax.php:135
+msgid "Remove Embed"
+msgstr "Eliminati Embed"
+
+#: includes/vendor/metabox/includes/CMB2_Ajax.php:139
+msgid "No oEmbed Results Found for %s. View more info at"
+msgstr "Nici un rezultat oEmbed gasit pentru %s. vedeti mai multe informatii la"
+
+#: includes/vendor/metabox/includes/CMB2_Field.php:955
+msgid "Add Group"
+msgstr "Adauga grup"
+
+#: includes/vendor/metabox/includes/CMB2_Field.php:956
+msgid "Remove Group"
+msgstr "Strege Grup"
+
+#: includes/vendor/metabox/includes/CMB2_Field.php:978
+#: includes/vendor/metabox/includes/CMB2_Field.php:982
+msgid "None"
+msgstr "Nici unul"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:86
+#: includes/vendor/metabox/includes/CMB2_JS.php:139
+msgid "Clear"
+msgstr "Goleste"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:87
+msgid "Default"
+msgstr "Implicita"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:88
+msgid "Select Color"
+msgstr "Selecteaza Culoarea"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:89
+msgid "Current Color"
+msgstr "Culoarea Actuala"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:129
+msgctxt "Valid formatDate string for jquery-ui datepicker"
+msgid "yy-mm-dd"
+msgstr "yy-mm-dd"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:130
+msgid "Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday"
+msgstr "Duminica, Luni, Marti, Miercuri, Joi, Vineri, Sambata"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:131
+msgid "Su, Mo, Tu, We, Th, Fr, Sa"
+msgstr "Du, Lu, Ma, Mi, Jo, Vi, Sa"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:132
+msgid "Sun, Mon, Tue, Wed, Thu, Fri, Sat"
+msgstr "Dum, Lun, Mar, Mie, Joi, Vin, Sam"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:133
+msgid ""
+"January, February, March, April, May, June, July, August, September, October, "
+"November, December"
+msgstr ""
+"Ianuarie, Februarie, Martie, Aprilie, Mai, Iunie, Iulie, August, Septembrie, "
+"Octombrie, Noiembrie, Decembrie"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:134
+msgid "Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec"
+msgstr "Ian, Feb, Mar, Apr, Mai, Iun, Iul, Aug, Sep, Oct, Noi, Dec"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:135
+msgid "Next"
+msgstr "Urmator"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:136
+msgid "Prev"
+msgstr "Precedent"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:137
+msgid "Today"
+msgstr "Azi"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:138
+#: includes/vendor/metabox/includes/CMB2_JS.php:148
+msgid "Done"
+msgstr "Gata"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:142
+msgid "Choose Time"
+msgstr "Alege timpul"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:143
+msgid "Time"
+msgstr "Timp"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:144
+msgid "Hour"
+msgstr "Ora"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:145
+msgid "Minute"
+msgstr "Minut"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:146
+msgid "Second"
+msgstr "Secunda"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:147
+msgid "Now"
+msgstr "Acum"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:149
+msgctxt ""
+"Valid formatting string, as per http://trentrichardson.com/examples/timepicker/"
+msgid "hh:mm TT"
+msgstr "hh:mm TT"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:155
+msgid "Use this file"
+msgstr "Foloseste acest fisier"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:156
+msgid "Use these files"
+msgstr "Foloseste aceste fisiere"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:157
+#: includes/vendor/metabox/includes/CMB2_Types.php:1004
+msgid "Remove Image"
+msgstr "Sterge Imagine"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:158
+#: includes/vendor/metabox/includes/CMB2_Types.php:357
+#: includes/vendor/metabox/includes/CMB2_Types.php:1023
+msgid "Remove"
+msgstr "Sterge"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:159
+#: includes/vendor/metabox/includes/CMB2_Types.php:1018
+msgid "File:"
+msgstr "Fisier:"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:160
+#: includes/vendor/metabox/includes/CMB2_Types.php:1021
+msgid "Download"
+msgstr "Downloadeaza"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:161
+msgid "Select / Deselect All"
+msgstr "Selecteaza / Deselecteaza Toate"
+
+#: includes/vendor/metabox/includes/CMB2_Types.php:298
+msgid "Add Row"
+msgstr "Adauga Rand"
+
+#: includes/vendor/metabox/includes/CMB2_Types.php:749
+#: includes/vendor/metabox/includes/CMB2_Types.php:797
+msgid "No terms"
+msgstr "Fara termeni"
+
+#: includes/vendor/metabox/includes/CMB2_Types.php:864
+msgid "Add or Upload Files"
+msgstr "Adauga sau Uploadeaza Fisiere"
+
+#: includes/vendor/metabox/includes/CMB2_Types.php:926
+msgid "Add or Upload File"
+msgstr "Adauga sau Uploadeaza Fisier"
+
+#: includes/vendor/metabox/includes/helper-functions.php:250
+msgid "Save"
+msgstr "Salveaza"
+
+#: public/templates/sliced-invoice-display.php:115
+#: public/templates/sliced-quote-display.php:103
+msgid "Page "
+msgstr "Pagina"
+
+#. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
+msgid "http://slicedinvoices.com/"
+msgstr "http://www.imagis.ro/"
+
+#. Description of the plugin/theme
+msgid "Create invoices and quotes for your clients and allow them to pay online."
+msgstr ""
+"Creaza facturi si oferte pentru clientii tai si permite-le sa plateasca online."
+
+#~ msgid "Email to client (extension required)"
+#~ msgstr "Email catre client (este necesara o extensie)"
+
+#~ msgid "Extension Required "
+#~ msgstr "Extensie Necesara"
+
+#~ msgid "You've received a payment"
+#~ msgstr "Ati primit o plata"
+
+#~ msgid "%1s has made a payment via %2s for %3s on %4s %5s"
+#~ msgstr "%1s a efectuat o plata folosind %2s pentru %3s pe %4s %5s"
+
+#~ msgid "A payment has failed"
+#~ msgstr "O plata a esuat"
+
+#~ msgid "%1s has made a payment attempt via %2s for %3s on %4s %5s"
+#~ msgstr "%1s a incercat sa faca o plata folosind %2s pentru %3s pe %4s %5s"
+
+#~ msgid "Unfortunately this payment has failed. Please check with your client."
+#~ msgstr ""
+#~ "Din nefericire aceasta plata a esuat. Va rugam verificati impreuna cu "
+#~ "clientul."
+
+#~ msgid "Thanks for your payment"
+#~ msgstr "Va multumim pentru plata"
+
+#~ msgid "Your payment via %2s for %3s on %4s %5s has been successful."
+#~ msgstr ""
+#~ "Plata dumneavoastra pentru %2s pe %4s %5s a fost finalizata cu succes."
+
+#~ msgid "Payment has failed"
+#~ msgstr "Plata a esuat"
+
+#~ msgid ""
+#~ "Unfortunately your recent payment attempt via %2s for %3s on %4s %5s has "
+#~ "failed."
+#~ msgstr ""
+#~ "Din nefericire incercarearecenta de plata prin %2s pentru %3s pe %4s %5s a "
+#~ "esuat."
+
+#~ msgid "Please try again or contact us to make further arrangements."
+#~ msgstr "Va rugam incercati din nou sau contactati-ne pentru alte aranjamente."
+
+#~ msgid "A %s has been accepted"
+#~ msgstr "O %s a fost acceptata"
+
+#~ msgid "A %s has been declined"
+#~ msgstr "O %s a fost refuzata"
+
+#~ msgid "The %1s has been set to Declined status."
+#~ msgstr "Aceasta %1s a fost setata la o stare de Refuzata."
+
+#~ msgid "The reason given was:"
+#~ msgstr "Motivul oferit a fost:"
+
+#~ msgid ""
+#~ "Add 1 line item per line. <br/>Quantity, title, description and price "
+#~ "should each be seperated with a | symbol. Price should be numbers only, no "
+#~ "currency symbol."
+#~ msgstr ""
+#~ "Adauga 1 linie de element pe linie. <br/>Cantitate, titlul, descriere si "
+#~ "pret trebuie sa fie separate cu un simbol |. Preturile trebuie sa fie doar "
+#~ "numere, fara simbolul de moneda."

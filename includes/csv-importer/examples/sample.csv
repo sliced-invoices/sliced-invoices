@@ -1,0 +1,14 @@
+sliced_title,sliced_description,sliced_author_id,sliced_number,sliced_created,sliced_due,sliced_valid,sliced_items,sliced_status,sliced_client_email,sliced_client_name,sliced_client_business,sliced_client_address,sliced_client_extra
+Very first,Anything can go in here,,,2015-12-31 20:00:12,,,"1|Test line item|Test description|60
+4|Test line items2||55
+2|Test 3 line item|Testing the descriptions|99",paid,dfsfdsfadsfasf@asdfadsfdsf.com,Bob Joness,Bobs Web Design,"123 Somewhere St
+Hollywood CA","Phone: 1234 123 554
+ABN: 44332 123 332"
+Second,,2,,,2018-01-01 14:00:00,,1|||45,unpaid,aaabbbccc@erer.com,bob’s name,,,
+third,,,,,,,1|Test line item|Test description|45,draft,fdfdsf@dfsdfsf.com,adsf,,,
+Title fourth,,,,2016-1-10 0:00:00,,,1|Test line item|Test description|45,overdue,ggghhhiii@erer.com,ggggggg,,,
+fifth,,,,,,,,,ggghhhiii@erer.com,ggggggg,,,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,

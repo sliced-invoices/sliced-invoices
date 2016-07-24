@@ -1,0 +1,71 @@
+.sliced-wrap {
+  border: 2px solid #5A7A9B;
+}
+
+.table thead tr td, .sliced-totals tr.row-total td, .sliced-details tr.table-active td {
+  background: #5a7a9b;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+.sliced-wrap .table th, .sliced-wrap .table td, .sliced-wrap .table-bordered {border: none;}
+.sliced-wrap .table th, .sliced-wrap .table-active td {
+  background: #5A7A9B;
+  color: #ffffff;
+  border:none;
+  text-transform: uppercase;
+}
+.sliced-wrap .sliced-items .row_even, .sliced-wrap .sliced-items .row_odd {background: transparent;}
+.sliced-wrap .sliced-item {
+  border-bottom: 1px solid #ccc;
+}
+.sliced-wrap .sliced-totals {
+  margin-top: 40px;
+}
+.sliced-upper {
+  margin-bottom: 20px;
+}
+.sliced-business {
+  padding: 25px 0 10px;
+}
+.sliced-address {
+  background: #5A7A9B none repeat scroll 0 0;
+  color: #fff;
+  padding: 10px 10px 10px 30px;
+  margin: 0 0 0 -30px;
+}
+.sliced-address a {
+  color: #fff;
+}
+.sliced-title h2 {
+  background: #5A7A9B none repeat scroll 0 0;
+  color: #fff;
+  padding: 5px 40px;
+  margin: 0 -30px 0 0;
+  width: 300px;
+  text-transform: uppercase;
+  float: right;
+}
+a {
+  color: #5A7A9B;
+}
+.sliced-footer {
+  border-top: 1px solid #5A7A9B;
+  margin: 60px 0 0;
+  padding: 30px 0 0;
+  text-align: center;
+}
+.sliced-payments {
+  background:#f4f4f4 none repeat scroll 0 0;
+  margin:60px 0;
+  padding:20px 30px;
+}
+.sliced-payments h4 {
+  padding:0 0 10px;
+}
+.sliced-payments h4 .fa {
+  margin:0 5px 0 0;
+}
+.bank, .generic {
+  float:left;
+  width:50%;
+}
