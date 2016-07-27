@@ -4,7 +4,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce
 Requires at least: 4.0
 Tested up to: 4.5.3
-Stable tag: 2.84
+Stable tag: 2.85
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -143,6 +143,11 @@ Quotes could be renamed to Estimate, Proposal, Tender, Bid or anything else.
 
 
 == Changelog ==
+= 2.85 =
+* NEW: Ability to customize the declined quote message
+* FIX: fix redirect and permissions issue when clients add comments to a quote
+* FIX: minor fix for legacy PHP 5.3 support
+
 = 2.84 =
 * UPDATE: Compatibility update with Recurring Invoices Extension v2.1.4
 
