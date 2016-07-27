@@ -40,6 +40,22 @@ class Sliced_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
+		
+		// fix redirect after non-logged in user posts a comment to a quote (i.e. the client)
+		function redirect_after_comment_in_quote($location) {
+			return $_SERVER["HTTP_REFERER"];
+		}
+		add_filter('comment_post_redirect', 'redirect_after_comment_in_quote');
+		
+		// auto approve quote comments for non-logged in user
+		function auto_approve_comments_in_quote( $approved, $commentdata ) {
+			$post = get_post( $commentdata['comment_post_ID'] );
+			if( $post->post_type == 'sliced_quote' ) {
+				return 1;
+			}
+			return $approved;
+		}
+		add_filter( 'pre_comment_approved' , 'auto_approve_comments_in_quote' , '99', 2 );
 
 	}
 
@@ -394,7 +410,9 @@ class Sliced_Public {
 						<?php endif; ?>
 
 
-						<?php $comment_args = array( 'title_reply'=>'Add a comment',
+						<?php $user = wp_get_current_user();
+						
+						$comment_args = array( 'title_reply'=>'Add a comment',
 
 							'fields' => apply_filters( 'comment_form_default_fields', array(
 								'author' => '',
@@ -405,6 +423,8 @@ class Sliced_Public {
 
 							'comment_field' => '<p>' .
 							'<textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea>' .
+							( $user->ID > 0 ? '' : '<input type="hidden" name="author" value="'.sliced_get_client_business().'" />' ) .
+							( $user->ID > 0 ? '' : '<input type="hidden" name="email" value="'.sliced_get_client_email().'" />' ) .
 							'</p>',
 							'comment_notes_after' => '',
 							);
