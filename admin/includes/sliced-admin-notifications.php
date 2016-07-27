@@ -217,7 +217,7 @@ class Sliced_Notifications {
 		} elseif ( isset( $this->settings["${type}_subject"] ) ) {
 			$output = $this->settings["${type}_subject"];
 		} else {
-			$output = $this->admin_notification_subject( ["${type}_subject"], $this->id, ["${type}_subject"] );
+			$output = $this->admin_notification_subject( array("${type}_subject"), $this->id, array("${type}_subject") );
 		}
 		return apply_filters( 'sliced_get_email_subject', $this->replace_wildcards( $output ), $this->id, $type );
 	}
