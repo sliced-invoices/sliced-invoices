@@ -304,10 +304,15 @@ class Sliced_Payments {
 		/*
 		 * Create and display the success message
 		 */
-		$message = '<h2>' . __( 'Bummer', 'sliced-invoices' ) .'</h2>';
-		$message .= '<p>';
-		$message .= sprintf( wp_kses_post( 'You have declined the %s.<br>We will be in touch shortly.', 'sliced-invoices' ), sliced_get_quote_label() );
-		$message .= '</p>';
+		$quotes = get_option( 'sliced_quotes' );
+		if ( $quotes['declined_quote_message'] > '' ) {
+			$message = wp_kses_post( $quotes['declined_quote_message'] );
+		} else {
+			$message = '<h2>' . __( 'Bummer', 'sliced-invoices' ) .'</h2>';
+			$message .= '<p>';
+			$message .= sprintf( wp_kses_post( 'You have declined the %s.<br>We will be in touch shortly.', 'sliced-invoices' ), sliced_get_quote_label() );
+			$message .= '</p>';
+		}
 
 		$message = apply_filters( 'sliced_decline_quote_message', $message, $id );
 

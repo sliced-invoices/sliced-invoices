@@ -367,6 +367,16 @@ class Sliced_Options {
 					'type'      => 'textarea_small'
 				),
 				array(
+					'name'      => __( 'Declined Quote Message', 'sliced-invoices' ),
+					'desc'      => __( 'Message to display if client declines the quote.<br />Leave blank for the default message.', 'sliced-invoices' ),
+					'default'   => '',
+					'id'        => 'declined_quote_message',
+					'type'      => 'textarea_small',
+					'attributes' => array(
+						'placeholder' => 'Bummer, you have declined the quote. We will be in touch shortly.',
+					)
+				),
+				array(
 					'name'      => __( 'Template Design', 'sliced-invoices' ),
 					'desc'      => 'For information on customizing your templates, please see our guide <a target="_blank" href="https://slicedinvoices.com/support/quote-invoice-templates/?utm_source=Plugin&utm_medium=Quote-Design&utm_content=Support&utm_campaign=Free" title="Opens in new window">here</a>.',
 					'id'        => 'quote_design_title',
