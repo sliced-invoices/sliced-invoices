@@ -801,6 +801,18 @@ class Sliced_Options {
 
 			)
 		) );
+		
+		$this->option_metabox[] = apply_filters( 'sliced_pdf_option_fields', array(
+			'id'         => $prefix . 'pdf',
+			'title'      => __( 'PDF', 'sliced-invoices' ),
+			'menu_title' => __( 'PDF Settings', 'sliced-invoices' ),
+			'desc'          => __( 'Here you will find all of the PDF related settings. The <a target="_blank" href="https://slicedinvoices.com/extensions/pdf-email">PDF & Email extension</a> will add extra options to customize the PDFs.', 'sliced-invoices' ),
+			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'emails' ), ),
+			'show_names' => true,
+			'fields'     => array(
+
+			)
+		) );
 
 		$this->option_metabox[] = apply_filters( 'sliced_translate_option_fields', array(
 			'id'         => $prefix . 'translate',
