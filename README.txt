@@ -4,7 +4,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce
 Requires at least: 4.0
 Tested up to: 4.5.3
-Stable tag: 2.86
+Stable tag: 2.861
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -143,6 +143,9 @@ Quotes could be renamed to Estimate, Proposal, Tender, Bid or anything else.
 
 
 == Changelog ==
+= 2.861 =
+* FIX: minor fix for legacy PHP 5.3 support
+
 = 2.86 =
 * UPDATE: Compatibility update with Easy Translate Extension v1.1.4
 * UPDATE: Compatibility update with PDF & Emails Extension v1.2.5
