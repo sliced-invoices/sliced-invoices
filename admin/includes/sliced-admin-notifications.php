@@ -335,7 +335,7 @@ class Sliced_Notifications {
 		} elseif ( isset( $this->settings["${type}_content"] ) ) {
 			$output .= wp_kses_post( wpautop( stripslashes( $this->replace_wildcards( $this->settings["${type}_content"] ) ) ) );
 		} else {
-			$output .= wp_kses_post( wpautop( stripslashes( $this->replace_wildcards( $this->admin_notification_content( null, $this->id, ["${type}_content"] ) ) ) ) );
+			$output .= wp_kses_post( wpautop( stripslashes( $this->replace_wildcards( $this->admin_notification_content( null, $this->id, array("${type}_content") ) ) ) ) );
 		}
 
 		$output .= $this->get_email_footer();
