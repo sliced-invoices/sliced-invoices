@@ -14,6 +14,16 @@ add_action( 'sliced_loaded', 'sliced_call_paypal_class', 1 );
 
 
 /**
+ * Invoice Tags
+ */
+function sliced_get_gateway_paypal_label() {
+	$translate = get_option( 'sliced_translate' );
+	$label = isset( $translate['gateway-paypal-label'] ) ? $translate['gateway-paypal-label'] : __( 'Pay with PayPal', 'sliced-invoices');
+	return apply_filters( 'sliced_get_gateway_paypal_label', $label );
+}
+
+
+/**
  * The Class.
  */
 class Sliced_Paypal {
@@ -24,10 +34,11 @@ class Sliced_Paypal {
 	 * Hook into the appropriate actions when the class is constructed.
 	 */
 	public function __construct() {
-
 		//add_action( 'sliced_invoice_after_body', array( $this, 'display_payment_options' ) );
 		add_filter( 'sliced_payment_option_fields', array( $this, 'add_options_fields') );
 		add_filter( 'sliced_register_payment_method', array( $this, 'add_payment_method') );
+		
+		add_filter( 'sliced_translate_option_fields', array( $this, 'add_translate_options' ) );
 
 		add_filter( 'sliced_business_details', array( $this, 'get_field_values') );
 
@@ -35,6 +46,7 @@ class Sliced_Paypal {
 		add_action( 'sliced_do_payment', array( $this, 'payment_return'), 10 );
 
 	}
+	
 
 
 	/**
@@ -100,6 +112,31 @@ class Sliced_Paypal {
 				'live' => 'Live',
 			)
 		);
+
+		return $options;
+
+	}
+	
+	
+	/**
+	 * Add the options for this gateway to the translate settings.
+	 *
+	 * @since   2.8.6
+	 */
+	public function add_translate_options( $options ) {
+	
+		if ( class_exists( 'Sliced_Translate' ) ) {
+
+			// add fields to end of options array
+			$options['fields'][] = array(
+				'name'      => __( 'Pay with PayPal', 'sliced-invoices-translate' ),
+				'desc'      => __( '', 'sliced-invoices-translate' ),
+				'default'   => '',
+				'type'      => 'text',
+				'id'        => 'gateway-paypal-label',
+			);
+		
+		}
 
 		return $options;
 

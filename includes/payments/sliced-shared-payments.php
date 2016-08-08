@@ -66,7 +66,17 @@ class Sliced_Payments {
 		if( ! empty( $online_gateways ) ) { ?>
 
 			<?php foreach ( $online_gateways as $gateway => $readable) { ?>
-				<a href="#TB_inline?height=300&width=450&inlineId=sliced_payment_form" title="Pay This Invoice" class="gateway btn btn-success thickbox btn-sm" data-gateway-readable="<?php esc_html_e( $readable ) ?>" data-gateway="<?php esc_html_e( $gateway ) ?>"><?php _e( 'Pay with', 'sliced-invoices' ) ?> <?php esc_html_e( $readable ) ?></a>
+				<a href="#TB_inline?height=300&width=450&inlineId=sliced_payment_form" title="Pay This Invoice" class="gateway btn btn-success thickbox btn-sm" data-gateway-readable="<?php esc_html_e( $readable ) ?>" data-gateway="<?php esc_html_e( $gateway ) ?>">
+				<?php
+				if ( function_exists('sliced_get_gateway_'.$gateway.'_label') ) {
+					echo call_user_func( 'sliced_get_gateway_'.$gateway.'_label' );
+				} else {
+					_e( 'Pay with', 'sliced-invoices' );
+					echo ' ';
+					esc_html_e( $readable );
+				}
+				?>
+				</a>
 			<?php }  ?>
 
 		<?php
