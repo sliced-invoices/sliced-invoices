@@ -367,6 +367,16 @@ class Sliced_Options {
 					'type'      => 'textarea_small'
 				),
 				array(
+					'name'      => __( 'Accepted Quote Message', 'sliced-invoices' ),
+					'desc'      => __( 'Message to display if client accepts the quote.<br />Leave blank for the default message.', 'sliced-invoices' ),
+					'default'   => '',
+					'id'        => 'accepted_quote_message',
+					'type'      => 'textarea_small',
+					'attributes' => array(
+						'placeholder' => 'Success, You have accepted the Quote. We will be in touch shortly.',
+					)
+				),
+				array(
 					'name'      => __( 'Declined Quote Message', 'sliced-invoices' ),
 					'desc'      => __( 'Message to display if client declines the quote.<br />Leave blank for the default message.', 'sliced-invoices' ),
 					'default'   => '',
