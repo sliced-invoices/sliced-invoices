@@ -170,9 +170,9 @@ class Sliced_Payments {
 
 		if( ! empty( $accept ) && $accept == 'on' ) { ?>
 
-			<a href="#TB_inline?height=300&width=450&inlineId=sliced_accept_quote" title="<?php printf( esc_html__( 'Accept This %s', 'sliced-invoices' ), sliced_get_quote_label() ) ?>" class="accept_quote btn btn-success btn-sm thickbox"><?php printf( esc_html__( 'Accept %s', 'sliced-invoices' ), sliced_get_quote_label() ) ?></a>
+			<a href="#TB_inline?height=300&width=450&inlineId=sliced_accept_quote" title="<?php if ( class_exists( 'Sliced_Translate' ) ) { echo Sliced_Translate::sliced_translate_some_text( 'Accept Quote', 'Accept Quote', 'sliced-invoices' ); } else { printf( esc_html__( 'Accept This %s', 'sliced-invoices' ), sliced_get_quote_label() ); } ?>" class="accept_quote btn btn-success btn-sm thickbox"><?php if ( class_exists( 'Sliced_Translate' ) ) { echo Sliced_Translate::sliced_translate_some_text( 'Accept Quote', 'Accept Quote', 'sliced-invoices' ); } else { printf( esc_html__( 'Accept %s', 'sliced-invoices' ), sliced_get_quote_label() ); } ?></a>
 
-			<a href="#TB_inline?height=300&width=450&inlineId=sliced_decline_quote" title="<?php printf( esc_html__( 'Decline This %s', 'sliced-invoices' ), sliced_get_quote_label() ) ?>" class="decline_quote btn btn-danger btn-sm thickbox"><?php printf( esc_html__( 'Decline %s', 'sliced-invoices' ), sliced_get_quote_label() ) ?></a>
+			<a href="#TB_inline?height=300&width=450&inlineId=sliced_decline_quote" title="<?php if ( class_exists( 'Sliced_Translate' ) ) { echo Sliced_Translate::sliced_translate_some_text( 'Decline Quote', 'Decline Quote', 'sliced-invoices' ); } else { printf( esc_html__( 'Decline This %s', 'sliced-invoices' ), sliced_get_quote_label() ); } ?>" class="decline_quote btn btn-danger btn-sm thickbox"><?php if ( class_exists( 'Sliced_Translate' ) ) { echo Sliced_Translate::sliced_translate_some_text( 'Decline Quote', 'Decline Quote', 'sliced-invoices' ); } else { printf( esc_html__( 'Decline %s', 'sliced-invoices' ), sliced_get_quote_label() ); } ?></a>
 
 		<?php
 
@@ -198,8 +198,8 @@ class Sliced_Payments {
 			<div class="sliced_accept_quote_form_wrap">
 
 				<ul>
-					<li><span><?php printf( esc_html__( '%s Number', 'sliced-invoices' ), sliced_get_quote_label() ); ?></span> <div class="quote-number"><?php esc_html_e( sliced_get_quote_prefix() ); ?><?php esc_html_e( sliced_get_quote_number() ); ?></div></li>
-					<li><span><?php printf( esc_html__( '%s Amount', 'sliced-invoices' ), sliced_get_quote_label() ); ?></span> <div class="quote-amount"><?php echo sliced_get_quote_total(); ?></div></li>
+					<li><span><?php if ( class_exists( 'Sliced_Translate' ) ) { echo Sliced_Translate::sliced_translate_some_text( 'Quote Number', 'Quote Number', 'sliced-invoices' ); } else { printf( esc_html__( '%s Number', 'sliced-invoices' ), sliced_get_quote_label() ); } ?></span> <div class="quote-number"><?php esc_html_e( sliced_get_quote_prefix() ); ?><?php esc_html_e( sliced_get_quote_number() ); ?></div></li>
+					<li><span><?php if ( class_exists( 'Sliced_Translate' ) ) { echo Sliced_Translate::sliced_translate_some_text( 'Quote Amount', 'Quote Amount', 'sliced-invoices' ); } else { printf( esc_html__( '%s Amount', 'sliced-invoices' ), sliced_get_quote_label() ); } ?></span> <div class="quote-amount"><?php echo sliced_get_quote_total(); ?></div></li>
 				</ul>
 
 				<form method="POST" action="<?php echo esc_url( get_permalink( (int)$payments['payment_page'] ) ) ?>">
@@ -207,7 +207,7 @@ class Sliced_Payments {
 
 					<?php wp_nonce_field( 'sliced_invoices_accept_quote', 'sliced_client_accept_quote_nonce' ); ?>
 					<input type="hidden" name="sliced_accept_quote_id" id="sliced_accept_quote_id" value="<?php the_ID(); ?>">
-					<input type="submit" name="accept-quote" class="btn btn-success btn-lg" id="accept-quote" value="<?php printf( esc_html__( 'Accept %s', 'sliced-invoices' ), sliced_get_quote_label() ) ?>">
+					<input type="submit" name="accept-quote" class="btn btn-success btn-lg" id="accept-quote" value="<?php if ( class_exists( 'Sliced_Translate' ) ) { echo Sliced_Translate::sliced_translate_some_text( 'Accept Quote', 'Accept Quote', 'sliced-invoices' ); } else { printf( esc_html__( 'Accept %s', 'sliced-invoices' ), sliced_get_quote_label() ); } ?>">
 
 					<div class="accept_quote_text"><?php echo wp_kses_post( $text ) ?></div>
 					<?php do_action( 'sliced_after_accept_quote_form_fields' ) ?>
@@ -243,9 +243,9 @@ class Sliced_Payments {
 					<?php wp_nonce_field( 'sliced_invoices_decline_quote', 'sliced_decline_quote_nonce' ); ?>
 
 					<input type="hidden" name="sliced_decline_quote_id" id="sliced_decline_quote_id" value="<?php the_ID(); ?>">
-					<p><?php _e( 'Reason for declining*', 'sliced-invoices' ) ?></p>
+					<p><?php if ( class_exists( 'Sliced_Translate' ) ) { echo Sliced_Translate::sliced_translate_some_text( 'Reason for declining', 'Reason for declining', 'sliced-invoices' ); } else { _e( 'Reason for declining', 'sliced-invoices' ); } ?>*</p>
 					<textarea name="decline_quote_reason" id="decline_quote_reason" cols="30" rows="5"></textarea>
-					<input type="submit" name="decline-quote" class="btn btn-danger btn-lg" id="decline-quote" value="<?php printf( esc_html__( 'Decline %s', 'sliced-invoices' ), sliced_get_quote_label() ) ?>">
+					<input type="submit" name="decline-quote" class="btn btn-danger btn-lg" id="decline-quote" value="<?php if ( class_exists( 'Sliced_Translate' ) ) { echo Sliced_Translate::sliced_translate_some_text( 'Decline Quote', 'Decline Quote', 'sliced-invoices' ); } else { printf( esc_html__( 'Decline %s', 'sliced-invoices' ), sliced_get_quote_label() ); } ?>">
 
 					<?php do_action( 'sliced_after_decline_quote_form_fields' ) ?>
 				</form>
