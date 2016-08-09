@@ -671,6 +671,11 @@ td.taxonomy-invoice_status a[href*="cancelled"], td.taxonomy-quote_status a[href
   min-width: 50px;
 }
 
+/* qTranslateX support */
+.sliced .qtranxs-lang-switch-wrap {
+	margin: 1px 20px;
+}
+
 
 
 /*  ----------- */

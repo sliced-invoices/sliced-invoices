@@ -1,0 +1,116 @@
+{"vendor":{"plugins/sliced-invoices":"1.0"},
+	"admin-config": {
+		"sliced_quote": {
+			"pages":{"edit.php":"post_type=sliced_quote", "post-new.php":"post_type=sliced_quote"},
+			"forms":{
+				"post":{
+					"fields":{
+						"title":{},
+						"excerpt":{},
+						"attachment_caption":{},
+						"attachment_alt":{},
+						"view-post-btn":{"encode":"display"},
+						"wp-editor-area":{"jquery":".wp-editor-area"},
+						"gallery-caption":{"jquery":".gallery-caption", "encode":"none"},
+						"wp-caption-text":{"jquery":".wp-caption-text", "encode":"display"}
+					}
+				},
+				"wpbody-content":{
+					"fields":{
+						"wrap-h1":{"jquery":".wrap h1", "encode":"display"},
+						"wrap-h2":{"jquery":".wrap h2", "encode":"display"},
+						"search-input":{"id":"search-submit", "encode":"display"}
+					}
+				}
+			}
+		},
+		"sliced_invoice": {
+			"pages":{"edit.php":"post_type=sliced_invoice", "post-new.php":"post_type=sliced_invoice"},
+			"forms":{
+				"post":{
+					"fields":{
+						"title":{},
+						"excerpt":{},
+						"attachment_caption":{},
+						"attachment_alt":{},
+						"view-post-btn":{"encode":"display"},
+						"wp-editor-area":{"jquery":".wp-editor-area"},
+						"gallery-caption":{"jquery":".gallery-caption", "encode":"none"},
+						"wp-caption-text":{"jquery":".wp-caption-text", "encode":"display"}
+					}
+				},
+				"wpbody-content":{
+					"fields":{
+						"wrap-h1":{"jquery":".wrap h1", "encode":"display"},
+						"wrap-h2":{"jquery":".wrap h2", "encode":"display"},
+						"search-input":{"id":"search-submit", "encode":"display"}
+					}
+				}
+			}
+		},
+		"sliced-invoices-general-admin": {
+			"pages": { 
+				"admin.php":"page=sliced_general"
+			}
+		},
+		"sliced-invoices-business-admin": {
+			"pages": { 
+				"admin.php":"page=sliced_business"
+			}
+		},
+		"sliced-invoices-quotes-admin": {
+			"pages": { 
+				"admin.php":"page=sliced_quotes"
+			},
+			"forms":{
+				"sliced_quotes":{
+					"fields":{
+						"invoices-title":{"jquery":"h3.title", "encode":"display"}
+					}
+				}
+			}
+		},
+		"sliced-invoices-invoices-admin": {
+			"pages": { 
+				"admin.php":"page=sliced_invoices"
+			},
+			"forms":{
+				"sliced_invoices":{
+					"fields":{
+						"invoices-title":{"jquery":"h3.title", "encode":"display"}
+					}
+				}
+			}
+		},
+		"sliced-invoices-payments-admin": {
+			"pages": { 
+				"admin.php":"page=sliced_payments"
+			}
+		},
+		"sliced-invoices-emails-admin": {
+			"pages": { 
+				"admin.php":"page=sliced_emails"
+			}
+		},
+		"sliced-invoices-pdf-admin": {
+			"pages": { 
+				"admin.php":"page=sliced_pdf"
+			}
+		},
+		"sliced-invoices-translate-admin": {
+			"pages": { 
+				"admin.php":"page=sliced_translate"
+			}
+		},
+		"sliced-invoices-extras-admin": {
+			"pages": { 
+				"admin.php":"page=sliced_extras"
+			}
+		},
+		"sliced-invoices-licenses-admin": {
+			"pages": { 
+				"admin.php":"page=sliced_licenses"
+			}
+		}
+	}
+}

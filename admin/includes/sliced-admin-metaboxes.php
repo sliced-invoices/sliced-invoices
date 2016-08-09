@@ -298,11 +298,11 @@ class Sliced_Metaboxes {
 			'default' => array( $this, 'get_quote_prefix' ),
 		) );
 		$info->add_field( array(
-			'name'    => sprintf( __( '%s Number', 'sliced-invoices' ), sliced_get_quote_label() ),
+			'name'    => sprintf( __( '%s Number', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.sliced_get_quote_label(),'</span>' ),
 			'id'      => $prefix . 'quote_number',
 			'type'    => 'text',
 			'default' => 'sliced_get_next_quote_number',
-			'before'  => array( $this, 'quote_prefix' ),
+			'before'  => array( $this, 'quote_prefix' )
 		) );
 		$info->add_field( array(
 			'name'        => __( 'Created Date', 'sliced-invoices' ),
@@ -419,7 +419,7 @@ class Sliced_Metaboxes {
 			'default' => array( $this, 'get_invoice_prefix' ),
 		) );
 		$info->add_field( array(
-			'name'    => sprintf( __( '%s Number', 'sliced-invoices' ), sliced_get_invoice_label() ),
+			'name'    => sprintf( __( '%s Number', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.sliced_get_invoice_label().'</span>' ),
 			'id'      => $prefix . 'invoice_number',
 			'type'    => 'text',
 			'default' => 'sliced_get_next_invoice_number',

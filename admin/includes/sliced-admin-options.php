@@ -132,7 +132,7 @@ class Sliced_Options {
 			<h2 class="nav-tab-wrapper">
 				<?php foreach ($option_tabs as $option_tab) :
 					$tab_slug = $option_tab['id'];
-					$nav_class = 'nav-tab';
+					$nav_class = 'i18n-multilingual-display nav-tab';
 					if ( $tab_slug == $_GET['page'] ) {
 						$nav_class .= ' nav-tab-active'; //add active class to current tab
 						$tab_forms[] = $option_tab; //add current tab to forms to be rendered
@@ -237,8 +237,8 @@ class Sliced_Options {
 					)
 				),
 				array(
-					'name'      => __( 'Footer<br><small>' . sprintf( __( 'Displayed on %1s & %2s', 'sliced-invoices' ), $quote_label_plural, $invoice_label_plural ) . '</small>', 'sliced-invoices' ),
-					'desc'      => __( 'The footer will be displayed at the bottom of each ' . sprintf( __( '%1s & %2s', 'sliced-invoices' ), $quote_label, $invoice_label ) . '. Basic HTML is allowed.', 'sliced-invoices' ),
+					'name'      => __( 'Footer<br><small>' . sprintf( __( 'Displayed on %1s & %2s', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label_plural.'</span>', '<span class="i18n-multilingual-display">'.$invoice_label_plural.'</span>' ) . '</small>', 'sliced-invoices' ),
+					'desc'      => __( 'The footer will be displayed at the bottom of each ' . sprintf( __( '%1s & %2s', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>', '<span class="i18n-multilingual-display">'.$invoice_label.'</span>' ) . '. Basic HTML is allowed.', 'sliced-invoices' ),
 					'default'   => '',
 					'id'        => 'footer',
 					'type'      => 'textarea_small',
@@ -252,7 +252,7 @@ class Sliced_Options {
 			'id'         => $prefix . 'business',
 			'title'      => __( 'Business', 'sliced-invoices' ),
 			'menu_title' => __( 'Business Settings', 'sliced-invoices' ),
-			'desc'       => sprintf( __( 'All of the Business Details below will be displayed on the %1s & %2s.', 'sliced-invoices' ), $quote_label_plural, $invoice_label_plural ),
+			'desc'       => sprintf( __( 'All of the Business Details below will be displayed on the %1s & %2s.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label_plural.'</span>', '<span class="i18n-multilingual-display">'.$invoice_label_plural.'</span>' ),
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'business' ), ),
 			'show_names' => true,
 			'fields'     => array(
@@ -298,14 +298,14 @@ class Sliced_Options {
 			'id'         => $prefix . 'quotes',
 			'title'      => $quote_label_plural,
 			'menu_title' => sprintf( __( '%s Settings', 'sliced-invoices' ), $quote_label ),
-			'desc'       => __( 'Here you will find all of the settings for ' . sprintf( __( '%s', 'sliced-invoices' ), $quote_label_plural ), 'sliced-invoices' ),
+			'desc'       => __( 'Here you will find all of the settings for ' . sprintf( __( '%s', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label_plural.'</span>' ), 'sliced-invoices' ),
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'quotes' ), ),
 			'show_names' => true,
 			'fields'     => array(
 
 				array(
 					'name'      => __( 'Prefix', 'sliced-invoices' ),
-					'desc'      => sprintf( __( 'Prefix of each %s. Can be left blank if you don\'t need a prefix.', 'sliced-invoices' ), $quote_label ),
+					'desc'      => sprintf( __( 'Prefix of each %s. Can be left blank if you don\'t need a prefix.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>' ),
 					'default'   => '',
 					'id'        => 'prefix',
 					'type'      => 'text',
@@ -330,8 +330,8 @@ class Sliced_Options {
 					'type'      => 'checkbox',
 				),
 				array(
-					'name'      => sprintf( __( '%s Valid For', 'sliced-invoices' ), $quote_label_plural ),
-					'desc'      => sprintf( __( 'Number of days each %1s is valid for. This will automatically set the date in the \'Valid Until\' field.<br>Can be overriden on individual %2s.', 'sliced-invoices' ), $quote_label, $quote_label_plural ),
+					'name'      => sprintf( __( '%s Valid For', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label_plural.'</span>' ),
+					'desc'      => sprintf( __( 'Number of days each %1s is valid for. This will automatically set the date in the \'Valid Until\' field.<br>Can be overriden on individual %2s.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>', '<span class="i18n-multilingual-display">'.$quote_label_plural.'</span>' ),
 					'default'   => '',
 					'id'        => 'valid_until',
 					'type'      => 'text',
@@ -420,14 +420,14 @@ class Sliced_Options {
 			'id'         => $prefix . 'invoices',
 			'title'      => $invoice_label_plural,
 			'menu_title' => sprintf( __( '%s Settings', 'sliced-invoices' ), $invoice_label ),
-			'desc'       => __( 'Here you will find all of the settings for ' . sprintf( __( '%s', 'sliced-invoices' ), $invoice_label_plural ), 'sliced-invoices' ),
+			'desc'       => __( 'Here you will find all of the settings for <span class="i18n-multilingual-display">' . sprintf( __( '%s', 'sliced-invoices' ), $invoice_label_plural ), 'sliced-invoices' ) . '</span>',
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'invoices' ), ),
 			'show_names' => true,
 			'fields'     => array(
 
 				array(
 					'name'      => __( 'Prefix', 'sliced-invoices' ),
-					'desc'      => sprintf( __( 'Prefix of each %s. Can be left blank if you don\'t need a prefix.', 'sliced-invoices' ), $invoice_label ),
+					'desc'      => 'Prefix of each <span class="i18n-multilingual-display">'.sprintf( __( '%s', 'sliced-invoices' ), $invoice_label ).'</span>. Can be left blank if you don\'t need a prefix.',
 					'default'   => '',
 					'id'        => 'prefix',
 					'type'      => 'text',
@@ -447,7 +447,7 @@ class Sliced_Options {
 				),
 				array(
 					'name'      => __( 'Due Date', 'sliced-invoices' ),
-					'desc'      => sprintf( __( 'Number of days each %1s is due after the created date. This will automatically set the date in the \'Due Date\' field.<br>Can be overriden on individual %2s.', 'sliced-invoices' ), $invoice_label, $invoice_label_plural ),
+					'desc'      => sprintf( __( 'Number of days each %1s is due after the created date. This will automatically set the date in the \'Due Date\' field.<br>Can be overriden on individual %2s.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$invoice_label.'</span>', '<span class="i18n-multilingual-display">'.$invoice_label_plural.'</span>' ),
 					'default'   => '',
 					'id'        => 'due_date',
 					'type'      => 'text',
@@ -838,6 +838,9 @@ class Sliced_Options {
 					'default'   => 'Quote',
 					'id'        => 'quote-label',
 					'type'      => 'text',
+					'attributes' => array(
+						'class'      => 'i18n-multilingual regular-text',
+					),
 				),
 				array(
 					'name'      => __( 'Quote Label Plural', 'sliced-invoices' ),
@@ -845,6 +848,9 @@ class Sliced_Options {
 					'default'   => 'Quotes',
 					'id'        => 'quote-label-plural',
 					'type'      => 'text',
+					'attributes' => array(
+						'class'      => 'i18n-multilingual regular-text',
+					),
 				),
 				array(
 					'name'      => __( 'Invoice Label', 'sliced-invoices' ),
@@ -852,6 +858,9 @@ class Sliced_Options {
 					'default'   => 'Invoice',
 					'id'        => 'invoice-label',
 					'type'      => 'text',
+					'attributes' => array(
+						'class'      => 'i18n-multilingual regular-text',
+					),
 				),
 				array(
 					'name'      => __( 'Invoice Label Plural', 'sliced-invoices' ),
@@ -859,6 +868,9 @@ class Sliced_Options {
 					'default'   => 'Invoices',
 					'id'        => 'invoice-label-plural',
 					'type'      => 'text',
+					'attributes' => array(
+						'class'      => 'i18n-multilingual regular-text',
+					),
 				),
 			)
 		) );

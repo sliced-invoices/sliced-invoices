@@ -134,6 +134,9 @@ class Sliced_Paypal {
 				'default'   => '',
 				'type'      => 'text',
 				'id'        => 'gateway-paypal-label',
+				'attributes' => array(
+					'class'      => 'i18n-multilingual regular-text',
+				),
 			);
 		
 		}
