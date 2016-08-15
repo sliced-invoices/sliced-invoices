@@ -253,7 +253,7 @@ class Sliced_Invoice {
 
 		$args = array(
 			'post_type'      => 'sliced_invoice',
-			'post_status'    => array( 'publish', 'future'  ),
+			'post_status'    => array( 'publish', 'future' ),
 			'posts_per_page' => -1,
 			'fields'         => 'ids',
 			// 'meta_query' => array(
@@ -276,7 +276,7 @@ class Sliced_Invoice {
 		if( $the_query->posts ) :
 			foreach ( $the_query->posts as $id ) {
 				$number = sliced_get_invoice_number( $id );
-				$ids[$id] = $number;
+				$ids[$id] = intval( $number );
 			};
 		endif;
 		if( ! empty( $ids ) ) {

@@ -227,7 +227,7 @@ class Sliced_Quote {
 		if( $the_query->posts ) :
 			foreach ( $the_query->posts as $id ) {
 				$number = sliced_get_quote_number( $id );
-				$ids[$id] = $number;
+				$ids[$id] = intval( $number );
 			};
 		endif;
 		if( ! empty( $ids ) ) {
