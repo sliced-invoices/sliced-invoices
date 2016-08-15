@@ -500,7 +500,7 @@ class Sliced_Shared {
 	public static function get_client_details( $id = 0 ) {
 
 		$client = apply_filters( 'sliced_client_data', self::get_client_data( $id ) );
-		$id     = apply_filters( 'sliced_client_id', self::get_client_id( $id ) );
+		//DG note: this is not used here --    $id     = apply_filters( 'sliced_client_id', self::get_client_id( $id ) );
 
 		if ( ! $client ) {
 			return;

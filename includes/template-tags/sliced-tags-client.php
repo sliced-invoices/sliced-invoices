@@ -4,8 +4,8 @@ if ( ! defined('ABSPATH') ) { exit; }
 
 if ( ! function_exists( 'sliced_get_client_id' ) ) :
 
-	function sliced_get_client_id() {
-		$client = Sliced_Shared::get_client_details();
+	function sliced_get_client_id( $id = 0 ) {
+		$client = Sliced_Shared::get_client_details( $id );
 		return apply_filters( 'sliced_get_client_id', $client['id'], $client );
 	}
 
