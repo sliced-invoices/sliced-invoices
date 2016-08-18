@@ -532,7 +532,7 @@ class Sliced_Shared {
 			$format = str_replace("/", ".", $format);
 		}
 
-		$today = date_i18n( $format, (int) current_time( 'timestamp' ) );
+		$today = date_i18n( $format, (int) current_time( 'timestamp', true ) );
 		return $today;
 	}
 
