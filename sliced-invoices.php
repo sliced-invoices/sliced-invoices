@@ -5,7 +5,7 @@
  * Plugin Name:       Sliced Invoices
  * Plugin URI:        http://slicedinvoices.com/
  * Description:       Create professional Quotes & Invoices that clients can pay for online.
- * Version:           2.871
+ * Version:           2.872
  * Author:            Sliced Invoices
  * Author URI:        http://slicedinvoices.com/
  * Text Domain:       sliced-invoices
@@ -16,7 +16,7 @@ if ( ! defined('ABSPATH') ) {
 	exit;
 }
 
-define( 'SLICED_VERSION', '2.871' );
+define( 'SLICED_VERSION', '2.872' );
 define( 'SLICED_PATH', plugin_dir_path( __FILE__ ) );
 
 /**
