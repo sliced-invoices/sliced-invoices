@@ -577,7 +577,8 @@ class Sliced_Shared {
 		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $curl, CURLOPT_HEADER, 0 );
 		curl_setopt( $curl, CURLOPT_USERAGENT, '' );
-		curl_setopt( $curl, CURLOPT_TIMEOUT, 10 );
+		curl_setopt( $curl, CURLOPT_TIMEOUT, 20 );
+		curl_setopt( $curl, CURLOPT_TIMEOUT_MS, 20000 );
 		curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false);
 
 		$response = curl_exec( $curl );
@@ -602,31 +603,32 @@ class Sliced_Shared {
 		$response = null;
 
 		// First, we try to use wp_remote_get
-		$response = wp_remote_get( $url );
+		$response = wp_remote_get( $url, array( 'timeout' => 10 ) );
 
 		if( is_wp_error( $response ) ) {
 
 			// If that doesn't work, then we'll try file_get_contents
-			$response = file_get_contents( $url );
+			$response = @file_get_contents( $url );
+			
 			if( false == $response ) {
 
 				// And if that doesn't work, then we'll try curl
 				$response = self::curl( $url );
 				if( null == $response ) {
 					$response = 0;
-				} // end if/else
+				}
 
-			} // end if
+			}
 
-		} // end if
+		}
 
 		// If the response is an array, it's coming from wp_remote_get,
 		// so we just want to capture to the body index for json_decode.
 		if( is_array( $response ) ) {
 			$response = $response['body'];
-		} // end if/else
+		}
 
-		// if still nothing, show an error at least
+		// try sslverify
 		if( ! $response || $response == false || $response == 0 ) {
 
 			$general = get_option( 'sliced_general' );
@@ -634,11 +636,18 @@ class Sliced_Shared {
 
 			$response = wp_remote_get( $url, array(
 			    'sslverify' => $sslverify,
+				'timeout'   => 10,
 			));
 
 			if( is_array( $response ) ) {
 				$response = $response['body'];
-			} // end if/else
+			} 
+			
+			// if still nothing, show an error at least
+			if( is_wp_error( $response ) ) {
+				$error_string = $response->get_error_message();
+				$response = '<div id="message" class="error"><p>' . $error_string . '</p></div>';
+			}
 
 		}
 
