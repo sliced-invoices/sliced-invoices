@@ -259,11 +259,11 @@ class Sliced_Paypal {
 			'&PAYMENTREQUEST_0_PAYMENTACTION=' . urlencode("SALE") .
 			'&L_PAYMENTREQUEST_0_NAME0=' . urlencode( sliced_get_invoice_label() ) .
 			'&L_PAYMENTREQUEST_0_NUMBER0=' . urlencode( sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id ) ) .
-			'&L_PAYMENTREQUEST_0_AMT0=' . urlencode( sliced_get_invoice_sub_total_raw( $id ) ) .
+			'&L_PAYMENTREQUEST_0_AMT0=' . urlencode( sliced_get_invoice_total_raw( $id ) ) .
 			'&L_PAYMENTREQUEST_0_QTY0='. urlencode( 1 ) .
 			'&NOSHIPPING=1'. //set 1 to hide buyer's shipping address, in-case products that does not require shipping
-			'&PAYMENTREQUEST_0_ITEMAMT=' . urlencode( sliced_get_invoice_sub_total_raw( $id ) ) .
-			'&PAYMENTREQUEST_0_TAXAMT=' . urlencode( sliced_get_invoice_tax_raw( $id ) ) .
+			'&PAYMENTREQUEST_0_ITEMAMT=' . urlencode( sliced_get_invoice_total_raw( $id ) ) .
+			//'&PAYMENTREQUEST_0_TAXAMT=' . urlencode( sliced_get_invoice_tax_raw( $id ) ) .
 			'&PAYMENTREQUEST_0_AMT=' . urlencode( sliced_get_invoice_total_raw( $id ) ) .
 			'&LOCALECODE='. urlencode( $locale ) . //PayPal pages to match the language on your website.
 			'&LOGOIMG='. urlencode( sliced_get_business_logo() ) .//site logo
@@ -273,9 +273,8 @@ class Sliced_Paypal {
 
 		return $payment_data;
 	}
-/*
-&PAYMENTREQUEST_0_PAYMENTACTION=SALE&L_PAYMENTREQUEST_0_NAME0=Invoice&L_PAYMENTREQUEST_0_NUMBER0=INV-0121&L_PAYMENTREQUEST_0_AMT0=325&L_PAYMENTREQUEST_0_QTY0=1&NOSHIPPING=1&PAYMENTREQUEST_0_ITEMAMT=325&PAYMENTREQUEST_0_TAXAMT=32.5&PAYMENTREQUEST_0_AMT=357.5&LOCALECODE=en_AU&LOGOIMG=http%3A%2F%2Flocalhost%2Fngauwudu%2Fwp-content%2Fuploads%2F2016%2F03%2Findex.png&CARTBORDERCOLOR=FFFFFF&ALLOWNOTE=1
-*/
+
+
 	/**
 	 * Start processing the payment.
 	 *
