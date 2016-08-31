@@ -5,7 +5,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
 Tested up to: 4.6  
-Stable tag: 2.872 
+Stable tag: 2.873 
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -144,6 +144,10 @@ Quotes could be renamed to Estimate, Proposal, Tender, Bid or anything else.
 
 
 ## Changelog
+##  2.873
+* FIX: Quotes & Invoices not displaying in Admin Area when quote/invoice date contains non-English characters
+* FIX: PayPal gateway issue with certain WooCommerce add-ons
+
 ##  2.872
 * FIX: minor bug fixes
 
