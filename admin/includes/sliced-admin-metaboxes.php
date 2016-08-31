@@ -309,10 +309,11 @@ class Sliced_Metaboxes {
 			'desc'        => '',
 			'id'          => $prefix . 'quote_created',
 			'type'        => 'text_date_timestamp',
-			'date_format' => 'M d, Y',
-			'default'     => array( 'Sliced_Shared', 'get_todays_date' ),
+			'date_format' => 'Y-m-d',
+			'default'     => array( 'Sliced_Shared', 'get_todays_date_iso8601' ),
 			'attributes'  => array(
 				'required'  => 'required',
+				'readonly'  => 'readonly',
 			),
 		) );
 		$info->add_field( array(
@@ -320,8 +321,11 @@ class Sliced_Metaboxes {
 			'desc'        => '',
 			'id'          => $prefix . 'quote_valid_until',
 			'type'        => 'text_date_timestamp',
-			'date_format' => 'M d, Y',
+			'date_format' => 'Y-m-d',
 			'default'     => array( 'Sliced_Quote', 'get_auto_valid_until_date' ),
+			'attributes'  => array(
+				'readonly'  => 'readonly',
+			),
 		) );
 		$info->add_field( array(
 			'name'       => __( 'Currency Symbol', 'sliced-invoices' ),
@@ -436,10 +440,11 @@ class Sliced_Metaboxes {
 			'desc'        => '',
 			'id'          => $prefix . 'invoice_created',
 			'type'        => 'text_date_timestamp',
-			'date_format' => 'M d, Y',
-			'default'     => array( 'Sliced_Shared', 'get_todays_date' ),
+			'date_format' => 'Y-m-d',
+			'default'     => array( 'Sliced_Shared', 'get_todays_date_iso8601' ),
 			'attributes'  => array(
 				'required'  => 'required',
+				'readonly'  => 'readonly',
 			),
 		) );
 		$info->add_field( array(
@@ -447,8 +452,11 @@ class Sliced_Metaboxes {
 			'desc'        => '',
 			'id'          => $prefix . 'invoice_due',
 			'type'        => 'text_date_timestamp',
-			'date_format' => 'M d, Y',
+			'date_format' => 'Y-m-d',
 			'default'     => array( 'Sliced_Invoice', 'get_auto_due_date' ),
+			'attributes'  => array(
+				'readonly'  => 'readonly',
+			),
 		) );
 		$info->add_field( array(
 			'name'       => __( 'Currency Symbol', 'sliced-invoices' ),

@@ -17,6 +17,7 @@ if ( ! defined('ABSPATH') ) {
 }
 
 define( 'SLICED_VERSION', '2.872' );
+define( 'SLICED_DB_VERSION', '3' );
 define( 'SLICED_PATH', plugin_dir_path( __FILE__ ) );
 
 /**
@@ -66,6 +67,74 @@ function run_sliced_invoices() {
 	$plugin->run();
  }
 run_sliced_invoices();
+
+
+
+
+/* DATABASE UPDATES
+============================================================================== */
+
+/**
+ * 2016-08-30: update from DB 2 to DB 3, for Sliced Invoices versions < 2.873
+ */
+function sliced_invoices_db_update() {
+	global $post;
+	$sliced_db_check = get_option('sliced_general');
+	if ( isset( $sliced_db_check['db_version'] ) && $sliced_db_check['db_version'] >= SLICED_DB_VERSION ) {
+		// okay
+	} else {
+		// update needed
+		
+		// quotes:
+		$args = array(
+			'post_type' => 'sliced_quote',
+			'posts_per_page' => -1,
+			'meta_query' =>
+				array(
+					array(
+						'key'     => '_sliced_quote_created',
+						'compare' => 'NOT EXISTS'
+					)
+				)
+			);
+		$query = new WP_Query( $args );
+		if ( $query->have_posts() ) { 
+			while ( $query->have_posts() ) {
+				$query->the_post();
+				update_post_meta( $post->ID, '_sliced_quote_created', strtotime( $post->post_date ) > 0 ? strtotime( $post->post_date ) : strtotime( $post->post_date_gmt ) );
+			}
+		}
+		wp_reset_postdata();
+
+		// invoices:
+		$args = array(
+			'post_type' => 'sliced_invoice',
+			'posts_per_page' => -1,
+			'meta_query' =>
+				array(
+					array(
+						'key'     => '_sliced_invoice_created',
+						'compare' => 'NOT EXISTS'
+					)
+				)
+			);
+		$query = new WP_Query( $args );
+		if ( $query->have_posts() ) { 
+			while ( $query->have_posts() ) {
+				$query->the_post();
+				update_post_meta( $post->ID, '_sliced_invoice_created', strtotime( $post->post_date ) > 0 ? strtotime( $post->post_date ) : strtotime( $post->post_date_gmt ) );
+			}
+		}
+		wp_reset_postdata();
+		
+		// Done
+		$sliced_db_check['db_version'] = '3';
+		update_option( 'sliced_general', $sliced_db_check );
+	}
+}
+add_action( 'init', 'sliced_invoices_db_update' );
+
+
 
 
 /* FILTERS AND ACTIONS TO AVOID PLUGIN AND THEME CONFLICTS

@@ -489,6 +489,10 @@
   color: #D41D1D;
 }
 
+.sliced input.cmb2-datepicker[readonly] {
+    background: #fff;
+}
+
 /*
  * Reports
  */

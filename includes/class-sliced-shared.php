@@ -521,7 +521,7 @@ class Sliced_Shared {
 
 
 	/**
-	 * Get todays date.
+	 * Get todays date (localized format).
 	 *
 	 * @since   2.0.0
 	 */
@@ -532,6 +532,18 @@ class Sliced_Shared {
 			$format = str_replace("/", ".", $format);
 		}
 
+		$today = date_i18n( $format, (int) current_time( 'timestamp', true ) );
+		return $today;
+	}
+
+
+	/**
+	 * Get today's date, formatted ISO_8601.
+	 *
+	 * @since   2.873
+	 */
+	public static function get_todays_date_iso8601() {
+		$format = "Y-m-d";
 		$today = date_i18n( $format, (int) current_time( 'timestamp', true ) );
 		return $today;
 	}
