@@ -140,7 +140,6 @@ class Sliced_Payments {
 						$( '#sliced_gateway' ).val( gateway );
 
 						var src = "<?php echo plugin_dir_url( dirname( dirname( __FILE__ ) ) ) ?>public/images/accept-" + gateway + ".png";
-						console.log(src);
 						$( '#sliced_gateway_image' ).html( '<img src="' + src + '" />' );
 
 					});
