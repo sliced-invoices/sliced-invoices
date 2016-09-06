@@ -62,7 +62,6 @@ require SLICED_PATH . 'core/class-sliced.php';
  */
 function run_sliced_invoices() {
 	define( 'SLICED_TIMEZONE', (get_option( 'timezone_string' ) ? get_option( 'timezone_string' ) : date_default_timezone_get() ) );
-	date_default_timezone_set( SLICED_TIMEZONE );
 	$plugin = new Sliced_Invoices();
 	$plugin->run();
  }

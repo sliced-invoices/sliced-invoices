@@ -55,8 +55,6 @@ class Sliced_Invoices {
 	 */
 	public function __construct() {
 
-		date_default_timezone_set( SLICED_TIMEZONE );
-
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->define_admin_hooks();

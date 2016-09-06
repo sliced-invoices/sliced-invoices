@@ -7,7 +7,6 @@ if ( ! defined('ABSPATH') ) { exit; }
  * Calls the class.
  */
 function sliced_call_logs_class() {
-	date_default_timezone_set( SLICED_TIMEZONE );
 	new Sliced_Logs;
 }
 add_action('sliced_loaded', 'sliced_call_logs_class' );
@@ -324,8 +323,8 @@ class Sliced_Logs {
 				// get the user, date and time
 				$user_info  = get_userdata( $log['by'] );
 				$user_name  = $user_info ? $user_info->user_login : 'Guest';
-				$the_date   = date( get_option( 'date_format' ), (int) $time );
-				$the_time   = date( get_option( 'time_format' ), (int) $time );
+				$the_date   = get_date_from_gmt ( date( 'Y-m-d H:i:s', (int) $time ), get_option('date_format') );
+				$the_time   = get_date_from_gmt ( date( 'Y-m-d H:i:s', (int) $time ), get_option('time_format') );
 				$time_date  = sprintf( __( '%1s on %2s', 'sliced-invoices' ), $the_time, $the_date );
 				$by         = sprintf( __( 'by %s', 'sliced-invoices' ), $user_name );
 
