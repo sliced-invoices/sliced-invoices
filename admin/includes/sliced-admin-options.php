@@ -3,13 +3,7 @@
 // Exit if accessed directly
 if ( ! defined('ABSPATH') ) { exit; }
 
-/**
- * CMB Tabbed Theme Options
- *
- * @author    Arushad Ahmed <@dash8x, contact@arushad.org>
- * @link      http://arushad.org/how-to-create-a-tabbed-options-page-for-your-wordpress-theme-using-cmb
- * @version   0.1.0
- */
+
 class Sliced_Options {
 
 	/**
@@ -890,7 +884,7 @@ class Sliced_Options {
 					'type'      => 'title',
 					'after_field'  => '
 					<span style="float: left; margin: 15px 50px 20px 0px; font-size: 38px;" class="dashicons dashicons-wordpress"></span>
-					<p>Thanks for using Sliced Invoices, we hope that you enjoy using it.<br>We\'d love it if you could take a minute and give the plugin a rating over on the <a target="_blank" href="https://wordpress.org/support/view/plugin-reviews/sliced-invoices?rate=5#postform" title="Opens in new window">Sliced Invoices WordPress page</a>.<br />This will help to continue the development of the free plugin. </p>
+					<p>Thanks for using Sliced Invoices, we hope that you enjoy using it.<br>We\'d love it if you could take a minute and give the plugin a rating over on the <a target="_blank" href="https://wordpress.org/support/plugin/sliced-invoices/reviews/?rate=5#postform" title="Opens in new window">Sliced Invoices WordPress page</a>.<br />This will help to continue the development of the free plugin. </p>
 					',
 				),
 				array(
@@ -915,6 +909,9 @@ class Sliced_Options {
 
 						<li><a target="_blank" href="https://slicedinvoices.com/extensions/stripe-payment-gateway/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Stripe&utm_campaign=Free" title="Opens in new window">Stripe Payment Gateway</a><br>
 						<span class="description">The Stripe Payment Gateway extension allows you to accept credit card payments for your invoices securely.</span></li>
+						
+						<li><a target="_blank" href="https://slicedinvoices.com/extensions/braintree-payment-gateway/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Braintree&utm_campaign=Free" title="Opens in new window">Braintree Payment Gateway</a><br>
+						<span class="description">The Braintree Payment Gateway extension allows you to accept credit card payments for your invoices securely.</span></li>
 
 						<li><a target="_blank" href="https://slicedinvoices.com/extensions/better-urls/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Better-URLs&utm_campaign=Free" title="Opens in new window">Better URL\'s</a><br>
 						<span class="description">Change the URL\'s of quotes and invoice to suit your business. Change it from \'sliced_invoice\' to \'bobs_invoice\' for example.</span></li>
