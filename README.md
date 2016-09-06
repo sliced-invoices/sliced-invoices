@@ -5,7 +5,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
 Tested up to: 4.6  
-Stable tag: 2.873 
+Stable tag: 2.874 
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -69,11 +69,12 @@ https://www.youtube.com/watch?v=9V6VRidkZFk
 *   [Contact Form 7 extension](https://wordpress.org/plugins/sliced-invoices-contact-form-7/) (free)
 *   [Better URL's](https://slicedinvoices.com/extensions/better-urls/?utm_source=WordPress&utm_medium=Readme&utm_content=Better-URLs&utm_campaign=Free) extension (free)
 *   [Stripe Payment Gateway](https://slicedinvoices.com/extensions/stripe-payment-gateway/?utm_source=WordPress&utm_medium=Readme&utm_content=Stripe&utm_campaign=Free)
+*   [Braintree Payment Gateway](https://slicedinvoices.com/extensions/braintree-payment-gateway/?utm_source=WordPress&utm_medium=Readme&utm_content=Braintree&utm_campaign=Free)
 *   [Recurring invoices](https://slicedinvoices.com/extensions/recurring-invoices/?utm_source=WordPress&utm_medium=Readme&utm_content=Recurring-Invoices&utm_campaign=Free) extension
 *   [Deposit invoices](https://slicedinvoices.com/extensions/deposit-invoices/?utm_source=WordPress&utm_medium=Readme&utm_content=Deposit-Invoices&utm_campaign=Free) extension
 * 	Plus many more available [here](https://slicedinvoices.com/extensions/?utm_source=WordPress&utm_medium=Readme&utm_content=Extensions&utm_campaign=Free)
 
-Our support is fantastic (check out the [reviews](https://wordpress.org/support/view/plugin-reviews/sliced-invoices)) and if you need a feature that you can't see, just ask and we will see if we can add it for a future release.
+Our support is fantastic (check out the [reviews](https://wordpress.org/support/plugin/sliced-invoices/reviews/)) and if you need a feature that you can't see, just ask and we will see if we can add it for a future release.
 
 > <strong>Visit our website to find out more</strong>
 >
@@ -144,6 +145,11 @@ Quotes could be renamed to Estimate, Proposal, Tender, Bid or anything else.
 
 
 ## Changelog
+##  2.874
+* FIX: Compatibility issue with WP Slimstat plugin
+* FIX: Timezone issue
+* UPDATE: minor code cleanup, textual updates
+
 ##  2.873
 * FIX: Quotes & Invoices not displaying in Admin Area when quote/invoice date contains non-English characters
 * FIX: PayPal gateway issue with certain WooCommerce add-ons
