@@ -328,6 +328,14 @@ class Sliced_Metaboxes {
 			),
 		) );
 		$info->add_field( array(
+			'name'       => __( 'Currency', 'sliced-invoices' ),
+			'desc'       => '',
+			'id'         => $prefix . 'currency',
+			'type'       => 'select',
+			'default'    => 'default',
+			'options'    => Sliced_Shared::currency_options(),
+		) );
+		$info->add_field( array(
 			'name'       => __( 'Currency Symbol', 'sliced-invoices' ),
 			'desc'       => '',
 			'id'         => $prefix . 'currency_symbol',
@@ -457,6 +465,14 @@ class Sliced_Metaboxes {
 			'attributes'  => array(
 				'readonly'  => 'readonly',
 			),
+		) );
+		$info->add_field( array(
+			'name'       => __( 'Currency', 'sliced-invoices' ),
+			'desc'       => '',
+			'id'         => $prefix . 'currency',
+			'type'       => 'select',
+			'default'    => 'default',
+			'options'    => Sliced_Shared::currency_options(),
 		) );
 		$info->add_field( array(
 			'name'       => __( 'Currency Symbol', 'sliced-invoices' ),

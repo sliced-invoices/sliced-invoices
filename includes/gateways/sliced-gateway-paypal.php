@@ -308,6 +308,7 @@ class Sliced_Paypal {
 		 */
 		$id         = $_POST['sliced_payment_invoice_id'];
 		$gateway    = $this->gateway();
+		$currency   = sliced_get_invoice_currency( $id );
 
 		/*
 		 * Send request to Paypal
@@ -315,7 +316,7 @@ class Sliced_Paypal {
 		$payment_data = '&METHOD=SetExpressCheckout'.
 			'&RETURNURL=' . urlencode( $gateway['payment_page'] ).
 			'&CANCELURL=' . urlencode( $gateway['cancel_page'] ) .
-			'&PAYMENTREQUEST_0_CURRENCYCODE=' . urlencode( $gateway['currency'] );
+			'&PAYMENTREQUEST_0_CURRENCYCODE=' . urlencode( $currency && $currency !== 'default' ? $currency : $gateway['currency'] );
 		$payment_data .= $this->payment_data( $id );
 
 		$response = $this->paypal_request(
@@ -428,10 +429,11 @@ class Sliced_Paypal {
 		$gateway  = $this->gateway();
 		$token    = $_GET["token"];
 		$payer_id = $_GET["PayerID"];
+		$currency = sliced_get_invoice_currency( $id );
 
 		$payment_data   =   '&TOKEN=' . urlencode( $token ) .
 			'&PAYERID=' . urlencode( $payer_id ) .
-			'&PAYMENTREQUEST_0_CURRENCYCODE=' . urlencode( $gateway['currency'] );
+			'&PAYMENTREQUEST_0_CURRENCYCODE=' . urlencode( $currency && $currency !== 'default' ? $currency : $gateway['currency'] );
 		$payment_data   .= $this->payment_data( $id );
 
 		$response = $this->paypal_request( 'DoExpressCheckoutPayment', $payment_data, $gateway['username'], $gateway['password'], $gateway['signature'], $gateway['mode'] );

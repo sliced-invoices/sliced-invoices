@@ -95,6 +95,15 @@ if ( ! function_exists( 'sliced_get_invoice_status' ) ) :
 
 endif;
 
+if ( ! function_exists( 'sliced_get_invoice_currency' ) ) :
+
+	function sliced_get_invoice_currency( $id = 0 ) {
+		$output = Sliced_Shared::get_currency( $id );
+		return apply_filters( 'sliced_get_invoice_currency', $output, $id );
+	}
+
+endif;
+
 if ( ! function_exists( 'sliced_get_invoice_line_items' ) ) :
 
 	function sliced_get_invoice_line_items( $id = 0 ) {
