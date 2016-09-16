@@ -126,6 +126,9 @@ a img {outline:none; border:none;}
   content: 'x';
   font: normal 18px/27px 'arial', 'helvetica';
 }
+#TB_window .screen-reader-text {
+	display: none;
+}
 #TB_window .btn {
   display: block;
   font-size: 22px;
