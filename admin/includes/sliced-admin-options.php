@@ -677,6 +677,13 @@ class Sliced_Options {
 						'quicktags' => true
 					),
 				),
+				array(
+					'name'      => __( 'Button text', 'sliced-invoices' ),
+					'desc'      => __( 'The "view this quote online" button.', 'sliced-invoices' ),
+					'default'   => '',
+					'type'      => 'text',
+					'id'        => 'quote_available_button',
+				),
 
 				array(
 					'name'      => __( 'Invoice Available', 'sliced-invoices' ),
@@ -705,6 +712,13 @@ class Sliced_Options {
 						'tinymce' => true,
 						'quicktags' => true
 					),
+				),
+				array(
+					'name'      => __( 'Button text', 'sliced-invoices' ),
+					'desc'      => __( 'The "view this invoice online" button.', 'sliced-invoices' ),
+					'default'   => '',
+					'type'      => 'text',
+					'id'        => 'invoice_available_button',
 				),
 
 				array(

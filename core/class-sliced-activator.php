@@ -166,6 +166,9 @@ Your recent payment for %total% on invoice %number% has been successful.<br>';
 
 Just a friendly reminder that your invoice %number% for %total% %is_was% due on %due_date%.';
 
+			$email['quote_available_button'] = 'View this quote online';
+			$email['invoice_available_button'] = 'View this invoice online';
+
 			update_option('sliced_emails', $email);
 
 		}

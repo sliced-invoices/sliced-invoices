@@ -810,10 +810,14 @@ class Sliced_Notifications {
 		$email_footer = null;
 
 		// include the button
-		if( $this->type == 'invoice' || $this->type == 'quote' ) {
-			$button_text = sprintf( __( 'View this %s online', 'sliced-invoices' ), $this->type );
-			$email_footer .= "<br><a href='" . esc_url( sliced_get_the_link( $this->id ) ) . "' style='font-size: 100%; line-height: 2; color: #ffffff; border-radius: 5px; display: inline-block; cursor: pointer; font-weight: bold; text-decoration: none; background: #60ad5d; margin: 30px 0 10px 0; padding: 0; border-color: #60ad5d; border-style: solid; border-width: 10px 20px;'>" . esc_html( $button_text ) . "</a>";
+		$button_text = '';
+		if( $this->type == 'invoice' ) {
+			$button_text = $this->settings['invoice_available_button'] > '' ? $this->settings['invoice_available_button'] : __( 'View this invoice online', 'sliced-invoices' );
+		} elseif ( $this->type == 'quote' ) {
+			$button_text = $this->settings['quote_available_button'] > '' ? $this->settings['quote_available_button'] : __( 'View this quote online', 'sliced-invoices' );
 		}
+		
+		$email_footer .= "<br><a href='" . esc_url( sliced_get_the_link( $this->id ) ) . "' style='font-size: 100%; line-height: 2; color: #ffffff; border-radius: 5px; display: inline-block; cursor: pointer; font-weight: bold; text-decoration: none; background: #60ad5d; margin: 30px 0 10px 0; padding: 0; border-color: #60ad5d; border-style: solid; border-width: 10px 20px;'>" . esc_html( $button_text ) . "</a>";
 
 		$email_footer .=  "</div><!-- End body_content_inner -->
 													</td>

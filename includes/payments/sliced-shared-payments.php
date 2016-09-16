@@ -66,7 +66,7 @@ class Sliced_Payments {
 		if( ! empty( $online_gateways ) ) { ?>
 
 			<?php foreach ( $online_gateways as $gateway => $readable) { ?>
-				<a href="#TB_inline?height=300&width=450&inlineId=sliced_payment_form" title="Pay This Invoice" class="gateway btn btn-success thickbox btn-sm" data-gateway-readable="<?php esc_html_e( $readable ) ?>" data-gateway="<?php esc_html_e( $gateway ) ?>">
+				<a href="#TB_inline?height=300&width=450&inlineId=sliced_payment_form" title="<?php _e( 'Pay This Invoice', 'sliced-invoices' ); ?>" class="gateway btn btn-success thickbox btn-sm" data-gateway-readable="<?php esc_html_e( $readable ) ?>" data-gateway="<?php esc_html_e( $gateway ) ?>">
 				<?php
 				if ( function_exists('sliced_get_gateway_'.$gateway.'_label') ) {
 					echo call_user_func( 'sliced_get_gateway_'.$gateway.'_label' );
@@ -102,9 +102,9 @@ class Sliced_Payments {
 			<div class="sliced_payment_form_wrap">
 
 				<ul>
-					<li><span><?php printf( esc_html__( '%s Number', 'sliced-invoices' ), sliced_get_invoice_label() ); ?></span> <?php esc_html_e( sliced_get_invoice_prefix() ); ?><?php esc_html_e( sliced_get_invoice_number() ); ?></li>
-					<li><span><?php _e( 'Amount Payable', 'sliced-invoices' ) ?></span> <?php _e( sliced_get_invoice_total() ); ?></li>
-					<li><span><?php _e( 'Payment Method', 'sliced-invoices' ) ?></span> <span id="sliced_gateway_readable"></span></li>
+					<li><span><?php _e( 'Invoice Number', 'sliced-invoices' ); ?></span> <?php esc_html_e( sliced_get_invoice_prefix() ); ?><?php esc_html_e( sliced_get_invoice_number() ); ?></li>
+					<li><span><?php _e( 'Amount Payable', 'sliced-invoices' ); ?></span> <?php _e( sliced_get_invoice_total() ); ?></li>
+					<li><span><?php _e( 'Payment Method', 'sliced-invoices' ); ?></span> <span id="sliced_gateway_readable"></span></li>
 				</ul>
 
 				<form method="POST" action="<?php echo esc_url( get_permalink( (int)$payments['payment_page'] ) ) ?>">
@@ -242,7 +242,7 @@ class Sliced_Payments {
 					<?php wp_nonce_field( 'sliced_invoices_decline_quote', 'sliced_decline_quote_nonce' ); ?>
 
 					<input type="hidden" name="sliced_decline_quote_id" id="sliced_decline_quote_id" value="<?php the_ID(); ?>">
-					<p><?php if ( class_exists( 'Sliced_Translate' ) ) { echo Sliced_Translate::sliced_translate_some_text( 'Reason for declining', 'Reason for declining', 'sliced-invoices' ); } else { _e( 'Reason for declining', 'sliced-invoices' ); } ?>*</p>
+					<p><?php _e( 'Reason for declining', 'sliced-invoices' ); ?>*</p>
 					<textarea name="decline_quote_reason" id="decline_quote_reason" cols="30" rows="5"></textarea>
 					<input type="submit" name="decline-quote" class="btn btn-danger btn-lg" id="decline-quote" value="<?php if ( class_exists( 'Sliced_Translate' ) ) { echo Sliced_Translate::sliced_translate_some_text( 'Decline Quote', 'Decline Quote', 'sliced-invoices' ); } else { printf( esc_html__( 'Decline %s', 'sliced-invoices' ), sliced_get_quote_label() ); } ?>">
 

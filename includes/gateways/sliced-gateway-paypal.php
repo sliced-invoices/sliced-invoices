@@ -289,9 +289,6 @@ class Sliced_Paypal {
 		if ( ! isset( $_POST['start-payment'] ) )
 			return;
 
-		if ( $_POST['start-payment'] != 'Pay Now' )
-			return;
-
 		// if not paypal return and look for another payment gateway
 		if ( $_POST['sliced_gateway'] != 'paypal' ) {
 			return;
