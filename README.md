@@ -4,8 +4,8 @@ Contributors: SlicedInvoices
 Donate link: http://slicedinvoices.com/  
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
-Tested up to: 4.6  
-Stable tag: 2.874 
+Tested up to: 4.6.1  
+Stable tag: 2.875 
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -145,6 +145,12 @@ Quotes could be renamed to Estimate, Proposal, Tender, Bid or anything else.
 
 
 ## Changelog
+##  2.875
+* NEW: ability to change currency setting on per-invoice basis, and process payments for multiple currencies through the same gateway
+* NEW: ability to customize "view online" button in email templates
+* UPDATE: add additional translatable fields (when using Easy Translate Extension)
+* FIX: minor CSS issue
+
 ##  2.874
 * FIX: Compatibility issue with WP Slimstat plugin
 * FIX: Timezone issue
