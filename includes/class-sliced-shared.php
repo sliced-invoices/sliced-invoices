@@ -692,7 +692,7 @@ class Sliced_Shared {
 	 *
 	 * @since  2.875
 	 */
-	public function currencies() {
+	public static function currencies() {
 		$currencies = array(
 			array(
 				'name' => 'UAE Dirham',
@@ -1936,7 +1936,7 @@ class Sliced_Shared {
 	 *
 	 * @since  2.875
 	 */
-	public function currency_exponent( $currency_code ) {
+	public static function currency_exponent( $currency_code ) {
 		
 		$currencies = Sliced_Shared::currencies();
 		foreach ( $currencies as $currency ) {
@@ -1956,7 +1956,7 @@ class Sliced_Shared {
 	 *
 	 * @since  2.875
 	 */
-	public function currency_options() {
+	public static function currency_options() {
 		
 		$currencies = Sliced_Shared::currencies();
 		$options = array( 'default' => 'Default Currency' );
