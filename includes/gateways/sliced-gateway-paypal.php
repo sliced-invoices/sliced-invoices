@@ -465,7 +465,7 @@ class Sliced_Paypal {
 			$message .= '</p>';
 
 			$message .= '<p>';
-			$message .= sprintf( __( '<a href="%1s">Click here to return to %s</a>', 'sliced-invoices' ), get_permalink($id), sliced_get_invoice_label() );
+			$message .= sprintf( __( '<a href="%1s">Click here to return to %s</a>', 'sliced-invoices' ), apply_filters( 'sliced_get_the_link', get_permalink($id), $id ), sliced_get_invoice_label() );
 			$message .= '</p>';
 
 			/*
