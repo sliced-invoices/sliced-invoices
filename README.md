@@ -5,7 +5,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
 Tested up to: 4.6.1  
-Stable tag: 2.875 
+Stable tag: 2.876 
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -145,6 +145,13 @@ Quotes could be renamed to Estimate, Proposal, Tender, Bid or anything else.
 
 
 ## Changelog
+##  2.876
+* FIX: issue with invoices incorrectly being assigned "overdue" status
+* FIX: issue with logs showing incorrect statuses
+* FIX: issue with sending emails to multiple recipients
+* FIX: issue with "return to invoice" link after payment
+* FIX: minor PHP strict standards fix
+
 ##  2.875
 * NEW: ability to change currency setting on per-invoice basis, and process payments for multiple currencies through the same gateway
 * NEW: ability to customize "view online" button in email templates
