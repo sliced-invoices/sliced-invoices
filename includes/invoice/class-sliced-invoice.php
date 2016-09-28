@@ -67,7 +67,7 @@ class Sliced_Invoice {
 			return;
 		}
 		// do the update
-		$set = wp_set_post_terms( Sliced_Shared::get_item_id( $id ), $term_id, 'invoice_status' );
+		$set = wp_set_object_terms( Sliced_Shared::get_item_id( $id ), $status, 'invoice_status' );
 		do_action( 'sliced_invoice_status_update', Sliced_Shared::get_item_id( $id ), $status );
 
 	}

@@ -71,7 +71,7 @@ class Sliced_Quote {
 		}
 
 		// do the update
-		$set = wp_set_post_terms( $id, $term_id['term_id'], 'quote_status' );
+		$set = wp_set_object_terms( $id, $status, 'quote_status' );
 		do_action( 'sliced_quote_status_update', Sliced_Shared::get_item_id( $id ), $status );
 
 	}
