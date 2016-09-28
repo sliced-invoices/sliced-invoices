@@ -92,8 +92,8 @@ class Sliced_Logs {
 			return;
 
 		// if the post is being updated, return
-		if( $post->post_date != $post->post_modified )
-			return;
+		//if( $post->post_date != $post->post_modified )
+			//return;
 
 		$meta_value = array(
 			'type'      => 'invoice_sent',
@@ -156,6 +156,7 @@ class Sliced_Logs {
 	 * @since 2.20
 	 */
 	public function status_change( $id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids ) {
+		
 		// if no change, return
 		if( $tt_ids == $old_tt_ids || ! isset( $id ) )
 			return;
@@ -163,9 +164,9 @@ class Sliced_Logs {
 		if( ! isset( $tt_ids[0] ) || ! isset( $old_tt_ids[0] ) )
 			return;
 
-		$new = get_term( $tt_ids[0], $taxonomy );
+		$new = get_term_by( 'term_taxonomy_id', $tt_ids[0], $taxonomy );
 		$new_status = $new->name;
-		$old = get_term( $old_tt_ids[0], $taxonomy );
+		$old = get_term_by( 'term_taxonomy_id', $old_tt_ids[0], $taxonomy );
 		$old_status = $old->name;
 
 		$meta_value = array(
@@ -253,7 +254,7 @@ class Sliced_Logs {
 		if( ! isset( $tt_ids[0] ) )
 			return;
 
-		$term = get_term( $tt_ids[0], $taxonomy );
+		$term = get_term_by( 'term_taxonomy_id', $tt_ids[0], $taxonomy );
 		$status = $term->slug;
 
 		if( $status != 'paid' )
