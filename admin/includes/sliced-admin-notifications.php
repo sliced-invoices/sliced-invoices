@@ -379,7 +379,7 @@ class Sliced_Notifications {
 	 *
 	 * @return string
 	 */
-	public function get_headers( $type ) {
+	public function get_the_headers( $type ) {
 
 		$output = 'From: ' . $this->settings['name'] . ' <' . $this->settings['from'] . '>' . "\r\n";
 
@@ -424,13 +424,23 @@ class Sliced_Notifications {
 
 		add_filter( 'wp_mail_content_type', array( $this, 'set_email_type' ) );
 
-		$send = wp_mail(
-			$this->get_recipient( $type ),
-			$this->get_subject( $type ),
-			$this->get_content( $type ),
-			$this->get_headers( $type ),
-			$this->get_attachments()
-		);
+		$recipients = $this->get_recipient( $type );
+
+		$recipients_array = str_getcsv( $recipients );
+		foreach ( $recipients_array as $k => $v ) {
+			if ( strpos($v,',') !== false ) {
+				$recipients_array[$k] = '"'.str_replace( ' <', '" <', $v );
+			}
+		}
+
+		$subject = $this->get_subject( $type );
+		$content = $this->get_content( $type );
+		$headers = $this->get_the_headers( $type );
+		$attachments = $this->get_attachments();
+
+		foreach ( $recipients_array as $to ) {
+			$send = wp_mail( $to, $subject, $content, $headers, $attachments );
+		}
 
 		remove_filter( 'wp_mail_content_type', array( $this, 'set_email_type' ) );
 
