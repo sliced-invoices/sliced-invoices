@@ -5,7 +5,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
 Tested up to: 4.6.1  
-Stable tag: 2.876 
+Stable tag: 3.0.0
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -33,6 +33,7 @@ Sliced Invoices is an invoicing system that is easy to use but at the same time 
 *	Add your logo and business details to Invoices & Quotes
 *   Bulk CSV import of Quotes &amp; Invoices
 *   Lots of filters, actions and template tags
+*   Support for WordPress Multisite (network activated)
 
 ### Invoices - Key Features
 
@@ -131,6 +132,10 @@ Yes, Invoices and quotes are called many different things in different parts of 
 Invoices could be renamed to Tax Invoice, Bill, Sale, Account, Statement or whatever else you desire.
 Quotes could be renamed to Estimate, Proposal, Tender, Bid or anything else.
 
+### Does Sliced Invoices work with WordPress multisite?
+
+Yes, it does!  As of version 3.0.0 you can network activate Sliced Invoices in WP Multisite.
+
 
 ## Screenshots
 1. Example invoice using Template 1. There are 3 invoice templates and you can also style using CSS or create your own template
@@ -145,6 +150,9 @@ Quotes could be renamed to Estimate, Proposal, Tender, Bid or anything else.
 
 
 ## Changelog
+##  3.0.0
+* NEW: WordPress Multisite support (network activate)
+
 ##  2.876
 * FIX: issue with invoices incorrectly being assigned "overdue" status
 * FIX: issue with logs showing incorrect statuses
