@@ -20,6 +20,7 @@ define( 'SLICED_VERSION', '2.876' );
 define( 'SLICED_DB_VERSION', '3' );
 define( 'SLICED_PATH', plugin_dir_path( __FILE__ ) );
 
+
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-sliced-activator.php
@@ -43,7 +44,6 @@ register_activation_hook( __FILE__, 'activate_sliced_invoices' );
 register_deactivation_hook( __FILE__, 'deactivate_sliced_invoices' );
 
 
-
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
@@ -65,7 +65,7 @@ function run_sliced_invoices() {
 	$plugin = new Sliced_Invoices();
 	$plugin->run();
  }
-run_sliced_invoices();
+add_action( 'plugins_loaded', 'run_sliced_invoices' ); // wait until 'plugins_loaded' hook fires, for WP Multisite compatibility
 
 
 

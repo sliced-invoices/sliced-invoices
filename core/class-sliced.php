@@ -161,8 +161,7 @@ class Sliced_Invoices {
 
 		$plugin_i18n = new Sliced_i18n();
 		$plugin_i18n->set_domain( $this->get_plugin_name() );
-
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+		$plugin_i18n->load_plugin_textdomain();
 
 	}
 
@@ -184,6 +183,7 @@ class Sliced_Invoices {
 		$this->loader->add_action( 'init', $plugin_admin, 'new_cpt_invoice', 1 );
 		$this->loader->add_action( 'init', $plugin_admin, 'new_taxonomy_quote_status', 1 );
 		$this->loader->add_action( 'init', $plugin_admin, 'new_taxonomy_invoice_status', 1 );
+		$this->loader->add_action( 'init', $plugin_admin, 'new_taxonomy_terms', 1 );
 
 		$this->loader->add_filter( 'admin_body_class', $plugin_admin, 'add_admin_body_class' );
 		$this->loader->add_filter( 'add_meta_boxes', $plugin_admin, 'remove_some_junk', 11 );

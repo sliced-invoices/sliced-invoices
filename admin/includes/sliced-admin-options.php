@@ -53,6 +53,7 @@ class Sliced_Options {
 	public function hooks() {
 		add_action( 'admin_init', array( $this, 'init' ), 999 );
 		add_action( 'admin_menu', array( $this, 'add_options_page' ), 999 ); //create tab pages
+		add_action( 'network_admin_menu', array( $this, 'add_options_page' ), 999 ); //for WP Multisite support
 	}
 
 	/**

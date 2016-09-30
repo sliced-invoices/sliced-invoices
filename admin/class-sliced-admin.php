@@ -407,6 +407,58 @@ class Sliced_Admin {
 		register_taxonomy( $tax_name, 'sliced_invoice', $opts );
 
 	}
+	
+	/**
+	 * Creates a new taxonomy for a custom post type
+	 *
+	 * @since 	3.0.0
+	 */
+	public function new_taxonomy_terms() {
+	
+		$flush_needed = false;
+	
+		$quote_status = array(
+			'quote_status' => array(
+				'Draft',
+				'Sent',
+				'Declined',
+				'Cancelled',
+			)
+		);
+
+		foreach ($quote_status as $taxonomy => $terms) {
+			foreach ($terms as $term) {
+				if (! get_term_by('slug', sanitize_title($term), $taxonomy)) {
+					$result = wp_insert_term($term, $taxonomy);
+					$flush_needed = true;
+				}
+			}
+		}
+
+		$invoice_status = array(
+			'invoice_status' => array(
+				'Draft',
+				'Paid',
+				'Unpaid',
+				'Overdue',
+				'Cancelled',
+			)
+		);
+
+		foreach ($invoice_status as $taxonomy => $terms) {
+			foreach ($terms as $term) {
+				if (! get_term_by('slug', sanitize_title($term), $taxonomy)) {
+					$result = wp_insert_term($term, $taxonomy);
+					$flush_needed = true;
+				}
+			}
+		}
+
+		if ( $flush_needed ) {
+			flush_rewrite_rules();
+		}
+		
+	}
 
 
 
