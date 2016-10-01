@@ -236,7 +236,7 @@ if ( ! function_exists( 'sliced_display_invoice_totals' ) ) :
 				</tr>
 				<?php do_action( 'sliced_invoice_after_tax' ); ?>
 				<tr class="table-active row-total">
-					<td class="rate"><strong><?php _e( 'Total', 'sliced-invoices' ) ?></strong></td>
+					<td class="rate"><strong><?php _e( 'Total Due', 'sliced-invoices' ) ?></strong></td>
 					<td class="total"><strong><?php _e( sliced_get_invoice_total() ) ?></strong></td>
 				</tr>
 				<?php do_action( 'sliced_invoice_after_totals' ); ?>
