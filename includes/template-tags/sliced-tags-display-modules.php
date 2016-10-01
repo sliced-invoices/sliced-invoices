@@ -7,7 +7,7 @@ if ( ! function_exists( 'sliced_display_business' ) ) :
 	function sliced_display_business() { ?>
 
 			<a target="_blank" href="<?php echo esc_url( sliced_get_business_website() ); ?>">
-				<?php echo sliced_get_business_logo() ? '<img class="logo" src="' . esc_url( sliced_get_business_logo() ) . '">' : '<h1>' . esc_html( sliced_get_business_name() ) . '</h1>' ?>
+				<?php echo sliced_get_business_logo() ? '<img class="logo sliced-business-logo" src="' . esc_url( sliced_get_business_logo() ) . '">' : '<h1>' . esc_html( sliced_get_business_name() ) . '</h1>' ?>
 			</a>
 
 		<?php

@@ -57,7 +57,8 @@ a img {outline:none; border:none;}
   margin-top: 20px;
   padding-top: 20px;
 }
-.sliced-business .logo {
+.sliced-business .logo,
+.sliced-business-logo {
   max-width: 300px;
 }
 .sliced-middle {
