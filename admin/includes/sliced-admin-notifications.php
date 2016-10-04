@@ -364,12 +364,6 @@ class Sliced_Notifications {
 			$output = $_POST['client_email'];
 		}
 
-		// for recurring invoices.
-		// sliced_get_client_email() function not working here. Need to investigate
-		if( in_array( $type, $this->client_emails ) && $this->settings['bcc'] == 'on' ) {
-			$output = sliced_get_client_email( $this->id );
-		}
-
 		return $output;
 	}
 
