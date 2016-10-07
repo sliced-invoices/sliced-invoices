@@ -41,22 +41,23 @@ class Sliced_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 		
-		// fix redirect after non-logged in user posts a comment to a quote (i.e. the client)
-		function redirect_after_comment_in_quote($location) {
-			return $_SERVER["HTTP_REFERER"];
-		}
-		add_filter('comment_post_redirect', 'redirect_after_comment_in_quote');
-		
-		// auto approve quote comments for non-logged in user
-		function auto_approve_comments_in_quote( $approved, $commentdata ) {
-			$post = get_post( $commentdata['comment_post_ID'] );
-			if( $post->post_type == 'sliced_quote' ) {
-				return 1;
-			}
-			return $approved;
-		}
-		add_filter( 'pre_comment_approved' , 'auto_approve_comments_in_quote' , '99', 2 );
+		add_filter( 'comment_post_redirect', array( $this, 'redirect_after_comment_in_quote' ) );
+		add_filter( 'pre_comment_approved' , array( $this, 'auto_approve_comments_in_quote' ), '99', 2 );
 
+	}
+	
+	// fix redirect after non-logged in user posts a comment to a quote (i.e. the client)
+	public function redirect_after_comment_in_quote($location) {
+		return $_SERVER["HTTP_REFERER"];
+	}
+	
+	// auto approve quote comments for non-logged in user
+	public function auto_approve_comments_in_quote( $approved, $commentdata ) {
+		$post = get_post( $commentdata['comment_post_ID'] );
+		if( $post->post_type == 'sliced_quote' ) {
+			return 1;
+		}
+		return $approved;
 	}
 
 	/**
