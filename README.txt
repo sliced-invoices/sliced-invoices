@@ -4,7 +4,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce
 Requires at least: 4.0
 Tested up to: 4.6.1
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -149,6 +149,12 @@ Yes, it does!  As of version 3.0.0 you can network activate Sliced Invoices in W
 
 
 == Changelog ==
+= 3.0.1 =
+* FIX: bug with email sending when admin BCC option is on
+* UPDATE: Compatibility update with PDF & Emails Extension v1.3.0
+* UPDATE: Minor CSS update (add class 'sliced-business-logo')
+* UPDATE: Minor textual update, code cleanup
+
 = 3.0.0 =
 * NEW: WordPress Multisite support (network activate)
 
