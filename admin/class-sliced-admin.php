@@ -1071,6 +1071,7 @@ class Sliced_Admin {
 		/*
 		 * Add the custom user meta
 		 */
+		update_user_meta( $user_id, 'show_admin_bar_front', 'false' );
 		update_user_meta( $user_id, '_sliced_client_business', sanitize_text_field( $_POST['business'] ) );
 		update_user_meta( $user_id, '_sliced_client_address', wp_kses_post( $_POST['address'] ) );
 		update_user_meta( $user_id, '_sliced_client_extra_info', wp_kses_post( $_POST['extra_info'] ) );
