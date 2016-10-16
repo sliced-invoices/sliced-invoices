@@ -264,7 +264,7 @@ class Sliced_Payments {
 					<?php wp_nonce_field( 'sliced_invoices_decline_quote', 'sliced_decline_quote_nonce' ); ?>
 
 					<input type="hidden" name="sliced_decline_quote_id" id="sliced_decline_quote_id" value="<?php the_ID(); ?>">
-					<p><?php _e( 'Reason for declining', 'sliced-invoices' ); ?>*</p>
+					<p><?php _e( 'Reason for declining', 'sliced-invoices' ); ?><span class="sliced_form_field_required">*</span></p>
 					<textarea name="decline_quote_reason" id="decline_quote_reason" cols="30" rows="5"></textarea>
 					<input type="submit" name="decline-quote" class="btn btn-danger btn-lg" id="decline-quote" value="<?php if ( class_exists( 'Sliced_Translate' ) ) { echo Sliced_Translate::sliced_translate_some_text( 'Decline Quote', 'Decline Quote', 'sliced-invoices' ); } else { printf( esc_html__( 'Decline %s', 'sliced-invoices' ), sliced_get_quote_label() ); } ?>">
 
