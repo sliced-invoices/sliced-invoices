@@ -413,7 +413,7 @@ class Sliced_Public {
 
 						<?php $user = wp_get_current_user();
 						
-						$comment_args = array( 'title_reply'=>'Add a comment',
+						$comment_args = array( 'title_reply' => __( 'Add a comment', 'sliced-invoices' ),
 
 							'fields' => apply_filters( 'comment_form_default_fields', array(
 								'author' => '',
