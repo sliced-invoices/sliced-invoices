@@ -5,7 +5,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
 Tested up to: 4.6.1  
-Stable tag: 3.0.1
+Stable tag: 3.1.0
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -150,6 +150,14 @@ Yes, it does!  As of version 3.0.0 you can network activate Sliced Invoices in W
 
 
 ## Changelog
+##  3.1.0
+* NEW: better streamlined payment process (removed payment popup and 2nd "Pay Now" button -- payment buttons now go straight to the payment page)
+* UPDATE: change PayPal gateway to allow guest checkout without PayPal account
+* UPDATE: increase max length of Tax name field from 10 to 100 characters
+* UPDATE: set 'show_admin_bar_front' default to false for new clients created
+* UPDATE: Minor textual update
+* FIX: fix issue with filter 'sliced_invoice_totals_output' not being applied
+
 ##  3.0.1
 * FIX: bug with email sending when admin BCC option is on
 * UPDATE: Compatibility update with PDF & Emails Extension v1.3.0
