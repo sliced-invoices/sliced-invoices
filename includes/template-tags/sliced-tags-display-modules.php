@@ -212,6 +212,8 @@ if ( ! function_exists( 'sliced_display_invoice_totals' ) ) :
 
 	function sliced_display_invoice_totals() {
 
+		ob_start();
+		
 		do_action( 'sliced_invoice_before_totals_table' ); 
 		
 		// need to fix this up
@@ -246,6 +248,9 @@ if ( ! function_exists( 'sliced_display_invoice_totals' ) ) :
 
 		<?php do_action( 'sliced_invoice_after_totals_table' );
 
+		$output = ob_get_clean();
+		
+		echo apply_filters( 'sliced_invoice_totals_output', $output );
 	}
 
 endif;
