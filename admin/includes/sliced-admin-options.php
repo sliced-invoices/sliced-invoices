@@ -581,7 +581,7 @@ class Sliced_Options {
 					'id'        => 'tax_name',
 					'type'      => 'text',
 					'attributes' => array(
-						'maxlength' => 10,
+						'maxlength' => 100,
 					)
 				),
 				array(
