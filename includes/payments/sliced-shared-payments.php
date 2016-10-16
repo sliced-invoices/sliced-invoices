@@ -25,7 +25,7 @@ class Sliced_Payments {
 	public function __construct() {
 
 		add_action( 'sliced_invoice_top_bar_left', array( $this, 'get_gateway_buttons') );
-		add_filter( 'sliced_invoice_footer', array( $this, 'create_payment_popup') );
+		//add_filter( 'sliced_invoice_footer', array( $this, 'create_payment_popup') );
 
 		add_action( 'sliced_quote_top_bar_left', array( $this, 'get_accept_decline_quote_buttons') );
 		add_filter( 'sliced_quote_footer', array( $this, 'create_accept_quote_popup') );
@@ -63,24 +63,11 @@ class Sliced_Payments {
 			}
 		}
 
-		if( ! empty( $online_gateways ) ) { ?>
-
-			<?php foreach ( $online_gateways as $gateway => $readable) { ?>
-				<a href="#TB_inline?height=300&width=450&inlineId=sliced_payment_form" title="<?php _e( 'Pay This Invoice', 'sliced-invoices' ); ?>" class="gateway btn btn-success thickbox btn-sm" data-gateway-readable="<?php esc_html_e( $readable ) ?>" data-gateway="<?php esc_html_e( $gateway ) ?>">
-				<?php
-				if ( function_exists('sliced_get_gateway_'.$gateway.'_label') ) {
-					echo call_user_func( 'sliced_get_gateway_'.$gateway.'_label' );
-				} else {
-					_e( 'Pay with', 'sliced-invoices' );
-					echo ' ';
-					esc_html_e( $readable );
-				}
-				?>
-				</a>
-			<?php }  ?>
-
-		<?php
-
+		// create the buttons
+		if( ! empty( $online_gateways ) ) {
+			foreach ( $online_gateways as $gateway => $readable) {
+				$this->create_payment_button_inline( $gateway, $readable );
+			}
 		}
 
 	}
@@ -88,8 +75,43 @@ class Sliced_Payments {
 
 
 	/**
-	 * Payment popup form
+	 * Payment button inline form
 	 *
+	 * @since   3.1.0
+	 */
+	public function create_payment_button_inline( $gateway, $readable ) {
+
+		$payments = get_option( 'sliced_payments' );
+		?>
+		
+		<div class="sliced_gateway_button">
+			<form method="POST" action="<?php echo esc_url( get_permalink( (int)$payments['payment_page'] ) ) ?>">
+				<?php do_action( 'sliced_before_payment_form_fields' ) ?>
+
+				<?php wp_nonce_field( 'sliced_invoices_payment', 'sliced_payment_nonce' ); ?>
+				<input type="hidden" name="sliced_payment_invoice_id" value="<?php the_ID(); ?>">
+				<input type="hidden" name="sliced_gateway" value="<?php echo $gateway; ?>" />
+				<input type="submit" name="start-payment" class="gateway btn btn-success btn-sm" value="<?php
+					if ( function_exists('sliced_get_gateway_'.$gateway.'_label') ) {
+						echo call_user_func( 'sliced_get_gateway_'.$gateway.'_label' );
+					} else {
+						_e( 'Pay with', 'sliced-invoices' );
+						echo ' ';
+						esc_html_e( $readable );
+					} ?>">
+
+				<?php do_action( 'sliced_after_payment_form_fields' ) ?>
+			</form>
+		</div>
+
+		<?php
+
+	}
+	
+	
+	/**
+	 * Payment popup form
+	 * DEPRECATED as of 3.1.0, may be removed in the future
 	 * @since   2.0.0
 	 */
 	public function create_payment_popup() {

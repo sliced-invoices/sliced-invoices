@@ -118,7 +118,7 @@ a img {outline:none; border:none;}
 
 /* PAYMENT POPUP THICKBOX */
 .gateway-image img {
-  margin: 20px auto 0;
+  margin: 50px auto 0;
   text-align: center;
   max-width: 200px;
   display: block;
@@ -255,12 +255,18 @@ a img {outline:none; border:none;}
 }
 
 /* Form specific */
+.sliced_gateway_button {
+    display: inline-block;
+}
 .sliced_payment_form #payment-form {
   padding: 10px 130px 0;
 }
 .sliced_payment_form .form-control {
   height: 46px;
   padding: 12px;
+}
+.sliced_payment_form .sliced-message span {
+	font-weight: bold;
 }
 .sliced .pad-right {
   padding-right: 25px;
