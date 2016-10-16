@@ -265,6 +265,8 @@ class Sliced_Paypal {
 			'&PAYMENTREQUEST_0_ITEMAMT=' . urlencode( sliced_get_invoice_total_raw( $id ) ) .
 			//'&PAYMENTREQUEST_0_TAXAMT=' . urlencode( sliced_get_invoice_tax_raw( $id ) ) .
 			'&PAYMENTREQUEST_0_AMT=' . urlencode( sliced_get_invoice_total_raw( $id ) ) .
+			'&SOLUTIONTYPE=Sole'. // to make PayPal account not required
+			'&LANDINGPAGE=Billing'. // this too
 			'&LOCALECODE='. urlencode( $locale ) . //PayPal pages to match the language on your website.
 			'&LOGOIMG='. urlencode( sliced_get_business_logo() ) .//site logo
 			'&CARTBORDERCOLOR=FFFFFF' . //border color of cart
