@@ -350,7 +350,7 @@ class Sliced_Metaboxes {
 			'desc'       => '',
 			'id'         => $prefix . 'tax',
 			'type'       => 'text',
-			'default'    => 'sliced_get_tax_amount',
+			'default'    => 'sliced_get_tax_amount_formatted',
 			'attributes' => array(
 				'placeholder' => '10',
 				'maxlength'   => '6',
@@ -498,7 +498,7 @@ class Sliced_Metaboxes {
 			'desc'       => '',
 			'id'         => $prefix . 'tax',
 			'type'       => 'text',
-			'default'    => 'sliced_get_tax_amount',
+			'default'    => 'sliced_get_tax_amount_formatted',
 			'attributes' => array(
 				'placeholder'   => '10',
 				'maxlength'     => '6',

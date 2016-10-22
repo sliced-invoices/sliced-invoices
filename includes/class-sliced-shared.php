@@ -182,7 +182,7 @@ class Sliced_Shared {
 	 *
 	 * @since   2.0.0
 	 */
-	public static function get_tax_amount( $id = 0 ) {
+	public static function get_tax_amount( $id = 0, $formatted = false ) {
 
 		$id = Sliced_Shared::get_item_id( $id );
 
@@ -202,7 +202,11 @@ class Sliced_Shared {
 	    	$amount 	= isset( $payments['tax'] ) ? $payments['tax'] : '0.00';
 	    }
 
-    	return self::get_raw_number( $amount );;
+		if ( $formatted ) {
+			return self::get_formatted_number( $amount );
+		} else {
+			return self::get_raw_number( $amount );
+		}
 	}
 	
 	/**

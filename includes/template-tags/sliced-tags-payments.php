@@ -12,6 +12,15 @@ if ( ! function_exists( 'sliced_get_tax_amount' ) ) :
 
 endif;
 
+if ( ! function_exists( 'sliced_get_tax_amount_formatted' ) ) :
+
+	function sliced_get_tax_amount_formatted() {
+		$output = Sliced_Shared::get_tax_amount( 0, true );
+		return apply_filters( 'sliced_get_tax_amount', $output );
+	}
+
+endif;
+
 if ( ! function_exists( 'sliced_get_tax_name' ) ) :
 
 	function sliced_get_tax_name() {
