@@ -219,31 +219,30 @@ class Sliced_Invoices {
 	 * @access   private
 	 */
 	private function define_public_hooks() {
+		
+		$plugin_public = new Sliced_Public( $this->get_plugin_name(), $this->get_version() );
 
-		if( ! is_admin() ) {
-			$plugin_public = new Sliced_Public( $this->get_plugin_name(), $this->get_version() );
+		$this->loader->add_action( 'sliced_head', $plugin_public, 'enqueue_styles' );
 
-			$this->loader->add_action( 'sliced_head', $plugin_public, 'enqueue_styles' );
+		$this->loader->add_action( 'sliced_invoice_head', $plugin_public, 'enqueue_invoice_scripts' );
+		$this->loader->add_action( 'sliced_invoice_head', $plugin_public, 'enqueue_invoice_styles' );
 
-			$this->loader->add_action( 'sliced_invoice_head', $plugin_public, 'enqueue_invoice_scripts' );
-			$this->loader->add_action( 'sliced_invoice_head', $plugin_public, 'enqueue_invoice_styles' );
+		$this->loader->add_action( 'sliced_quote_head', $plugin_public, 'enqueue_quote_scripts' );
+		$this->loader->add_action( 'sliced_quote_head', $plugin_public, 'enqueue_quote_styles' );
 
-			$this->loader->add_action( 'sliced_quote_head', $plugin_public, 'enqueue_quote_scripts' );
-			$this->loader->add_action( 'sliced_quote_head', $plugin_public, 'enqueue_quote_styles' );
+		$this->loader->add_action( 'sliced_quote_footer', $plugin_public, 'display_quote_comments' );
 
-			$this->loader->add_action( 'sliced_quote_footer', $plugin_public, 'display_quote_comments' );
+		$this->loader->add_action( 'script_loader_tag', $plugin_public, 'add_defer_attribute' );
 
-			$this->loader->add_action( 'script_loader_tag', $plugin_public, 'add_defer_attribute' );
+		$this->loader->add_filter( 'single_template', $plugin_public, 'invoice_quote_template' );
+		$this->loader->add_filter( 'page_template', $plugin_public, 'payment_templates' );
 
-			$this->loader->add_filter( 'single_template', $plugin_public, 'invoice_quote_template' );
-			$this->loader->add_filter( 'page_template', $plugin_public, 'payment_templates' );
+		$this->loader->add_filter( 'private_title_format', $plugin_public, 'title_format');
+		$this->loader->add_filter( 'protected_title_format', $plugin_public, 'title_format');
 
-			$this->loader->add_filter( 'private_title_format', $plugin_public, 'title_format');
-			$this->loader->add_filter( 'protected_title_format', $plugin_public, 'title_format');
-
-			$this->loader->add_action( 'sliced_invoice_after_body', $plugin_public, 'display_invoice_top_bar');
-			$this->loader->add_action( 'sliced_quote_after_body', $plugin_public, 'display_quote_top_bar');
-		}
+		$this->loader->add_action( 'sliced_invoice_after_body', $plugin_public, 'display_invoice_top_bar');
+		$this->loader->add_action( 'sliced_quote_after_body', $plugin_public, 'display_quote_top_bar');
+		
 	}
 
 
