@@ -316,7 +316,9 @@ class Sliced_Paypal {
 			'&RETURNURL=' . urlencode( $gateway['payment_page'] ).
 			'&CANCELURL=' . urlencode( $gateway['cancel_page'] ) .
 			'&PAYMENTREQUEST_0_CURRENCYCODE=' . urlencode( $currency && $currency !== 'default' ? $currency : $gateway['currency'] );
-		$payment_data .= $this->payment_data( $id );
+		$payment_data_transient = $this->payment_data( $id );
+		set_transient( 'sliced_paypal_'.$id, $payment_data_transient , 60*60*24 );
+		$payment_data .= $payment_data_transient;
 
 		$response = $this->paypal_request(
 			'SetExpressCheckout',
@@ -433,7 +435,8 @@ class Sliced_Paypal {
 		$payment_data   =   '&TOKEN=' . urlencode( $token ) .
 			'&PAYERID=' . urlencode( $payer_id ) .
 			'&PAYMENTREQUEST_0_CURRENCYCODE=' . urlencode( $currency && $currency !== 'default' ? $currency : $gateway['currency'] );
-		$payment_data   .= $this->payment_data( $id );
+		//$payment_data   .= $this->payment_data( $id );
+		$payment_data .= get_transient( 'sliced_paypal_'.$id );
 
 		$response = $this->paypal_request( 'DoExpressCheckoutPayment', $payment_data, $gateway['username'], $gateway['password'], $gateway['signature'], $gateway['mode'] );
 
