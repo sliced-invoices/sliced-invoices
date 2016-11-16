@@ -4,7 +4,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce
 Requires at least: 4.0
 Tested up to: 4.6.1
-Stable tag: 3.1.1
+Stable tag: 3.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -149,6 +149,10 @@ Yes, it does!  As of version 3.0.0 you can network activate Sliced Invoices in W
 
 
 == Changelog ==
+= 3.1.2 =
+* FIX: issue with Woo Invoices tax and shipping not being charged through PayPal
+* FIX: issue with template hooks not being loaded for emails sent via AJAX (i.e. from admin area)
+
 = 3.1.1 =
 * FIX: issue with tax calculation when using comma as decimal separator
 * UPDATE: Minor CSS update (add class 'sliced_form_field_required')
