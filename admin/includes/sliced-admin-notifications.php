@@ -298,13 +298,26 @@ class Sliced_Notifications {
 				break;
 
 			case 'payment_received':
+			
+				// temporary hack to fix total amount in email confirmation after paypal payments
+				$total = false;
+				$payment_data = get_transient( 'sliced_paypal_'.$id );
+				if ( $payment_data ) {
+					foreach ( explode( '&', $payment_data ) as $chunk ) {
+						$param = explode( "=", $chunk );
+						if ( $param[0] === 'PAYMENTREQUEST_0_AMT' ) {
+							$total = Sliced_Shared::get_formatted_currency( urldecode( $param[1] ) );
+							break;
+						}
+					}
+				}
 
 				 $content = __( 'You\'ve received a payment!', 'sliced-invoices' );
 				 $content .= '<br/>';
 				 $content .= sprintf(
 					__( '%1s has made a payment for %2s on %3s %4s.', 'sliced-invoices' ),
 					sliced_get_client_business( $this->id ),
-					sliced_get_total( $this->id ),
+					( $total ? $total : sliced_get_total( $this->id ) ), //hack
 					sliced_get_invoice_label(),
 					sliced_get_invoice_prefix( $this->id ) . sliced_get_invoice_number( $this->id )
 				 );
