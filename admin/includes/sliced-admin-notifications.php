@@ -412,9 +412,9 @@ class Sliced_Notifications {
 	 *
 	 * @return string
 	 */
-	public function get_attachments() {
+	public function get_attachments( $type = '' ) {
 		$attachment = null;
-		$output = apply_filters( 'sliced_email_attachment', $attachment, $this->id );
+		$output = apply_filters( 'sliced_email_attachment', $attachment, $this->id, $type );
 		if( ! $output ) {
 			$output = null;
 		}
@@ -443,7 +443,7 @@ class Sliced_Notifications {
 		$subject = $this->get_subject( $type );
 		$content = $this->get_content( $type );
 		$headers = $this->get_the_headers( $type );
-		$attachments = $this->get_attachments();
+		$attachments = $this->get_attachments( $type );
 
 		foreach ( $recipients_array as $to ) {
 			$send = wp_mail( $to, $subject, $content, $headers, $attachments );
