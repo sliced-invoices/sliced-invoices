@@ -379,6 +379,7 @@ Just a friendly reminder that your invoice %number% for %total% %is_was% due on 
 			'quote_status' => array(
 				'Draft',
 				'Sent',
+				'Accepted',
 				'Declined',
 				'Cancelled',
 			)

@@ -598,7 +598,8 @@ td.taxonomy-invoice_status a[href*="draft"], td.taxonomy-quote_status a[href*="d
   border-color: #25B1D1;
   color: #25B1D1;
 }
-td.taxonomy-invoice_status a[href*="paid"], .sliced .subsubsub .paid a, td.taxonomy-quote_status a[href*="sent"], .sliced .subsubsub .sent a {
+td.taxonomy-invoice_status a[href*="paid"], .sliced .subsubsub .paid a, td.taxonomy-quote_status a[href*="sent"], .sliced .subsubsub .sent a,
+td.taxonomy-quote_status a[href*="accepted"] {
   border-color: #60AD5D;
   color: #60AD5D;
 }

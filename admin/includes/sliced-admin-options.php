@@ -350,9 +350,23 @@ class Sliced_Options {
 				),
 				array(
 					'name'      => __( 'Accept Quote Button', 'sliced-invoices' ),
-					'desc'      => __( 'Yes, show the \'Accept Quote\' button on quotes. Invoice will be auto created.', 'sliced-invoices' ),
+					'desc'      => __( 'Yes, show the \'Accept Quote\' button on quotes.', 'sliced-invoices' ),
 					'id'        => 'accept_quote',
 					'type'      => 'checkbox',
+				),
+				array(
+					'name'      => __( 'Accepted Quote Action', 'sliced-invoices' ),
+					'desc'      => __( 'Actions to perform automatically when client accepts quote.', 'sliced-invoices' ),
+					'id'        => 'accepted_quote_action',
+					'type'      => 'select',
+					'default'   => 'convert',
+					'options'   => array(
+						'convert'         => __( 'Convert quote to invoice', 'sliced-invoices' ),
+						'convert_send'    => __( 'Convert quote to invoice and send to client', 'sliced-invoices' ),
+						'duplicate'       => __( 'Create invoice, but keep quote', 'sliced-invoices' ),
+						'duplicate_send'  => __( 'Create invoice and send to client, but keep quote', 'sliced-invoices' ),
+						'do_nothing'      => __( 'Do nothing', 'sliced-invoices' ),
+					),
 				),
 				array(
 					'name'      => __( 'Accept Quote Text', 'sliced-invoices' ),
