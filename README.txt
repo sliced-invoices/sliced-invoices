@@ -4,7 +4,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce
 Requires at least: 4.0
 Tested up to: 4.7
-Stable tag: 3.1.3
+Stable tag: 3.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,9 +67,10 @@ https://www.youtube.com/watch?v=9V6VRidkZFk
 *	[Client Area](https://slicedinvoices.com/extensions/client-area/?utm_source=WordPress&utm_medium=Readme&utm_content=Client-Area&utm_campaign=Free) extension
 *   [Gravity Forms extension](https://wordpress.org/plugins/sliced-invoices-gravity-forms/) (free)
 *   [Contact Form 7 extension](https://wordpress.org/plugins/sliced-invoices-contact-form-7/) (free)
-*   [Better URL's](https://slicedinvoices.com/extensions/better-urls/?utm_source=WordPress&utm_medium=Readme&utm_content=Better-URLs&utm_campaign=Free) extension (free)
-*   [Stripe Payment Gateway](https://slicedinvoices.com/extensions/stripe-payment-gateway/?utm_source=WordPress&utm_medium=Readme&utm_content=Stripe&utm_campaign=Free)
+*   [2Checkout Payment Gateway](https://slicedinvoices.com/extensions/2checkout-payment-gateway/?utm_source=WordPress&utm_medium=Readme&utm_content=2Checkout&utm_campaign=Free)
 *   [Braintree Payment Gateway](https://slicedinvoices.com/extensions/braintree-payment-gateway/?utm_source=WordPress&utm_medium=Readme&utm_content=Braintree&utm_campaign=Free)
+*   [Stripe Payment Gateway](https://slicedinvoices.com/extensions/stripe-payment-gateway/?utm_source=WordPress&utm_medium=Readme&utm_content=Stripe&utm_campaign=Free)
+*   [Better URL's](https://slicedinvoices.com/extensions/better-urls/?utm_source=WordPress&utm_medium=Readme&utm_content=Better-URLs&utm_campaign=Free) extension (free)
 *   [Recurring invoices](https://slicedinvoices.com/extensions/recurring-invoices/?utm_source=WordPress&utm_medium=Readme&utm_content=Recurring-Invoices&utm_campaign=Free) extension
 *   [Deposit invoices](https://slicedinvoices.com/extensions/deposit-invoices/?utm_source=WordPress&utm_medium=Readme&utm_content=Deposit-Invoices&utm_campaign=Free) extension
 * 	Plus many more available [here](https://slicedinvoices.com/extensions/?utm_source=WordPress&utm_medium=Readme&utm_content=Extensions&utm_campaign=Free)
@@ -149,6 +150,12 @@ Yes, it does!  As of version 3.0.0 you can network activate Sliced Invoices in W
 
 
 == Changelog ==
+= 3.2.0 =
+* NEW: new automatic actions to choose from when client accepts quote
+* NEW: ability to edit clients directly from Edit Quote / Edit Invoice screens
+* UPDATE: Add $type to filter sliced_email_attachment
+* UPDATE: Update .pot file for future translations
+
 = 3.1.3 =
 * FIX: issue with Woo Invoices showing incorrect total in payment confirmation email
 
