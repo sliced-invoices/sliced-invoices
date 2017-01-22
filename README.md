@@ -5,7 +5,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
 Tested up to: 4.7
-Stable tag: 3.2.0
+Stable tag: 3.2.1
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -151,6 +151,10 @@ Yes, it does!  As of version 3.0.0 you can network activate Sliced Invoices in W
 
 
 ## Changelog
+##  3.2.1
+* FIX: issue where other plugins' custom columns inadvertently removed from Users admin page.
+* FIX: sort issue preventing auto-saved drafts from being displayed in admin pages
+
 ##  3.2.0
 * NEW: new automatic actions to choose from when client accepts quote
 * NEW: ability to edit clients directly from Edit Quote / Edit Invoice screens
