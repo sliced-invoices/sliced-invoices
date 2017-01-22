@@ -445,17 +445,13 @@ class Sliced_User_Columns {
 	public function add_user_columns( $user_columns )  {
 
 		$columns = array();
-
-		/* Adds the checkbox column. */
-		$columns['cb'] = '<input type="checkbox" />';
-
-		 // /* Add custom columns and overwrite the 'title' column. */
-		$columns['username']                = $user_columns['username'];
-		$columns['sliced_client_business']  = __('Business', 'sliced-invoices');
-		$columns['name']                    = $user_columns['name'];
-		$columns['email']                   = $user_columns['email'];
-		$columns['role']                    = $user_columns['role'];
-		$columns['posts']                   = $user_columns['posts'];
+		foreach ( $user_columns as $key => $value ) {
+			$columns[ $key ] = $value;
+			// insert business column after user column:
+			if ( $key === 'username' ) {
+				$columns['sliced_client_business']  = __('Business', 'sliced-invoices');
+			}
+		}
 
 		return $columns;
 
