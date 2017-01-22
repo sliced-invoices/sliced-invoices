@@ -242,9 +242,9 @@ class Sliced_Columns {
 			return;
 
 		$query->set('order','DESC');
-		$query->set('orderby','meta_value_num');
-		$query->set('meta_key','_' . esc_html( $_GET['post_type'] ) . '_created');
-
+		$query->set('orderby','post_date');
+		//$query->set('meta_key','_' . esc_html( $_GET['post_type'] ) . '_created');
+		
 		// filtering
 		if ( isset( $_GET['sliced_client'] ) && $_GET['sliced_client'] ) {
 			$query->query_vars['meta_query'] = array(
