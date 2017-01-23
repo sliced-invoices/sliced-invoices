@@ -495,6 +495,8 @@ class Sliced_User_Columns {
 
 			return $billing_client;
 		}
+		
+		return $value;
 
 	}
 
