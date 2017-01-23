@@ -95,6 +95,13 @@ class Sliced_Columns {
 			$columns['comments'] = '<span><span title="Comments" class="vers comment-grey-bubble"><span class="screen-reader-text">Comments</span></span></span>';
 		}
 		$columns['sliced_actions'] = __( 'Actions', 'sliced-invoices' );
+		
+		/* allow 3rd-party columns */
+		foreach ( $post_columns as $key => $value ) {
+			if ( ! isset( $columns[ $key ] ) ) {
+				$columns[ $key ] = $value;
+			}
+		}
 
 		/* Return the columns. */
 		return apply_filters( 'sliced_edit_admin_columns', $columns );
