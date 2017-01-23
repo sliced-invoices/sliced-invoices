@@ -347,7 +347,7 @@ class Sliced_Payments {
 
 		$message = apply_filters( 'sliced_decline_quote_message', $message, $id );
 
-		sliced_print_message( $id, $message, 'failed', false );
+		sliced_print_message( $id, $message, 'failed' );
 
 	}
 
@@ -530,7 +530,7 @@ class Sliced_Payments {
 
 		$message = apply_filters( 'sliced_convert_quote_success_message', $message, $id );
 
-		sliced_print_message( $id, $message, 'success', false );
+		sliced_print_message( $id, $message, 'success' );
 
 	}
 

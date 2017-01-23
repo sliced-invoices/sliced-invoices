@@ -226,7 +226,7 @@ class Sliced_Paypal {
 		$httpResponse = curl_exec($ch);
 
 		if( ! $httpResponse ) {
-			sliced_print_message( $id, "$methodName_ failed: ".curl_error($ch).'('.curl_errno($ch).')', 'failed', false );
+			sliced_print_message( $id, "$methodName_ failed: ".curl_error($ch).'('.curl_errno($ch).')', 'failed' );
 		}
 
 		// Extract the response details.
@@ -241,7 +241,7 @@ class Sliced_Paypal {
 		}
 
 		if((0 == sizeof($response)) || ! array_key_exists('ACK', $response)) {
-			sliced_print_message( $id, "Invalid HTTP Response for POST request($nvpreq) to $API_Endpoint.", 'failed', false );
+			sliced_print_message( $id, "Invalid HTTP Response for POST request($nvpreq) to $API_Endpoint.", 'failed' );
 		}
 
 		return $response;
@@ -298,7 +298,7 @@ class Sliced_Paypal {
 
 		// check the nonce
 		if( ! isset( $_POST['sliced_payment_nonce'] ) || ! wp_verify_nonce( $_POST['sliced_payment_nonce'], 'sliced_invoices_payment' ) ) {
-			sliced_print_message( $id, __( 'There was an error with the form submission, please try again.', 'sliced-invoices' ), 'failed', false );
+			sliced_print_message( $id, __( 'There was an error with the form submission, please try again.', 'sliced-invoices' ), 'failed' );
 			return;
 		}
 
@@ -355,7 +355,7 @@ class Sliced_Paypal {
 
 			$message = 'Error Code: ' . urldecode( $response["L_ERRORCODE0"] ) . '<br />';
 			$message .= urldecode( $response["L_LONGMESSAGE0"] );
-			sliced_print_message( $id, urldecode( $message ), 'failed', false );
+			sliced_print_message( $id, urldecode( $message ), 'failed' );
 
 		}
 
@@ -505,7 +505,7 @@ class Sliced_Paypal {
 			/**
 			 * Print the message
 			 */
-			sliced_print_message( $id, urldecode( $response["L_LONGMESSAGE0"] ), 'failed', false );
+			sliced_print_message( $id, urldecode( $response["L_LONGMESSAGE0"] ), 'failed' );
 
 			/**
 			 * send notifications, update status etc
