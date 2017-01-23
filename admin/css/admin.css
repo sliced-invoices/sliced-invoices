@@ -676,6 +676,20 @@ td.taxonomy-invoice_status a[href*="cancelled"], td.taxonomy-quote_status a[href
   min-width: 50px;
 }
 
+/* subscription invoices */
+.sliced .sliced-subscription-status {
+	font-weight: bold;
+}
+.sliced .sliced-subscription-status .sliced-subscription-pending {
+	color: #ED904E;
+}
+.sliced .sliced-subscription-status .sliced-subscription-active {
+	color: #60AD5D;
+}
+.sliced .sliced-subscription-status .sliced-subscription-cancelled {
+	color: #a00;
+}
+
 /* qTranslateX support */
 .sliced .qtranxs-lang-switch-wrap {
 	margin: 1px 20px;
