@@ -245,30 +245,19 @@ class Sliced_Columns {
 	 */
 	public function initial_orderby_filtering( $query ) {
 
-		if ( isset( $_GET['orderby'] ) || isset( $_GET['order'] ) )
-			return;
+		if ( ! isset( $_GET['order'] ) ) {
+			$query->set('order','DESC');
+		}
 
-		$query->set('order','DESC');
-		$query->set('orderby','post_date');
-		//$query->set('meta_key','_' . esc_html( $_GET['post_type'] ) . '_created');
+		if ( ! isset( $_GET['orderby'] ) ) {
+			$query->set('orderby','ID');
+		}
 		
 		// filtering
 		if ( isset( $_GET['sliced_client'] ) && $_GET['sliced_client'] ) {
 			$query->query_vars['meta_query'][] = array(
 				 'key'      => '_sliced_client',
 				 'value'    => (int)$_GET['sliced_client']
-			);
-		}
-
-		 // filtering
-		$type = sliced_get_the_type();
-		if ( isset( $_GET[$type . '_status'] ) && $_GET[$type . '_status'] ) {
-			$the_query->query_vars['tax_query'] = array(
-				array(
-					'taxonomy' => $type . '_status',
-					'terms'    => $_GET[$type . '_status'],
-					'field'    => 'slug',
-				)
 			);
 		}
 
