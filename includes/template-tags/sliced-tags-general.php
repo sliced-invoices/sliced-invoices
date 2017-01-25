@@ -159,7 +159,11 @@ if ( ! function_exists( 'sliced_get_status' ) ) :
 		}
 		$type = Sliced_Shared::get_type( $id );
 		$statuses = wp_get_post_terms( $id, $type . '_status', array( "fields" => "names" ) );
-		$output = $statuses[0];
+		if ( count( $statuses ) > 0 ) { 
+			$output = $statuses[0];
+		} else {
+			$output = '';
+		}
 		return apply_filters( 'sliced_get_status', $output, $id );
 	}
 
