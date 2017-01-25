@@ -890,6 +890,73 @@ class Sliced_Admin {
 	 */
 	public function mark_invoice_overdue() {
 
+		/**
+		 * Some explanation of the timezone maths, because it gets confusing quickly:
+		 * 
+		 * 1) Due dates are stored in _sliced_invoice_due as the unix timestamp
+		 * representing the date, at precisely 12:00 AM UTC.  For example: a due date
+		 * of 25 January 2017 would be stored as the timestamp equivalent of
+		 * '2017-01-25 00:00:00' (which is 1485302400).
+		 * 
+		 * 
+		 * 2) current_time( 'timestamp' ) returns the unix timestamp of the current time,
+		 * localized to the timezone set in the WordPress settings.
+		 * 
+		 * For example:
+		 * - let's say the current time in UTC is 1485334800 (2017-01-25 09:00:00)
+		 * - and let's say the WordPress timezone is set to UTC+11 (Melbourne)
+		 * - in this case, current_time( 'timestamp' ) will return 1485374400
+		 * (2017-01-25 20:00:00), which is the current time in Melbourne.
+		 *    
+		 * 
+		 * 3) So, you ask, why are we comparing a UTC timestamp (due date) with a
+		 * localized timestamp (current_time('timestamp'))?  Shouldn't we be comparing
+		 * UTC with UTC?  I.e. shouldn't we be using current_time('timestamp', true)?
+		 * 
+		 * You'd think so, but here's why we don't.  If our due date is
+		 * 2017-01-25 00:00:00 UTC, and our site is in Melbourne, comparing UTC to UTC
+		 * would mean our invoices become "overdue" at 2017-01-25 11:00:00 Melbourne
+		 * time.  Kind of odd to become "overdue" in the middle of the day, don't you
+		 * think?
+		 * 
+		 * To solve this, we could localize the due date.  For sake of argument, let's
+		 * consider the scenario using UTC with current_time('timestamp',true).  If we
+		 * roll back the due date by the 11 hour offset, we get: 2017-01-24 13:00:00 UTC,
+		 * which is the same as 2017-01-25 00:00:00 Melbourne time.  The formula would
+		 * thus be:
+		 * 
+		 *         due_date - offset < current_time('timestamp',true)
+		 * 		
+		 *     ...which can also be written as:
+		 * 	
+		 * 	       due_date < current_time('timestamp',true) + offset
+		 * 		
+		 *     ...but, guess what, current_time('timestamp',true) + offset is the exact
+		 *     same thing as current_time('timestamp') (the localized time)!
+		 * 	
+		 *     So we just use:
+		 * 	
+		 * 	       due_date < current_time('timestamp')
+		 * 	
+		 * Confused yet?  Here's one final complication:
+		 *    
+		 * 
+		 * 4) Even though the due dates are stored with the time 00:00:00 (due to issues
+		 * we had between CMB2 and the Datepicker script), we don't really want to
+		 * consider an invoice "overdue" until the entire day has passed.  So we have to
+		 * advance the due date by 23:59:59, or 86399 seconds.  This makes our comparison
+		 * formula like this:
+		 * 
+		 *         due_date + 86399 < current_time('timestamp')
+		 * 		
+		 *     ...which can also be written as:
+		 * 	
+		 *         due_date < current_time('timestamp') - 86399
+		 * 		
+		 *     ...hence what you see below.
+		 *
+		 */
+		
 		$taxonomy = 'invoice_status';
 		$args = array(
 			'post_type'     =>  'sliced_invoice',
@@ -897,7 +964,12 @@ class Sliced_Admin {
 			'meta_query'    =>  array(
 				array(
 					'key' 		=>  '_sliced_invoice_due',
-					'value' 	=>  current_time( 'timestamp' ),
+					'value' 	=>  0,	// this filters out invoices with no due date set
+					'compare' 	=>  '>',
+				),
+				array(
+					'key' 		=>  '_sliced_invoice_due',
+					'value' 	=>  current_time( 'timestamp' ) - 86399, // see explanation above
 					'compare' 	=>  '<',
 				),
 			),
@@ -908,14 +980,15 @@ class Sliced_Admin {
 					'terms'    => 'unpaid',
 				),
 			),
+			'posts_per_page' => -1,
 		);
-		$overdue = get_posts( apply_filters( 'sliced_mark_overdue_query', $args ) );
+		$overdues = get_posts( apply_filters( 'sliced_mark_overdue_query', $args ) );
 
 		/*
 		 * If a post exists, mark it as overdue.
 		 */
-		foreach ( $overdue as $post ) {
-			Sliced_Invoice::set_as_overdue( $post->ID );
+		foreach ( $overdues as $overdue ) {
+			Sliced_Invoice::set_as_overdue( $overdue->ID );
 		}
 
 	}

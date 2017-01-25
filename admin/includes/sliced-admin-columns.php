@@ -254,11 +254,9 @@ class Sliced_Columns {
 		
 		// filtering
 		if ( isset( $_GET['sliced_client'] ) && $_GET['sliced_client'] ) {
-			$query->query_vars['meta_query'] = array(
-				array(
-					 'key'      => '_sliced_client',
-					 'value'    => (int)$_GET['sliced_client']
-				)
+			$query->query_vars['meta_query'][] = array(
+				 'key'      => '_sliced_client',
+				 'value'    => (int)$_GET['sliced_client']
 			);
 		}
 
