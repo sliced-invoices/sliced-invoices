@@ -405,7 +405,7 @@ class Sliced_Payments {
 			delete_post_meta( $id, '_sliced_quote_terms' );
 
 			// update the invoice number
-			Sliced_Invoice::update_invoice_number();
+			Sliced_Invoice::update_invoice_number( $id );
 
 			// Set the status as draft
 			Sliced_Invoice::set_as_draft( $id );
@@ -483,7 +483,7 @@ class Sliced_Payments {
 			delete_post_meta( $new_post_id, '_sliced_quote_terms' );
 
 			// update the invoice number and set as draft
-			Sliced_Invoice::update_invoice_number();
+			Sliced_Invoice::update_invoice_number( $new_post_id );
 			Sliced_Invoice::set_as_draft( $new_post_id );
 			
 			// make the quote as accepted

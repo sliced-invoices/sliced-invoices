@@ -38,7 +38,7 @@ class Sliced_Quote {
 
 	public function __construct() {
 
-		add_action( 'admin_init', array( $this, 'update_quote_number' ), 1 );
+		add_action( 'wp_insert_post', array( $this, 'update_quote_number' ), 10, 3 );
 
 	}
 
@@ -192,52 +192,39 @@ class Sliced_Quote {
 
 
 	/**
-	  * Get the last quote number that was used.
-	  *
-	  * @since   2.0.0
-	  */
-	public static function get_last_number() {
+	 * Check if quote number already in use
+	 *
+	 * @since   3.3.0
+	 */
+	public static function is_duplicate_quote_number( $id ) {
 
-		$last_number = null;
-		// $quotes    	 = get_option( 'sliced_quotes' );
-		// $prefix      = $quotes['prefix'];
-
+		$quote_prefix = get_post_meta( $id, '_sliced_quote_prefix', true );
+		$quote_number = get_post_meta( $id, '_sliced_quote_number', true );
+	
 		$args = array(
 			'post_type'      => 'sliced_quote',
-			'post_status'    => 'publish',
+			'post_status'    => array( 'publish', 'future' ),
 			'posts_per_page' => -1,
-			'fields'         => 'ids',
-			// 'meta_query' => array(
-			// 	'relation' => 'OR',
-			// 	// only get invoices matching the current prefix as the prefix can change year to year
-			// 	array(
-			// 		'key'     => '_sliced_quote_prefix',
-			// 		'value'   => $prefix,
-			// 		'compare' => '=',
-			// 	),
-			// 	array(
-			// 		'key'     => '_sliced_quote_prefix',
-			// 		'compare' => 'NOT EXISTS',
-			// 	),
-			// ),
+			'meta_query' => array(
+				array(
+					'key'     => '_sliced_quote_prefix',
+					'value'   => $quote_prefix,
+					'compare' => '=',
+				),
+				array(
+					'key'     => '_sliced_quote_number',
+					'value'   => $quote_number,
+					'compare' => '=',
+				),
+			),
 		);
 
-		$the_query = new WP_Query( $args );
-		$ids = array();
-		if( $the_query->posts ) :
-			foreach ( $the_query->posts as $id ) {
-				$number = sliced_get_quote_number( $id );
-				$ids[$id] = intval( $number );
-			};
-		endif;
-		if( ! empty( $ids ) ) {
-			$last_number = max($ids);
+		$query = new WP_Query( $args );
+		if( $query->found_posts > 1 ) {
+			return true;
 		} else {
-			$last_number = null;
+			return false;
 		}
-
-		wp_reset_postdata();
-		return $last_number;
 
 	}
 
@@ -247,22 +234,33 @@ class Sliced_Quote {
 	  *
 	  * @since   2.0.0
 	  */
-	public static function update_quote_number() {
-
-		$quotes      = get_option( 'sliced_quotes' );
-		$last_number = self::get_last_number( 'sliced_quote' );
-
-		if( (int)$quotes['number'] <= (int)$last_number ) {
-
+	public static function update_quote_number( $post_id = null, $post = null, $update = null ) {
+	
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) { return; }
+		if ( false !== wp_is_post_revision( $post_id ) ) { return; }
+		if ( get_post_type( $post_id ) !== 'sliced_quote' ) { return; }
+		
+		$quotes = get_option( 'sliced_quotes' );
+		
+		if ( isset( $_POST['_sliced_quote_number'] ) ) {
+			$this_number = $_POST['_sliced_quote_number'];
+		} elseif ( $post_id > 0 && $post = get_post( $post_id ) ) {
+			$this_number = $post->_sliced_quote_number;
+		} else {
+			$this_number = 0;
+		}
+		
+		if( (int)$quotes['number'] <= (int)$this_number ) {
+		
 			// clean up the number
-			$length     = strlen( (string)$quotes['number'] ); // get the length of the number
-			$new_number = (int)$last_number + 1; // increment number
+			$length     = strlen( (string)$this_number ); // get the length of the number
+			$new_number = (int)$this_number + 1; // increment number
 			$number     = zeroise( $new_number, $length ); // return the new number, ensuring correct length (if using leading zeros)
 
 			// set the number in the options as the new, next number and update it.
 			$quotes['number'] = (string)$number;
-			update_option( 'sliced_quotes', $quotes);
-
+			update_option( 'sliced_quotes', $quotes );
+			
 		}
 
 	}

@@ -125,6 +125,9 @@
   float: right;
   width: 75% !important;
 }
+.sliced #side-sortables .cmb2-id--sliced-quote-number .warning, .sliced #side-sortables .cmb2-id--sliced-invoice-number .warning {
+  display:inline-block;
+}
 .sliced #side-sortables select {
   width: 100%;
 }

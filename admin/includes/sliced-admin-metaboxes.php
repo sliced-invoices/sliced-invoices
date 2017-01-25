@@ -302,7 +302,8 @@ class Sliced_Metaboxes {
 			'id'      => $prefix . 'quote_number',
 			'type'    => 'text',
 			'default' => 'sliced_get_next_quote_number',
-			'before'  => array( $this, 'quote_prefix' )
+			'before'  => array( $this, 'quote_prefix' ),
+			'after'   => array( $this, 'is_duplicate_quote_number' ),
 		) );
 		$info->add_field( array(
 			'name'        => __( 'Created Date', 'sliced-invoices' ),
@@ -436,6 +437,7 @@ class Sliced_Metaboxes {
 			'type'    => 'text',
 			'default' => 'sliced_get_next_invoice_number',
 			'before'  => array( $this, 'invoice_prefix' ),
+			'after'   => array( $this, 'is_duplicate_invoice_number' ),
 		) );
 		$info->add_field( array(
 			'name' => __( 'Order Number', 'sliced-invoices' ),
@@ -684,6 +686,18 @@ class Sliced_Metaboxes {
 
 	public function invoice_prefix() {
 		return '<span class="prefix">' . sliced_get_invoice_prefix() . '</span>';
+	}
+	
+	public function is_duplicate_quote_number() {
+		if ( Sliced_Quote::is_duplicate_quote_number( (int) $_GET['post'] ) ) {
+			return '<span class="warning">' . __( 'Warning: duplicate quote number', 'sliced-invoices' ) . '</span>';
+		}
+	}
+	
+	public function is_duplicate_invoice_number() {
+		if ( Sliced_Invoice::is_duplicate_invoice_number( (int) $_GET['post'] ) ) {
+			return '<span class="warning">' . __( 'Warning: duplicate invoice number', 'sliced-invoices' ) . '</span>';
+		}
 	}
 
 }

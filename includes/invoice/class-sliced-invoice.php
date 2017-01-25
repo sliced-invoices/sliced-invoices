@@ -39,9 +39,9 @@ class Sliced_Invoice {
 	);
 
 
-	 public function __construct() {
+	public function __construct() {
 
-		add_action( 'admin_init', array( $this, 'update_invoice_number' ), 1 );
+		add_action( 'wp_insert_post', array( $this, 'update_invoice_number' ), 10, 3 );
 
 	}
 
@@ -241,52 +241,39 @@ class Sliced_Invoice {
 
 
 	/**
-	 * Get the last invoice number that was used.
+	 * Check if invoice number already in use
 	 *
-	 * @since   2.0.0
+	 * @since   3.3.0
 	 */
-	public static function get_last_number() {
+	public static function is_duplicate_invoice_number( $id ) {
 
-		$last_number = null;
-		//$invoices    = get_option( 'sliced_invoices' );
-		//$prefix      = $invoices['prefix'];
-
+		$invoice_prefix = get_post_meta( $id, '_sliced_invoice_prefix', true );
+		$invoice_number = get_post_meta( $id, '_sliced_invoice_number', true );
+	
 		$args = array(
 			'post_type'      => 'sliced_invoice',
 			'post_status'    => array( 'publish', 'future' ),
 			'posts_per_page' => -1,
-			'fields'         => 'ids',
-			// 'meta_query' => array(
-			// 	'relation' => 'OR',
-			// 	// only get invoices matching the current prefix as the prefix can change year to year
-			// 	array(
-			// 		'key'     => '_sliced_invoice_prefix',
-			// 		'value'   => $prefix,
-			// 		'compare' => '=',
-			// 	),
-			// 	array(
-			// 		'key'     => '_sliced_invoice_prefix',
-			// 		'compare' => 'NOT EXISTS',
-			// 	),
-			// ),
+			'meta_query' => array(
+				array(
+					'key'     => '_sliced_invoice_prefix',
+					'value'   => $invoice_prefix,
+					'compare' => '=',
+				),
+				array(
+					'key'     => '_sliced_invoice_number',
+					'value'   => $invoice_number,
+					'compare' => '=',
+				),
+			),
 		);
 
-		$the_query = new WP_Query( $args );
-		$ids = array();
-		if( $the_query->posts ) :
-			foreach ( $the_query->posts as $id ) {
-				$number = sliced_get_invoice_number( $id );
-				$ids[$id] = intval( $number );
-			};
-		endif;
-		if( ! empty( $ids ) ) {
-			$last_number = max($ids);
+		$query = new WP_Query( $args );
+		if( $query->found_posts > 1 ) {
+			return true;
 		} else {
-			$last_number = null;
+			return false;
 		}
-
-		wp_reset_postdata();
-		return $last_number;
 
 	}
 
@@ -296,22 +283,33 @@ class Sliced_Invoice {
 	 *
 	 * @since   2.0.0
 	 */
-	public static function update_invoice_number() {
-
-		$invoices    = get_option( 'sliced_invoices' );
-		$last_number = self::get_last_number();
-
-		if( (int)$invoices['number'] <= (int)$last_number ) {
-
+	public static function update_invoice_number( $post_id = null, $post = null, $update = null ) {
+	
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) { return; }
+		if ( false !== wp_is_post_revision( $post_id ) ) { return; }
+		if ( get_post_type( $post_id ) !== 'sliced_invoice' ) { return; }
+		
+		$invoices = get_option( 'sliced_invoices' );
+		
+		if ( isset( $_POST['_sliced_invoice_number'] ) ) {
+			$this_number = $_POST['_sliced_invoice_number'];
+		} elseif ( $post_id > 0 && $post = get_post( $post_id ) ) {
+			$this_number = $post->_sliced_invoice_number;
+		} else {
+			$this_number = 0;
+		}
+		
+		if( (int)$invoices['number'] <= (int)$this_number ) {
+		
 			// clean up the number
-			$length     = strlen( (string)$invoices['number'] ); // get the length of the number
-			$new_number = (int)$last_number + 1; // increment number
+			$length     = strlen( (string)$this_number ); // get the length of the number
+			$new_number = (int)$this_number + 1; // increment number
 			$number     = zeroise( $new_number, $length ); // return the new number, ensuring correct length (if using leading zeros)
 
 			// set the number in the options as the new, next number and update it.
 			$invoices['number'] = (string)$number;
-			update_option( 'sliced_invoices', $invoices);
-
+			update_option( 'sliced_invoices', $invoices );
+			
 		}
 
 	}
