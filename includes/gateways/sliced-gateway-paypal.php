@@ -29,7 +29,6 @@ function sliced_get_gateway_paypal_label() {
 class Sliced_Paypal {
 
 
-
 	/**
 	 * Hook into the appropriate actions when the class is constructed.
 	 */
@@ -46,25 +45,6 @@ class Sliced_Paypal {
 		add_action( 'sliced_do_payment', array( $this, 'payment_return'), 10 );
 
 	}
-	
-
-
-	/**
-	 * Add this gateway to the list of registered payment methods.
-	 *
-	 * @since   2.0.0
-	 */
-	public function add_payment_method( $pay_array ) {
-
-		$payments = get_option( 'sliced_payments' );
-
-		if ( ! empty( $payments['paypal_signature'] ) && ! empty( $payments['paypal_username'] ) && ! empty( $payments['paypal_password'] ) ) {
-			$pay_array['paypal'] = 'PayPal';
-		}
-
-		return $pay_array;
-	}
-
 
 
 	/**
@@ -119,6 +99,23 @@ class Sliced_Paypal {
 	
 	
 	/**
+	 * Add this gateway to the list of registered payment methods.
+	 *
+	 * @since   2.0.0
+	 */
+	public function add_payment_method( $pay_array ) {
+
+		$payments = get_option( 'sliced_payments' );
+
+		if ( ! empty( $payments['paypal_signature'] ) && ! empty( $payments['paypal_username'] ) && ! empty( $payments['paypal_password'] ) ) {
+			$pay_array['paypal'] = 'PayPal';
+		}
+
+		return $pay_array;
+	}
+	
+	
+	/**
 	 * Add the options for this gateway to the translate settings.
 	 *
 	 * @since   2.8.6
@@ -144,25 +141,40 @@ class Sliced_Paypal {
 		return $options;
 
 	}
-
-
-
+	
+	
 	/**
-	 * Make the field values available.
+	 * Cancel subscription invoice payments
 	 *
-	 * @since   2.0.0
+	 * @since   3.3.0
 	 */
-	public function get_field_values( $fields ) {
-
-		$payments = get_option( 'sliced_payments' );
-
-		$fields['paypal_username']  = isset( $payments['paypal_username'] ) ? $payments['paypal_username'] : '';
-		$fields['paypal_password']  = isset( $payments['paypal_password'] ) ? $payments['paypal_password'] : '';
-		$fields['paypal_signature'] = isset( $payments['paypal_signature'] ) ? $payments['paypal_signature'] : '';
-		$fields['paypal_mode']      = isset( $payments['paypal_mode'] ) ? $payments['paypal_mode'] : '';
-
-		return $fields;
-
+	public function cancel_subscription( $id, $gateway_subscr_id ) {
+		
+		$gateway = $this->gateway();
+		
+		$payment_data = '&PROFILEID=' . urlencode( $gateway_subscr_id ) .
+			'&ACTION=Cancel';
+		
+		$response = $this->paypal_request(
+			'ManageRecurringPaymentsProfileStatus',
+			$payment_data,
+			$gateway['username'],
+			$gateway['password'],
+			$gateway['signature'],
+			$gateway['mode'] );
+		
+		if( 'SUCCESS' == strtoupper( $response["ACK"] ) || 'SUCCESSWITHWARNING' == strtoupper( $response["ACK"] ) ) {
+			return array(
+				'status'  => 'success',
+				'message' => urldecode( $response['L_LONGMESSAGE0'] ),
+			);
+		} else {
+			return array(
+				'status'  => 'error',
+				'message' => 'Gateway says: ' . urldecode( $response['L_LONGMESSAGE0'] ),
+			);
+		}
+		
 	}
 
 
@@ -184,6 +196,275 @@ class Sliced_Paypal {
 		$gateway['cancel_page']  = esc_url( get_permalink( (int)$payments['payment_page'] ) ); //Cancel URL if user clicks cancel
 
 		return $gateway;
+	}
+	
+	/**
+	 * Make the field values available.
+	 *
+	 * @since   2.0.0
+	 */
+	public function get_field_values( $fields ) {
+
+		$payments = get_option( 'sliced_payments' );
+
+		$fields['paypal_username']  = isset( $payments['paypal_username'] ) ? $payments['paypal_username'] : '';
+		$fields['paypal_password']  = isset( $payments['paypal_password'] ) ? $payments['paypal_password'] : '';
+		$fields['paypal_signature'] = isset( $payments['paypal_signature'] ) ? $payments['paypal_signature'] : '';
+		$fields['paypal_mode']      = isset( $payments['paypal_mode'] ) ? $payments['paypal_mode'] : '';
+
+		return $fields;
+
+	}
+	
+	
+	/**
+	 * Helper to convert billing period value into the specific value needed by this gateway
+	 *
+	 * @since   3.3.0
+	 */
+	public function get_billing_period( $input ) {
+		switch ( $input ) {
+			case 'days':
+				$output = 'Day';
+				break;
+			case 'months':
+				$output = 'Month';
+				break;
+			case 'years':
+				$output = 'Year';
+				break;
+			default:
+				$output = 'Month';
+		}
+		return $output;
+	}
+
+
+	/**
+	 * Further processing after returning from Paypal.
+	 *
+	 * @since   2.0.0
+	 */
+	public function payment_return( $data ) {
+	
+		// is this a paypal IPN?
+		if ( isset( $_POST['ipn_track_id'] ) ) {
+			$this->process_ipn();
+			return;
+		}
+
+		// check for token back from paypal
+		if ( ! isset( $_GET['token'] ) ) {
+			return;
+		}
+		
+		$token      = $_GET['token'];
+		$payer_id   = isset( $_GET['PayerID'] ) ? $_GET['PayerID'] : false;
+
+		/*
+		 * get the invoice that matches the token we are receiving
+		 */
+		$args = array(
+			'post_type'     =>  'sliced_invoice',
+			'meta_query'    =>  array(
+				array(
+					'value' =>  esc_html( $token )
+				)
+			)
+		);
+		$query      = get_posts( $args );
+		$id         = $query[0]->ID;
+		
+		// if we can't get the id, stop
+		if ( ! $id ) {
+			sliced_print_message( $id, __( 'Error processing the payment.<br> <a href="' . esc_url( sliced_get_the_link( $id ) ) . '">Go back</a> and try again?', 'sliced-invoices' ), 'failed' );
+			return;
+		}
+		
+		// otherwise, we go on...
+		$payment    = get_post_meta( $id, '_sliced_payment', false );
+		$currency   = sliced_get_invoice_currency( $id );
+		$gateway    = $this->gateway();
+		
+		/*
+		 * Subscriptions only -- do GetExpressCheckoutDetails 
+		 */
+		$subscription_status = get_post_meta( $id, '_sliced_subscription_status', true );
+		if ( $subscription_status === 'pending' ) {
+			// if it's for a subscription invoice we have to get PayerID in a separate call, now:
+			$payment_data = '&TOKEN=' . urlencode( $token );
+			$response = $this->paypal_request(
+				'GetExpressCheckoutDetails',
+				$payment_data,
+				$gateway['username'],
+				$gateway['password'],
+				$gateway['signature'],
+				$gateway['mode']
+			);
+			if( "SUCCESS" === strtoupper( $response["ACK"] ) || "SUCCESSWITHWARNING" == strtoupper( $response["ACK"] ) ) {
+				$payer_id = isset( $response['PAYERID'] ) ? $response['PAYERID'] : false;
+			}
+		}
+		
+		/*
+		 * Last of our checks here:
+		 */
+		 
+		// if cancelled at paypal, print message and die.
+		if ( ! $payer_id ) {
+			sliced_print_message( $id, __( 'Payment has been cancelled.<br> <a href="' . esc_url( sliced_get_the_link( $id ) ) . '">Go back</a> and try again?', 'sliced-invoices' ), 'failed' );
+			return;
+		}
+
+		// if already been paid, print message and die.
+		if( $payment[0]['status'] == 'success' ) {
+			sliced_print_message( $id, __( 'This invoice has already been paid.', 'sliced-invoices' ), 'alert' );
+			return;
+		}
+		
+		/*
+		 * Finalize payment
+		 */
+		$payment_data = '&TOKEN=' . urlencode( $token ) .
+			'&PAYERID=' . urlencode( $payer_id );
+		$payment_data .= get_transient( 'sliced_paypal_'.$id );
+		 
+		if ( $subscription_status === 'pending' ) {
+		
+			/*
+			 * subscription invoices
+			 */
+		
+			$billing_period = $this->get_billing_period( get_post_meta( $id, '_sliced_subscription_interval_type', true ) );
+			$billing_frequency = get_post_meta( $id, '_sliced_subscription_interval_number', true );
+			$total_billing_cycles = ( get_post_meta( $id, '_sliced_subscription_cycles_type', true ) === 'fixed' ? get_post_meta( $id, '_sliced_subscription_cycles_count', true ) : '0' );
+		
+			$payment_data .= '&PROFILESTARTDATE=' . date( "Y-m-d" ) . 'T00:00:00Z' .
+				'&DESC=' . urlencode( sliced_get_invoice_label( $id ) . ' ' . sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id ) ) .
+				'&BILLINGPERIOD=' . $billing_period .
+				'&BILLINGFREQUENCY=' . $billing_frequency .
+				'&TOTALBILLINGCYCLES=' . $total_billing_cycles .
+				'&CURRENCYCODE=' . urlencode( $currency && $currency !== 'default' ? $currency : $gateway['currency'] );
+				
+			if ( get_post_meta( $id, '_sliced_subscription_trial', true ) == '1' ) {
+				$trial_billing_period = $this->get_billing_period( get_post_meta( $id, '_sliced_subscription_trial_interval_type', true ) );
+				$trial_billing_frequency = get_post_meta( $id, '_sliced_subscription_trial_interval_number', true );
+				$trial_total_billing_cycles = get_post_meta( $id, '_sliced_subscription_trial_cycles_count', true );
+				$trial_amount = get_post_meta( $id, '_sliced_subscription_trial_amount', true );
+				$payment_data .= '&TRIALBILLINGPERIOD=' . $trial_billing_period .
+					'&TRIALBILLINGFREQUENCY=' . $trial_billing_frequency .
+					'&TRIALTOTALBILLINGCYCLES=' . $trial_total_billing_cycles .
+					'&TRIALAMT=' . urlencode( $trial_amount );
+			}
+			
+			$response = $this->paypal_request(
+				'CreateRecurringPaymentsProfile',
+				$payment_data,
+				$gateway['username'],
+				$gateway['password'],
+				$gateway['signature'],
+				$gateway['mode']
+			);
+			
+			if( 'SUCCESS' == strtoupper( $response["ACK"] ) || 'SUCCESSWITHWARNING' == strtoupper( $response["ACK"] ) ) {
+				// activate subscription
+				if ( class_exists( 'Sliced_Subscriptions' ) ) {
+					Sliced_Subscriptions::activate_subscription_invoice( 
+						$id, 
+						'Paypal', // must match class name
+						urldecode( $response['PROFILEID'] ),
+						$response
+					);
+				}
+			}
+		
+		} else {
+		
+			/*
+			 * regular invoices
+			 */
+			
+			$response = $this->paypal_request(
+				'DoExpressCheckoutPayment',
+				$payment_data,
+				$gateway['username'],
+				$gateway['password'],
+				$gateway['signature'],
+				$gateway['mode'] );
+			
+		}
+
+		/*
+		 * Display result message and save data
+		 */
+			
+		//Respond according to message we receive from Paypal
+		if( 'SUCCESS' == strtoupper( $response["ACK"] ) || 'SUCCESSWITHWARNING' == strtoupper( $response["ACK"] ) ) {
+
+			$message = '<h2>' . __( 'Success', 'sliced-invoices' ) .'</h2>';
+			$message .= '<p>';
+
+			/*
+			 * Sometimes payments are kept pending even when transaction is complete.
+			 * hence we need to notify user about it and ask them to manually approve the transaction
+			*/
+			if ( isset( $response['PROFILESTATUS'] ) ) {
+				$message .= __( 'Subscription has been activated!', 'sliced-invoices' );
+				$message .= '<br />';
+				$message .= __( 'Your PayPal Transaction ID is: ', 'sliced-invoices' ) . urldecode( $response['PROFILEID'] ) .'</p>';
+				$message .= '</p>';
+			} elseif ( 'Completed' == $response["PAYMENTINFO_0_PAYMENTSTATUS"] ) {
+				$message .= __( 'Payment has been received!', 'sliced-invoices' );
+				$message .= '<br />';
+				$message .= __( 'Your PayPal Transaction ID is: ', 'sliced-invoices' ) . urldecode( $response["PAYMENTINFO_0_TRANSACTIONID"] ) .'</p>';
+				$message .= '</p>';
+			} elseif ( 'Pending' == $response["PAYMENTINFO_0_PAYMENTSTATUS"] ) {
+				$message .= __( 'Transaction complete, however payment is still pending.', 'sliced-invoices' );
+				$message .= '<br />';
+				$message .= __( 'You need to manually authorize this payment in your <a target="_new" href="http://www.paypal.com">PayPal Account</a>', 'sliced-invoices' );
+				$message .= '<br />';
+				$message .= __( 'Your PayPal Transaction ID is: ', 'sliced-invoices' ) . urldecode( $response["PAYMENTINFO_0_TRANSACTIONID"] ) .'</p>';
+				$message .= '</p>';
+			}
+
+			$message .= '<p>';
+			$message .= sprintf( __( '<a href="%1s">Click here to return to %s</a>', 'sliced-invoices' ), apply_filters( 'sliced_get_the_link', get_permalink($id), $id ), sliced_get_invoice_label() );
+			$message .= '</p>';
+
+			/**
+			 * Update payment status
+			 */
+			$payment = get_post_meta( $id, '_sliced_payment', false );
+			$payment[0]['date']     = date("Y-m-d H:i:s");
+			$payment[0]['response'] = $response;
+			$payment[0]['clientip'] = Sliced_Shared::get_ip();
+			$payment[0]['status']   = $response["ACK"];
+			update_post_meta( $id, '_sliced_payment', $payment[0] );
+
+			/**
+			 * Print the message
+			 */
+			sliced_print_message( $id, $message, 'success' );
+
+			/**
+			 * send notifications, update status etc
+			 */
+			do_action( 'sliced_payment_made', $id, 'PayPal', 'success' );
+
+		} else {
+
+			/**
+			 * Print the message
+			 */
+			sliced_print_message( $id, urldecode( $response["L_LONGMESSAGE0"] ), 'failed' );
+
+			/**
+			 * send notifications, update status etc
+			 */
+			do_action( 'sliced_payment_made', $id, 'PayPal', 'failed' );
+
+		}
+
 	}
 
 
@@ -245,6 +526,95 @@ class Sliced_Paypal {
 		}
 
 		return $response;
+	}
+	
+	
+	/**
+	 * Process IPNs (for subscription invoice payments)
+	 *
+	 * @since   3.3.0
+	 */
+	public function process_ipn() {
+	
+		$gateway = $this->gateway();
+
+		// STEP 1: read POST data
+		// Reading POSTed data directly from $_POST causes serialization issues with array data in the POST.
+		// Instead, read raw POST data from the input stream.
+		$raw_post_data = file_get_contents('php://input');
+		$raw_post_array = explode('&', $raw_post_data);
+		$myPost = array();
+		foreach ($raw_post_array as $keyval) {
+		  $keyval = explode ('=', $keyval);
+		  if (count($keyval) == 2)
+			$myPost[$keyval[0]] = urldecode($keyval[1]);
+		}
+		// read the IPN message sent from PayPal and prepend 'cmd=_notify-validate'
+		$req = 'cmd=_notify-validate';
+		if (function_exists('get_magic_quotes_gpc')) {
+		  $get_magic_quotes_exists = true;
+		}
+		foreach ($myPost as $key => $value) {
+		  if ($get_magic_quotes_exists == true && get_magic_quotes_gpc() == 1) {
+			$value = urlencode(stripslashes($value));
+		  } else {
+			$value = urlencode($value);
+		  }
+		  $req .= "&$key=$value";
+		}
+
+		// Step 2: POST IPN data back to PayPal to validate
+		$ch = curl_init('https://www'.( $gateway['mode'] == 'sandbox' ? '.sandbox' : '').'.paypal.com/cgi-bin/webscr');
+		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $req);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+		curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Connection: Close'));
+		// In wamp-like environments that do not come bundled with root authority certificates,
+		// please download 'cacert.pem' from "http://curl.haxx.se/docs/caextract.html" and set
+		// the directory path of the certificate as shown below:
+		// curl_setopt($ch, CURLOPT_CAINFO, dirname(__FILE__) . '/cacert.pem');
+		do_action( 'sliced_gateway_paypal_ipn_verify', $ch );
+		if ( !($res = curl_exec($ch)) ) {
+		  // error_log("Got " . curl_error($ch) . " when processing IPN data");
+		  curl_close($ch);
+		  exit;
+		}
+		curl_close($ch);
+		
+		// inspect IPN validation result and act accordingly
+		if (strcmp ($res, "VERIFIED") == 0) {
+		
+			// The IPN is verified, process it
+			switch ( $_POST['txn_type'] ) {
+				
+				case 'recurring_payment_profile_cancel':
+					
+					$args = array(
+						'post_type'     =>  'sliced_invoice',
+						'meta_key'      =>  '_sliced_subscription_gateway_subscr_id',
+						'meta_value'    =>  $_POST['recurring_payment_id'],
+					);
+					$query      = get_posts( $args );
+					$id         = $query[0]->ID;
+					
+					if ( class_exists( 'Sliced_Subscriptions' ) ) {
+						Sliced_Subscriptions::cancel_subscription_invoice( $id, $_POST );
+					}
+					
+					break;
+				
+			}
+			
+			
+		} else {
+			// IPN invalid, no further action
+			
+		}
+	
 	}
 
 
@@ -367,7 +737,6 @@ class Sliced_Paypal {
 	}
 
 
-
 	/**
 	 * Update the post meta payment field.
 	 *
@@ -387,351 +756,6 @@ class Sliced_Paypal {
 			)
 		);
 
-	}
-
-
-	/**
-	 * Further processing after returning from Paypal.
-	 *
-	 * @since   2.0.0
-	 */
-	public function payment_return( $data ) {
-	
-		// is this a paypal IPN?
-		if ( isset( $_POST['ipn_track_id'] ) ) {
-			$this->process_ipn();
-			return;
-		}
-
-		// check for token back from paypal
-		if ( ! isset( $_GET['token'] ) ) {
-			return;
-		}
-		
-		$token      = $_GET['token'];
-		$payer_id   = isset( $_GET['PayerID'] ) ? $_GET['PayerID'] : false;
-
-		/*
-		 * get the invoice that matches the token we are receiving
-		 */
-		$args = array(
-			'post_type'     =>  'sliced_invoice',
-			'meta_query'    =>  array(
-				array(
-					'value' =>  esc_html( $token )
-				)
-			)
-		);
-		$query      = get_posts( $args );
-		$id         = $query[0]->ID;
-		
-		// if we can't get the id, stop
-		if ( ! $id ) {
-			sliced_print_message( $id, __( 'Error processing the payment.<br> <a href="' . esc_url( sliced_get_the_link( $id ) ) . '">Go back</a> and try again?', 'sliced-invoices' ), 'failed' );
-			return;
-		}
-		
-		// otherwise, we go on...
-		$payment    = get_post_meta( $id, '_sliced_payment', false );
-		$currency   = sliced_get_invoice_currency( $id );
-		$gateway    = $this->gateway();
-		
-		/*
-		 * Subscriptions only -- do GetExpressCheckoutDetails 
-		 */
-		$subscription_status = get_post_meta( $id, '_sliced_subscription_status', true );
-		if ( $subscription_status === 'pending' ) {
-			// if it's for a subscription invoice we have to get PayerID in a separate call, now:
-			$payment_data = '&TOKEN=' . urlencode( $token );
-			$response = $this->paypal_request(
-				'GetExpressCheckoutDetails',
-				$payment_data,
-				$gateway['username'],
-				$gateway['password'],
-				$gateway['signature'],
-				$gateway['mode']
-			);
-			if( "SUCCESS" === strtoupper( $response["ACK"] ) || "SUCCESSWITHWARNING" == strtoupper( $response["ACK"] ) ) {
-				$payer_id = isset( $response['PAYERID'] ) ? $response['PAYERID'] : false;
-			}
-		}
-		
-		/*
-		 * Last of our checks here:
-		 */
-		 
-		// if cancelled at paypal, print message and die.
-		if ( ! $payer_id ) {
-			sliced_print_message( $id, __( 'Payment has been cancelled.<br> <a href="' . esc_url( sliced_get_the_link( $id ) ) . '">Go back</a> and try again?', 'sliced-invoices' ), 'failed' );
-			return;
-		}
-
-		// if already been paid, print message and die.
-		if( $payment[0]['status'] == 'success' ) {
-			sliced_print_message( $id, __( 'This invoice has already been paid.', 'sliced-invoices' ), 'alert' );
-			return;
-		}
-		
-		/*
-		 * Finalize payment
-		 */
-		$payment_data = '&TOKEN=' . urlencode( $token ) .
-			'&PAYERID=' . urlencode( $payer_id );
-		$payment_data .= get_transient( 'sliced_paypal_'.$id );
-		 
-		if ( $subscription_status === 'pending' ) {
-		
-			switch ( get_post_meta( $id, '_sliced_subscription_interval_type', true ) ) {
-				case 'days':
-					$billing_period = 'Day';
-					break;
-				case 'months':
-					$billing_period = 'Month';
-					break;
-				case 'years':
-					$billing_period = 'Year';
-					break;
-				default:
-					$billing_period = 'Month';
-			}
-			$billing_frequency = get_post_meta( $id, '_sliced_subscription_interval_number', true );
-			$total_billing_cycles = ( get_post_meta( $id, '_sliced_subscription_cycles_type', true ) === 'fixed' ? get_post_meta( $id, '_sliced_subscription_cycles_count', true ) : '0' );
-		
-			$payment_data .= '&PROFILESTARTDATE=' . date( "Y-m-d" ) . 'T00:00:00Z' .
-				'&DESC=' . urlencode( sliced_get_invoice_label( $id ) . ' ' . sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id ) ) .
-				'&BILLINGPERIOD=' . $billing_period .
-				'&BILLINGFREQUENCY=' . $billing_frequency .
-				'&TOTALBILLINGCYCLES=' . $total_billing_cycles .
-				'&CURRENCYCODE=' . urlencode( $currency && $currency !== 'default' ? $currency : $gateway['currency'] );
-			
-			$response = $this->paypal_request(
-				'CreateRecurringPaymentsProfile',
-				$payment_data,
-				$gateway['username'],
-				$gateway['password'],
-				$gateway['signature'],
-				$gateway['mode']
-			);
-			
-			if( 'SUCCESS' == strtoupper( $response["ACK"] ) || 'SUCCESSWITHWARNING' == strtoupper( $response["ACK"] ) ) {
-				// activate subscription
-				if ( class_exists( 'Sliced_Subscriptions' ) ) {
-					Sliced_Subscriptions::activate_subscription_invoice( 
-						$id, 
-						'Paypal', // must match class name
-						urldecode( $response['PROFILEID'] ),
-						$response
-					);
-				}
-			}
-		
-		} else {
-			
-			$response = $this->paypal_request(
-				'DoExpressCheckoutPayment',
-				$payment_data,
-				$gateway['username'],
-				$gateway['password'],
-				$gateway['signature'],
-				$gateway['mode'] );
-			
-		}
-
-		/*
-		 * Display result message and save data
-		 */
-			
-		//Respond according to message we receive from Paypal
-		if( 'SUCCESS' == strtoupper( $response["ACK"] ) || 'SUCCESSWITHWARNING' == strtoupper( $response["ACK"] ) ) {
-
-			$message = '<h2>' . __( 'Success', 'sliced-invoices' ) .'</h2>';
-			$message .= '<p>';
-
-			/*
-			 * Sometimes payments are kept pending even when transaction is complete.
-			 * hence we need to notify user about it and ask them to manually approve the transaction
-			*/
-			if ( isset( $response['PROFILESTATUS'] ) ) {
-				$message .= __( 'Subscription has been activated!', 'sliced-invoices' );
-				$message .= '<br />';
-				$message .= __( 'Your PayPal Transaction ID is: ', 'sliced-invoices' ) . urldecode( $response['PROFILEID'] ) .'</p>';
-				$message .= '</p>';
-			} elseif ( 'Completed' == $response["PAYMENTINFO_0_PAYMENTSTATUS"] ) {
-				$message .= __( 'Payment has been received!', 'sliced-invoices' );
-				$message .= '<br />';
-				$message .= __( 'Your PayPal Transaction ID is: ', 'sliced-invoices' ) . urldecode( $response["PAYMENTINFO_0_TRANSACTIONID"] ) .'</p>';
-				$message .= '</p>';
-			} elseif ( 'Pending' == $response["PAYMENTINFO_0_PAYMENTSTATUS"] ) {
-				$message .= __( 'Transaction complete, however payment is still pending.', 'sliced-invoices' );
-				$message .= '<br />';
-				$message .= __( 'You need to manually authorize this payment in your <a target="_new" href="http://www.paypal.com">PayPal Account</a>', 'sliced-invoices' );
-				$message .= '<br />';
-				$message .= __( 'Your PayPal Transaction ID is: ', 'sliced-invoices' ) . urldecode( $response["PAYMENTINFO_0_TRANSACTIONID"] ) .'</p>';
-				$message .= '</p>';
-			}
-
-			$message .= '<p>';
-			$message .= sprintf( __( '<a href="%1s">Click here to return to %s</a>', 'sliced-invoices' ), apply_filters( 'sliced_get_the_link', get_permalink($id), $id ), sliced_get_invoice_label() );
-			$message .= '</p>';
-
-			/**
-			 * Update payment status
-			 */
-			$payment = get_post_meta( $id, '_sliced_payment', false );
-			$payment[0]['date']     = date("Y-m-d H:i:s");
-			$payment[0]['response'] = $response;
-			$payment[0]['clientip'] = Sliced_Shared::get_ip();
-			$payment[0]['status']   = $response["ACK"];
-			update_post_meta( $id, '_sliced_payment', $payment[0] );
-
-			/**
-			 * Print the message
-			 */
-			sliced_print_message( $id, $message, 'success' );
-
-			/**
-			 * send notifications, update status etc
-			 */
-			do_action( 'sliced_payment_made', $id, 'PayPal', 'success' );
-
-		} else {
-
-			/**
-			 * Print the message
-			 */
-			sliced_print_message( $id, urldecode( $response["L_LONGMESSAGE0"] ), 'failed' );
-
-			/**
-			 * send notifications, update status etc
-			 */
-			do_action( 'sliced_payment_made', $id, 'PayPal', 'failed' );
-
-		}
-
-	}
-	
-	
-	/**
-	 * Cancel subscription invoice payments
-	 *
-	 * @since   3.3.0
-	 */
-	public function cancel_subscription( $id, $gateway_subscr_id ) {
-		
-		$gateway = $this->gateway();
-		
-		$payment_data = '&PROFILEID=' . urlencode( $gateway_subscr_id ) .
-			'&ACTION=Cancel';
-		
-		$response = $this->paypal_request(
-			'ManageRecurringPaymentsProfileStatus',
-			$payment_data,
-			$gateway['username'],
-			$gateway['password'],
-			$gateway['signature'],
-			$gateway['mode'] );
-		
-		if( 'SUCCESS' == strtoupper( $response["ACK"] ) || 'SUCCESSWITHWARNING' == strtoupper( $response["ACK"] ) ) {
-			return array(
-				'status'  => 'success',
-				'message' => urldecode( $response['L_LONGMESSAGE0'] ),
-			);
-		} else {
-			return array(
-				'status'  => 'error',
-				'message' => 'Gateway says: ' . urldecode( $response['L_LONGMESSAGE0'] ),
-			);
-		}
-		
-	}
-	
-	
-	/**
-	 * Process IPNs (for subscription invoice payments)
-	 *
-	 * @since   3.3.0
-	 */
-	public function process_ipn() {
-	
-		$gateway = $this->gateway();
-
-		// STEP 1: read POST data
-		// Reading POSTed data directly from $_POST causes serialization issues with array data in the POST.
-		// Instead, read raw POST data from the input stream.
-		$raw_post_data = file_get_contents('php://input');
-		$raw_post_array = explode('&', $raw_post_data);
-		$myPost = array();
-		foreach ($raw_post_array as $keyval) {
-		  $keyval = explode ('=', $keyval);
-		  if (count($keyval) == 2)
-			$myPost[$keyval[0]] = urldecode($keyval[1]);
-		}
-		// read the IPN message sent from PayPal and prepend 'cmd=_notify-validate'
-		$req = 'cmd=_notify-validate';
-		if (function_exists('get_magic_quotes_gpc')) {
-		  $get_magic_quotes_exists = true;
-		}
-		foreach ($myPost as $key => $value) {
-		  if ($get_magic_quotes_exists == true && get_magic_quotes_gpc() == 1) {
-			$value = urlencode(stripslashes($value));
-		  } else {
-			$value = urlencode($value);
-		  }
-		  $req .= "&$key=$value";
-		}
-
-		// Step 2: POST IPN data back to PayPal to validate
-		$ch = curl_init('https://www'.( $gateway['mode'] == 'sandbox' ? '.sandbox' : '').'.paypal.com/cgi-bin/webscr');
-		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $req);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-		curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Connection: Close'));
-		// In wamp-like environments that do not come bundled with root authority certificates,
-		// please download 'cacert.pem' from "http://curl.haxx.se/docs/caextract.html" and set
-		// the directory path of the certificate as shown below:
-		// curl_setopt($ch, CURLOPT_CAINFO, dirname(__FILE__) . '/cacert.pem');
-		do_action( 'sliced_gateway_paypal_ipn_verify', $ch );
-		if ( !($res = curl_exec($ch)) ) {
-		  // error_log("Got " . curl_error($ch) . " when processing IPN data");
-		  curl_close($ch);
-		  exit;
-		}
-		curl_close($ch);
-		
-		// inspect IPN validation result and act accordingly
-		if (strcmp ($res, "VERIFIED") == 0) {
-		
-			// The IPN is verified, process it
-			switch ( $_POST['txn_type'] ) {
-				
-				case 'recurring_payment_profile_cancel':
-					
-					$args = array(
-						'post_type'     =>  'sliced_invoice',
-						'meta_key'      =>  '_sliced_subscription_gateway_subscr_id',
-						'meta_value'    =>  $_POST['recurring_payment_id'],
-					);
-					$query      = get_posts( $args );
-					$id         = $query[0]->ID;
-					
-					if ( class_exists( 'Sliced_Subscriptions' ) ) {
-						Sliced_Subscriptions::cancel_subscription_invoice( $id, $_POST );
-					}
-					
-					break;
-				
-			}
-			
-			
-		} else {
-			// IPN invalid, no further action
-			
-		}
-	
 	}
 
 
