@@ -4,7 +4,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce
 Requires at least: 4.0
 Tested up to: 4.7
-Stable tag: 3.2.1
+Stable tag: 3.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -150,6 +150,18 @@ Yes, it does!  As of version 3.0.0 you can network activate Sliced Invoices in W
 
 
 == Changelog ==
+= 3.3.0 =
+* NEW: Change the way quote and invoice numbers are auto-incremented, allow duplicates with a warning
+* NEW: Completely revamped PayPal gateway, adding support for IPN handling, subscriptions
+* FIX: issue with unpaid invoices sometimes marked "overdue" prematurely
+* FIX: allow custom columns from other plugins (like Reveal IDs)
+* FIX: inadvertently blanking out other plugins custom columns on admin users page
+* FIX: fix default ordering and filtering in Quotes and Invoices admin areas
+* FIX: fix PHP notice
+* UPDATE: Optimize some queries for enhanced performance
+* UPDATE: removing $die argument from sliced_print_message()
+* UPDATE: Update .pot file
+
 = 3.2.1 =
 * FIX: issue where other plugins' custom columns inadvertently removed from Users admin page.
 * FIX: sort issue preventing auto-saved drafts from being displayed in admin pages
