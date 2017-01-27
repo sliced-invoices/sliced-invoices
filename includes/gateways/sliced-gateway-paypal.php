@@ -198,6 +198,7 @@ class Sliced_Paypal {
 		return $gateway;
 	}
 	
+	
 	/**
 	 * Make the field values available.
 	 *
