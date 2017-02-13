@@ -327,7 +327,8 @@ class Sliced_Paypal {
 		 * Finalize payment
 		 */
 		$payment_data = '&TOKEN=' . urlencode( $token ) .
-			'&PAYERID=' . urlencode( $payer_id );
+			'&PAYERID=' . urlencode( $payer_id ) .
+			'&BUTTONSOURCE=' . 'SlicedInvoices_SP';
 		$payment_data .= get_transient( 'sliced_paypal_'.$id );
 		 
 		if ( $subscription_status === 'pending' ) {
