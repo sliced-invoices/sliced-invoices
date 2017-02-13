@@ -171,6 +171,7 @@ class Sliced_Options {
 		$quote_label_plural = sliced_get_quote_label_plural();
 		$invoice_label = sliced_get_invoice_label();
 		$invoice_label_plural = sliced_get_invoice_label_plural();
+		$current_user = wp_get_current_user();
 
 		$this->option_metabox[] = apply_filters( 'sliced_general_option_fields', array(
 			'id'         => $prefix . 'general',
@@ -913,7 +914,36 @@ class Sliced_Options {
 					'type'      => 'title',
 					'after_field'  => '
 					<span style="float: left; margin: 15px 50px 20px 0px; font-size: 38px;" class="dashicons dashicons-wordpress"></span>
-					<p>Thanks for using Sliced Invoices, we hope that you enjoy using it.<br>We\'d love it if you could take a minute and give the plugin a rating over on the <a target="_blank" href="https://wordpress.org/support/plugin/sliced-invoices/reviews/?rate=5#postform" title="Opens in new window">Sliced Invoices WordPress page</a>.<br />This will help to continue the development of the free plugin. </p>
+					<p>Thanks for using Sliced Invoices, we hope that you enjoy using it.<br>We\'d love it if you could take a minute and give the plugin a rating over on the <a target="_blank" href="https://wordpress.org/support/plugin/sliced-invoices/reviews/?rate=5#new-post" title="Opens in new window">Sliced Invoices WordPress page</a>.<br />This will help to continue the development of the free plugin. </p>
+					',
+				),
+				array(
+					'name'      => __( 'Sign up for our newsletter', 'sliced-invoices' ),
+					'desc'      => __( '', 'sliced-invoices' ),
+					'id'        => 'newsletter',
+					'type'      => 'title',
+					'after_field'  => '
+					<p>Sign up for our newsletter to receive occasional updates and announcements related to Sliced Invoices.  (We won\'t sell your information to anyone, we promise!)</p>
+					<input id="sliced_newsletter_email" type="email" value="'.$current_user->user_email.'" />
+					<button class="button" id="sliced_newsletter_submit" type="button">Submit</button>
+					<span class="" id="sliced_newsletter_success" style="display:none;">Thanks! Please check your inbox to confirm your subscription.</span>
+					<script type="text/javascript">
+						jQuery( "#sliced_newsletter_submit" ).click(function(){
+							var email_address = jQuery("#sliced_newsletter_email").val();
+							if ( email_address > "" ) {
+								jQuery.post(
+									"https://slicedinvoices.com/wp-admin/admin-ajax.php",
+									{ "action": "maillist_signup", "email_address": email_address },
+									function(response) {
+										if ( response > 1 ) {
+											jQuery("#sliced_newsletter_submit").fadeOut();
+											jQuery("#sliced_newsletter_success").fadeIn();
+										}
+									}
+								);
+							}
+						});
+					</script>
 					',
 				),
 				array(
@@ -926,36 +956,42 @@ class Sliced_Options {
 					<img style="margin:15px 0 5px;" src="' . plugin_dir_url( dirname( __FILE__ ) ) . '/img/sliced-invoices-logo.png" width="250" /><br>
 
 					<p style="clear: both;">Check out the <strong>free and premium extensions</strong> that are available for Sliced Invoices at the <a target="_blank" href="https://slicedinvoices.com/extensions/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Extensions&utm_campaign=Free" title="Opens in new window">extensions marketplace</a>.<br>
-						There are also <a target="_blank" href="https://slicedinvoices.com/bundles/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Bundles&utm_campaign=Free" title="Opens in new window">extension bundles</a> available that include <a target="_blank" href="https://slicedinvoices.com/support/priority-support/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Priority-Support&utm_campaign=Free" title="Opens in new window">priority support</a> options.</p>
+						There are also <a target="_blank" href="https://slicedinvoices.com/bundles/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Bundles&utm_campaign=Free" title="Opens in new window">extension bundles</a> available where you can get our most popular plugins for one great price!</p>
 
 					<ul class="sliced-extras">
-
-						<li><a target="_blank" href="https://slicedinvoices.com/extensions/client-area/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Client-Area&utm_campaign=Free" title="Opens in new window">Client Area</a><br>
-						<span class="description">A secure area for your clients to view, print and export their list of Quotes and Invoices as well as edit their business details.</span></li>
-
-						<li><a target="_blank" href="https://slicedinvoices.com/extensions/pdf-email/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=PDF-Email&utm_campaign=Free" title="Opens in new window">PDF & Email</a><br>
-						<span class="description">Print quotes and invoices to PDF, email direct to clients and style the HTML emails and notifications.</span></li>
-
-						<li><a target="_blank" href="https://slicedinvoices.com/extensions/stripe-payment-gateway/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Stripe&utm_campaign=Free" title="Opens in new window">Stripe Payment Gateway</a><br>
-						<span class="description">The Stripe Payment Gateway extension allows you to accept credit card payments for your invoices securely.</span></li>
-						
-						<li><a target="_blank" href="https://slicedinvoices.com/extensions/braintree-payment-gateway/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Braintree&utm_campaign=Free" title="Opens in new window">Braintree Payment Gateway</a><br>
-						<span class="description">The Braintree Payment Gateway extension allows you to accept credit card payments for your invoices securely.</span></li>
+					
+						<li><a target="_blank" href="https://slicedinvoices.com/extensions/2checkout-payment-gateway/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=2Checkout&utm_campaign=Free" title="Opens in new window">2Checkout Payment Gateway</a><br>
+						<span class="description">Accept credit card payments for your invoices securely by using the 2Checkout Payment Gateway.</span></li>
 
 						<li><a target="_blank" href="https://slicedinvoices.com/extensions/better-urls/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Better-URLs&utm_campaign=Free" title="Opens in new window">Better URL\'s</a><br>
 						<span class="description">Change the URL\'s of quotes and invoice to suit your business. Change it from \'sliced_invoice\' to \'bobs_invoice\' for example.</span></li>
+						
+						<li><a target="_blank" href="https://slicedinvoices.com/extensions/braintree-payment-gateway/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Braintree&utm_campaign=Free" title="Opens in new window">Braintree Payment Gateway</a><br>
+						<span class="description">The Braintree Payment Gateway extension allows you to accept credit card payments for your invoices securely.</span></li>
+						
+						<li><a target="_blank" href="https://slicedinvoices.com/extensions/client-area/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Client-Area&utm_campaign=Free" title="Opens in new window">Client Area</a><br>
+						<span class="description">A secure area for your clients to view, print and export their list of Quotes and Invoices as well as edit their business details.</span></li>
+
+						<li><a target="_blank" href="https://slicedinvoices.com/extensions/deposit-invoices/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Deposit-Invoices&utm_campaign=Free" title="Opens in new window">Deposit Invoices</a><br>
+						<span class="description">Easily create deposit invoices with the click of a button. </span></li>
 
 						<li><a target="_blank" href="https://slicedinvoices.com/extensions/easy-translate/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Easy-Translate&utm_campaign=Free" title="Opens in new window">Easy Translate</a><br>
 						<span class="description">Translate or modify the text that is displayed on the standard invoice and quote templates, without touching any code.</span></li>
 
+						<li><a target="_blank" href="https://slicedinvoices.com/extensions/pdf-email/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=PDF-Email&utm_campaign=Free" title="Opens in new window">PDF & Email</a><br>
+						<span class="description">Print quotes and invoices to PDF, email direct to clients and style the HTML emails and notifications.</span></li>
+						
+						<li><a target="_blank" href="https://slicedinvoices.com/extensions/recurring-invoices/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Recurring-Invoices&utm_campaign=Free" title="Opens in new window">Recurring Invoices</a><br>
+						<span class="description">Easily create recurring invoices with the click of a button. </span></li>
+						
 						<li><a target="_blank" href="https://slicedinvoices.com/extensions/secure-invoices/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Secure-Invoices&utm_campaign=Free" title="Opens in new window">Secure Invoices</a><br>
 						<span class="description">Secure your invoices and only allow access to people who have been sent a secure link.</span></li>
 
-						<li><a target="_blank" href="https://slicedinvoices.com/extensions/recurring-invoices/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Recurring-Invoices&utm_campaign=Free" title="Opens in new window">Recurring Invoices</a><br>
-						<span class="description">Easily create recurring invoices with the click of a button. </span></li>
-
-						<li><a target="_blank" href="https://slicedinvoices.com/extensions/deposit-invoices/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Deposit-Invoices&utm_campaign=Free" title="Opens in new window">Deposit Invoices</a><br>
-						<span class="description">Easily create deposit invoices with the click of a button. </span></li>
+						<li><a target="_blank" href="https://slicedinvoices.com/extensions/stripe-payment-gateway/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Stripe&utm_campaign=Free" title="Opens in new window">Stripe Payment Gateway</a><br>
+						<span class="description">The Stripe Payment Gateway extension allows you to accept credit card payments for your invoices securely.</span></li>
+						
+						<li><a target="_blank" href="https://slicedinvoices.com/extensions/subscription-invoices/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Subscription-Invoices&utm_campaign=Free" title="Opens in new window">Subscription Invoices</a><br>
+						<span class="description">This extension allows you to easily charge your clients with automatic recurring payments.</span></li>
 
 					</ul>
 					<br />
