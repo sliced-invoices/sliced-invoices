@@ -130,7 +130,7 @@ class Sliced_Quick_Edit {
 										printf(
 											'<option value="%s">%s</option>',
 											esc_attr( $status->slug ),
-											( ( isset( $translate[$status->name] ) && class_exists( 'Sliced_Translate' ) ) ? $translate[$status->name] : __( ucfirst( $status->name ), 'sliced-invoices' ) )
+											( ( isset( $translate[$status->slug] ) && class_exists( 'Sliced_Translate' ) ) ? $translate[$status->slug] : __( ucfirst( $status->name ), 'sliced-invoices' ) )
 										);
 									}
 

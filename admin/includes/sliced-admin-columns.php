@@ -235,7 +235,7 @@ class Sliced_Columns {
 			$translate = get_option( 'sliced_translate' );
 			
 			foreach ( $terms as &$term ) {
-				$term->name = ( isset( $translate[$term->name] ) && class_exists( 'Sliced_Translate' ) ) ? $translate[$term->name] : __( ucfirst( $term->name ), 'sliced-invoices' );
+				$term->name = ( isset( $translate[$term->slug] ) && class_exists( 'Sliced_Translate' ) ) ? $translate[$term->slug] : __( ucfirst( $term->name ), 'sliced-invoices' );
 			}
 			
 		}
@@ -378,7 +378,7 @@ class Sliced_Columns {
 					'<option value="%s"%s>%s (%s)</option>',
 					esc_attr( $term->slug ),
 					selected( $term->slug, $tag, false ),
-					( ( isset( $translate[$term->name] ) && class_exists( 'Sliced_Translate' ) ) ? $translate[$term->name] : __( ucfirst( $term->name ), 'sliced-invoices' ) ),
+					( ( isset( $translate[$term->slug] ) && class_exists( 'Sliced_Translate' ) ) ? $translate[$term->slug] : __( ucfirst( $term->name ), 'sliced-invoices' ) ),
 					esc_html( $term->count )
 				);
 			}
@@ -417,7 +417,7 @@ class Sliced_Columns {
 				if( $status->slug == 'unpaid' )	{
 					$status->slug = 'unpaid%2Coverdue';
 				}
-				$status_name = esc_html( $status->name );
+				$status_name = esc_html( $status->slug );
 				$views[$status->slug] = "<a href='"
 					. esc_url( add_query_arg( array( $type . '_status' => $status->slug ) ) ) . "'>"
 					. ( ( isset( $translate[$status_name] ) && class_exists( 'Sliced_Translate' ) ) ? $translate[$status_name] : __( ucfirst( $status_name ), 'sliced-invoices' ) )

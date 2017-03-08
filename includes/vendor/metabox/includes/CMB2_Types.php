@@ -708,7 +708,7 @@ class CMB2_Types {
 		foreach ( $terms as $term ) {
 			$options .= $this->select_option( array(
 				//'label'   => $term->name,
-				'label'   => ( ( isset( $translate[$term->name] ) && class_exists( 'Sliced_Translate' ) ) ? $translate[$term->name] : __( ucfirst( $term->name ), 'sliced-invoices' ) ),
+				'label'   => ( ( isset( $translate[$term->slug] ) && class_exists( 'Sliced_Translate' ) ) ? $translate[$term->slug] : __( ucfirst( $term->name ), 'sliced-invoices' ) ),
 				// end SI mod
 				'value'   => $term->slug,
 				'checked' => $saved_term === $term->slug,
