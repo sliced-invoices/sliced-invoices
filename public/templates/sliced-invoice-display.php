@@ -107,13 +107,18 @@ do_action( 'sliced_before_invoice_display' ); ?><!doctype html>
 			</div>
 		</div><!-- END row -->
 		<?php endif; ?>
+		
+		<div class="row sliced-footer">
+			<div class="col-sm-12">
+				<div class="terms-text"><?php echo wpautop( sliced_get_invoice_terms() ); ?></div>
+			</div>
+		</div><!-- END row -->
 
 		<!-- ///// Start PDF footer -->
 		<htmlpagefooter name="sliced-pdf-footer">
 
 			<div class="row sliced-footer">
 				<div class="col-sm-12">
-					<div class="terms-text"><?php echo wpautop( sliced_get_invoice_terms() ); ?></div>
 					<div class="footer-text"><?php echo sliced_get_business_footer(); ?></div>
 					<div class="print-only"><?php _e( 'Page ', 'sliced-invoices') ?> {PAGENO}/{nbpg}</div>
 				</div>
