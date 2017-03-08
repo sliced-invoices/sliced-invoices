@@ -75,6 +75,8 @@ class Sliced_Quick_Edit {
 		$statuses = Sliced_Admin::get_statuses();
 		$id       = Sliced_Shared::get_item_id();
 		$type     = sliced_get_the_type( $id );
+		
+		$translate = get_option( 'sliced_translate' );
 
 		?>
 		<fieldset class="inline-edit-col-left inline-edit-<?php echo $post_type; ?>">
@@ -125,7 +127,11 @@ class Sliced_Quick_Edit {
 								if ( ! empty( $statuses ) ) {
 									echo '<select name="sliced_status">';
 									foreach ( $statuses as $status ) {
-										printf('<option value="%s">%s</option>', esc_attr( $status->name ), esc_html($status->name));
+										printf(
+											'<option value="%s">%s</option>',
+											esc_attr( $status->slug ),
+											( ( isset( $translate[$status->name] ) && class_exists( 'Sliced_Translate' ) ) ? $translate[$status->name] : __( ucfirst( $status->name ), 'sliced-invoices' ) )
+										);
 									}
 
 									echo '</select>';

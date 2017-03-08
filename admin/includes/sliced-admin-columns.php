@@ -47,6 +47,9 @@ class Sliced_Columns {
 		add_action('manage_sliced_invoice_posts_custom_column', array( $this, 'manage_posts_custom_column'), 10, 2);
 		add_filter('manage_edit-sliced_quote_sortable_columns', array( $this, 'manage_edit_sortable_columns') );
 		add_filter('manage_edit-sliced_invoice_sortable_columns', array( $this, 'manage_edit_sortable_columns') );
+		
+		// allow translating of status taxonomies
+		add_filter( 'get_the_terms', array( $this, 'pre_get_the_terms' ), 10, 3 );
 
 		// adds links to top of quotes and invoices list for each term
 		add_filter('views_edit-sliced_quote', array( $this, 'edit_posts_views'), 10, 2);
@@ -54,7 +57,7 @@ class Sliced_Columns {
 
 	}
 
-
+	
 	/**
 	 * Create the columns
 	 *
@@ -147,8 +150,8 @@ class Sliced_Columns {
 				echo ! empty( $output ) ? $output : '&mdash;';
 
 				break;
-
-
+			
+			
 			case 'sliced_created':
 
 				if ( $type == 'quote' ) {
@@ -218,6 +221,28 @@ class Sliced_Columns {
 		 }
 
 	}
+	
+	
+	/**
+	 * Translate statuses
+	 *
+	 * @since   3.3.2
+	 */
+	public function pre_get_the_terms( $terms, $post_id, $taxonomy ) {
+		
+		if ( $taxonomy === 'invoice_status' || $taxonomy === 'quote_status' ) {
+		
+			$translate = get_option( 'sliced_translate' );
+			
+			foreach ( $terms as &$term ) {
+				$term->name = ( isset( $translate[$term->name] ) && class_exists( 'Sliced_Translate' ) ) ? $translate[$term->name] : __( ucfirst( $term->name ), 'sliced-invoices' );
+			}
+			
+		}
+		
+		return $terms;
+	}
+	
 
 	/**
 	 * Allow sortable columns.
@@ -317,6 +342,8 @@ class Sliced_Columns {
 	 */
 	public function show_filters() {
 
+		$translate = get_option( 'sliced_translate' );
+		
 		// Get the clients filter dropdown
 		$clients = Sliced_Admin::get_clients();
 
@@ -347,7 +374,13 @@ class Sliced_Columns {
 			echo '<option value="" ' . selected('', $tag, false) . ' >' . __( 'View all statuses', 'sliced-invoices' ) . '</option>';
 
 			foreach ( $terms as $term ) {
-				printf('<option value="%s"%s>%s (%s)</option>', esc_attr( $term->slug ), selected($term->slug, $tag, false), esc_html($term->name), esc_html($term->count));
+				printf(
+					'<option value="%s"%s>%s (%s)</option>',
+					esc_attr( $term->slug ),
+					selected( $term->slug, $tag, false ),
+					( ( isset( $translate[$term->name] ) && class_exists( 'Sliced_Translate' ) ) ? $translate[$term->name] : __( ucfirst( $term->name ), 'sliced-invoices' ) ),
+					esc_html( $term->count )
+				);
 			}
 
 			echo '</select>';
@@ -369,6 +402,8 @@ class Sliced_Columns {
 	 */
 	public function edit_posts_views( $views ) {
 
+		$translate = get_option( 'sliced_translate' );
+		
 		$type = sliced_get_the_type();
 
 		foreach ( $views as $index => $view ) {
@@ -382,10 +417,15 @@ class Sliced_Columns {
 				if( $status->slug == 'unpaid' )	{
 					$status->slug = 'unpaid%2Coverdue';
 				}
-				$views[$status->slug] = "<a href='" . esc_url( add_query_arg( array( $type . '_status' => $status->slug ) ) ) . "'>" . esc_html( $status->name ) . " <span class='count'>(" . esc_html( $status->count ) . ")</span></a>";
+				$status_name = esc_html( $status->name );
+				$views[$status->slug] = "<a href='"
+					. esc_url( add_query_arg( array( $type . '_status' => $status->slug ) ) ) . "'>"
+					. ( ( isset( $translate[$status_name] ) && class_exists( 'Sliced_Translate' ) ) ? $translate[$status_name] : __( ucfirst( $status_name ), 'sliced-invoices' ) )
+					. " <span class='count'>(" . esc_html( $status->count ) . ")</span></a>";
+				
 			}
 		}
-
+		
 		return apply_filters( 'sliced_admin_col_views', $views );
 
 	}

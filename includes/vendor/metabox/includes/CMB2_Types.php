@@ -696,10 +696,20 @@ class CMB2_Types {
 				'checked' => $saved_term == $option_none_value,
 			) );
 		}
+		
+		// begin SI mod
+		// We need the CMB2 library to let us translate the displayed taxonomy term names.
+		// We hate modifying 3rd party libraries, but in this case we got tired after
+		// spending many hours trying to find a "proper" workaround for this and decided
+		// the following would be massively easier.  So there.
+		// (if someday CMB2 adds a filter we can use for this, we'll use that instead...)
+		$translate = get_option( 'sliced_translate' );
 
 		foreach ( $terms as $term ) {
 			$options .= $this->select_option( array(
-				'label'   => $term->name,
+				//'label'   => $term->name,
+				'label'   => ( ( isset( $translate[$term->name] ) && class_exists( 'Sliced_Translate' ) ) ? $translate[$term->name] : __( ucfirst( $term->name ), 'sliced-invoices' ) ),
+				// end SI mod
 				'value'   => $term->slug,
 				'checked' => $saved_term === $term->slug,
 			) );
