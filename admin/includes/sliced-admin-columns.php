@@ -414,10 +414,10 @@ class Sliced_Columns {
 		if ( !empty( $statuses ) && !is_wp_error( $statuses ) ) {
 			foreach ( $statuses as $status ) {
 
+				$status_name = esc_html( $status->slug );
 				if( $status->slug == 'unpaid' )	{
 					$status->slug = 'unpaid%2Coverdue';
 				}
-				$status_name = esc_html( $status->slug );
 				$views[$status->slug] = "<a href='"
 					. esc_url( add_query_arg( array( $type . '_status' => $status->slug ) ) ) . "'>"
 					. ( ( isset( $translate[$status_name] ) && class_exists( 'Sliced_Translate' ) ) ? $translate[$status_name] : __( ucfirst( $status_name ), 'sliced-invoices' ) )
