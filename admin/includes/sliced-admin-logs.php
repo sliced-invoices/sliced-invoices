@@ -312,9 +312,9 @@ class Sliced_Logs {
 
 		$log_meta = $this->get_log_meta( $id, true );
 		$notes = null;
-
+		
 		if( $log_meta ) {
-
+		
 			$log_meta = array_reverse($log_meta, true); // reverse the order. keep the keys
 			$notes = '<ul class="notes">';
 
@@ -384,13 +384,18 @@ class Sliced_Logs {
 
 
 	private function get_log_meta( $id, $single ) {
-		return get_post_meta( $id, $this->meta_key, $single );
+		$meta_value = get_post_meta( $id, $this->meta_key, $single );
+		if ( is_array( $meta_value ) ) {
+			return $meta_value;
+		}
+		return array();
 	}
 
 	private function update_log_meta( $id, $meta_value ) {
 		sleep(1); // sleep for 1 second to avoid other logs overwriting each other if they go at the same time
 		$log_meta = $this->get_log_meta( $id, true );
-		$log_meta[time()] = $meta_value;
+		$log_meta[current_time( 'timestamp', 1 )] = $meta_value;
 		return update_post_meta( $id, $this->meta_key, $log_meta );
 	}
+	
 }
