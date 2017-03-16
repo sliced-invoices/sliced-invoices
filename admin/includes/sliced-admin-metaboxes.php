@@ -689,13 +689,13 @@ class Sliced_Metaboxes {
 	}
 	
 	public function is_duplicate_quote_number() {
-		if ( Sliced_Quote::is_duplicate_quote_number( (int) $_GET['post'] ) ) {
+		if ( isset( $_GET['post'] ) && Sliced_Quote::is_duplicate_quote_number( (int) $_GET['post'] ) ) {
 			return '<span class="warning">' . __( 'Warning: duplicate quote number', 'sliced-invoices' ) . '</span>';
 		}
 	}
 	
 	public function is_duplicate_invoice_number() {
-		if ( Sliced_Invoice::is_duplicate_invoice_number( (int) $_GET['post'] ) ) {
+		if ( isset( $_GET['post'] ) && Sliced_Invoice::is_duplicate_invoice_number( (int) $_GET['post'] ) ) {
 			return '<span class="warning">' . __( 'Warning: duplicate invoice number', 'sliced-invoices' ) . '</span>';
 		}
 	}
