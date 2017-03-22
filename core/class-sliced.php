@@ -236,8 +236,8 @@ class Sliced_Invoices {
 
 		$this->loader->add_action( 'script_loader_tag', $plugin_public, 'add_defer_attribute' );
 
-		$this->loader->add_filter( 'single_template', $plugin_public, 'invoice_quote_template' );
-		$this->loader->add_filter( 'page_template', $plugin_public, 'payment_templates' );
+		$this->loader->add_filter( 'single_template', $plugin_public, 'invoice_quote_template', 999 );
+		$this->loader->add_filter( 'page_template', $plugin_public, 'payment_templates', 999 );
 
 		$this->loader->add_filter( 'private_title_format', $plugin_public, 'title_format');
 		$this->loader->add_filter( 'protected_title_format', $plugin_public, 'title_format');
