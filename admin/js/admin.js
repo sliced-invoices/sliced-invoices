@@ -166,19 +166,28 @@
         $( ".sliced-email-button" ).click(function() {
 
             var id = jQuery(this).data('id');
+			var $previewDiv = $('.sliced-email-preview');
+			var placeholder = $($previewDiv).html();
 
-            var data = {
-                    'action': 'sliced_sure_to_email',
-                    'id' : id,
-                };
-
-                $.post(ajaxurl, data, function(response) {
-
-                    $('.sliced-email-preview').html(response);
-                    return false;
-
-                });
-
+			// preview updater
+			var currentTime = new Date().valueOf();
+			$($previewDiv).append('<iframe id="sliced-preview-' + currentTime + '" src="' + ajaxurl + '?action=sliced_sure_to_email&id=' + id + '" style="display:none;"></iframe>');
+			$('#sliced-preview-'+currentTime).on( 'load', function() {
+				$($previewDiv).children('.sliced-email-preview-loading').remove();
+				$(this).show();
+			});
+			
+			// hack to only do this once, even though tb_unload fires twice...
+			var tb_unload_count = 1;
+			jQuery(window).bind('tb_unload', function () {
+				if (tb_unload_count > 1) {
+					tb_unload_count = 1;
+				} else {
+					// restore placeholder
+					$($previewDiv).html(placeholder);
+					tb_unload_count = tb_unload_count + 1;
+				}
+			});
 
         });
 

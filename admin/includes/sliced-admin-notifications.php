@@ -9,7 +9,7 @@ if ( ! defined('ABSPATH') ) { exit; }
  * Calls the class.
  */
 function sliced_call_notifications_class() {
-	 new Sliced_Notifications();
+	new Sliced_Notifications();
 }
 add_action( 'init', 'sliced_call_notifications_class' );
 
@@ -65,9 +65,9 @@ class Sliced_Notifications {
 
 		if( $pagenow == 'edit.php' ){
 			add_action( 'admin_footer', array( $this, 'email_popup' ) );
-			add_action( 'admin_init', array( $this, 'send_quote_or_invoice_manually' ) );
 		}
 		add_action( 'wp_ajax_sliced_sure_to_email', array( $this, 'sure_to_email' ) );
+		add_action( 'wp_ajax_sliced-send-email', array( $this, 'send_quote_or_invoice_manually' ) );
 
 		// send notifications
 		add_action( 'sliced_send_payment_notification', array( $this, 'payment_received_client'), 9, 2 );
@@ -200,8 +200,26 @@ class Sliced_Notifications {
 		} else {
 			$this->send_the_quote( $id );
 		}
-
-		wp_redirect( admin_url( "edit.php?post_type=sliced_${type}&email=sent" ) );
+		?>
+		<html>
+			<head>
+				<script type="text/javascript">
+					var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
+				</script>
+				<?php 
+				wp_enqueue_style( 'sliced-invoices', plugins_url( 'sliced-invoices' ) . '/admin/css/admin.css', array(), SLICED_VERSION, 'all' );
+				wp_print_styles( array( 'wp-admin','sliced-invoices' ) );
+				wp_print_scripts( array( 'jquery' ) );				
+				?>
+			</head>
+			<body class="wp-admin wp-core-ui sliced sliced-email-ajax-page">
+				<p><?php _e( 'Email was sent successfully.', 'sliced-invoices' ); ?></p>
+				<script type="text/javascript">
+					window.top.location.href = "<?php echo admin_url( "edit.php?post_type=sliced_${type}&email=sent" ); ?>";
+				</script>
+			</body>
+		</html>
+		<?php
 		exit;
 
 	}
@@ -464,17 +482,12 @@ class Sliced_Notifications {
 	public function email_popup() {	?>
 
 		<div id="sliced-email-popup" style="display:none;">
-			<form action="" method="post" name="sliced-send-email" id="sliced-send-email">
-
-					<input name="action" type="hidden" value="sliced-send-email" />
-					<?php wp_nonce_field( 'sliced-send-email', 'send_email' ); ?>
-
-				 <div class="sliced-email-preview">
-						  <p><?php _e( 'Loading the email preview....', 'sliced-invoices' ) ?></p>
-					</div>
-
-					 <?php submit_button( __( 'Send The Email', 'sliced-invoices' ), 'primary', 'sliced-send-email', true, array( 'id' => 'btn-send-email', 'class' => 'submit button button-primary button-large' ) ); ?>
-				</form>
+			<div class="sliced-email-preview">
+				<div class="sliced-email-preview-loading">
+					<div class="spinner" style="visibility: visible; float: left;"></div>
+					<p><?php _e( 'Loading the email preview....', 'sliced-invoices' ) ?></p>
+				</div>
+			</div>			
 		</div>
 
 		<?php
@@ -487,8 +500,8 @@ class Sliced_Notifications {
 	 */
 	public function sure_to_email() {
 
-		$id        = $_POST['id'];
-		$type      = sliced_get_the_type();
+		$id        = $_GET['id'];
+		$type      = sliced_get_the_type( $id );
 		$content   = $this->get_preview_content( "${type}_available" );
 		$subject   = $this->get_subject( "${type}_available" );
 		$recipient = $this->get_recipient( "${type}_available" );
@@ -504,37 +517,59 @@ class Sliced_Notifications {
 			'textarea_name' => 'email_content',
 			'editor_class'  => 'sliced-editor',
 		);
+		
 		?>
+		<html>
+			<head>
+				<script type="text/javascript">
+					var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
+				</script>
+				<?php
+				wp_enqueue_style( 'sliced-invoices', plugins_url( 'sliced-invoices' ) . '/admin/css/admin.css', array(), SLICED_VERSION, 'all' );
+				wp_print_styles( array( 'wp-admin','sliced-invoices' ) );
+				wp_print_scripts( array( 'jquery' ) );				
+				?>
+			</head>
+			<body class="wp-admin wp-core-ui sliced sliced-email-ajax-page">
 
-		<input name="id" type="hidden" value="<?php echo (int)$id; ?>" />
-		<table class="form-table popup-form">
-			<tbody>
-				<tr class="form-field form-required">
-					<td>
-						<label for="client_email"><?php _e('Send To', 'sliced-invoices' ); ?> <span class="description"><?php _e('(required)'); ?></span></label>
-						<input name="client_email" type="text" id="client_email" value="<?php echo sanitize_email( $recipient ); ?>" aria-required="true" autocapitalize="none" autocorrect="off" />
-						<p class="description"><?php _e('Use comma to separate multiple recipients', 'sliced-invoices' ); ?></p>
-					</td>
-				</tr>
-				<tr class="form-field form-required">
-					<td>
-						<label for="email_subject"><?php _e('Subject', 'sliced-invoices' ); ?> <span class="description"><?php _e('(required)'); ?></span></label>
-						<input name="email_subject" type="text" id="email_subject" value="<?php echo esc_html( $subject ); ?>" aria-required="true" autocapitalize="none" autocorrect="off" />
-					</td>
-				</tr>
-				<tr class="form-field form-required">
-					<td>
-					<label for="email_content"><?php _e('Email Content', 'sliced-invoices' ); ?> <span class="description"><?php _e('(required)'); ?></span></label>
-					<?php wp_editor( stripslashes( $content ), 'email_content', $args );
-					do_action('admin_print_footer_scripts'); ?>
-					</td>
-				</tr>
-			</tbody>
-		  </table>
+				<form action="<?php echo admin_url( 'admin-ajax.php' ); ?>" method="post" name="sliced-send-email" id="sliced-send-email">
 
+					<input name="action" type="hidden" value="sliced-send-email" />
+					<input name="id" type="hidden" value="<?php echo (int)$id; ?>" />
+					<?php wp_nonce_field( 'sliced-send-email', 'send_email' ); ?>
+
+					<table class="form-table popup-form">
+						<tbody>
+							<tr class="form-field form-required">
+								<td>
+									<label for="client_email"><?php _e('Send To', 'sliced-invoices' ); ?> <span class="description"><?php _e('(required)'); ?></span></label>
+									<input name="client_email" type="text" id="client_email" value="<?php echo sanitize_email( $recipient ); ?>" aria-required="true" autocapitalize="none" autocorrect="off" />
+									<p class="description"><?php _e('Use comma to separate multiple recipients', 'sliced-invoices' ); ?></p>
+								</td>
+							</tr>
+							<tr class="form-field form-required">
+								<td>
+									<label for="email_subject"><?php _e('Subject', 'sliced-invoices' ); ?> <span class="description"><?php _e('(required)'); ?></span></label>
+									<input name="email_subject" type="text" id="email_subject" value="<?php echo esc_html( $subject ); ?>" aria-required="true" autocapitalize="none" autocorrect="off" />
+								</td>
+							</tr>
+							<tr class="form-field form-required">
+								<td>
+								<label for="email_content"><?php _e('Email Content', 'sliced-invoices' ); ?> <span class="description"><?php _e('(required)'); ?></span></label>
+								<?php wp_editor( stripslashes( $content ), 'email_content', $args );
+								do_action('admin_print_footer_scripts'); ?>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				  
+					<?php submit_button( __( 'Send The Email', 'sliced-invoices' ), 'primary', 'sliced-send-email', true, array( 'id' => 'btn-send-email', 'class' => 'submit button button-primary button-large' ) ); ?>
+				</form>
+			</body>
+		</html>
 		<?php
-
-		die();
+		
+		exit();
 
 	}
 

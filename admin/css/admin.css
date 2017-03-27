@@ -83,18 +83,63 @@
 /*
   email popup form
 */
-.sliced #TB_window .wp-editor-wrap {
-  width: 95%;
+.sliced #sliced-send-email .wp-editor-wrap {
+  width: 100%;
 }
-.sliced .sliced-email-preview textarea#email_content {
+.sliced #sliced-send-email textarea#email_content {
   color: #32373c;
 }
-.sliced .sliced-email-preview p.description {
+.sliced #sliced-send-email p.description {
   color: #888;
   font-size: 12px;
   font-style: normal;
   margin: 2px 0 0 1px !important;
   padding: 0 !important;
+}
+.sliced .sliced-email-preview iframe {
+	width: 100%;
+    height: 480px;
+    margin-top: 10px;
+	overflow: scroll;
+}
+.sliced-email-ajax-page {
+	height: auto;
+	background-color: #fff;
+}
+.sliced-email-ajax-page input[type="text"],
+.sliced-email-ajax-page textarea {
+    font-size: 14px !important;
+	line-height: normal !important;
+	margin: 1px  !important;
+    padding: 3px 5px !important;
+}
+.sliced-email-ajax-page input[type="submit"] {
+    font-size: 13px !important;
+	line-height: 26px !important;
+	margin: 0px  !important;
+    padding: 0px 10px 1px 10px !important;
+}
+.sliced-email-ajax-page .form-table {
+	margin-top: 0;
+}
+.sliced-email-ajax-page button.wp-switch-editor {
+    font-size: 13px;
+    line-height: 19px;
+    margin: 5px 0 0 5px;
+    padding: 3px 8px 4px 8px;
+}
+.sliced-email-ajax-page .mce-toolbar .mce-btn button {
+    padding: 2px 3px;
+}
+.sliced-email-ajax-page .wp-core-ui .button.button-small {
+	font-size: 12px;
+	height: 26px;
+	line-height: 24px;
+	margin: 2px;
+	padding: 0 8px 1px 8px;
+}
+.sliced-email-ajax-page p.submit {
+	padding-bottom: 5px;
 }
 
 /*
