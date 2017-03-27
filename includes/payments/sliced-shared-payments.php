@@ -182,22 +182,35 @@ class Sliced_Payments {
 	 */
 	public function get_accept_decline_quote_buttons() {
 
-		if( has_term( array( 'declined', 'cancelled' ), 'quote_status' ) )
-			return;
-
 		// get the quote options
 		$quotes = get_option( 'sliced_quotes' );
 		$accept = isset( $quotes['accept_quote'] ) ? $quotes['accept_quote'] : '';
+		$output = '';
+		
+		if( ! empty( $accept ) && $accept == 'on' ) { 
+		
+			if ( has_term( 'declined', 'quote_status' ) ) {
 
-		if( ! empty( $accept ) && $accept == 'on' ) { ?>
+				$output = '<p class="sliced-quote-declined">' . __( 'You have declined this quote.', 'sliced-invoices' ) . '</p>';
+				
+			} elseif ( has_term( 'cancelled', 'quote_status' ) ) {
+			
+				$output = '<p class="sliced-quote-cancelled">' . __( 'This quote has been cancelled.', 'sliced-invoices' ) . '</p>';
+				
+			} elseif ( has_term( 'accepted', 'quote_status' ) ) {
+				
+				$output = '<p class="sliced-quote-accepted">' . __( 'You have accepted this quote.', 'sliced-invoices' ) . '</p>';
+				
+			} else {
+			
+				$output = '<a href="#TB_inline?height=300&width=450&inlineId=sliced_accept_quote" title="' . sprintf( esc_html__( 'Accept %s', 'sliced-invoices' ), sliced_get_quote_label() ) . '" class="accept_quote btn btn-success btn-sm thickbox">' . sprintf( esc_html__( 'Accept %s', 'sliced-invoices' ), sliced_get_quote_label() ) . '</a> ';
+				$output = '<a href="#TB_inline?height=300&width=450&inlineId=sliced_decline_quote" title="' . sprintf( esc_html__( 'Decline %s', 'sliced-invoices' ), sliced_get_quote_label() ) . '" class="decline_quote btn btn-danger btn-sm thickbox">' . sprintf( esc_html__( 'Decline %s', 'sliced-invoices' ), sliced_get_quote_label() ) . '</a> ';
 
-			<a href="#TB_inline?height=300&width=450&inlineId=sliced_accept_quote" title="<?php if ( class_exists( 'Sliced_Translate' ) ) { echo Sliced_Translate::sliced_translate_some_text( 'Accept Quote', 'Accept Quote', 'sliced-invoices' ); } else { printf( esc_html__( 'Accept This %s', 'sliced-invoices' ), sliced_get_quote_label() ); } ?>" class="accept_quote btn btn-success btn-sm thickbox"><?php if ( class_exists( 'Sliced_Translate' ) ) { echo Sliced_Translate::sliced_translate_some_text( 'Accept Quote', 'Accept Quote', 'sliced-invoices' ); } else { printf( esc_html__( 'Accept %s', 'sliced-invoices' ), sliced_get_quote_label() ); } ?></a>
-
-			<a href="#TB_inline?height=300&width=450&inlineId=sliced_decline_quote" title="<?php if ( class_exists( 'Sliced_Translate' ) ) { echo Sliced_Translate::sliced_translate_some_text( 'Decline Quote', 'Decline Quote', 'sliced-invoices' ); } else { printf( esc_html__( 'Decline This %s', 'sliced-invoices' ), sliced_get_quote_label() ); } ?>" class="decline_quote btn btn-danger btn-sm thickbox"><?php if ( class_exists( 'Sliced_Translate' ) ) { echo Sliced_Translate::sliced_translate_some_text( 'Decline Quote', 'Decline Quote', 'sliced-invoices' ); } else { printf( esc_html__( 'Decline %s', 'sliced-invoices' ), sliced_get_quote_label() ); } ?></a>
-
-		<?php
+			}
 
 		}
+		
+		echo apply_filters( 'sliced_quote_accept_decline_buttons', $output );
 
 	}
 
