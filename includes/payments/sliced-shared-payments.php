@@ -204,7 +204,7 @@ class Sliced_Payments {
 			} else {
 			
 				$output = '<a href="#TB_inline?height=300&width=450&inlineId=sliced_accept_quote" title="' . sprintf( esc_html__( 'Accept %s', 'sliced-invoices' ), sliced_get_quote_label() ) . '" class="accept_quote btn btn-success btn-sm thickbox">' . sprintf( esc_html__( 'Accept %s', 'sliced-invoices' ), sliced_get_quote_label() ) . '</a> ';
-				$output = '<a href="#TB_inline?height=300&width=450&inlineId=sliced_decline_quote" title="' . sprintf( esc_html__( 'Decline %s', 'sliced-invoices' ), sliced_get_quote_label() ) . '" class="decline_quote btn btn-danger btn-sm thickbox">' . sprintf( esc_html__( 'Decline %s', 'sliced-invoices' ), sliced_get_quote_label() ) . '</a> ';
+				$output .= '<a href="#TB_inline?height=300&width=450&inlineId=sliced_decline_quote" title="' . sprintf( esc_html__( 'Decline %s', 'sliced-invoices' ), sliced_get_quote_label() ) . '" class="decline_quote btn btn-danger btn-sm thickbox">' . sprintf( esc_html__( 'Decline %s', 'sliced-invoices' ), sliced_get_quote_label() ) . '</a> ';
 
 			}
 
