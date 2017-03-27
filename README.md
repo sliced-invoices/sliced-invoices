@@ -5,7 +5,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
 Tested up to: 4.7
-Stable tag: 3.3.3
+Stable tag: 3.3.4
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -151,6 +151,9 @@ Yes, it does!  As of version 3.0.0 you can network activate Sliced Invoices in W
 
 
 ## Changelog
+##  3.3.4
+* FIX: minor bug fix
+
 ##  3.3.3
 * NEW: add filter 'sliced_quote_accept_decline_buttons'
 * FIX: issue where accept/decline quote buttons continue to appear on quote after it's been accepted, allowing users to accept more than once
