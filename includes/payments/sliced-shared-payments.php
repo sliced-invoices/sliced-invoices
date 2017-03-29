@@ -232,8 +232,8 @@ class Sliced_Payments {
 			<div class="sliced_accept_quote_form_wrap">
 
 				<ul>
-					<li><span><?php if ( class_exists( 'Sliced_Translate' ) ) { echo Sliced_Translate::sliced_translate_some_text( 'Quote Number', 'Quote Number', 'sliced-invoices' ); } else { printf( esc_html__( '%s Number', 'sliced-invoices' ), sliced_get_quote_label() ); } ?></span> <div class="quote-number"><?php esc_html_e( sliced_get_quote_prefix() ); ?><?php esc_html_e( sliced_get_quote_number() ); ?></div></li>
-					<li><span><?php if ( class_exists( 'Sliced_Translate' ) ) { echo Sliced_Translate::sliced_translate_some_text( 'Quote Amount', 'Quote Amount', 'sliced-invoices' ); } else { printf( esc_html__( '%s Amount', 'sliced-invoices' ), sliced_get_quote_label() ); } ?></span> <div class="quote-amount"><?php echo sliced_get_quote_total(); ?></div></li>
+					<li><span><?php printf( esc_html__( '%s Number', 'sliced-invoices' ), sliced_get_quote_label() ); ?></span> <div class="quote-number"><?php esc_html_e( sliced_get_quote_prefix() ); ?><?php esc_html_e( sliced_get_quote_number() ); ?></div></li>
+					<li><span><?php printf( esc_html__( '%s Amount', 'sliced-invoices' ), sliced_get_quote_label() ); ?></span> <div class="quote-amount"><?php echo sliced_get_quote_total(); ?></div></li>
 				</ul>
 
 				<form method="POST" action="<?php echo esc_url( get_permalink( (int)$payments['payment_page'] ) ) ?>">
