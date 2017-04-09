@@ -3,9 +3,9 @@
 if ( ! defined('ABSPATH') ) { exit; }
 
 // define the font location for PDF's
-if ( ! defined( "_MPDF_SYSTEM_TTFONTS") ) {
+if ( ! defined( "_SLICED_MPDF_SYSTEM_TTFONTS") ) {
 	$path = plugin_dir_path( __FILE__ ) . 'fonts/';
-	define("_MPDF_SYSTEM_TTFONTS",  $path );
+	define("_SLICED_MPDF_SYSTEM_TTFONTS",  $path );
 }
 
 /**
