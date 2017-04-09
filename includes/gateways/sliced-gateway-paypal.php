@@ -504,6 +504,8 @@ class Sliced_Paypal {
 
 		// Set the request as a POST FIELD for curl.
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $nvpreq);
+		
+		do_action( 'sliced_pre_curl_exec', $ch );
 
 		// Get response from the server.
 		$httpResponse = curl_exec($ch);
@@ -580,6 +582,7 @@ class Sliced_Paypal {
 		// the directory path of the certificate as shown below:
 		// curl_setopt($ch, CURLOPT_CAINFO, dirname(__FILE__) . '/cacert.pem');
 		do_action( 'sliced_gateway_paypal_ipn_verify', $ch );
+		do_action( 'sliced_pre_curl_exec', $ch );
 		if ( !($res = curl_exec($ch)) ) {
 		  // error_log("Got " . curl_error($ch) . " when processing IPN data");
 		  curl_close($ch);

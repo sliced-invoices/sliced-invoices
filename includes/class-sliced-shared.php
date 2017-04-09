@@ -615,6 +615,8 @@ class Sliced_Shared {
 		curl_setopt( $curl, CURLOPT_TIMEOUT, 20 );
 		curl_setopt( $curl, CURLOPT_TIMEOUT_MS, 20000 );
 		curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false);
+		
+		do_action( 'sliced_pre_curl_exec', $curl );
 
 		$response = curl_exec( $curl );
 
