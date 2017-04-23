@@ -1671,12 +1671,12 @@ class Sliced_Admin {
 
 			$index = 0;
 			foreach ( $items as $item ) {
-
-				list( $qty, $title, $price, $desc ) = explode( '|', $item );
-				$qty   = trim( $qty );
-				$title = trim( $title );
-				$price = trim( $price );
-				$desc  = trim( $desc );
+			
+				$item_array = explode( '|', $item );
+				$qty   = isset( $item_array[0] ) ? trim( $item_array[0] ) : '';
+				$title = isset( $item_array[1] ) ? trim( $item_array[1] ) : '';
+				$price = isset( $item_array[2] ) ? trim( $item_array[2] ) : '';
+				$desc  = isset( $item_array[3] ) ? trim( $item_array[3] ) : '';
 
 				$price_array[] = "<option value='" . esc_html( $title ) . "' data-qty='" . esc_html( $qty ) . "' data-price='" . esc_html( $price ) . "' data-title='" . esc_html( $title ) . "' data-desc='" . wp_kses_post( $desc ) . "'>" . esc_html( $title ) . "</option>";
 
