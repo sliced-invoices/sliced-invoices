@@ -5,7 +5,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
 Tested up to: 4.7
-Stable tag: 3.3.4
+Stable tag: 3.3.5
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -151,6 +151,15 @@ Yes, it does!  As of version 3.0.0 you can network activate Sliced Invoices in W
 
 
 ## Changelog
+##  3.3.5
+* NEW: add action 'sliced_pre_curl_exec'
+* NEW: add filter 'sliced_print_message'
+* FIX: fix error with payment reminders in PHP 7.1
+* UPDATE: Compatibility update with PDF & Emails Extension v1.4.4
+* UPDATE: Make PayPal payment success message translatable
+* UPDATE: minor code cleanup, textual updates
+* UPDATE: Update .pot file
+
 ##  3.3.4
 * FIX: minor bug fix
 
