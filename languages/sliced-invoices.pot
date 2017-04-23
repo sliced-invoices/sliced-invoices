@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Sliced Invoices\n"
-"POT-Creation-Date: 2017-03-07 16:52-0800\n"
+"POT-Creation-Date: 2017-04-23 09:00-0700\n"
 "PO-Revision-Date: 2017-01-15 20:46-0800\n"
 "Last-Translator: \n"
 "Language-Team: Sliced Invoices <info@slicedinvoices.com>\n"
@@ -30,6 +30,7 @@ msgid "Settings saved successfully."
 msgstr ""
 
 #: admin/class-sliced-admin.php:489
+#: admin/includes/sliced-admin-notifications.php:216
 msgid "Email was sent successfully."
 msgstr ""
 
@@ -176,9 +177,9 @@ msgid "Password"
 msgstr ""
 
 #: admin/class-sliced-admin.php:1142 admin/class-sliced-admin.php:1166
-#: admin/includes/sliced-admin-notifications.php:513
-#: admin/includes/sliced-admin-notifications.php:520
-#: admin/includes/sliced-admin-notifications.php:526
+#: admin/includes/sliced-admin-notifications.php:545
+#: admin/includes/sliced-admin-notifications.php:552
+#: admin/includes/sliced-admin-notifications.php:558
 msgid "(required)"
 msgstr ""
 
@@ -702,7 +703,7 @@ msgstr ""
 #: admin/includes/sliced-admin-metaboxes.php:301
 #: admin/includes/sliced-admin-metaboxes.php:435
 #: admin/includes/sliced-admin-quick-edit.php:92
-#: includes/payments/sliced-shared-payments.php:222
+#: includes/payments/sliced-shared-payments.php:235
 #, php-format
 msgid "%s Number"
 msgstr ""
@@ -792,58 +793,54 @@ msgstr ""
 msgid "Warning: duplicate invoice number"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:238
+#: admin/includes/sliced-admin-notifications.php:257
 #, php-format
 msgid "Your %s has been accepted"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:241
+#: admin/includes/sliced-admin-notifications.php:260
 #, php-format
 msgid "Your %s has been declined"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:244
-#: admin/includes/sliced-admin-notifications.php:315
+#: admin/includes/sliced-admin-notifications.php:263
+#: admin/includes/sliced-admin-notifications.php:334
 msgid "You've received a payment!"
-msgstr ""
-
-#: admin/includes/sliced-admin-notifications.php:268
-#, php-format
-msgid "%1s has accepted your %2s of %3s."
-msgstr ""
-
-#: admin/includes/sliced-admin-notifications.php:274
-#, php-format
-msgid "An %1s has automatically been created (%2s)."
 msgstr ""
 
 #: admin/includes/sliced-admin-notifications.php:287
 #, php-format
+msgid "%1s has accepted your %2s of %3s."
+msgstr ""
+
+#: admin/includes/sliced-admin-notifications.php:293
+#, php-format
+msgid "An %1s has automatically been created (%2s)."
+msgstr ""
+
+#: admin/includes/sliced-admin-notifications.php:306
+#, php-format
 msgid "%1s has declined your %2s of %3s."
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:318
+#: admin/includes/sliced-admin-notifications.php:337
 #, php-format
 msgid "%1s has made a payment for %2s on %3s %4s."
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:472
+#: admin/includes/sliced-admin-notifications.php:488
 msgid "Loading the email preview...."
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:475
-msgid "Send The Email"
-msgstr ""
-
-#: admin/includes/sliced-admin-notifications.php:513
+#: admin/includes/sliced-admin-notifications.php:545
 msgid "Send To"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:515
+#: admin/includes/sliced-admin-notifications.php:547
 msgid "Use comma to separate multiple recipients"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:520
+#: admin/includes/sliced-admin-notifications.php:552
 #: admin/includes/sliced-admin-options.php:675
 #: admin/includes/sliced-admin-options.php:711
 #: admin/includes/sliced-admin-options.php:747
@@ -851,37 +848,41 @@ msgstr ""
 msgid "Subject"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:526
+#: admin/includes/sliced-admin-notifications.php:558
 msgid "Email Content"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:679
+#: admin/includes/sliced-admin-notifications.php:566
+msgid "Send The Email"
+msgstr ""
+
+#: admin/includes/sliced-admin-notifications.php:718
 msgid "Email to client"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:704
+#: admin/includes/sliced-admin-notifications.php:743
 #, php-format
 msgctxt "sliced-invoices"
 msgid "%s ago"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:706
+#: admin/includes/sliced-admin-notifications.php:745
 msgid "Sent "
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:739
+#: admin/includes/sliced-admin-notifications.php:778
 msgid "was"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:739
+#: admin/includes/sliced-admin-notifications.php:778
 msgid "is"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:832
+#: admin/includes/sliced-admin-notifications.php:871
 msgid "View this invoice online"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:834
+#: admin/includes/sliced-admin-notifications.php:873
 msgid "View this quote online"
 msgstr ""
 
@@ -1722,55 +1723,54 @@ msgid ""
 msgstr ""
 
 #: includes/gateways/sliced-gateway-paypal.php:21
-#: includes/gateways/sliced-gateway-paypal.php:129
 msgid "Pay with PayPal"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:59
+#: includes/gateways/sliced-gateway-paypal.php:55
 msgid "PayPal Currency"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:60
+#: includes/gateways/sliced-gateway-paypal.php:56
 msgid ""
 "3 letter code - <a href=\"https://developer.paypal.com/docs/classic/api/"
 "currency_codes/\" target=\"_blank\">Full list of accepted currencies here</a>"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:67
+#: includes/gateways/sliced-gateway-paypal.php:63
 msgid "PayPal API Username"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:68
+#: includes/gateways/sliced-gateway-paypal.php:64
 msgid ""
 "You will find your API Username under \"Profile\" and then \"Request API "
 "credentials\"."
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:73
+#: includes/gateways/sliced-gateway-paypal.php:69
 msgid "PayPal API Password"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:74
+#: includes/gateways/sliced-gateway-paypal.php:70
 msgid ""
 "You will find your API Password under \"Profile\" and then \"Request API "
 "credentials\"."
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:79
+#: includes/gateways/sliced-gateway-paypal.php:75
 msgid "PayPal Signature"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:80
+#: includes/gateways/sliced-gateway-paypal.php:76
 msgid ""
 "You will find your Signature under \"Profile\" and then \"Request API "
 "credentials\"."
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:85
+#: includes/gateways/sliced-gateway-paypal.php:81
 msgid "PayPal Mode"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:86
+#: includes/gateways/sliced-gateway-paypal.php:82
 msgid ""
 "Set to Sandbox for testing purposes (you must have a <a href=\"https://"
 "developer.paypal.com/docs/classic/lifecycle/ug_sandbox/\">Sandbox account</"
@@ -1778,53 +1778,53 @@ msgid ""
 "accept payments from clients."
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:281
+#: includes/gateways/sliced-gateway-paypal.php:249
 msgid "Error processing the payment.<br> <a href=\""
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:316
+#: includes/gateways/sliced-gateway-paypal.php:284
 msgid "Payment has been cancelled.<br> <a href=\""
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:322
+#: includes/gateways/sliced-gateway-paypal.php:290
 msgid "This invoice has already been paid."
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:406
-#: includes/payments/sliced-shared-payments.php:525
+#: includes/gateways/sliced-gateway-paypal.php:374
+#: includes/payments/sliced-shared-payments.php:538
 msgid "Success"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:414
+#: includes/gateways/sliced-gateway-paypal.php:382
 msgid "Subscription has been activated!"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:416
-#: includes/gateways/sliced-gateway-paypal.php:421
-#: includes/gateways/sliced-gateway-paypal.php:428
+#: includes/gateways/sliced-gateway-paypal.php:384
+#: includes/gateways/sliced-gateway-paypal.php:389
+#: includes/gateways/sliced-gateway-paypal.php:396
 msgid "Your PayPal Transaction ID is: "
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:419
+#: includes/gateways/sliced-gateway-paypal.php:387
 msgid "Payment has been received!"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:424
+#: includes/gateways/sliced-gateway-paypal.php:392
 msgid "Transaction complete, however payment is still pending."
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:426
+#: includes/gateways/sliced-gateway-paypal.php:394
 msgid ""
 "You need to manually authorize this payment in your <a target=\"_new\" href="
 "\"http://www.paypal.com\">PayPal Account</a>"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:433
+#: includes/gateways/sliced-gateway-paypal.php:402
 #, php-format
-msgid "<a href=\"%1s\">Click here to return to %s</a>"
+msgid "Click here to return to %s"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:642
+#: includes/gateways/sliced-gateway-paypal.php:615
 msgid "There was an error with the form submission, please try again."
 msgstr ""
 
@@ -1857,37 +1857,39 @@ msgid "Pay Now"
 msgstr ""
 
 #: includes/payments/sliced-shared-payments.php:194
-#, php-format
-msgid "Accept This %s"
+msgid "You have declined this quote."
 msgstr ""
 
-#: includes/payments/sliced-shared-payments.php:194
-#: includes/payments/sliced-shared-payments.php:231
+#: includes/payments/sliced-shared-payments.php:198
+msgid "This quote has been cancelled."
+msgstr ""
+
+#: includes/payments/sliced-shared-payments.php:202
+msgid "You have accepted this quote."
+msgstr ""
+
+#: includes/payments/sliced-shared-payments.php:206
+#: includes/payments/sliced-shared-payments.php:244
 #, php-format
 msgid "Accept %s"
 msgstr ""
 
-#: includes/payments/sliced-shared-payments.php:196
-#, php-format
-msgid "Decline This %s"
-msgstr ""
-
-#: includes/payments/sliced-shared-payments.php:196
-#: includes/payments/sliced-shared-payments.php:269
+#: includes/payments/sliced-shared-payments.php:207
+#: includes/payments/sliced-shared-payments.php:282
 #, php-format
 msgid "Decline %s"
 msgstr ""
 
-#: includes/payments/sliced-shared-payments.php:223
+#: includes/payments/sliced-shared-payments.php:236
 #, php-format
 msgid "%s Amount"
 msgstr ""
 
-#: includes/payments/sliced-shared-payments.php:267
+#: includes/payments/sliced-shared-payments.php:280
 msgid "Reason for declining"
 msgstr ""
 
-#: includes/payments/sliced-shared-payments.php:342
+#: includes/payments/sliced-shared-payments.php:355
 msgid "Bummer"
 msgstr ""
 
@@ -2175,8 +2177,8 @@ msgstr ""
 msgid "Add a comment"
 msgstr ""
 
-#: public/templates/sliced-invoice-display.php:118
-#: public/templates/sliced-quote-display.php:103
+#: public/templates/sliced-invoice-display.php:123
+#: public/templates/sliced-quote-display.php:107
 msgid "Page "
 msgstr ""
 
