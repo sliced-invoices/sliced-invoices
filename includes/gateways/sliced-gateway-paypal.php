@@ -33,14 +33,10 @@ class Sliced_Paypal {
 	 * Hook into the appropriate actions when the class is constructed.
 	 */
 	public function __construct() {
-		//add_action( 'sliced_invoice_after_body', array( $this, 'display_payment_options' ) );
+		
 		add_filter( 'sliced_payment_option_fields', array( $this, 'add_options_fields') );
 		add_filter( 'sliced_register_payment_method', array( $this, 'add_payment_method') );
-		
-		add_filter( 'sliced_translate_option_fields', array( $this, 'add_translate_options' ) );
-
 		add_filter( 'sliced_business_details', array( $this, 'get_field_values') );
-
 		add_action( 'sliced_do_payment', array( $this, 'process_payment') );
 		add_action( 'sliced_do_payment', array( $this, 'payment_return'), 10 );
 
@@ -112,34 +108,6 @@ class Sliced_Paypal {
 		}
 
 		return $pay_array;
-	}
-	
-	
-	/**
-	 * Add the options for this gateway to the translate settings.
-	 *
-	 * @since   2.8.6
-	 */
-	public function add_translate_options( $options ) {
-	
-		if ( class_exists( 'Sliced_Translate' ) ) {
-
-			// add fields to end of options array
-			$options['fields'][] = array(
-				'name'      => __( 'Pay with PayPal', 'sliced-invoices-translate' ),
-				'desc'      => __( '', 'sliced-invoices-translate' ),
-				'default'   => '',
-				'type'      => 'text',
-				'id'        => 'gateway-paypal-label',
-				'attributes' => array(
-					'class'      => 'i18n-multilingual regular-text',
-				),
-			);
-		
-		}
-
-		return $options;
-
 	}
 	
 	
@@ -430,7 +398,9 @@ class Sliced_Paypal {
 			}
 
 			$message .= '<p>';
-			$message .= sprintf( __( '<a href="%1s">Click here to return to %s</a>', 'sliced-invoices' ), apply_filters( 'sliced_get_the_link', get_permalink($id), $id ), sliced_get_invoice_label() );
+			$message .= '<a href="' . apply_filters( 'sliced_get_the_link', get_permalink($id), $id ) . '">';
+			$message .= sprintf( __( 'Click here to return to %s', 'sliced-invoices' ), sliced_get_invoice_label() );
+			$message .= '</a>';
 			$message .= '</p>';
 
 			/**
