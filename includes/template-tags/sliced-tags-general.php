@@ -213,7 +213,7 @@ if ( ! function_exists( 'sliced_print_message' ) ) :
 
 			<div class="sliced-message <?php esc_attr_e( $type, 'sliced-invoices' ) ?>">
 				<?php   echo $icon;
-						echo wp_kses_post( $message );  ?>
+						echo apply_filters( 'sliced_print_message', wp_kses_post( $message ), $id, $type );  ?>
 			</div>
 
 		<?php
