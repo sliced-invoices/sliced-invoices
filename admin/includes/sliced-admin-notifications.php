@@ -668,6 +668,9 @@ class Sliced_Notifications {
 	 */
 	private function payment_reminder_sent( $id ) {
 		$sent = get_post_meta( $id, 'sliced_invoice_reminder_sent', true );
+		if ( ! is_array( $sent ) ) {
+			$sent = array();
+		}
 		$sent[] = date( 'Y-m-d' );
 		update_post_meta( $id, 'sliced_invoice_reminder_sent', $sent );
 	}
