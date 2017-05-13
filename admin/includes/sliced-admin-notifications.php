@@ -600,22 +600,22 @@ class Sliced_Notifications {
 			return;
 
 		$args = array(
-				'post_type'     =>  'sliced_invoice',
-				'status'     	=>  'publish',
-				'fields'     	=>  'ids',
-				'meta_query'    =>  array(
-					 array(
-						  'key' 		=>  '_sliced_invoice_due',
-						  'compare' 	=>  'EXISTS',
-					 )
-				),
-				'tax_query' => array(
+			'post_type'      => 'sliced_invoice',
+			'post_status'    => 'publish',
+			'posts_per_page' => -1,
+			'fields'     	 => 'ids',
+			'meta_query'     => array(
 				array(
-					'taxonomy' => 'invoice_status',
-					'field'    => 'slug',
-					'terms'    => array( 'unpaid', 'overdue' ),
+					'key'       =>  '_sliced_invoice_due',
+					'compare'   =>  'EXISTS',
+				)
+			),
+			'tax_query'      => array(
+				array(
+					'taxonomy'  => 'invoice_status',
+					'field'     => 'slug',
+					'terms'     => array( 'unpaid', 'overdue' ),
 				),
-
 			),
 		);
 		$invoices = get_posts( $args );
@@ -626,6 +626,9 @@ class Sliced_Notifications {
 		foreach ( $invoices as $id ) {
 			// get the due date of the invoice
 			$due_date = get_post_meta( $id, '_sliced_invoice_due', true );
+			if ( ! $due_date ) {
+				continue;
+			}
 			// loop through the reminder dates
 			foreach ($reminders as $key => $send_days) {
 				// add each date that the reminder needs to be sent into a new array with id as the key
