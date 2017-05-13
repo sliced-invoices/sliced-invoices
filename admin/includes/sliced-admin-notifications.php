@@ -84,7 +84,7 @@ class Sliced_Notifications {
 		add_action( 'sliced_quote_available_email_sent', array( $this, 'quote_sent' ), 10, 1);
 		add_action( 'sliced_invoice_available_email_sent', array( $this, 'invoice_sent' ), 10, 1);
 
-		add_action( 'admin_init', array( $this, 'check_for_reminder_dates' ) );
+		//add_action( 'admin_init', array( $this, 'check_for_reminder_dates' ) );
 	}
 
 	/**

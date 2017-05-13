@@ -38,6 +38,11 @@ class Sliced_Admin {
 			remove_action( 'media_buttons_context', 'add_slgf_custom_button' );
 			remove_action( 'admin_footer', 'add_slgf_inline_popup_content' );
 		}
+		
+		// Sliced Recurring Tasks
+		if ( ! wp_next_scheduled ( 'sliced_invoices_hourly_tasks' ) ) {
+			wp_schedule_event( time(), 'hourly', 'sliced_invoices_hourly_tasks' );
+		}
 
 	}
 
@@ -1900,5 +1905,21 @@ class Sliced_Admin {
 		die();
 
 	}
+	
+	
+	/**
+	 * Handle hourly tasks as needed
+	 *
+	 * @since     3.4.0
+	 */
+	public function sliced_invoices_hourly_tasks() {
+	
+		$this->mark_quote_expired();
+		$this->mark_invoice_overdue();
+		
+		$SN = new Sliced_Notifications();
+		$SN->check_for_reminder_dates();
+		
+	}
 
-} // end class
+}

@@ -20,6 +20,9 @@ class Sliced_Deactivator {
 	 * @since   2.0.0
 	 */
 	public static function deactivate() {
+	
+		// Sliced Recurring Tasks
+		wp_clear_scheduled_hook( 'sliced_invoices_hourly_tasks' );
 
 		flush_rewrite_rules();
 
