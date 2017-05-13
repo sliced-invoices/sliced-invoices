@@ -173,9 +173,9 @@ class Sliced_Notifications {
 	public function payment_reminder( $id ) {
 		$this->id = $id;
 		$this->type = 'invoice';
-		$this->payment_reminder_sent( $this->id );
 		$type = 'payment_reminder';
 		$this->send_mail( $type );
+		$this->payment_reminder_sent( $this->id );
 	}
 
 	/**
