@@ -191,15 +191,19 @@ class Sliced_Payments {
 		
 			if ( has_term( 'declined', 'quote_status' ) ) {
 
-				$output = '<p class="sliced-quote-declined">' . __( 'You have declined this quote.', 'sliced-invoices' ) . '</p>';
+				$output = '<p class="sliced-quote-declined">' . sprintf( __( 'You have declined this %s.', 'sliced-invoices' ), sliced_get_quote_label() ) . '</p>';
 				
 			} elseif ( has_term( 'cancelled', 'quote_status' ) ) {
 			
-				$output = '<p class="sliced-quote-cancelled">' . __( 'This quote has been cancelled.', 'sliced-invoices' ) . '</p>';
+				$output = '<p class="sliced-quote-cancelled">' . sprintf( __( 'This %s has been cancelled.', 'sliced-invoices' ), sliced_get_quote_label() ) . '</p>';
 				
 			} elseif ( has_term( 'accepted', 'quote_status' ) ) {
 				
-				$output = '<p class="sliced-quote-accepted">' . __( 'You have accepted this quote.', 'sliced-invoices' ) . '</p>';
+				$output = '<p class="sliced-quote-accepted">' . sprintf( __( 'You have accepted this %s.', 'sliced-invoices' ), sliced_get_quote_label() ) . '</p>';
+				
+			} elseif ( has_term( 'expired', 'quote_status' ) ) {
+				
+				$output = '<p class="sliced-quote-expired">' . sprintf( __( 'This %s has expired.', 'sliced-invoices' ), sliced_get_quote_label() ) . '</p>';
 				
 			} else {
 			

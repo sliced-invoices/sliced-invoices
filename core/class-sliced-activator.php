@@ -382,6 +382,7 @@ Just a friendly reminder that your invoice %number% for %total% %is_was% due on 
 				'Accepted',
 				'Declined',
 				'Cancelled',
+				'Expired',
 			)
 		);
 
