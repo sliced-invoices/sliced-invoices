@@ -95,6 +95,16 @@ class Sliced_Quote {
 		self::set_status( $id, 'declined' );
 	}
 
+	/**
+	 * Change status to expired.
+	 * run on admin_init within admin class
+	 *
+	 * @since   3.4.0
+	 */
+	public static function set_as_expired( $id ) {
+		self::set_status( $id, 'expired' );
+	}
+
 
 
 	/**

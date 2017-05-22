@@ -577,6 +577,17 @@ class Sliced_Options {
 					)
 				),
 				array(
+					'name'      => __( 'Confirmation Page', 'sliced-invoices' ),
+					'desc'      => __( 'Choose a page to use for PayPal and other <a target="_blank" href="https://slicedinvoices.com/extensions/">available payment gateway</a> messages and other confirmations.<br>A blank page named Confirmation would be perfect.', 'sliced-invoices' ),
+					'default'   => $payments['payment_page'],
+					'type'      => 'select',
+					'id'        => 'payment_page',
+					'options'   => $this->get_the_pages(),
+					'attributes' => array(
+						'required' => 'required',
+					)
+				),
+				array(
 					'name'      => __( 'Tax Percentage', 'sliced-invoices' ),
 					'desc'      => __( 'Global tax percentage. Set to 0 or leave blank for no tax.', 'sliced-invoices' ),
 					'default'   => '10',
@@ -597,17 +608,6 @@ class Sliced_Options {
 					'type'      => 'text',
 					'attributes' => array(
 						'maxlength' => 100,
-					)
-				),
-				array(
-					'name'      => __( 'Confirmation Page', 'sliced-invoices' ),
-					'desc'      => __( 'Choose a page to use for PayPal and other <a target="_blank" href="https://slicedinvoices.com/extensions/">available payment gateway</a> messages and other confirmations.<br>A blank page named Confirmation would be perfect.', 'sliced-invoices' ),
-					'default'   => $payments['payment_page'],
-					'type'      => 'select',
-					'id'        => 'payment_page',
-					'options'   => $this->get_the_pages(),
-					'attributes' => array(
-						'required' => 'required',
 					)
 				),
 				array(

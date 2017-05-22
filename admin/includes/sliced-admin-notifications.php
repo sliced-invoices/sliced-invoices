@@ -84,7 +84,7 @@ class Sliced_Notifications {
 		add_action( 'sliced_quote_available_email_sent', array( $this, 'quote_sent' ), 10, 1);
 		add_action( 'sliced_invoice_available_email_sent', array( $this, 'invoice_sent' ), 10, 1);
 
-		add_action( 'admin_init', array( $this, 'check_for_reminder_dates' ) );
+		//add_action( 'admin_init', array( $this, 'check_for_reminder_dates' ) );
 	}
 
 	/**
@@ -173,9 +173,9 @@ class Sliced_Notifications {
 	public function payment_reminder( $id ) {
 		$this->id = $id;
 		$this->type = 'invoice';
-		$this->payment_reminder_sent( $this->id );
 		$type = 'payment_reminder';
 		$this->send_mail( $type );
+		$this->payment_reminder_sent( $this->id );
 	}
 
 	/**
@@ -600,22 +600,22 @@ class Sliced_Notifications {
 			return;
 
 		$args = array(
-				'post_type'     =>  'sliced_invoice',
-				'status'     	=>  'publish',
-				'fields'     	=>  'ids',
-				'meta_query'    =>  array(
-					 array(
-						  'key' 		=>  '_sliced_invoice_due',
-						  'compare' 	=>  'EXISTS',
-					 )
-				),
-				'tax_query' => array(
+			'post_type'      => 'sliced_invoice',
+			'post_status'    => 'publish',
+			'posts_per_page' => -1,
+			'fields'     	 => 'ids',
+			'meta_query'     => array(
 				array(
-					'taxonomy' => 'invoice_status',
-					'field'    => 'slug',
-					'terms'    => array( 'unpaid', 'overdue' ),
+					'key'       =>  '_sliced_invoice_due',
+					'compare'   =>  'EXISTS',
+				)
+			),
+			'tax_query'      => array(
+				array(
+					'taxonomy'  => 'invoice_status',
+					'field'     => 'slug',
+					'terms'     => array( 'unpaid', 'overdue' ),
 				),
-
 			),
 		);
 		$invoices = get_posts( $args );
@@ -626,6 +626,9 @@ class Sliced_Notifications {
 		foreach ( $invoices as $id ) {
 			// get the due date of the invoice
 			$due_date = get_post_meta( $id, '_sliced_invoice_due', true );
+			if ( ! $due_date ) {
+				continue;
+			}
 			// loop through the reminder dates
 			foreach ($reminders as $key => $send_days) {
 				// add each date that the reminder needs to be sent into a new array with id as the key
