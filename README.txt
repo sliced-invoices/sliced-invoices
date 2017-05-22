@@ -70,6 +70,7 @@ https://www.youtube.com/watch?v=9V6VRidkZFk
 *   [2Checkout Payment Gateway](https://slicedinvoices.com/extensions/2checkout-payment-gateway/?utm_source=WordPress&utm_medium=Readme&utm_content=2Checkout&utm_campaign=Free)
 *   [Braintree Payment Gateway](https://slicedinvoices.com/extensions/braintree-payment-gateway/?utm_source=WordPress&utm_medium=Readme&utm_content=Braintree&utm_campaign=Free)
 *   [Stripe Payment Gateway](https://slicedinvoices.com/extensions/stripe-payment-gateway/?utm_source=WordPress&utm_medium=Readme&utm_content=Stripe&utm_campaign=Free)
+*   [Additional Tax](https://slicedinvoices.com/extensions/additional-tax/?utm_source=WordPress&utm_medium=Readme&utm_content=Additional-Tax&utm_campaign=Free) extension (free)
 *   [Better URL's](https://slicedinvoices.com/extensions/better-urls/?utm_source=WordPress&utm_medium=Readme&utm_content=Better-URLs&utm_campaign=Free) extension (free)
 *   [Recurring invoices](https://slicedinvoices.com/extensions/recurring-invoices/?utm_source=WordPress&utm_medium=Readme&utm_content=Recurring-Invoices&utm_campaign=Free) extension
 *   [Deposit invoices](https://slicedinvoices.com/extensions/deposit-invoices/?utm_source=WordPress&utm_medium=Readme&utm_content=Deposit-Invoices&utm_campaign=Free) extension
