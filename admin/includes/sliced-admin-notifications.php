@@ -396,7 +396,7 @@ class Sliced_Notifications {
 			$output = $_POST['client_email'];
 		}
 
-		return $output;
+		return apply_filters( 'sliced_get_email_recipient', $output, $this->id, $type );
 	}
 
 
