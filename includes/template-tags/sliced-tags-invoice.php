@@ -50,6 +50,17 @@ if ( ! function_exists( 'sliced_get_invoice_prefix' ) ) :
 
 endif;
 
+
+if ( ! function_exists( 'sliced_get_invoice_suffix' ) ) :
+
+	function sliced_get_invoice_suffix( $id = 0 ) {
+		$output = Sliced_Invoice::get_suffix( $id );
+		return apply_filters( 'sliced_get_invoice_suffix', $output, $id );
+	}
+
+endif;
+
+
 if ( ! function_exists( 'sliced_get_next_invoice_number' ) ) :
 
 	function sliced_get_next_invoice_number() {

@@ -292,7 +292,7 @@ class Sliced_Notifications {
 				$content .= sprintf(
 					__( 'An %1s has automatically been created (%2s).', 'sliced-invoices' ),
 					sliced_get_invoice_label(),
-					sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id )
+					sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id ) . sliced_get_invoice_suffix( $id )
 				);
 				 $content .= '<br>';
 
@@ -338,7 +338,7 @@ class Sliced_Notifications {
 					sliced_get_client_business( $this->id ),
 					( $total ? $total : sliced_get_total( $this->id ) ), //hack
 					sliced_get_invoice_label(),
-					sliced_get_invoice_prefix( $this->id ) . sliced_get_invoice_number( $this->id )
+					sliced_get_invoice_prefix( $this->id ) . sliced_get_invoice_number( $this->id ) . sliced_get_invoice_suffix( $this->id )
 				 );
 				 $content .= '<br>';
 
@@ -799,7 +799,7 @@ class Sliced_Notifications {
 			'%created%'           => date_i18n( get_option( 'date_format' ), (int) sliced_get_created( $this->id ) ),
 			'%total%'             => sliced_get_total( $this->id ),
 			'%order_number%'      => sliced_get_invoice_order_number( $this->id ),
-			'%number%'            => sliced_get_prefix( $this->id ) . sliced_get_number( $this->id ),
+			'%number%'            => sliced_get_prefix( $this->id ) . sliced_get_number( $this->id ) . sliced_get_suffix( $this->id ),
 			'%valid_until%'       => date_i18n( get_option( 'date_format' ), (int) sliced_get_quote_valid( $this->id ) ),
 			'%is_was%'            => $this->is_was(),
 			'%date%'              => date_i18n( get_option( 'date_format' ), (int) current_time( 'timestamp' ) ),

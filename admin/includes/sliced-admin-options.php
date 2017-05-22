@@ -298,17 +298,23 @@ class Sliced_Options {
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'quotes' ), ),
 			'show_names' => true,
 			'fields'     => array(
-
 				array(
 					'name'      => __( 'Prefix', 'sliced-invoices' ),
-					'desc'      => sprintf( __( 'Prefix of each %s. Can be left blank if you don\'t need a prefix.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>' ),
+					'desc'      => sprintf( __( 'Prefix before each %s number. Can be left blank if you don\'t need a prefix.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>' ),
 					'default'   => '',
 					'id'        => 'prefix',
 					'type'      => 'text',
 				),
 				array(
+					'name'      => __( 'Suffix', 'sliced-invoices' ),
+					'desc'      => sprintf( __( 'Suffix after each %s number. Can be left blank if you don\'t need a suffix.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>' ),
+					'default'   => '',
+					'id'        => 'suffix',
+					'type'      => 'text',
+				),
+				array(
 					'name'      => __( 'Auto Increment', 'sliced-invoices' ),
-					'desc'      => __( 'Yes, increment quote numbers by one. Recommended.', 'sliced-invoices' ),
+					'desc'      => sprintf( __( 'Yes, increment %s numbers by one. Recommended.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>' ),
 					'id'        => 'increment',
 					'type'      => 'checkbox',
 				),
@@ -434,12 +440,18 @@ class Sliced_Options {
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'invoices' ), ),
 			'show_names' => true,
 			'fields'     => array(
-
 				array(
 					'name'      => __( 'Prefix', 'sliced-invoices' ),
-					'desc'      => 'Prefix of each <span class="i18n-multilingual-display">'.sprintf( __( '%s', 'sliced-invoices' ), $invoice_label ).'</span>. Can be left blank if you don\'t need a prefix.',
+					'desc'      => sprintf( __( 'Prefix before each %s number. Can be left blank if you don\'t need a prefix.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$invoice_label.'</span>' ),
 					'default'   => '',
 					'id'        => 'prefix',
+					'type'      => 'text',
+				),
+				array(
+					'name'      => __( 'Suffix', 'sliced-invoices' ),
+					'desc'      => sprintf( __( 'Suffix after each %s number. Can be left blank if you don\'t need a suffix.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$invoice_label.'</span>' ),
+					'default'   => '',
+					'id'        => 'suffix',
 					'type'      => 'text',
 				),
 				array(

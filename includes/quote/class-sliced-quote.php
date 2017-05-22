@@ -25,6 +25,7 @@ class Sliced_Quote {
 		'items'       => '_sliced_items',
 		'prefix'      => '_sliced_quote_prefix',
 		'number'      => '_sliced_quote_number',
+		'suffix'      => '_sliced_quote_suffix',
 		'created'     => '_sliced_quote_created',
 		'valid'       => '_sliced_quote_valid_until',
 		'email_sent'  => '_sliced_quote_email_sent',
@@ -176,6 +177,22 @@ class Sliced_Quote {
 
 	}
 
+	public static function get_suffix( $id = 0 ) {
+		 if ( ! $id ) {
+			 $id = Sliced_Shared::get_item_id();
+		}
+		$suffix = null;
+		if ( isset( $id ) ) {
+			$suffix = self::get_sliced_meta( $id, self::$meta_key['suffix'], true );
+		}
+		if ( ! $suffix ) {
+			$quotes 	= get_option( 'sliced_quotes' );
+			$suffix 	= isset( $quotes['suffix'] ) ? $quotes['suffix'] : '';
+		}
+		return $suffix;
+
+	}
+
 
 	/**
 	  * Get the quote template.
@@ -210,6 +227,7 @@ class Sliced_Quote {
 
 		$quote_prefix = get_post_meta( $id, '_sliced_quote_prefix', true );
 		$quote_number = get_post_meta( $id, '_sliced_quote_number', true );
+		$quote_suffix = get_post_meta( $id, '_sliced_quote_suffix', true );
 	
 		$args = array(
 			'post_type'      => 'sliced_quote',
@@ -224,6 +242,11 @@ class Sliced_Quote {
 				array(
 					'key'     => '_sliced_quote_number',
 					'value'   => $quote_number,
+					'compare' => '=',
+				),
+				array(
+					'key'     => '_sliced_quote_suffix',
+					'value'   => $quote_suffix,
 					'compare' => '=',
 				),
 			),

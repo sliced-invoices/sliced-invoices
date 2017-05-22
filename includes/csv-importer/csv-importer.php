@@ -455,6 +455,10 @@ class Sliced_Csv_Importer {
 		// insert the prefix and the number
 		$prefix = $post_type == 'sliced_invoice' ? sliced_get_invoice_prefix() : sliced_get_quote_prefix();
 		add_post_meta( $id, '_' . $post_type . '_prefix', $prefix );
+		
+		// insert the suffix
+		$suffix = $post_type == 'sliced_invoice' ? sliced_get_invoice_suffix() : sliced_get_quote_suffix();
+		add_post_meta( $id, '_' . $post_type . '_suffix', $suffix );
 
 	}
 
