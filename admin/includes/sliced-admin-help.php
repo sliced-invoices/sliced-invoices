@@ -125,7 +125,7 @@ class Sliced_Help {
 				'<ul>' .
 					'<li>' . sprintf( __( '<strong>Hide/Display Columns</strong> and decide how many %s to list per screen by using the Screen Options tab.', 'sliced-invoices' ), sliced_get_label_plural() ) . '</li>' .
 					'<li>' . sprintf( __( '<strong>Filter</strong> the list of %1s by their status using the text links in the upper left. You can show All, Published, Draft, Cancelled, Overdue, Paid and Unpaid %2s. The default view is to show all %3s.', 'sliced-invoices' ), sliced_get_label_plural(), sliced_get_label_plural(), sliced_get_label_plural() ) . '</li>' .
-					'<li>' . sprintf( __( '<strong>Refine</strong> the list to show only %1s from specific dats, specific clients or specific statuses by using the dropdown menus above the %2s list. Click the Filter button after making your selection.', 'sliced-invoices' ), sliced_get_label_plural(), sliced_get_label_plural() ) . '</li>' .
+					'<li>' . sprintf( __( '<strong>Refine</strong> the list to show only %1s from specific dates, specific clients or specific statuses by using the dropdown menus above the %2s list. Click the Filter button after making your selection.', 'sliced-invoices' ), sliced_get_label_plural(), sliced_get_label_plural() ) . '</li>' .
 					'<li>' . sprintf( __( '<strong>Export</strong> a list of %s in CSV format by clicking the Export to CSV button.', 'sliced-invoices' ), sliced_get_label_plural() ) . '</li>' .
 				'</ul>'
 			) );
