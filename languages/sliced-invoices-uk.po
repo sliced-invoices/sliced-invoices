@@ -1,0 +1,2369 @@
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Project-Id-Version: Sliced Invoices\n"
+"POT-Creation-Date: 2017-05-04 01:04+0300\n"
+"PO-Revision-Date: 2017-05-15 23:22+0300\n"
+"Language-Team: Sliced Invoices <info@slicedinvoices.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: sliced-invoices.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Last-Translator: \n"
+"Language: uk_UA\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: admin/class-sliced-admin.php:96
+#, fuzzy, php-format
+msgid "Are you sure you want to convert from %1s to %2s"
+msgstr "Чи ви дійсно бажаєте перетворити %1s на %2s"
+
+#: admin/class-sliced-admin.php:480
+msgid "Settings saved successfully."
+msgstr "Налаштування збережені успішно."
+
+#: admin/class-sliced-admin.php:489
+#: admin/includes/sliced-admin-notifications.php:216
+msgid "Email was sent successfully."
+msgstr "Повідомлення надіслано успішно."
+
+#: admin/class-sliced-admin.php:497
+#, fuzzy, php-format
+msgid "Successfully converted %1s to %2s"
+msgstr "%1s було успішно перетворено на %2s"
+
+#: admin/class-sliced-admin.php:508
+msgid ""
+"Your WordPress version may not be compatible with the Sliced Invoices "
+"plugin. If you are having issues with the plugin, we recommend making a "
+"backup of your site and upgrading to the latest version of WordPress."
+msgstr ""
+"Ваша версія WordPress може виявитись несумісною з плагіном Sliced Invoices. "
+"Ми радимо вам зробити копію сайту, та оновити WordPress до останньої версії."
+
+#: admin/class-sliced-admin.php:513
+msgid ""
+"Your PHP version may not be compatible with the Sliced Invoices plugin. We "
+"recommend contacting your server administrator and getting them to upgrade "
+"to a newer version of PHP."
+msgstr ""
+"Версія PHP, що встановлена на вашому сервері, може бути несумісною з "
+"плагіном Sliced Invoices. Радимо вам зернутись до адміністратора серверу з "
+"проханням встановити більш сучасну версію PHP."
+
+#: admin/class-sliced-admin.php:518
+msgid ""
+"You do not have the cURL extension installed on your server. This extension "
+"is required for some tasks including PayPal payments. Please contact your "
+"server administrator to have them install this on your server."
+msgstr ""
+"Розширення cURL не встановлене на вашому сервері. Воно необхідне для "
+"виконання деяких задач, включаючи оплату за допомогою PayPal. Зв'яжіться, "
+"будь ласка, з адміністратором вашого серверу з проханням встановити "
+"розширення на сервер."
+
+#: admin/class-sliced-admin.php:543 admin/class-sliced-admin.php:546
+#, fuzzy, php-format
+msgid "%s updated."
+msgstr "%s оновлено."
+
+#: admin/class-sliced-admin.php:548
+#, fuzzy, php-format
+msgid "%1s restored to revision from %2s"
+msgstr "%1s відновлено до ревізії з %2s"
+
+#: admin/class-sliced-admin.php:549
+#, php-format
+msgid "%s published."
+msgstr "%s опубліковано."
+
+#: admin/class-sliced-admin.php:550
+#, php-format
+msgid "%s saved."
+msgstr "%s збережено."
+
+#: admin/class-sliced-admin.php:551
+#, php-format
+msgid "%s submitted."
+msgstr "%s надіслано."
+
+#: admin/class-sliced-admin.php:553
+#, fuzzy, php-format
+msgid "%s draft updated."
+msgstr "%s чернетку оновлено."
+
+#: admin/class-sliced-admin.php:560
+msgid "View "
+msgstr "Дивитись "
+
+#: admin/class-sliced-admin.php:566
+msgid "Preview "
+msgstr "Переглянути "
+
+#: admin/class-sliced-admin.php:589 admin/class-sliced-admin.php:592
+#, fuzzy, php-format
+msgid "Enter %s title"
+msgstr "Введіть %s назву"
+
+#: admin/class-sliced-admin.php:606
+msgid "Settings"
+msgstr "Налаштування"
+
+#: admin/class-sliced-admin.php:607
+msgid "Extensions"
+msgstr "Розширення"
+
+#: admin/class-sliced-admin.php:626
+#, php-format
+msgid ""
+"If you like <strong>Sliced Invoices</strong> please leave us a %s&#9733;"
+"&#9733;&#9733;&#9733;&#9733;%s rating. A huge thank you in advance!"
+msgstr ""
+"Якщо вам подобається плагін <strong>Sliced Invoices</strong>, будь ласка, "
+"залиште нам %s&#9733;&#9733;&#9733;&#9733;&#9733;%s трохи зірочок до "
+"рейтингу. Дуже дякуємо вам заздалегідь!"
+
+#: admin/class-sliced-admin.php:668
+#, fuzzy, php-format
+msgid "Convert %1s to %2s"
+msgstr "Перетворити %1s на %2s"
+
+#: admin/class-sliced-admin.php:668
+#, fuzzy, php-format
+msgid "Convert to %s"
+msgstr "Перетворити на %s"
+
+#: admin/class-sliced-admin.php:1035
+msgid "Choose client"
+msgstr "Оберіть клієнта"
+
+#: admin/class-sliced-admin.php:1096 admin/class-sliced-admin.php:1214
+msgid "Username"
+msgstr "Логін"
+
+#: admin/class-sliced-admin.php:1100 admin/class-sliced-admin.php:1218
+msgid "E-mail"
+msgstr "Електронна пошта"
+
+#: admin/class-sliced-admin.php:1106 admin/class-sliced-admin.php:1224
+#: admin/includes/sliced-admin-metaboxes.php:542
+#: admin/includes/sliced-admin-metaboxes.php:594
+msgid "Business/Client Name"
+msgstr "Компанія/Ім'я клієнта"
+
+#: admin/class-sliced-admin.php:1113 admin/class-sliced-admin.php:1231
+#: admin/includes/sliced-admin-metaboxes.php:548
+#: admin/includes/sliced-admin-metaboxes.php:600
+#: admin/includes/sliced-admin-options.php:271
+msgid "Address"
+msgstr "Поштова адреса"
+
+#: admin/class-sliced-admin.php:1120 admin/class-sliced-admin.php:1238
+#: admin/includes/sliced-admin-metaboxes.php:557
+#: admin/includes/sliced-admin-metaboxes.php:609
+msgid "Extra Info"
+msgstr "Додаткова інформація"
+
+#: admin/class-sliced-admin.php:1126 admin/class-sliced-admin.php:1244
+msgid "First Name"
+msgstr "Ім'я"
+
+#: admin/class-sliced-admin.php:1130 admin/class-sliced-admin.php:1248
+msgid "Last Name"
+msgstr "Прізвище"
+
+#: admin/class-sliced-admin.php:1134 admin/class-sliced-admin.php:1252
+#: admin/includes/sliced-admin-options.php:285
+msgid "Website"
+msgstr "Веб-сайт"
+
+#: admin/class-sliced-admin.php:1141
+msgid "Password"
+msgstr "Пароль"
+
+#: admin/class-sliced-admin.php:1142 admin/class-sliced-admin.php:1166
+#: admin/includes/sliced-admin-notifications.php:545
+#: admin/includes/sliced-admin-notifications.php:552
+#: admin/includes/sliced-admin-notifications.php:558
+msgid "(required)"
+msgstr "(обов'язково)"
+
+#: admin/class-sliced-admin.php:1147
+msgid "Show password"
+msgstr "Показати пароль"
+
+#: admin/class-sliced-admin.php:1153
+msgid "Hide password"
+msgstr "Приховати пароль"
+
+#: admin/class-sliced-admin.php:1155
+msgid "Hide"
+msgstr "Приховати"
+
+#: admin/class-sliced-admin.php:1157
+msgid "Cancel password change"
+msgstr "Скасувати зміну пароля"
+
+#: admin/class-sliced-admin.php:1158
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: admin/class-sliced-admin.php:1166
+msgid "Repeat Password"
+msgstr "Повторіть пароль"
+
+#: admin/class-sliced-admin.php:1172
+msgid "Confirm Password"
+msgstr "Підтвердіть пароль"
+
+#: admin/class-sliced-admin.php:1176
+msgid "Confirm use of weak password"
+msgstr "Підтвердіть використання слабкого пароля"
+
+#: admin/class-sliced-admin.php:1184
+msgid "Add New User "
+msgstr "Додати нового користувача "
+
+#: admin/class-sliced-admin.php:1186 admin/class-sliced-admin.php:1261
+msgid "Please wait..."
+msgstr "Зачекайте, будь ласка…"
+
+#: admin/class-sliced-admin.php:1195
+msgid "Loading client info..."
+msgstr "Завантажується картка клієнта…"
+
+#: admin/class-sliced-admin.php:1202
+msgid "Edit a client here."
+msgstr "Змініть картку клієнта тут."
+
+#: admin/class-sliced-admin.php:1203
+msgid "NOTE: Username cannot be changed here."
+msgstr "ПРИМІТКА: Логін не може бути змінено."
+
+#: admin/class-sliced-admin.php:1259
+msgid "Update User"
+msgstr "Оновити запис про користувача"
+
+#: admin/class-sliced-admin.php:1272
+msgid "No client selected"
+msgstr "Клиєнт не заданий"
+
+#: admin/class-sliced-admin.php:1334
+msgid "Client successfully updated"
+msgstr "Запис про клієнта успішно оновлено"
+
+#: admin/class-sliced-admin.php:1338
+msgid "Please check that all required fields are filled in."
+msgstr "Перевірте, будь ласка, чи ви заповнили усі необхідні поля."
+
+#: admin/class-sliced-admin.php:1362 admin/class-sliced-admin.php:1433
+#: admin/class-sliced-admin.php:1471
+msgid "Cheatin&#8217; uh?"
+msgstr "Жартуєте?"
+
+#: admin/class-sliced-admin.php:1539
+msgid "Clone this item"
+msgstr "Клонувати запис"
+
+#: admin/class-sliced-admin.php:1539
+msgid "Clone"
+msgstr "Клонувати"
+
+#: admin/class-sliced-admin.php:1665
+msgid "Add a pre-defined line item"
+msgstr "Додати із шаблону"
+
+#: admin/class-sliced-admin.php:1754 admin/includes/sliced-admin-columns.php:78
+msgid "Number"
+msgstr "Число"
+
+#: admin/class-sliced-admin.php:1755 admin/includes/sliced-admin-columns.php:77
+msgid "Title"
+msgstr "Назва"
+
+#: admin/class-sliced-admin.php:1756 admin/includes/sliced-admin-columns.php:79
+#: admin/includes/sliced-admin-metaboxes.php:275
+#: admin/includes/sliced-admin-metaboxes.php:409
+#: admin/includes/sliced-admin-quick-edit.php:106
+msgid "Client"
+msgstr "Клиєнт"
+
+#: admin/class-sliced-admin.php:1757
+#: admin/includes/sliced-admin-metaboxes.php:285
+#: admin/includes/sliced-admin-metaboxes.php:419
+#: admin/includes/sliced-admin-quick-edit.php:125
+msgid "Status"
+msgstr "Статус"
+
+#: admin/class-sliced-admin.php:1758 admin/includes/sliced-admin-columns.php:95
+#: admin/includes/sliced-admin-quick-edit.php:147
+msgid "Created"
+msgstr "Створено"
+
+#: admin/class-sliced-admin.php:1759
+#: includes/template-tags/sliced-tags-display-modules.php:161
+#: includes/template-tags/sliced-tags-display-modules.php:231
+#: includes/template-tags/sliced-tags-display-modules.php:267
+#: includes/template-tags/sliced-tags-general.php:193
+msgid "Sub Total"
+msgstr "Сума"
+
+#: admin/class-sliced-admin.php:1760 includes/class-sliced-shared.php:176
+msgid "Tax"
+msgstr "Податок"
+
+#: admin/class-sliced-admin.php:1761 admin/includes/sliced-admin-columns.php:96
+#: includes/template-tags/sliced-tags-display-modules.php:133
+#: includes/template-tags/sliced-tags-display-modules.php:275
+#: includes/template-tags/sliced-tags-general.php:195
+msgid "Total"
+msgstr "Загальна сума"
+
+#: admin/includes/sliced-admin-columns.php:100
+msgid "Actions"
+msgstr "Дії"
+
+#: admin/includes/sliced-admin-columns.php:161
+#, fuzzy, php-format
+msgid "Valid: %s"
+msgstr "Дійсне: %s"
+
+#: admin/includes/sliced-admin-columns.php:166
+#, fuzzy, php-format
+msgid "Due: %s"
+msgstr "До: %s"
+
+#: admin/includes/sliced-admin-columns.php:177
+#: admin/includes/sliced-admin-columns.php:181
+#, fuzzy, php-format
+msgid "Total: %s"
+msgstr "Загальна сума: %s"
+
+#: admin/includes/sliced-admin-columns.php:211
+msgid "View or download as a PDF (extension required)"
+msgstr "Переглянути або завантажити PDF (необхідне розширення)"
+
+#: admin/includes/sliced-admin-columns.php:374
+msgid "View all statuses"
+msgstr "Переглянути усі статуси"
+
+#: admin/includes/sliced-admin-columns.php:392
+msgid "Export as CSV"
+msgstr "Експортувати до CSV"
+
+#: admin/includes/sliced-admin-columns.php:486
+#: admin/includes/sliced-admin-options.php:249
+msgid "Business"
+msgstr "Бізнес"
+
+#: admin/includes/sliced-admin-help.php:55
+#: admin/includes/sliced-admin-help.php:116
+msgid "Overview"
+msgstr "Перегляд"
+
+#: admin/includes/sliced-admin-help.php:56
+#, php-format
+msgid ""
+"This screen allows you to add/edit a single %s. You can customize the "
+"display of this screen to suit your workflow by using the Screen Options tab."
+msgstr ""
+"Ця сторінка дозволяє додавати/змінювати запис %s. Ви можете налаштувати "
+"зовнішній вигляд сторінки. Для цього перейдіть до вкладки налаштувань."
+
+#: admin/includes/sliced-admin-help.php:57
+msgid "Some Quick Tips:"
+msgstr "Корисні поради:"
+
+#: admin/includes/sliced-admin-help.php:59
+msgid "Title, Client, Status and Created Date are required fields."
+msgstr "Назва, Клієнт, Статус, а також Дата Створення — обов'язкові поля."
+
+#: admin/includes/sliced-admin-help.php:60
+msgid ""
+"If Payment Methods is empty, you need to add a payment method in Sliced "
+"Invoices --> Payment."
+msgstr "Якщо способів оплати не задано, вам треба додати щонайменше один."
+
+#: admin/includes/sliced-admin-help.php:61
+msgid ""
+"If there are no Pre-Defined Line Items, you you can add these in Sliced "
+"Invoices --> General."
+msgstr ""
+"Якщо немає заданих шаблонів, ви можете додати їх на сторінці налаштувань."
+
+#: admin/includes/sliced-admin-help.php:62
+#, php-format
+msgid ""
+"All fields that are filled in will be shown to the client on the %s, except "
+"for the Title field. The title is only used in the admin area."
+msgstr ""
+"Усі заповнені поля %s, окрім Назви, будуть показані клієнту. Назва "
+"використовується тільки в панелі адміністратора."
+
+#: admin/includes/sliced-admin-help.php:64
+msgid "Click on the help tabs to your left to find out more info."
+msgstr "Перейдіть до вкладки Довідка зліва, щоб дізнатись більше."
+
+#: admin/includes/sliced-admin-help.php:68
+msgid "Title and Description"
+msgstr "Назва та Опис"
+
+#: admin/includes/sliced-admin-help.php:70
+#, php-format
+msgid ""
+"<strong>Title</strong> &mdash; Enter a title for your %1s. After you enter a "
+"title, you&#8217;ll see the permalink below, which you can edit. The title "
+"is not visible to your client on the %2s, it is only used in your admin area."
+msgstr ""
+"<strong>Назва</strong> &mdash; Введіть назву для вашого %1s. Після введення "
+"назви, ви побачите пермалінк, який ви можете підправити, відповідно до ваших "
+"вподобань. Назва залишається видимою тільки в панелі адміністратора, її не "
+"буде показано на %2s."
+
+#: admin/includes/sliced-admin-help.php:71
+#, php-format
+msgid ""
+"<strong>Description</strong> &mdash; An optional field to add a description "
+"to the %s."
+msgstr ""
+"<strong>Опис</strong> &mdash; додаткове поле, призначене для приміток до %s."
+
+#: admin/includes/sliced-admin-help.php:75
+#: admin/includes/sliced-admin-metaboxes.php:78
+#, fuzzy
+msgid "Line Items"
+msgstr "Шаблони"
+
+#: admin/includes/sliced-admin-help.php:77
+#, fuzzy
+msgid ""
+"Each line item is grouped and labelled per Item #. Each line item group "
+"contains 5 fields, with Qty and Rate being the only required fields."
+msgstr ""
+"Кожен шаблон містить 5 полів, з яких тільки Кількість та Рейт — обов'язкові."
+
+#: admin/includes/sliced-admin-help.php:78
+msgid ""
+"<strong>Qty</strong> &mdash; Add the quantity of your line item in this "
+"field."
+msgstr "<strong>К-ть</strong> &mdash; кількість."
+
+#: admin/includes/sliced-admin-help.php:79
+msgid "<strong>Title</strong> &mdash; Add a title for this line item."
+msgstr "<strong>Назва</strong> &mdash; Назва шаблону."
+
+#: admin/includes/sliced-admin-help.php:80
+msgid ""
+"<strong>Adjust</strong> &mdash; This can be used as an extra Tax field by "
+"adding a positive number, or as a discount field by adding a negative "
+"number. The line item amount will be adjusted by the number (in percentage "
+"%) that is input into this field."
+msgstr ""
+
+#: admin/includes/sliced-admin-help.php:81
+msgid ""
+"<strong>Rate</strong> &mdash; Add the rate or price of your line item in "
+"this field."
+msgstr "<strong>Рейт</strong> &mdash; Вкажіть вартість в цьому полі."
+
+#: admin/includes/sliced-admin-help.php:82
+msgid ""
+"<strong>Description</strong> &mdash; You can add a description to each line "
+"item in this field."
+msgstr "<strong>Примітка</strong> &mdash; Ви можете додати опис до цього поля."
+
+#: admin/includes/sliced-admin-help.php:86
+#: admin/includes/sliced-admin-metaboxes.php:269
+#: admin/includes/sliced-admin-metaboxes.php:402
+#, php-format
+msgid "%s Details"
+msgstr "%s Подробиці"
+
+#: admin/includes/sliced-admin-help.php:88
+msgid ""
+"<strong>Client</strong> &mdash; Choose the client or click on the Add New "
+"Client button to add a new client. Once added, the client will immediately "
+"appear in the dropdown for you to choose."
+msgstr ""
+"<strong>Клієнт</strong> &mdash; Оберіть клієнта, або натисніть кнопку "
+"«Додати клиєнта». Як тільки запис про клієнта буде додано, він одразу ж "
+"з'явиться у списку, і стане доступний для вибору."
+
+#: admin/includes/sliced-admin-help.php:89
+msgid "<strong>Status</strong> &mdash; Add a status."
+msgstr "<strong>Статус</strong> &mdash; Вкажіть статус."
+
+#: admin/includes/sliced-admin-help.php:90
+#, fuzzy, php-format
+msgid ""
+"<strong>%1s Number</strong> &mdash; The prefix that is set in Sliced "
+"Invoices --> %2s is automatically added to the front of the number. If you "
+"have auto increment setup, then the next number should appear in this field."
+msgstr ""
+"<strong>%1s Кількість</strong> &mdash; Префікс, який вказано в %2s, "
+"автоматично додається перед числом. Якщо ви вказали автоінкремент в "
+"налаштуваннях, буде вказане наступне значення."
+
+#: admin/includes/sliced-admin-help.php:91
+msgid "<strong>Created Date</strong> &mdash; This field is required."
+msgstr "<strong>Дата Створення</strong> &mdash; Обов'язкове поле."
+
+#: admin/includes/sliced-admin-help.php:117
+#, php-format
+msgid ""
+"This screen provides access to all of your %s. You can customize the display "
+"of this screen to suit your workflow."
+msgstr ""
+"Сторінка доступу до усіх ваших %s. Ви можете налаштувати виведення "
+"відповідно до ваших потреб."
+
+#: admin/includes/sliced-admin-help.php:118
+msgid "Click on the help tabs to your left to find out what can be done here."
+msgstr ""
+
+#: admin/includes/sliced-admin-help.php:122
+msgid "Screen Content"
+msgstr ""
+
+#: admin/includes/sliced-admin-help.php:124
+msgid ""
+"You can customize the display of this screen&#8217;s contents in a number of "
+"ways:"
+msgstr "Ви можете налаштувати зовнішній вигляд сторінки кількома способами:"
+
+#: admin/includes/sliced-admin-help.php:126
+#, fuzzy, php-format
+msgid ""
+"<strong>Hide/Display Columns</strong> and decide how many %s to list per "
+"screen by using the Screen Options tab."
+msgstr ""
+"<strong>Показати/Приховати стовпчики</strong> а також вирішити, скільки "
+"елементів %s треба виводити на сторінці."
+
+#: admin/includes/sliced-admin-help.php:127
+#, fuzzy, php-format
+msgid ""
+"<strong>Filter</strong> the list of %1s by their status using the text links "
+"in the upper left. You can show All, Published, Draft, Cancelled, Overdue, "
+"Paid and Unpaid %2s. The default view is to show all %3s."
+msgstr ""
+"<strong>Фільтр</strong> список %1s за статусом. Ви можете показати Усі, "
+"Опубліковані, Чернетки, Скасовані, Прострочені, Оплачені, Неоплачені %2s. За "
+"замовченням показуються усі %3s."
+
+#: admin/includes/sliced-admin-help.php:128
+#, php-format
+msgid ""
+"<strong>Refine</strong> the list to show only %1s from specific dats, "
+"specific clients or specific statuses by using the dropdown menus above the "
+"%2s list. Click the Filter button after making your selection."
+msgstr ""
+"<strong>Уточнити</strong> список, щоб показувати тільки %1s із загального "
+"списку, використовуючи меню %2s. Натисніть кнопку «Фільтр» після вибору."
+
+#: admin/includes/sliced-admin-help.php:129
+#, php-format
+msgid ""
+"<strong>Export</strong> a list of %s in CSV format by clicking the Export to "
+"CSV button."
+msgstr "<strong>Експорт</strong> списку %s в формат CSV."
+
+#: admin/includes/sliced-admin-help.php:134
+msgid "Available Actions"
+msgstr "Доступні операції"
+
+#: admin/includes/sliced-admin-help.php:136
+#, php-format
+msgid ""
+"Hovering over a row in the %1s list will display action links that allow you "
+"to manage your %2s. You can perform the following actions:"
+msgstr ""
+"Підведіть вказівник мишки на рядок %1s списку, щоб побачити доступні "
+"операції з керування вашими %2s. Ви можете виконати наступні операції:"
+
+#: admin/includes/sliced-admin-help.php:138
+#, php-format
+msgid ""
+"<strong>Edit</strong> takes you to the editing screen for that %1s. You can "
+"also reach that screen by clicking on the %2s title."
+msgstr ""
+"<strong>Редагування</strong> перехід на сторінку редагування %1s. Ви можете "
+"також потрапити на цю сторінку, натиснувши на заголовок %2s."
+
+#: admin/includes/sliced-admin-help.php:139
+#, php-format
+msgid ""
+"<strong>Quick Edit</strong> provides inline access to the metadata of your "
+"%1s, allowing you to update the %2s details without leaving this screen."
+msgstr ""
+"<strong>Швидке редагування</strong> дозволяє миттєво змінити метадані вашого "
+"%1s, та зберегти зміни до %2s, залишаючись на цій сторінці."
+
+#: admin/includes/sliced-admin-help.php:140
+#, php-format
+msgid ""
+"<strong>Trash</strong> removes your %s from this list and places it in the "
+"trash, from which you can permanently delete it."
+msgstr ""
+"<strong>Видалити</strong> прибирає %s зі списку, переміщуючи до корзини, "
+"звідки ви можете остаточно видалити запис."
+
+#: admin/includes/sliced-admin-help.php:141
+#, php-format
+msgid "<strong>View</strong> will take you to your live site to view the %s."
+msgstr ""
+"<strong>Перегляд</strong> відкриє ваш сайт, де ви можете переглянути %s."
+
+#: admin/includes/sliced-admin-help.php:142
+#, php-format
+msgid "<strong>Clone</strong> will clone (or duplicate) the %s. "
+msgstr "<strong>Клон</strong> клонування (створення дублікату) %s. "
+
+#: admin/includes/sliced-admin-logs.php:329
+#, fuzzy, php-format
+msgid "%1s on %2s"
+msgstr "%1s в %2s"
+
+#: admin/includes/sliced-admin-logs.php:330
+#, fuzzy, php-format
+msgid "by %s"
+msgstr "%s"
+
+#: admin/includes/sliced-admin-logs.php:335
+#: admin/includes/sliced-admin-logs.php:338
+#, php-format
+msgid "%s was created."
+msgstr "%s створено."
+
+#: admin/includes/sliced-admin-logs.php:341
+#, php-format
+msgid "Status changed from %1s to %2s."
+msgstr "Статус змінено з %1s на %2s."
+
+#: admin/includes/sliced-admin-logs.php:344
+#, php-format
+msgid "%1s was declined. Reason: %2s"
+msgstr "%1s було скасовано. Причина: %2s"
+
+#: admin/includes/sliced-admin-logs.php:347
+#, php-format
+msgid "%s was accepted by client."
+msgstr "%s було прийняте клієнтом."
+
+#: admin/includes/sliced-admin-logs.php:350
+#, php-format
+msgid "Payment was made via %s."
+msgstr "Оплату здійснено за допомогою %s."
+
+#: admin/includes/sliced-admin-logs.php:353
+#, php-format
+msgid "%s was marked as Paid."
+msgstr "%s було відмічено, як Оплачений."
+
+#: admin/includes/sliced-admin-logs.php:356
+#, php-format
+msgid "Converted from %1s to %2s."
+msgstr "Конвертовано з %1s на %2s."
+
+#: admin/includes/sliced-admin-logs.php:359
+#: admin/includes/sliced-admin-logs.php:362
+#, php-format
+msgid "%s was sent."
+msgstr "%s було надіслане."
+
+#: admin/includes/sliced-admin-metaboxes.php:56
+#: admin/includes/sliced-admin-metaboxes.php:144
+msgid "Description"
+msgstr "Примітка"
+
+#: admin/includes/sliced-admin-metaboxes.php:86
+msgid "Item {#}"
+msgstr "Запис {#}"
+
+#: admin/includes/sliced-admin-metaboxes.php:87
+msgid "Add Another Item"
+msgstr "Додати ще один запис"
+
+#: admin/includes/sliced-admin-metaboxes.php:88
+msgid "Remove Item"
+msgstr "Видалити запис"
+
+#: admin/includes/sliced-admin-metaboxes.php:94
+msgid "Qty"
+msgstr "К-ть"
+
+#: admin/includes/sliced-admin-metaboxes.php:108
+msgid "Item Title"
+msgstr "Назва запису"
+
+#: admin/includes/sliced-admin-metaboxes.php:115
+msgid "Adjust (%)"
+msgstr ""
+
+#: admin/includes/sliced-admin-metaboxes.php:129
+#, php-format
+msgid "Rate (%s)"
+msgstr "Рейт (%s)"
+
+#: admin/includes/sliced-admin-metaboxes.php:129
+#, php-format
+msgid "Amount (%s)"
+msgstr "Кількість (%s)"
+
+#: admin/includes/sliced-admin-metaboxes.php:148
+msgid "Brief description of the work carried out for this line item (optional)"
+msgstr "Примітка (необов'язкове поле)"
+
+#: admin/includes/sliced-admin-metaboxes.php:170
+#: admin/includes/sliced-admin-metaboxes.php:196
+#: admin/includes/sliced-admin-options.php:340
+#: admin/includes/sliced-admin-options.php:476
+msgid "Terms & Conditions"
+msgstr "Терміни та Умови"
+
+#: admin/includes/sliced-admin-metaboxes.php:234
+#, php-format
+msgid "Convert %s"
+msgstr "Перетворити %s"
+
+#: admin/includes/sliced-admin-metaboxes.php:252
+#: admin/includes/sliced-admin-metaboxes.php:384
+#, php-format
+msgid "%s Notes"
+msgstr "%s Нотатки"
+
+#: admin/includes/sliced-admin-metaboxes.php:275
+#: admin/includes/sliced-admin-metaboxes.php:409
+msgid "Add New Client"
+msgstr "Додати новий запис про клієнта"
+
+#: admin/includes/sliced-admin-metaboxes.php:275
+#: admin/includes/sliced-admin-metaboxes.php:409
+msgid "Edit Client"
+msgstr "Редагувати запис про клієнта"
+
+#: admin/includes/sliced-admin-metaboxes.php:301
+#: admin/includes/sliced-admin-metaboxes.php:435
+#: admin/includes/sliced-admin-quick-edit.php:92
+#: includes/payments/sliced-shared-payments.php:235
+#, php-format
+msgid "%s Number"
+msgstr "%s Кількість"
+
+#: admin/includes/sliced-admin-metaboxes.php:309
+#: admin/includes/sliced-admin-metaboxes.php:449
+msgid "Created Date"
+msgstr "Дата створення"
+
+#: admin/includes/sliced-admin-metaboxes.php:321
+msgid "Valid Until Date"
+msgstr "Дійсне до"
+
+#: admin/includes/sliced-admin-metaboxes.php:332
+#: admin/includes/sliced-admin-metaboxes.php:472
+msgid "Currency"
+msgstr "Валюта"
+
+#: admin/includes/sliced-admin-metaboxes.php:340
+#: admin/includes/sliced-admin-metaboxes.php:480
+#: admin/includes/sliced-admin-options.php:523
+msgid "Currency Symbol"
+msgstr "Символ валюти"
+
+#: admin/includes/sliced-admin-metaboxes.php:350
+#: admin/includes/sliced-admin-metaboxes.php:499
+msgid "Tax Rate"
+msgstr "Податок"
+
+#: admin/includes/sliced-admin-metaboxes.php:376
+msgid "<a target=\"_blank\" class=\"button\" href=\""
+msgstr ""
+
+#: admin/includes/sliced-admin-metaboxes.php:443
+#: admin/includes/sliced-admin-quick-edit.php:97
+#: includes/template-tags/sliced-tags-display-modules.php:72
+msgid "Order Number"
+msgstr "Номер замовлення"
+
+#: admin/includes/sliced-admin-metaboxes.php:461
+#: admin/includes/sliced-admin-options.php:459
+#: admin/includes/sliced-admin-quick-edit.php:158
+#: includes/template-tags/sliced-tags-display-modules.php:86
+msgid "Due Date"
+msgstr "До"
+
+#: admin/includes/sliced-admin-metaboxes.php:490
+#: admin/includes/sliced-admin-options.php:614
+msgid "Payment Methods"
+msgstr "Способи оплати"
+
+#: admin/includes/sliced-admin-metaboxes.php:530
+#: admin/includes/sliced-admin-metaboxes.php:582
+msgid "Client Information"
+msgstr "Інформація про клієнта"
+
+#: admin/includes/sliced-admin-metaboxes.php:536
+#: admin/includes/sliced-admin-metaboxes.php:588
+msgid "Sliced Invoices Client"
+msgstr ""
+
+#: admin/includes/sliced-admin-metaboxes.php:537
+msgid "Add a Business/Client Name below to activate this user as a Client."
+msgstr ""
+"Додайте назву Організації або Ім'я клієнта, щоб перетворити обліковий запис "
+"користувача на клієнта."
+
+#: admin/includes/sliced-admin-metaboxes.php:595
+msgid "Adding a Business/Client Name will activate this user as a Client."
+msgstr "Якщо заповнити це поле, користувач з'явиться в якості Клиєнта."
+
+#: admin/includes/sliced-admin-metaboxes.php:601
+msgid ""
+"Enter the address of the client. Format the Address any way you like. HTML "
+"is allowed."
+msgstr ""
+"Введіть поштову адресу клієнта у довільному форматі. Можете використовувати "
+"HTML-теги."
+
+#: admin/includes/sliced-admin-metaboxes.php:610
+msgid ""
+"Any extra client info such as phone number or business number. HTML is "
+"allowed."
+msgstr ""
+"Будь-яка додаткова інформація про клієнта, наприклад номер телефону. Можете "
+"використовувати HTML-теги."
+
+#: admin/includes/sliced-admin-metaboxes.php:693
+msgid "Warning: duplicate quote number"
+msgstr "Увага: такий номер кошторису вже існує"
+
+#: admin/includes/sliced-admin-metaboxes.php:699
+msgid "Warning: duplicate invoice number"
+msgstr "Увага: такий номер рахунку вже існує"
+
+#: admin/includes/sliced-admin-notifications.php:257
+#, php-format
+msgid "Your %s has been accepted"
+msgstr "Ваш %s було прийнято"
+
+#: admin/includes/sliced-admin-notifications.php:260
+#, php-format
+msgid "Your %s has been declined"
+msgstr "Ваш %s було відхилено"
+
+#: admin/includes/sliced-admin-notifications.php:263
+#: admin/includes/sliced-admin-notifications.php:334
+msgid "You've received a payment!"
+msgstr "Ви отримали платіж!"
+
+#: admin/includes/sliced-admin-notifications.php:287
+#, fuzzy, php-format
+msgid "%1s has accepted your %2s of %3s."
+msgstr "%1s прийняв ваш %2s з %3s."
+
+#: admin/includes/sliced-admin-notifications.php:293
+#, php-format
+msgid "An %1s has automatically been created (%2s)."
+msgstr "%1s автоматично було створено (%2s)."
+
+#: admin/includes/sliced-admin-notifications.php:306
+#, php-format
+msgid "%1s has declined your %2s of %3s."
+msgstr "%1s відхилив ваш %2s з %3s."
+
+#: admin/includes/sliced-admin-notifications.php:337
+#, fuzzy, php-format
+msgid "%1s has made a payment for %2s on %3s %4s."
+msgstr "%1s виконав оплату %2s з %3s %4s."
+
+#: admin/includes/sliced-admin-notifications.php:488
+msgid "Loading the email preview...."
+msgstr "Завантажуємо повідомлення…"
+
+#: admin/includes/sliced-admin-notifications.php:545
+msgid "Send To"
+msgstr "Нвдіслати До"
+
+#: admin/includes/sliced-admin-notifications.php:547
+msgid "Use comma to separate multiple recipients"
+msgstr ""
+"Використовуйте символ <strong>;</strong>, щоб відокремити отримувачів між "
+"собою"
+
+#: admin/includes/sliced-admin-notifications.php:552
+#: admin/includes/sliced-admin-options.php:675
+#: admin/includes/sliced-admin-options.php:711
+#: admin/includes/sliced-admin-options.php:747
+#: admin/includes/sliced-admin-options.php:793
+msgid "Subject"
+msgstr "Тема"
+
+#: admin/includes/sliced-admin-notifications.php:558
+msgid "Email Content"
+msgstr "Зміст повідомлення"
+
+#: admin/includes/sliced-admin-notifications.php:566
+msgid "Send The Email"
+msgstr "Надіслати повідомлення"
+
+#: admin/includes/sliced-admin-notifications.php:718
+msgid "Email to client"
+msgstr "Надіслати"
+
+#: admin/includes/sliced-admin-notifications.php:743
+#, fuzzy, php-format
+msgctxt "sliced-invoices"
+msgid "%s ago"
+msgstr "%s тому"
+
+#: admin/includes/sliced-admin-notifications.php:745
+msgid "Sent "
+msgstr "Надіслано "
+
+#: admin/includes/sliced-admin-notifications.php:778
+msgid "was"
+msgstr "було"
+
+#: admin/includes/sliced-admin-notifications.php:778
+msgid "is"
+msgstr "є"
+
+#: admin/includes/sliced-admin-notifications.php:871
+msgid "View this invoice online"
+msgstr "Переглянути рахунок онлайн"
+
+#: admin/includes/sliced-admin-notifications.php:873
+msgid "View this quote online"
+msgstr "Переглянути кошторис онлайн"
+
+#. Plugin Name of the plugin/theme
+#. Author of the plugin/theme
+#: admin/includes/sliced-admin-options.php:45
+#: admin/includes/sliced-admin-options.php:46
+msgid "Sliced Invoices"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:178
+msgid "General"
+msgstr "Загальні"
+
+#: admin/includes/sliced-admin-options.php:179
+msgid "General Settings"
+msgstr "Загальні налаштування"
+
+#: admin/includes/sliced-admin-options.php:180
+msgid "Just some general options."
+msgstr "Налаштування загального характеру."
+
+#: admin/includes/sliced-admin-options.php:186
+msgid "Year Start"
+msgstr "Початок року"
+
+#: admin/includes/sliced-admin-options.php:188
+msgid "The start date of the fiscal year"
+msgstr "Дата, з якої починається фіскальний рік"
+
+#: admin/includes/sliced-admin-options.php:191
+msgid "01 Jan"
+msgstr "1 Січня"
+
+#: admin/includes/sliced-admin-options.php:192
+msgid "01 Feb"
+msgstr "1 Лютого"
+
+#: admin/includes/sliced-admin-options.php:193
+msgid "01 Mar"
+msgstr "1 Березня"
+
+#: admin/includes/sliced-admin-options.php:194
+msgid "01 Apr"
+msgstr "1 Квітня"
+
+#: admin/includes/sliced-admin-options.php:195
+msgid "01 May"
+msgstr "1 Травня"
+
+#: admin/includes/sliced-admin-options.php:196
+msgid "01 Jun"
+msgstr "1 Червня"
+
+#: admin/includes/sliced-admin-options.php:197
+msgid "01 Jul"
+msgstr "1 Липня"
+
+#: admin/includes/sliced-admin-options.php:198
+msgid "01 Aug"
+msgstr "1 Серпня"
+
+#: admin/includes/sliced-admin-options.php:199
+msgid "01 Sep"
+msgstr "1 Вересня"
+
+#: admin/includes/sliced-admin-options.php:200
+msgid "01 Oct"
+msgstr "1 Жовтня"
+
+#: admin/includes/sliced-admin-options.php:201
+msgid "01 Nov"
+msgstr "1 Листопада"
+
+#: admin/includes/sliced-admin-options.php:202
+msgid "01 Dec"
+msgstr "1 Грудня"
+
+#: admin/includes/sliced-admin-options.php:206
+msgid "Year End"
+msgstr "Кінець року"
+
+#: admin/includes/sliced-admin-options.php:208
+msgid "The end date of the fiscal year"
+msgstr "Дата закінчення фіскального року"
+
+#: admin/includes/sliced-admin-options.php:211
+msgid "31 Jan"
+msgstr "31 Січня"
+
+#: admin/includes/sliced-admin-options.php:212
+msgid "28 Feb"
+msgstr "28 Лютого"
+
+#: admin/includes/sliced-admin-options.php:213
+msgid "31 Mar"
+msgstr "31 Березня"
+
+#: admin/includes/sliced-admin-options.php:214
+msgid "30 Apr"
+msgstr "30 Квітня"
+
+#: admin/includes/sliced-admin-options.php:215
+msgid "31 May"
+msgstr "31 Травня"
+
+#: admin/includes/sliced-admin-options.php:216
+msgid "30 Jun"
+msgstr "30 Червня"
+
+#: admin/includes/sliced-admin-options.php:217
+msgid "31 Jul"
+msgstr "31 Липня"
+
+#: admin/includes/sliced-admin-options.php:218
+msgid "31 Aug"
+msgstr "31 Серпня"
+
+#: admin/includes/sliced-admin-options.php:219
+msgid "30 Sep"
+msgstr "30 Вересня"
+
+#: admin/includes/sliced-admin-options.php:220
+msgid "31 Oct"
+msgstr "31 Жовтня"
+
+#: admin/includes/sliced-admin-options.php:221
+msgid "30 Nov"
+msgstr "30 Листопада"
+
+#: admin/includes/sliced-admin-options.php:222
+msgid "31 Dec"
+msgstr "31 Грудня"
+
+#: admin/includes/sliced-admin-options.php:226
+msgid "Pre-Defined Line Items"
+msgstr "Шаблони"
+
+#: admin/includes/sliced-admin-options.php:227
+msgid ""
+"Add 1 line item per line in this format: Qty | Title | Price | Description. "
+"Each field separated with a | symbol. <br>Price should be numbers only, no "
+"currency symbol.<br>If you prefer to have an item blank, you still need the "
+"| symbol like so: 1 | Web Design | | Designing the web"
+msgstr ""
+"Додайте по одному шаблону на рядок тексту: К-ть | Назва |  Ціна | Примітка. "
+"Кожне поле шаблону відокремлюється символом |<br>Ціна має бути записана "
+"виключно цифрами, без використання інших символів (напр., таких, як символ "
+"валюти).<br>Якщо ви бажаєте, можете залишити поле пустим. Але в такому "
+"випадку треба відокремити пусте поле за допомогою | |. Наприклад: 1 | Веб-"
+"дизайн | | Розробка дизайну"
+
+#: admin/includes/sliced-admin-options.php:236
+#, php-format
+msgid "Displayed on %1s & %2s"
+msgstr "Відображення на %1s & %2s"
+
+#: admin/includes/sliced-admin-options.php:236
+msgid "Footer<br><small>"
+msgstr "Підпис<br><small>"
+
+#: admin/includes/sliced-admin-options.php:237
+#, php-format
+msgid "%1s & %2s"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:237
+msgid "The footer will be displayed at the bottom of each "
+msgstr "Підпис буде показано знизу "
+
+#: admin/includes/sliced-admin-options.php:250
+msgid "Business Settings"
+msgstr "Бізнес налаштування"
+
+#: admin/includes/sliced-admin-options.php:251
+#, php-format
+msgid "All of the Business Details below will be displayed on the %1s & %2s."
+msgstr "Вся бизнес-информация будет отображена %1s и %2s."
+
+#: admin/includes/sliced-admin-options.php:257
+msgid "Logo"
+msgstr "Логотип"
+
+#: admin/includes/sliced-admin-options.php:258
+msgid ""
+"Logo of your business. If no logo is added, the name of your business will "
+"be used instead."
+msgstr ""
+"Логотип вашого бизнесу. Якщо логотип не вказано, буде використоване им'я "
+"вашої компанії."
+
+#: admin/includes/sliced-admin-options.php:264
+msgid "Business Name"
+msgstr "Ім'я компанії"
+
+#: admin/includes/sliced-admin-options.php:272
+msgid ""
+"Add your full address and format it anyway you like. Basic HTML is allowed."
+msgstr "Введіть поштову адресу в довільній формі. HTML-теги дозволено."
+
+#: admin/includes/sliced-admin-options.php:278
+msgid "Extra Business Info"
+msgstr "Додаткова ділова інформація"
+
+#: admin/includes/sliced-admin-options.php:279
+msgid ""
+"Extra business info such as Business Number, phone number or email address "
+"and format it anyway you like. Basic HTML is allowed.<br>You can add your "
+"VAT number or ABN here."
+msgstr ""
+"Будь-які ділові дані, такі як контактні телефони, електронні скриньки, тощо. "
+"Можете використовувати HTML."
+
+#: admin/includes/sliced-admin-options.php:296
+#: admin/includes/sliced-admin-options.php:432
+#, php-format
+msgid "%s Settings"
+msgstr "Налаштування %s"
+
+#: admin/includes/sliced-admin-options.php:297
+#: admin/includes/sliced-admin-options.php:433
+#: admin/includes/sliced-admin-options.php:440
+#, php-format
+msgid "%s"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:297
+msgid "Here you will find all of the settings for "
+msgstr "Тут ви зможете знайти усі налаштування для "
+
+#: admin/includes/sliced-admin-options.php:303
+#: admin/includes/sliced-admin-options.php:439
+msgid "Prefix"
+msgstr "Префікс"
+
+#: admin/includes/sliced-admin-options.php:304
+#, php-format
+msgid "Prefix of each %s. Can be left blank if you don't need a prefix."
+msgstr "Префікс до кожного запису %s. Може бути пустим, якщо хочете."
+
+#: admin/includes/sliced-admin-options.php:310
+#: admin/includes/sliced-admin-options.php:446
+msgid "Auto Increment"
+msgstr "Автоінкремент"
+
+#: admin/includes/sliced-admin-options.php:311
+msgid "Yes, increment quote numbers by one. Recommended."
+msgstr ""
+"Так, збільшуйте порядковий номер кошторису кожного разу (рекомендується)."
+
+#: admin/includes/sliced-admin-options.php:316
+#: admin/includes/sliced-admin-options.php:452
+msgid "Next Number"
+msgstr "Наступний номер"
+
+#: admin/includes/sliced-admin-options.php:317
+msgid "The next number to use for auto incrementing. Can use leading zeros."
+msgstr ""
+"Цифрове значення, з якого буде починатись автоматичний інкремент. Може "
+"містити початкові нулі."
+
+#: admin/includes/sliced-admin-options.php:323
+#: admin/includes/sliced-admin-options.php:470
+#, fuzzy
+msgid "Hide Adjust Field"
+msgstr "Сховати поле з надбавкою"
+
+#: admin/includes/sliced-admin-options.php:324
+#: admin/includes/sliced-admin-options.php:471
+msgid "Yes, hide the Adjust field on line items, I won't need this field"
+msgstr ""
+"Так, приховайте поле для введення шаблонів, я не маю намір використовувати "
+"шаблони"
+
+#: admin/includes/sliced-admin-options.php:329
+#, php-format
+msgid "%s Valid For"
+msgstr "%s Дійсне протягом"
+
+#: admin/includes/sliced-admin-options.php:330
+#, php-format
+msgid ""
+"Number of days each %1s is valid for. This will automatically set the date "
+"in the 'Valid Until' field.<br>Can be overriden on individual %2s."
+msgstr ""
+"Кількість днів, протягом яких кожен %1s буде вважатись дійсним. Впливає на "
+"значення поля «Дійсне до». Може бути перевизначене %2s."
+
+#: admin/includes/sliced-admin-options.php:341
+msgid ""
+"Terms and conditions displayed on the quote..<br>Can be overriden on "
+"individual quotes."
+msgstr ""
+"Терміни та умови, які мають виводитись у кошторисі.<br>Може бути "
+"перевизначене в окремих кошторисах."
+
+#: admin/includes/sliced-admin-options.php:347
+#, fuzzy
+msgid "Accept Quotes"
+msgstr "Підтвердити кошторис"
+
+#: admin/includes/sliced-admin-options.php:353
+msgid "Accept Quote Button"
+msgstr "Кнопка підтвердиження кошторису"
+
+#: admin/includes/sliced-admin-options.php:354
+#, fuzzy
+msgid "Yes, show the 'Accept Quote' button on quotes."
+msgstr "Так, показувати кнопку «Підтвердити Кошторис» на сторінці кошторису."
+
+#: admin/includes/sliced-admin-options.php:359
+#, fuzzy
+msgid "Accepted Quote Action"
+msgstr "Дія прийнятого кошторису"
+
+#: admin/includes/sliced-admin-options.php:360
+msgid "Actions to perform automatically when client accepts quote."
+msgstr ""
+"Дії, необхідні для автоматичного виконання, які виконуються коли клієнт "
+"підтвердить кошторис."
+
+#: admin/includes/sliced-admin-options.php:365
+msgid "Convert quote to invoice"
+msgstr "Перетворити кошторис на рахунок"
+
+#: admin/includes/sliced-admin-options.php:366
+msgid "Convert quote to invoice and send to client"
+msgstr "Перетворити кошторис на рахунок, та виставити його клієнту"
+
+#: admin/includes/sliced-admin-options.php:367
+#, fuzzy
+msgid "Create invoice, but keep quote"
+msgstr "Створити рахунок, але залишити кошторис"
+
+#: admin/includes/sliced-admin-options.php:368
+msgid "Create invoice and send to client, but keep quote"
+msgstr "Створити рахунок і відправити його клієнту, але залишити кошторис"
+
+#: admin/includes/sliced-admin-options.php:369
+msgid "Do nothing"
+msgstr "Не робити нічого"
+
+#: admin/includes/sliced-admin-options.php:373
+msgid "Accept Quote Text"
+msgstr "Прийняти текст кошторису"
+
+#: admin/includes/sliced-admin-options.php:374
+msgid ""
+"Text to add on the 'Accept Quote' popup.<br />Should provide some indication "
+"to your client of what happens after accepting the quote."
+msgstr ""
+"Текст, який треба додати до діалогового вікна «Прийняти кошторис».<br>Має "
+"містити інформацію про те, що відбудеться після підтвердження кошторису."
+
+#: admin/includes/sliced-admin-options.php:380
+msgid "Accepted Quote Message"
+msgstr "Повідомлення про підтвердження кошторису"
+
+#: admin/includes/sliced-admin-options.php:381
+msgid ""
+"Message to display if client accepts the quote.<br />Leave blank for the "
+"default message."
+msgstr ""
+"Повідомлення, яке буде відображене клієнту, якщо він підтвердить кошторис."
+"<br>Залиште пустим, якщо хочете використати значення за замовченням."
+
+#: admin/includes/sliced-admin-options.php:390
+msgid "Declined Quote Message"
+msgstr "Повідомлення про відмову від кошторису"
+
+#: admin/includes/sliced-admin-options.php:391
+msgid ""
+"Message to display if client declines the quote.<br />Leave blank for the "
+"default message."
+msgstr ""
+"Текст, який буде показано клієнту, якщо він відмовиться від кошторису."
+"<br>Залиште пустим, щоб скористатись текстом за замовченням."
+
+#: admin/includes/sliced-admin-options.php:400
+#: admin/includes/sliced-admin-options.php:483
+msgid "Template Design"
+msgstr "Дизайн шаблону"
+
+#: admin/includes/sliced-admin-options.php:406
+#: admin/includes/sliced-admin-options.php:489
+msgid "Template"
+msgstr "Шаблон"
+
+#: admin/includes/sliced-admin-options.php:418
+#: admin/includes/sliced-admin-options.php:501
+msgid "Custom CSS"
+msgstr "Власний CSS"
+
+#: admin/includes/sliced-admin-options.php:419
+msgid "Add custom CSS to your quotes"
+msgstr "Додати власні CSS-стилі до сторінки кошторису"
+
+#: admin/includes/sliced-admin-options.php:433
+msgid ""
+"Here you will find all of the settings for <span class=\"i18n-multilingual-"
+"display\">"
+msgstr ""
+"Тут ви знайдете усі налаштування до <span class=\"i18n-multilingual-display"
+"\">"
+
+#: admin/includes/sliced-admin-options.php:447
+msgid "Yes, increment invoice numbers by one. Recommended."
+msgstr "Так, збільшувати значення автоматично. Рекомендується."
+
+#: admin/includes/sliced-admin-options.php:453
+msgid "The next number to use for auto incrementing. Can use leading zeros"
+msgstr ""
+"Цифрове значення, з якого буде починатись автоматичний інкремент. Може "
+"містити початкові нулі"
+
+#: admin/includes/sliced-admin-options.php:460
+#, php-format
+msgid ""
+"Number of days each %1s is due after the created date. This will "
+"automatically set the date in the 'Due Date' field.<br>Can be overriden on "
+"individual %2s."
+msgstr ""
+"Кількість днів, протягом яких кожен з %1s буде вважатись дійсним, починаючи "
+"з дати створення. Автоматично змінює дату в полі «Дійсне до».<br>Може бути "
+"перевизначене індивідуально %2s."
+
+#: admin/includes/sliced-admin-options.php:477
+msgid ""
+"Terms and conditions displayed on the invoice.<br>Can be overriden on "
+"individual invoices."
+msgstr ""
+"Терміни та умови, для виводу на сторінці рахунку.<br>Може бути перевизначене "
+"індивідуально."
+
+#: admin/includes/sliced-admin-options.php:502
+msgid "Add custom CSS to your invoices."
+msgstr "Додати власні CSS-стилі до сторінки рахунку."
+
+#: admin/includes/sliced-admin-options.php:515
+msgid "Payments"
+msgstr "Платежі"
+
+#: admin/includes/sliced-admin-options.php:516
+msgid "Payment Settings"
+msgstr "Налаштування платежів"
+
+#: admin/includes/sliced-admin-options.php:517
+msgid "Here you will find all of the Payment related settings."
+msgstr "Тут ви зможете знайти всі платіжні налаштування."
+
+#: admin/includes/sliced-admin-options.php:533
+msgid "Currency Position"
+msgstr "Позиція"
+
+#: admin/includes/sliced-admin-options.php:545
+msgid "Thousand Separator"
+msgstr "Відокремлювач тисяч"
+
+#: admin/includes/sliced-admin-options.php:556
+msgid "Decimal Separator"
+msgstr "Відокремлювач"
+
+#: admin/includes/sliced-admin-options.php:567
+msgid "Number of Decimals"
+msgstr "Кількість десяткових чисел"
+
+#: admin/includes/sliced-admin-options.php:580
+msgid "Tax Percentage"
+msgstr "Відсоток податку"
+
+#: admin/includes/sliced-admin-options.php:581
+msgid "Global tax percentage. Set to 0 or leave blank for no tax."
+msgstr ""
+"Глобальний відсоток податку. Вкажіть 0 або лишіть поле пустим, якщо податок "
+"не враховується."
+
+#: admin/includes/sliced-admin-options.php:593
+msgid "Tax Name"
+msgstr "Назва податку"
+
+#: admin/includes/sliced-admin-options.php:594
+msgid "The name of the tax for your country/region. GST, VAT, Tax etc"
+msgstr "Назва податку для вашої країни або регіону"
+
+#: admin/includes/sliced-admin-options.php:603
+msgid "Confirmation Page"
+msgstr "Сторінка підтвердження"
+
+#: admin/includes/sliced-admin-options.php:604
+msgid ""
+"Choose a page to use for PayPal and other <a target=\"_blank\" href="
+"\"https://slicedinvoices.com/extensions/\">available payment gateway</a> "
+"messages and other confirmations.<br>A blank page named Confirmation would "
+"be perfect."
+msgstr ""
+"Оберіть сторінку для виводу підтверджень PayPal та <a target=\"_blank\" href="
+"\"https://slicedinvoices.com/extensions/\">іншими платіжними системами</a>."
+"<br>Пуста сторінка з назвою Confirmation буде чудовим вибором."
+
+#: admin/includes/sliced-admin-options.php:621
+msgid "Bank"
+msgstr "Банк"
+
+#: admin/includes/sliced-admin-options.php:621
+#: admin/includes/sliced-admin-options.php:628
+#, php-format
+msgid "Displayed on the %s"
+msgstr "Виводиться на %s"
+
+#: admin/includes/sliced-admin-options.php:622
+msgid ""
+"Add your bank account details if you wish to allow direct bank deposits. "
+"HTML is allowed."
+msgstr ""
+"Додайте деталі ваших банківських реквізитів., якщо ви хочете дозволити "
+"міжбанківскі платежі. Можете скористатись HTML-тегами."
+
+#: admin/includes/sliced-admin-options.php:628
+msgid "Generic Payment"
+msgstr "Основний платіж"
+
+#: admin/includes/sliced-admin-options.php:629
+msgid ""
+"Set a generic message or include further instructions for the user on how to "
+"pay. HTML is allowed."
+msgstr ""
+"Вкажіть типове повідомлення, або подальші платіжні інструкції. Можете "
+"скористатись HTML-тегами."
+
+#: admin/includes/sliced-admin-options.php:641
+msgid "Emails"
+msgstr "Електронні скриньки"
+
+#: admin/includes/sliced-admin-options.php:642
+msgid "Email Settings"
+msgstr "Налаштування електронної пошти"
+
+#: admin/includes/sliced-admin-options.php:643
+msgid ""
+"Here you will find all of the Email related settings. The <a target=\"_blank"
+"\" href=\"https://slicedinvoices.com/extensions/pdf-email\">PDF & Email "
+"extension</a> will add extra options to customize the emails."
+msgstr ""
+"Тут ви можете знайти налаштування електронної пошти. Спробуйте <a target="
+"\"_blank\" href=\"https://slicedinvoices.com/extensions/pdf-email\">PDF & "
+"Email розширення</a>, воно додає більше можливостей."
+
+#: admin/includes/sliced-admin-options.php:649
+msgid "Email Address"
+msgstr "Електронні скриньки"
+
+#: admin/includes/sliced-admin-options.php:650
+msgid ""
+"The email address to send and receive notifications (probably your business "
+"email)."
+msgstr ""
+"Скринька для відправки та отримання сповіщень (скоріш за все, ваша основна "
+"ділова поштова скринька)."
+
+#: admin/includes/sliced-admin-options.php:656
+msgid "Email Name"
+msgstr "Назва скриньки"
+
+#: admin/includes/sliced-admin-options.php:657
+msgid ""
+"The name on emails to send and receive notifications (probably your business "
+"name)."
+msgstr ""
+"Назва вхідних та віхидніх поштових повідомлень (скоріш за все, назва вашої "
+"компанії)."
+
+#: admin/includes/sliced-admin-options.php:663
+msgid "Bcc on Client Emails"
+msgstr "Надсилати копію"
+
+#: admin/includes/sliced-admin-options.php:664
+msgid ""
+"Yes, send myself a copy of all client emails (Bcc). Recommended.<br><span "
+"class=\"description\"><small>This ensures you have a copy of the email on "
+"record</small></span>"
+msgstr ""
+"Так, надсилати мені дублікат клієнтських поштових повідомлень. "
+"Рекомендується.<br><span class=\"description\"><small>Гарантує те, що ви "
+"завжди матимете копію надісланих повідомлень</small></span>"
+
+#: admin/includes/sliced-admin-options.php:669
+msgid "Quote Available"
+msgstr "Доступні кошториси"
+
+#: admin/includes/sliced-admin-options.php:676
+#: admin/includes/sliced-admin-options.php:712
+#: admin/includes/sliced-admin-options.php:748
+#: admin/includes/sliced-admin-options.php:794
+msgid "The subject of the email (wildcards are allowed)."
+msgstr "Тема повідомлення (можете використовувати узагальнюючі символи)."
+
+#: admin/includes/sliced-admin-options.php:682
+#: admin/includes/sliced-admin-options.php:718
+#: admin/includes/sliced-admin-options.php:754
+#: admin/includes/sliced-admin-options.php:800
+msgid "Content"
+msgstr "Зміст повідомлення"
+
+#: admin/includes/sliced-admin-options.php:683
+#: admin/includes/sliced-admin-options.php:719
+#: admin/includes/sliced-admin-options.php:755
+#: admin/includes/sliced-admin-options.php:801
+msgid "The content of the email (wildcards and HTML are allowed)."
+msgstr ""
+"Текст поштового повідомлення (можете використовувати HTML та узагальнюючі "
+"символи)."
+
+#: admin/includes/sliced-admin-options.php:697
+#: admin/includes/sliced-admin-options.php:733
+msgid "Button text"
+msgstr "Текст кнопки"
+
+#: admin/includes/sliced-admin-options.php:698
+msgid "The \"view this quote online\" button."
+msgstr "Кнопка для перегляду кошторису онлайн."
+
+#: admin/includes/sliced-admin-options.php:705
+msgid "Invoice Available"
+msgstr "Доступні рахунки"
+
+#: admin/includes/sliced-admin-options.php:734
+msgid "The \"view this invoice online\" button."
+msgstr "Кнопка перегляду рахунку онлайн."
+
+#: admin/includes/sliced-admin-options.php:741
+msgid "Payment Received"
+msgstr "Платіж отримано"
+
+#: admin/includes/sliced-admin-options.php:770
+msgid "Payment Reminder"
+msgstr "Нагадування про платіж"
+
+#: admin/includes/sliced-admin-options.php:776
+msgid "When to Send"
+msgstr "Коли надсилати"
+
+#: admin/includes/sliced-admin-options.php:777
+msgid "Check when you would like payment reminders sent out."
+msgstr "Вкажіть час, коли надсилати нагадування про платіж."
+
+#: admin/includes/sliced-admin-options.php:815
+msgid "Wildcards For Emails"
+msgstr "Узагальнюючі символи для поштових повідомлень"
+
+#: admin/includes/sliced-admin-options.php:816
+#, fuzzy
+msgid ""
+"The following wildcards can be used in email subjects and email content:"
+"<br>\n"
+"\t\t\t\t\t\t%client_first_name% : Clients first name<br>\n"
+"\t\t\t\t\t\t%client_last_name% : Clients last name<br>\n"
+"\t\t\t\t\t\t%client_business% : Clients business<br>\n"
+"\t\t\t\t\t\t%client_email% : Clients email address<br>\n"
+"\t\t\t\t\t\t%link% : URL to the quote<br>\n"
+"\t\t\t\t\t\t%number% : The quote or invoice number<br>\n"
+"\t\t\t\t\t\t%total% : The quote or invoice total<br>\n"
+"\t\t\t\t\t\t%created% : The quote or invoice created date<br>\n"
+"\t\t\t\t\t\t%valid_until% : The date the quote is valid until<br>\n"
+"\t\t\t\t\t\t%due_date% : The date the invoice is due<br>\n"
+"\t\t\t\t\t\t%date% : Todays date. Useful on Payment emails<br>\n"
+"\t\t\t\t\t\t%order_number% : The order number of the invoice<br>\n"
+"\t\t\t\t\t\t%is_was% : If due date of invoice is past, displays \"was\" "
+"otherwise displays \"is\"<br>\n"
+"\t\t\t\t\t\t"
+msgstr ""
+"Ви можете використовувати наступні узагальнюючі символи в темі та/або тексті "
+"поштових повідомлень:br>\n"
+"\t\t\t\t\t\t%client_first_name% : Ім'я клієнта<br>\n"
+"\t\t\t\t\t\t%client_last_name% : Прізвище клієнта<br>\n"
+"\t\t\t\t\t\t%client_business% : Компанія клієнта<br>\n"
+"\t\t\t\t\t\t%client_email% : Поштова адреса клієнта<br>\n"
+"\t\t\t\t\t\t%link% : URL сторінки кошторису<br>\n"
+"\t\t\t\t\t\t%number% : Номер кошторису або рахунку<br>\n"
+"\t\t\t\t\t\t%total% : Сума до сплати<br>\n"
+"\t\t\t\t\t\t%created% : Дата створення рахунку або кошторису<br>\n"
+"\t\t\t\t\t\t%valid_until% : Кінцева дата дійсності рахунку<br>\n"
+"\t\t\t\t\t\t%due_date% : Кінцева дата сплати<br>\n"
+"\t\t\t\t\t\t%date% : Сьогоднішня дата. Корисне для повідомлень про сплату."
+"<br>\n"
+"\t\t\t\t\t\t%order_number% : Порядковий номер рахунку<br>\n"
+"\t\t\t\t\t\t%is_was% : If due date of invoice is past, displays \"was\" "
+"otherwise displays \"is\"<br>\n"
+"\t\t\t\t\t\t"
+
+#: admin/includes/sliced-admin-options.php:841
+msgid "PDF"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:842
+msgid "PDF Settings"
+msgstr "Налаштування PDF"
+
+#: admin/includes/sliced-admin-options.php:843
+msgid ""
+"Here you will find all of the PDF related settings. The <a target=\"_blank\" "
+"href=\"https://slicedinvoices.com/extensions/pdf-email\">PDF & Email "
+"extension</a> will add extra options to customize the PDFs."
+msgstr ""
+"Тут ви можете знайти усі налаштування, пов'язані з PDF. Радимо скористатись "
+"розширенням <a target=\"_blank\" href=\"https://slicedinvoices.com/"
+"extensions/pdf-email\">PDF & Email</a>, яке додає багато корисних "
+"можливостей."
+
+#: admin/includes/sliced-admin-options.php:853
+msgid "Translate"
+msgstr "Переклад"
+
+#: admin/includes/sliced-admin-options.php:854
+msgid "Translate Settings"
+msgstr "Налаштування перекладу"
+
+#: admin/includes/sliced-admin-options.php:855
+msgid ""
+"Here you will find all of the Translation related settings. The <a target="
+"\"_blank\" href=\"https://slicedinvoices.com/extensions/easy-translate/"
+"\">Easy Translate extension</a> will allow you to translate every piece of "
+"text shown on invoices and quotes."
+msgstr ""
+"Тут ви можете знайти налаштування перекладу. Радимо встановити розширення <a "
+"target=\"_blank\" href=\"https://slicedinvoices.com/extensions/easy-"
+"translate/\">Easy Translate</a>, щоб отримати набагато більше можливостей з "
+"перекладу."
+
+#: admin/includes/sliced-admin-options.php:860
+msgid "Quote Label"
+msgstr "Кошторис"
+
+#: admin/includes/sliced-admin-options.php:861
+msgid ""
+"You can change this from Quote to Estimate or Proposal (or any other word "
+"you like)."
+msgstr ""
+"Можете вказати щось, на кшталт «Оцінка», «Пропозиція» або «Офер» (що "
+"завгодно, на ваш особистий смак)."
+
+#: admin/includes/sliced-admin-options.php:870
+msgid "Quote Label Plural"
+msgstr "Кошторис, множина"
+
+#: admin/includes/sliced-admin-options.php:871
+#: admin/includes/sliced-admin-options.php:891
+msgid "The plural of the above"
+msgstr "Множина вищевказаного поля"
+
+#: admin/includes/sliced-admin-options.php:880
+msgid "Invoice Label"
+msgstr "Рахунок"
+
+#: admin/includes/sliced-admin-options.php:881
+msgid ""
+"You can change this from Invoice to Tax Invoice (or any other word you like)."
+msgstr "Ви можете вказати натомість будь-що, за власним бажанням."
+
+#: admin/includes/sliced-admin-options.php:890
+msgid "Invoice Label Plural"
+msgstr "Рахунок, множина"
+
+#: admin/includes/sliced-admin-options.php:904
+#: admin/includes/sliced-admin-options.php:905
+msgid "Extras"
+msgstr "Додатково"
+
+#: admin/includes/sliced-admin-options.php:906
+msgid "Just a page with some advertising and a cry for help ;-)"
+msgstr "Трошки реклами й благання про допомогу ;-)"
+
+#: admin/includes/sliced-admin-options.php:911
+msgid "We'd Love Your Support"
+msgstr "Ми були б щасливі отримати вашу допомогу"
+
+#: admin/includes/sliced-admin-options.php:921
+msgid "Sign up for our newsletter"
+msgstr "Підпишіться на наші новини"
+
+#: admin/includes/sliced-admin-options.php:950
+msgid "Extend Sliced Invoices"
+msgstr "Отримай більше від Sliced Invoices"
+
+#: admin/includes/sliced-admin-options.php:1008
+#: admin/includes/sliced-admin-options.php:1009
+msgid "Licenses"
+msgstr "Ліцензії"
+
+#: admin/includes/sliced-admin-options.php:1010
+msgid "Licenses allow for one-click updates of extensions."
+msgstr "Оновлення в один клік."
+
+#: admin/includes/sliced-admin-options.php:1015
+msgid "Instructions"
+msgstr "Інструкції"
+
+#: admin/includes/sliced-admin-quick-edit.php:153
+#: includes/template-tags/sliced-tags-display-modules.php:127
+msgid "Valid Until"
+msgstr "Термін дії"
+
+#: admin/includes/sliced-admin-quick-edit.php:168
+msgid "Terms"
+msgstr "Терміни"
+
+#: admin/includes/sliced-admin-reports.php:38
+#: admin/includes/sliced-admin-reports.php:39
+#, php-format
+msgid "%s Report"
+msgstr "Звіт %s"
+
+#: admin/includes/sliced-admin-reports.php:41
+#, php-format
+msgid "%1s and %2s"
+msgstr "%1s і %2s"
+
+#: admin/includes/sliced-admin-reports.php:42
+#: admin/includes/sliced-admin-reports.php:43
+#, php-format
+msgid "Current %s Statuses"
+msgstr "Поточні %s статуси"
+
+#: admin/includes/sliced-admin-reports.php:59
+msgid "Reports"
+msgstr "Звіти"
+
+#: admin/includes/sliced-admin-reports.php:289
+msgid "(Does not include Cancelled or Draft statuses)"
+msgstr "(не включаючи Скасовані та Чернетки)"
+
+#: admin/includes/sliced-admin-reports.php:292
+#, php-format
+msgid "Total %s"
+msgstr "Загальна сума %s"
+
+#: admin/includes/sliced-admin-reports.php:294
+#: admin/includes/sliced-admin-reports.php:339
+msgid "Year to Date:"
+msgstr "Рік:"
+
+#: admin/includes/sliced-admin-reports.php:295
+#: admin/includes/sliced-admin-reports.php:340
+msgid "This Month:"
+msgstr "Цього місяця:"
+
+#: admin/includes/sliced-admin-reports.php:296
+#: admin/includes/sliced-admin-reports.php:341
+msgid "This Week:"
+msgstr "Цього тижня:"
+
+#: admin/includes/sliced-admin-reports.php:300
+#: admin/includes/sliced-admin-reports.php:345
+msgid "Last Year:"
+msgstr "Минулого року:"
+
+#: admin/includes/sliced-admin-reports.php:301
+#: admin/includes/sliced-admin-reports.php:346
+msgid "Last Month:"
+msgstr "Минулого місяця:"
+
+#: admin/includes/sliced-admin-reports.php:302
+#: admin/includes/sliced-admin-reports.php:347
+msgid "Last Week:"
+msgstr "Минулого тижня:"
+
+#: admin/includes/sliced-admin-reports.php:333
+#, php-format
+msgid "(Shows current Sent %s)"
+msgstr "(Показує відправлені %s)"
+
+#: admin/includes/sliced-admin-reports.php:337
+#, php-format
+msgid "Outstanding %s"
+msgstr "%s"
+
+#: admin/includes/sliced-admin-tools.php:82
+msgid "System Info"
+msgstr "Системна інформація"
+
+#: admin/includes/sliced-admin-tools.php:83
+msgid "CSV Importer"
+msgstr "Імпортер CSV"
+
+#: core/class-slice-base-plugin-updater.php:223
+#, php-format
+msgid ""
+"There is a new version of %1$s available. <a target=\"_blank\" class="
+"\"thickbox\" href=\"%2$s\">View version %3$s details</a>."
+msgstr ""
+"Новіша версія %1$s вже доступна. <a target=\"_blank\" class=\"thickbox\" "
+"href=\"%2$s\">Детальніше про версію %3$s</a>."
+
+#: core/class-slice-base-plugin-updater.php:230
+#, php-format
+msgid ""
+"There is a new version of %1$s available. <a target=\"_blank\" class="
+"\"thickbox\" href=\"%2$s\">View version %3$s details</a> or <a href=\"%4$s"
+"\">update now</a>."
+msgstr ""
+"Новіша версія %1$s вже доступна. <a target=\"_blank\" class=\"thickbox\" "
+"href=\"%2$s\">Дізнатись про версію %3$s</a> або <a href=\"%4$s\">обновити</"
+"a> автоматично."
+
+#: core/class-slice-base-plugin-updater.php:368
+msgid "You do not have permission to install plugin updates"
+msgstr "Ви не маєте повноважень щоб встановлювати оновлення"
+
+#: core/class-slice-base-plugin-updater.php:368
+msgid "Error"
+msgstr "Помилка"
+
+#: core/class-slice-base-plugin-updater.php:463
+msgid "Enter the License Key for this extension"
+msgstr "Введіть ліцензійний ключ"
+
+#: core/class-slice-base-plugin-updater.php:481
+#, php-format
+msgid "License: %s"
+msgstr "Ліцензія: %s"
+
+#: core/class-slice-base-plugin-updater.php:489
+msgid "Deactivate License"
+msgstr "Деактивувати"
+
+#: core/class-slice-base-plugin-updater.php:490
+msgid "Activate License"
+msgstr "Активувати"
+
+#: core/class-sliced-activator.php:136
+#, php-format
+msgid ""
+"**Please Note: After accepting this %1s an %2s will be automatically "
+"generated. This will then become a legally binding contract."
+msgstr ""
+"**Зверніть увагу: Після підтвердження %1s, %2s буде автоматично згенеровано "
+"і контракт набуде чинності."
+
+#: includes/gateways/sliced-gateway-paypal.php:21
+msgid "Pay with PayPal"
+msgstr "Сплатити за допомогою PayPal"
+
+#: includes/gateways/sliced-gateway-paypal.php:55
+msgid "PayPal Currency"
+msgstr "Валюта PayPal"
+
+#: includes/gateways/sliced-gateway-paypal.php:56
+msgid ""
+"3 letter code - <a href=\"https://developer.paypal.com/docs/classic/api/"
+"currency_codes/\" target=\"_blank\">Full list of accepted currencies here</a>"
+msgstr ""
+"3 буквенний код - <a href=\"https://developer.paypal.com/docs/classic/api/"
+"currency_codes/\" target=\"_blank\">повний список валют</a>"
+
+#: includes/gateways/sliced-gateway-paypal.php:63
+msgid "PayPal API Username"
+msgstr "PayPal API логін"
+
+#: includes/gateways/sliced-gateway-paypal.php:64
+msgid ""
+"You will find your API Username under \"Profile\" and then \"Request API "
+"credentials\"."
+msgstr ""
+"API логін можна знайти на сторінці профіля, виконавши операцію \"Request API "
+"credentials\"."
+
+#: includes/gateways/sliced-gateway-paypal.php:69
+msgid "PayPal API Password"
+msgstr "PayPal API пароль"
+
+#: includes/gateways/sliced-gateway-paypal.php:70
+msgid ""
+"You will find your API Password under \"Profile\" and then \"Request API "
+"credentials\"."
+msgstr ""
+"API пароль можна знайти на сторінці профіля, виконавши операцію \"Request "
+"API credentials\"."
+
+#: includes/gateways/sliced-gateway-paypal.php:75
+msgid "PayPal Signature"
+msgstr "PayPal підпис"
+
+#: includes/gateways/sliced-gateway-paypal.php:76
+msgid ""
+"You will find your Signature under \"Profile\" and then \"Request API "
+"credentials\"."
+msgstr ""
+"API підпис можна знайти на сторінці профіля, виконавши операцію \"Request "
+"API credentials\"."
+
+#: includes/gateways/sliced-gateway-paypal.php:81
+msgid "PayPal Mode"
+msgstr "Режим PayPal"
+
+#: includes/gateways/sliced-gateway-paypal.php:82
+msgid ""
+"Set to Sandbox for testing purposes (you must have a <a href=\"https://"
+"developer.paypal.com/docs/classic/lifecycle/ug_sandbox/\">Sandbox account</"
+"a> for this and be using the Sandbox API credentials).<br />Set to Live to "
+"accept payments from clients."
+msgstr ""
+"Режим тестування (ви маєте отримати <a href=\"https://developer.paypal.com/"
+"docs/classic/lifecycle/ug_sandbox/\">тестовий обліковий запис</a> для цього, "
+"а також скористатись Sandbox API).<br />Для повноцінної роботи вимкніть "
+"режим тестування."
+
+#: includes/gateways/sliced-gateway-paypal.php:249
+msgid "Error processing the payment.<br> <a href=\""
+msgstr "Під час опрацювання платежу сталася помилка.<br> <a href=\""
+
+#: includes/gateways/sliced-gateway-paypal.php:284
+msgid "Payment has been cancelled.<br> <a href=\""
+msgstr "Платіж було скасовано.<br> <a href=\""
+
+#: includes/gateways/sliced-gateway-paypal.php:290
+msgid "This invoice has already been paid."
+msgstr "Рахунок вже було оплачено."
+
+#: includes/gateways/sliced-gateway-paypal.php:374
+#: includes/payments/sliced-shared-payments.php:538
+msgid "Success"
+msgstr "Операція успішна"
+
+#: includes/gateways/sliced-gateway-paypal.php:382
+msgid "Subscription has been activated!"
+msgstr "Підписку було активовано!"
+
+#: includes/gateways/sliced-gateway-paypal.php:384
+#: includes/gateways/sliced-gateway-paypal.php:389
+#: includes/gateways/sliced-gateway-paypal.php:396
+msgid "Your PayPal Transaction ID is: "
+msgstr "ID вашої PayPal транзакції: "
+
+#: includes/gateways/sliced-gateway-paypal.php:387
+msgid "Payment has been received!"
+msgstr "Платіж було отримано!"
+
+#: includes/gateways/sliced-gateway-paypal.php:392
+msgid "Transaction complete, however payment is still pending."
+msgstr "Транзакцію завершено, але платіж ще опрацьовується."
+
+#: includes/gateways/sliced-gateway-paypal.php:394
+msgid ""
+"You need to manually authorize this payment in your <a target=\"_new\" href="
+"\"http://www.paypal.com\">PayPal Account</a>"
+msgstr ""
+"Вам необхідно вручну авторизувати цей платіж, для цього перейдіть до вашого "
+"облікового запису у системі <a target=\"_new\" href=\"http://www.paypal.com"
+"\">PayPal</a>"
+
+#: includes/gateways/sliced-gateway-paypal.php:402
+#, php-format
+msgid "Click here to return to %s"
+msgstr "Натисніть тут, щоб повернутись до %s"
+
+#: includes/gateways/sliced-gateway-paypal.php:615
+msgid "There was an error with the form submission, please try again."
+msgstr ""
+"Під час опрацювання форми сталася помилка. Будь ласка, спробуйте ще раз."
+
+#: includes/invoice/class-sliced-invoice.php:234
+msgid "Paid"
+msgstr "Оплачено"
+
+#: includes/invoice/class-sliced-invoice.php:237
+msgid "Cancelled"
+msgstr "Скасовано"
+
+#: includes/payments/sliced-shared-payments.php:98
+msgid "Pay with"
+msgstr "Оплатити за допомогою"
+
+#: includes/payments/sliced-shared-payments.php:127
+msgid "Invoice Number"
+msgstr "Номер рахунку"
+
+#: includes/payments/sliced-shared-payments.php:128
+msgid "Amount Payable"
+msgstr "Доступна сума"
+
+#: includes/payments/sliced-shared-payments.php:129
+msgid "Payment Method"
+msgstr "Спосіб оплати"
+
+#: includes/payments/sliced-shared-payments.php:138
+msgid "Pay Now"
+msgstr "Сплатити зараз"
+
+#: includes/payments/sliced-shared-payments.php:194
+msgid "You have declined this quote."
+msgstr "Ви скасували кошторис."
+
+#: includes/payments/sliced-shared-payments.php:198
+msgid "This quote has been cancelled."
+msgstr "Цей кошторис було скасовано."
+
+#: includes/payments/sliced-shared-payments.php:202
+msgid "You have accepted this quote."
+msgstr "Ви затвердили цей кошторис."
+
+#: includes/payments/sliced-shared-payments.php:206
+#: includes/payments/sliced-shared-payments.php:244
+#, php-format
+msgid "Accept %s"
+msgstr "Затвердити %s"
+
+#: includes/payments/sliced-shared-payments.php:207
+#: includes/payments/sliced-shared-payments.php:282
+#, php-format
+msgid "Decline %s"
+msgstr "Відмовити %s"
+
+#: includes/payments/sliced-shared-payments.php:236
+#, php-format
+msgid "%s Amount"
+msgstr "%s Сума"
+
+#: includes/payments/sliced-shared-payments.php:280
+msgid "Reason for declining"
+msgstr "Причина відмови"
+
+#: includes/payments/sliced-shared-payments.php:355
+msgid "Bummer"
+msgstr "Упс"
+
+#: includes/template-tags/sliced-tags-display-modules.php:23
+msgid "From:"
+msgstr "Від:"
+
+#: includes/template-tags/sliced-tags-display-modules.php:41
+msgid "To:"
+msgstr "До:"
+
+#: includes/template-tags/sliced-tags-display-modules.php:65
+#, php-format
+msgctxt "invoice number"
+msgid "%s Number"
+msgstr "%s Номер"
+
+#: includes/template-tags/sliced-tags-display-modules.php:79
+#, php-format
+msgctxt "invoice date"
+msgid "%s Date"
+msgstr "%s Дата"
+
+#: includes/template-tags/sliced-tags-display-modules.php:92
+#: includes/template-tags/sliced-tags-display-modules.php:241
+msgid "Total Due"
+msgstr ""
+
+#: includes/template-tags/sliced-tags-display-modules.php:111
+#, php-format
+msgctxt "quote number"
+msgid "%s Number"
+msgstr "%s номер"
+
+#: includes/template-tags/sliced-tags-display-modules.php:120
+#, php-format
+msgctxt "quote date"
+msgid "%s Date"
+msgstr "%s дата"
+
+#: includes/template-tags/sliced-tags-display-modules.php:155
+msgid "Hrs/Qty"
+msgstr "Год/К-ть"
+
+#: includes/template-tags/sliced-tags-display-modules.php:156
+msgid "Service"
+msgstr "Послуга"
+
+#: includes/template-tags/sliced-tags-display-modules.php:157
+msgid "Rate/Price"
+msgstr "Рейт/Ціна"
+
+#: includes/template-tags/sliced-tags-display-modules.php:159
+msgid "Adjust"
+msgstr ""
+
+#: includes/template-tags/sliced-tags-display-modules.php:189
+msgid "%"
+msgstr "%"
+
+#: includes/template-tags/sliced-tags-general.php:192
+#, php-format
+msgid "%s Totals"
+msgstr ""
+
+#: includes/template-tags/sliced-tags-invoice.php:9
+msgid "Invoice"
+msgstr "Рахунок"
+
+#: includes/template-tags/sliced-tags-invoice.php:19
+msgid "Invoices"
+msgstr "Рахунки"
+
+#: includes/template-tags/sliced-tags-quote.php:9
+msgid "Quote"
+msgstr "Кошторис"
+
+#: includes/template-tags/sliced-tags-quote.php:19
+msgid "Quotes"
+msgstr "Кошториси"
+
+#: includes/vendor/metabox/includes/CMB2.php:122
+msgid "Metabox configuration is required to have an ID parameter"
+msgstr "Щоб мати ID, необхідна конфігурація метабоксу"
+
+#: includes/vendor/metabox/includes/CMB2.php:375
+msgid "Click to toggle"
+msgstr "Натисніть, щоб переключити"
+
+#: includes/vendor/metabox/includes/CMB2_Ajax.php:65
+msgid "Please Try Again"
+msgstr "Будь ласка, спробуйте ще"
+
+#: includes/vendor/metabox/includes/CMB2_Ajax.php:155
+msgid "Remove Embed"
+msgstr ""
+
+#: includes/vendor/metabox/includes/CMB2_Ajax.php:159
+#, php-format
+msgid "No oEmbed Results Found for %s. View more info at"
+msgstr ""
+
+#: includes/vendor/metabox/includes/CMB2_Field.php:1030
+msgid "Add Group"
+msgstr "Додати групу"
+
+#: includes/vendor/metabox/includes/CMB2_Field.php:1031
+msgid "Remove Group"
+msgstr "Видалити групу"
+
+#: includes/vendor/metabox/includes/CMB2_Field.php:1053
+#: includes/vendor/metabox/includes/CMB2_Field.php:1057
+msgid "None"
+msgstr ""
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:86
+#: includes/vendor/metabox/includes/CMB2_JS.php:119
+msgid "Clear"
+msgstr "Очистити"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:87
+msgid "Default"
+msgstr "За замовчуванням"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:88
+msgid "Select Color"
+msgstr "Обрати колір"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:89
+msgid "Current Color"
+msgstr "Поточний колір"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:109
+msgctxt "Valid formatDate string for jquery-ui datepicker"
+msgid "mm/dd/yy"
+msgstr ""
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:110
+msgid "Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday"
+msgstr "Неділя, Понеділок, Вівторок, Середа, Четвер, П'ятниця, Субота"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:111
+msgid "Su, Mo, Tu, We, Th, Fr, Sa"
+msgstr "Нд, Пн, Вт, Ср, Чт, Пт, Сб"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:112
+msgid "Sun, Mon, Tue, Wed, Thu, Fri, Sat"
+msgstr "Нед, Пнд, Ввт, Срд, Чтв, Птн, Сбт"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:113
+msgid ""
+"January, February, March, April, May, June, July, August, September, "
+"October, November, December"
+msgstr ""
+"Січень, Лютий, Березень, Квітень, Травень, Червень, Липень, Серпень, "
+"Вересень, Жовтень, Листопад, Грудень"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:114
+msgid "Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec"
+msgstr "Січ, Лют, Бер, Кві, Тра, Чер, Лип, Сер, Вер, Жов, Лис, Гру"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:115
+msgid "Next"
+msgstr "Далі"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:116
+msgid "Prev"
+msgstr "Назад"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:117
+msgid "Today"
+msgstr "Сьогодні"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:118
+#: includes/vendor/metabox/includes/CMB2_JS.php:128
+msgid "Done"
+msgstr "Зроблено"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:122
+msgid "Choose Time"
+msgstr "Оберіть час"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:123
+msgid "Time"
+msgstr "Час"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:124
+msgid "Hour"
+msgstr "Годин"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:125
+msgid "Minute"
+msgstr "Хвилин"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:126
+msgid "Second"
+msgstr "Секунд"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:127
+msgid "Now"
+msgstr "Зараз"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:129
+msgctxt ""
+"Valid formatting string, as per http://trentrichardson.com/examples/"
+"timepicker/"
+msgid "hh:mm TT"
+msgstr ""
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:135
+msgid "Use this file"
+msgstr "Використати цей файл"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:136
+msgid "Use these files"
+msgstr "Використати ці файли"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:137
+#: includes/vendor/metabox/includes/CMB2_Types.php:1031
+msgid "Remove Image"
+msgstr "Видалити зображення"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:138
+#: includes/vendor/metabox/includes/CMB2_Types.php:357
+#: includes/vendor/metabox/includes/CMB2_Types.php:1050
+msgid "Remove"
+msgstr "Видалити"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:139
+#: includes/vendor/metabox/includes/CMB2_Types.php:1045
+msgid "File:"
+msgstr "Файл:"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:140
+#: includes/vendor/metabox/includes/CMB2_Types.php:1048
+msgid "Download"
+msgstr "Завантажити"
+
+#: includes/vendor/metabox/includes/CMB2_JS.php:141
+msgid "Select / Deselect All"
+msgstr "Обрати / Скасувати все"
+
+#: includes/vendor/metabox/includes/CMB2_Types.php:298
+msgid "Add Row"
+msgstr "Додати рядок"
+
+#: includes/vendor/metabox/includes/CMB2_Types.php:778
+#: includes/vendor/metabox/includes/CMB2_Types.php:826
+msgid "No terms"
+msgstr "Немає елементів"
+
+#: includes/vendor/metabox/includes/CMB2_Types.php:894
+msgid "Add or Upload Files"
+msgstr "Додати або завантажити файли"
+
+#: includes/vendor/metabox/includes/CMB2_Types.php:955
+msgid "Add or Upload File"
+msgstr "Додати або завантажити файл"
+
+#: includes/vendor/metabox/includes/CMB2_hookup.php:120
+msgid ""
+"Term Metadata is a WordPress > 4.4 feature. Please upgrade your WordPress "
+"install."
+msgstr "Необхідно встановити WordPress, версії 4.4, або вище."
+
+#: includes/vendor/metabox/includes/CMB2_hookup.php:124
+msgid "Term metaboxes configuration requires a 'taxonomies' parameter"
+msgstr "Конфігурація командних метабоксів вимагає параметрів таксономії"
+
+#: includes/vendor/metabox/includes/helper-functions.php:250
+msgid "Save"
+msgstr "Зберегти"
+
+#: public/class-sliced-public.php:389
+#, php-format
+msgctxt "comments title"
+msgid "One comment"
+msgid_plural "%1$s comments"
+msgstr[0] "%1$s коментар"
+msgstr[1] "%1$s коментаря"
+msgstr[2] "%1$s коментарів"
+
+#: public/class-sliced-public.php:409
+msgid "Comments are closed."
+msgstr "Коментування відключено."
+
+#: public/class-sliced-public.php:416
+msgid "Add a comment"
+msgstr "Додати коментар"
+
+#: public/templates/sliced-invoice-display.php:123
+#: public/templates/sliced-quote-display.php:107
+msgid "Page "
+msgstr "Сторінка "
+
+#. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
+msgid "http://slicedinvoices.com/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Create professional Quotes & Invoices that clients can pay for online."
+msgstr ""
+"Створюйте професійні кошториси, та виставляйте рахунки для оплати клієнтами "
+"— тут і зараз, онлайн!"
