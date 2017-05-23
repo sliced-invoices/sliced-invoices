@@ -4,7 +4,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce
 Requires at least: 4.0
 Tested up to: 4.7
-Stable tag: 3.3.5
+Stable tag: 3.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,9 +17,12 @@ Sliced Invoices is an invoicing system that is easy to use but at the same time 
 
 = Sliced Invoices - General Features =
 
-*   Auto increment of Invoice &amp; Quote numbers
-*   Set custom Invoice &amp; Quote prefixes
+*   Send Quotes and Invoices and get paid online
+*   Many customization options
+*   Lots of filters, actions and template tags
 *   Pre-defined line items
+*   Auto increment of Invoice &amp; Quote numbers
+*   Set custom Invoice &amp; Quote prefixes and/or suffixes
 *   Flexible tax settings (global, per Invoice/Quote or per line item)
 *   Customizable email templates including subject and content
 *   Custom email from name and email address
@@ -31,7 +34,6 @@ Sliced Invoices is an invoicing system that is easy to use but at the same time 
 *	Customize templates using CSS
 *	Add your logo and business details to Invoices & Quotes
 *   Bulk CSV import of Quotes &amp; Invoices
-*   Lots of filters, actions and template tags
 *   Support for WordPress Multisite (network activated)
 
 = Invoices - Key Features =
@@ -151,6 +153,16 @@ Yes, it does!  As of version 3.0.0 you can network activate Sliced Invoices in W
 
 
 == Changelog ==
+= 3.4.0 =
+* NEW: Add suffix option for quote and invoice numbers
+* NEW: Add "expired" status for quotes, and automatically change to "expired" once "Valid Until" date has passed.
+* NEW: Add filter 'sliced_get_email_recipient'
+* FIX: Issue with Sliced Invoices Extensions not showing updating notifications
+* FIX: Various issues with payment reminder emails
+* UPDATE: Various performance enhancements, including moving certain repetitive tasks from other hooks into the cron to reduce # of queries and memory use during normal plugin usage
+* UPDATE: Minor CSS updates
+* UPDATE: Update .pot file
+
 = 3.3.5 =
 * NEW: add action 'sliced_pre_curl_exec'
 * NEW: add filter 'sliced_print_message'
