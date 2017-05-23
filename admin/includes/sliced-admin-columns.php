@@ -126,11 +126,11 @@ class Sliced_Columns {
 
 				if ( $type == 'quote' ) {
 
-					echo sliced_get_quote_number() != '' ? '<a class="sliced-number" href="' . esc_url( admin_url( 'post.php?post=' . $id ) ) . '&action=edit' . '">' . sliced_get_quote_prefix() . sliced_get_quote_number() . '</a>' : '';
+					echo sliced_get_quote_number() != '' ? '<a class="sliced-number" href="' . esc_url( admin_url( 'post.php?post=' . $id ) ) . '&action=edit' . '">' . sliced_get_quote_prefix() . sliced_get_quote_number() . sliced_get_quote_suffix() . '</a>' : '';
 
 				} else {
 
-					echo sliced_get_invoice_number() != '' ? '<a class="sliced-number" href="' . esc_url( admin_url( 'post.php?post=' . $id ) ) . '&action=edit' . '">' . sliced_get_invoice_prefix() . sliced_get_invoice_number() . '</a>' : '';
+					echo sliced_get_invoice_number() != '' ? '<a class="sliced-number" href="' . esc_url( admin_url( 'post.php?post=' . $id ) ) . '&action=edit' . '">' . sliced_get_invoice_prefix() . sliced_get_invoice_number() . sliced_get_invoice_suffix() . '</a>' : '';
 					do_action( 'sliced_admin_col_after_invoice_number' );
 
 				}

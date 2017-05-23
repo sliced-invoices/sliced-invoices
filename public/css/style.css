@@ -291,6 +291,12 @@ a img {outline:none; border:none;}
 #TB_ajaxContent .sliced_accept_quote_form_wrap ul {
   padding: 20px 0 0;
 }
+p.sliced-quote-accepted,
+p.sliced-quote-declined,
+p.sliced-quote-cancelled,
+p.sliced-quote-expired {
+    font-size: 14px;
+}
 
 
 /* COMMENTS */

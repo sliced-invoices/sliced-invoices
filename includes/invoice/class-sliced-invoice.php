@@ -25,6 +25,7 @@ class Sliced_Invoice {
 		'items'           => '_sliced_items',
 		'prefix'          => '_sliced_invoice_prefix',
 		'number'          => '_sliced_invoice_number',
+		'suffix'          => '_sliced_invoice_suffix',
 		'order_number'    => '_sliced_order_number',
 		'created'         => '_sliced_invoice_created',
 		'due'             => '_sliced_invoice_due',
@@ -197,6 +198,22 @@ class Sliced_Invoice {
 		return $prefix;
 	}
 
+	public static function get_suffix( $id = 0 ) {
+		if ( ! $id ) {
+			$id = Sliced_Shared::get_item_id();
+		}
+		$suffix = null;
+		if ( isset( $id ) ) {
+			$suffix = self::get_sliced_meta( $id, self::$meta_key['suffix'], true );
+		}
+
+		if ( ! $suffix ) {
+			$invoices = get_option( 'sliced_invoices' );
+			$suffix   = isset( $invoices['suffix'] ) ? $invoices['suffix'] : '';
+		}
+		return $suffix;
+	}
+
 
 	/**
 	 * Get the invoice template.
@@ -249,6 +266,7 @@ class Sliced_Invoice {
 
 		$invoice_prefix = get_post_meta( $id, '_sliced_invoice_prefix', true );
 		$invoice_number = get_post_meta( $id, '_sliced_invoice_number', true );
+		$invoice_suffix = get_post_meta( $id, '_sliced_invoice_suffix', true );
 	
 		$args = array(
 			'post_type'      => 'sliced_invoice',
@@ -263,6 +281,11 @@ class Sliced_Invoice {
 				array(
 					'key'     => '_sliced_invoice_number',
 					'value'   => $invoice_number,
+					'compare' => '=',
+				),
+				array(
+					'key'     => '_sliced_invoice_suffix',
+					'value'   => $invoice_suffix,
 					'compare' => '=',
 				),
 			),

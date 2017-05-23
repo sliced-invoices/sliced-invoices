@@ -310,7 +310,7 @@ class Sliced_Paypal {
 			$total_billing_cycles = ( get_post_meta( $id, '_sliced_subscription_cycles_type', true ) === 'fixed' ? get_post_meta( $id, '_sliced_subscription_cycles_count', true ) : '0' );
 		
 			$payment_data .= '&PROFILESTARTDATE=' . date( "Y-m-d" ) . 'T00:00:00Z' .
-				'&DESC=' . urlencode( sliced_get_invoice_label( $id ) . ' ' . sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id ) ) .
+				'&DESC=' . urlencode( sliced_get_invoice_label( $id ) . ' ' . sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id ) . sliced_get_invoice_suffix( $id ) ) .
 				'&BILLINGPERIOD=' . $billing_period .
 				'&BILLINGFREQUENCY=' . $billing_frequency .
 				'&TOTALBILLINGCYCLES=' . $total_billing_cycles .
@@ -636,7 +636,7 @@ class Sliced_Paypal {
 		if ( $subscription_status === 'pending' ) {
 			
 			$payment_data .= '&L_BILLINGTYPE0=RecurringPayments' .
-				'&L_BILLINGAGREEMENTDESCRIPTION0='.urlencode( sliced_get_invoice_label( $id ) . ' ' . sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id ) );
+				'&L_BILLINGAGREEMENTDESCRIPTION0='.urlencode( sliced_get_invoice_label( $id ) . ' ' . sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id ) . sliced_get_invoice_suffix( $id ) );
 			
 			$payment_data_transient = '&AMT=' . urlencode( sliced_get_invoice_total_raw( $id ) );
 			set_transient( 'sliced_paypal_'.$id, $payment_data_transient , 60*60*24 );
@@ -647,7 +647,7 @@ class Sliced_Paypal {
 			$payment_data_transient = '&PAYMENTREQUEST_0_CURRENCYCODE=' . urlencode( $currency && $currency !== 'default' ? $currency : $gateway['currency'] ) .
 				'&PAYMENTREQUEST_0_PAYMENTACTION=' . urlencode("SALE") .
 				'&L_PAYMENTREQUEST_0_NAME0=' . urlencode( sliced_get_invoice_label() ) .
-				'&L_PAYMENTREQUEST_0_NUMBER0=' . urlencode( sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id ) ) .
+				'&L_PAYMENTREQUEST_0_NUMBER0=' . urlencode( sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id ) . sliced_get_invoice_suffix( $id ) ) .
 				'&L_PAYMENTREQUEST_0_AMT0=' . urlencode( sliced_get_invoice_total_raw( $id ) ) .
 				'&L_PAYMENTREQUEST_0_QTY0='. urlencode( 1 ) .
 				'&NOSHIPPING=1'. //set 1 to hide buyer's shipping address, in-case products that does not require shipping

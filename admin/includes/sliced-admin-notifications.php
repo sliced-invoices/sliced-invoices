@@ -84,7 +84,7 @@ class Sliced_Notifications {
 		add_action( 'sliced_quote_available_email_sent', array( $this, 'quote_sent' ), 10, 1);
 		add_action( 'sliced_invoice_available_email_sent', array( $this, 'invoice_sent' ), 10, 1);
 
-		add_action( 'admin_init', array( $this, 'check_for_reminder_dates' ) );
+		//add_action( 'admin_init', array( $this, 'check_for_reminder_dates' ) );
 	}
 
 	/**
@@ -173,9 +173,9 @@ class Sliced_Notifications {
 	public function payment_reminder( $id ) {
 		$this->id = $id;
 		$this->type = 'invoice';
-		$this->payment_reminder_sent( $this->id );
 		$type = 'payment_reminder';
 		$this->send_mail( $type );
+		$this->payment_reminder_sent( $this->id );
 	}
 
 	/**
@@ -292,7 +292,7 @@ class Sliced_Notifications {
 				$content .= sprintf(
 					__( 'An %1s has automatically been created (%2s).', 'sliced-invoices' ),
 					sliced_get_invoice_label(),
-					sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id )
+					sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id ) . sliced_get_invoice_suffix( $id )
 				);
 				 $content .= '<br>';
 
@@ -338,7 +338,7 @@ class Sliced_Notifications {
 					sliced_get_client_business( $this->id ),
 					( $total ? $total : sliced_get_total( $this->id ) ), //hack
 					sliced_get_invoice_label(),
-					sliced_get_invoice_prefix( $this->id ) . sliced_get_invoice_number( $this->id )
+					sliced_get_invoice_prefix( $this->id ) . sliced_get_invoice_number( $this->id ) . sliced_get_invoice_suffix( $this->id )
 				 );
 				 $content .= '<br>';
 
@@ -396,7 +396,7 @@ class Sliced_Notifications {
 			$output = $_POST['client_email'];
 		}
 
-		return $output;
+		return apply_filters( 'sliced_get_email_recipient', $output, $this->id, $type );
 	}
 
 
@@ -600,22 +600,22 @@ class Sliced_Notifications {
 			return;
 
 		$args = array(
-				'post_type'     =>  'sliced_invoice',
-				'status'     	=>  'publish',
-				'fields'     	=>  'ids',
-				'meta_query'    =>  array(
-					 array(
-						  'key' 		=>  '_sliced_invoice_due',
-						  'compare' 	=>  'EXISTS',
-					 )
-				),
-				'tax_query' => array(
+			'post_type'      => 'sliced_invoice',
+			'post_status'    => 'publish',
+			'posts_per_page' => -1,
+			'fields'     	 => 'ids',
+			'meta_query'     => array(
 				array(
-					'taxonomy' => 'invoice_status',
-					'field'    => 'slug',
-					'terms'    => array( 'unpaid', 'overdue' ),
+					'key'       =>  '_sliced_invoice_due',
+					'compare'   =>  'EXISTS',
+				)
+			),
+			'tax_query'      => array(
+				array(
+					'taxonomy'  => 'invoice_status',
+					'field'     => 'slug',
+					'terms'     => array( 'unpaid', 'overdue' ),
 				),
-
 			),
 		);
 		$invoices = get_posts( $args );
@@ -626,6 +626,9 @@ class Sliced_Notifications {
 		foreach ( $invoices as $id ) {
 			// get the due date of the invoice
 			$due_date = get_post_meta( $id, '_sliced_invoice_due', true );
+			if ( ! $due_date ) {
+				continue;
+			}
 			// loop through the reminder dates
 			foreach ($reminders as $key => $send_days) {
 				// add each date that the reminder needs to be sent into a new array with id as the key
@@ -796,7 +799,7 @@ class Sliced_Notifications {
 			'%created%'           => date_i18n( get_option( 'date_format' ), (int) sliced_get_created( $this->id ) ),
 			'%total%'             => sliced_get_total( $this->id ),
 			'%order_number%'      => sliced_get_invoice_order_number( $this->id ),
-			'%number%'            => sliced_get_prefix( $this->id ) . sliced_get_number( $this->id ),
+			'%number%'            => sliced_get_prefix( $this->id ) . sliced_get_number( $this->id ) . sliced_get_suffix( $this->id ),
 			'%valid_until%'       => date_i18n( get_option( 'date_format' ), (int) sliced_get_quote_valid( $this->id ) ),
 			'%is_was%'            => $this->is_was(),
 			'%date%'              => date_i18n( get_option( 'date_format' ), (int) current_time( 'timestamp' ) ),

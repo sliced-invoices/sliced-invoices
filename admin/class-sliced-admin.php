@@ -38,6 +38,11 @@ class Sliced_Admin {
 			remove_action( 'media_buttons_context', 'add_slgf_custom_button' );
 			remove_action( 'admin_footer', 'add_slgf_inline_popup_content' );
 		}
+		
+		// Sliced Recurring Tasks
+		if ( ! wp_next_scheduled ( 'sliced_invoices_hourly_tasks' ) ) {
+			wp_schedule_event( time(), 'hourly', 'sliced_invoices_hourly_tasks' );
+		}
 
 	}
 
@@ -424,6 +429,7 @@ class Sliced_Admin {
 				'Accepted',
 				'Declined',
 				'Cancelled',
+				'Expired',
 			)
 		);
 
@@ -779,11 +785,13 @@ class Sliced_Admin {
 			update_post_meta( $id, '_sliced_invoice_created', current_time( 'timestamp' ) );
 			update_post_meta( $id, '_sliced_invoice_number', sliced_get_next_invoice_number() );
 			update_post_meta( $id, '_sliced_invoice_prefix', sliced_get_invoice_prefix() );
+			update_post_meta( $id, '_sliced_invoice_suffix', sliced_get_invoice_suffix() );
 			update_post_meta( $id, '_sliced_payment_methods', array_keys($payment) );
 
 			delete_post_meta( $id, '_sliced_quote_created' );
 			delete_post_meta( $id, '_sliced_quote_number' );
 			delete_post_meta( $id, '_sliced_quote_prefix' );
+			delete_post_meta( $id, '_sliced_quote_suffix' );
 			delete_post_meta( $id, '_sliced_quote_terms' );
 
 			// update the invoice number
@@ -851,11 +859,13 @@ class Sliced_Admin {
 			update_post_meta( $new_post_id, '_sliced_invoice_created', current_time( 'timestamp' ) );
 			update_post_meta( $new_post_id, '_sliced_invoice_number', sliced_get_next_invoice_number() );
 			update_post_meta( $new_post_id, '_sliced_invoice_prefix', sliced_get_invoice_prefix() );
+			update_post_meta( $new_post_id, '_sliced_invoice_suffix', sliced_get_invoice_suffix() );
 			update_post_meta( $new_post_id, '_sliced_payment_methods', array_keys($payment) );
 
 			delete_post_meta( $new_post_id, '_sliced_quote_created' );
 			delete_post_meta( $new_post_id, '_sliced_quote_number' );
 			delete_post_meta( $new_post_id, '_sliced_quote_prefix' );
+			delete_post_meta( $new_post_id, '_sliced_quote_suffix' );
 			delete_post_meta( $new_post_id, '_sliced_quote_terms' );
 
 			// update the invoice number and set as draft
@@ -989,6 +999,54 @@ class Sliced_Admin {
 		 */
 		foreach ( $overdues as $overdue ) {
 			Sliced_Invoice::set_as_overdue( $overdue->ID );
+		}
+
+	}
+	
+	
+	/**
+	 * Mark a quote as expired if it has sent as it's status.
+	 *
+	 * @since 	3.4.0
+	 */
+	public function mark_quote_expired() {
+
+		/**
+		 * for extended discussion of the timezone maths, see mark_invoice_overdue() above.
+		 */
+		
+		$taxonomy = 'quote_status';
+		$args = array(
+			'post_type'     =>  'sliced_quote',
+			'status'     	=>  'publish',
+			'meta_query'    =>  array(
+				array(
+					'key' 		=>  '_sliced_quote_valid_until',
+					'value' 	=>  0,	// this filters out invoices with no due date set
+					'compare' 	=>  '>',
+				),
+				array(
+					'key' 		=>  '_sliced_quote_valid_until',
+					'value' 	=>  current_time( 'timestamp' ) - 86399, // see explanation above
+					'compare' 	=>  '<',
+				),
+			),
+			'tax_query' => array(
+				array(
+					'taxonomy' => $taxonomy,
+					'field'    => 'slug',
+					'terms'    => 'sent',
+				),
+			),
+			'posts_per_page' => -1,
+		);
+		$expireds = get_posts( apply_filters( 'sliced_mark_expired_query', $args ) );
+
+		/*
+		 * If a post exists, mark it as expired.
+		 */
+		foreach ( $expireds as $expired ) {
+			Sliced_Quote::set_as_expired( $expired->ID );
 		}
 
 	}
@@ -1818,7 +1876,7 @@ class Sliced_Admin {
 			 * Put each posts data into the appropriate cell
 			 */
 			$row = array();
-			$row[0] = sliced_get_prefix() . sliced_get_number();
+			$row[0] = sliced_get_prefix() . sliced_get_number() . sliced_get_suffix();
 			$row[1] = wp_kses_decode_entities( get_the_title() );
 			$row[2] = sliced_get_client_business();
 			$row[3] = rtrim( implode( ',', $status_array ), ',' );
@@ -1851,5 +1909,21 @@ class Sliced_Admin {
 		die();
 
 	}
+	
+	
+	/**
+	 * Handle hourly tasks as needed
+	 *
+	 * @since     3.4.0
+	 */
+	public function sliced_invoices_hourly_tasks() {
+	
+		$this->mark_quote_expired();
+		$this->mark_invoice_overdue();
+		
+		$SN = new Sliced_Notifications();
+		$SN->check_for_reminder_dates();
+		
+	}
 
-} // end class
+}

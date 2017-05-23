@@ -92,6 +92,25 @@ if ( ! function_exists( 'sliced_get_prefix' ) ) :
 
 endif;
 
+
+if ( ! function_exists( 'sliced_get_suffix' ) ) :
+
+	function sliced_get_suffix( $id = 0 ) {
+		if ( ! $id ) {
+			$id = Sliced_Shared::get_item_id();
+		}
+		$type = Sliced_Shared::get_type( $id );
+		if ( $type == 'invoice' ) {
+			$output = sliced_get_invoice_suffix( $id );
+		} else if ( $type == 'quote' ) {
+			$output = sliced_get_quote_suffix( $id );
+		}
+		return apply_filters( 'sliced_get_suffix', $output, $id );
+	}
+
+endif;
+
+
 if ( ! function_exists( 'sliced_get_type' ) ) :
 
 	function sliced_get_the_type( $id = 0 ) {

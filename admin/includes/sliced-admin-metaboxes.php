@@ -303,7 +303,12 @@ class Sliced_Metaboxes {
 			'type'    => 'text',
 			'default' => 'sliced_get_next_quote_number',
 			'before'  => array( $this, 'quote_prefix' ),
-			'after'   => array( $this, 'is_duplicate_quote_number' ),
+			'after'   => array( $this, 'after_quote_number' ),
+		) );
+		$info->add_field( array(
+			'id'      => $prefix . 'quote_suffix',
+			'type'    => 'hidden',
+			'default' => array( $this, 'get_quote_suffix' ),
 		) );
 		$info->add_field( array(
 			'name'        => __( 'Created Date', 'sliced-invoices' ),
@@ -437,7 +442,12 @@ class Sliced_Metaboxes {
 			'type'    => 'text',
 			'default' => 'sliced_get_next_invoice_number',
 			'before'  => array( $this, 'invoice_prefix' ),
-			'after'   => array( $this, 'is_duplicate_invoice_number' ),
+			'after'   => array( $this, 'after_invoice_number' ),
+		) );
+		$info->add_field( array(
+			'id'      => $prefix . 'invoice_suffix',
+			'type'    => 'hidden',
+			'default' => array( $this, 'get_invoice_suffix' ),
 		) );
 		$info->add_field( array(
 			'name' => __( 'Order Number', 'sliced-invoices' ),
@@ -676,16 +686,32 @@ class Sliced_Metaboxes {
 		return sliced_get_quote_prefix();
 	}
 
+	public function get_quote_suffix() {
+		return sliced_get_quote_suffix();
+	}
+
 	public function get_invoice_prefix() {
 		return sliced_get_invoice_prefix();
+	}
+
+	public function get_invoice_suffix() {
+		return sliced_get_invoice_suffix();
 	}
 
 	public function quote_prefix() {
 		return '<span class="prefix">' . sliced_get_quote_prefix() . '</span>';
 	}
 
+	public function quote_suffix() {
+		return '<span class="suffix">' . sliced_get_quote_suffix() . '</span>';
+	}
+
 	public function invoice_prefix() {
 		return '<span class="prefix">' . sliced_get_invoice_prefix() . '</span>';
+	}
+
+	public function invoice_suffix() {
+		return '<span class="suffix">' . sliced_get_invoice_suffix() . '</span>';
 	}
 	
 	public function is_duplicate_quote_number() {
@@ -698,6 +724,16 @@ class Sliced_Metaboxes {
 		if ( isset( $_GET['post'] ) && Sliced_Invoice::is_duplicate_invoice_number( (int) $_GET['post'] ) ) {
 			return '<span class="warning">' . __( 'Warning: duplicate invoice number', 'sliced-invoices' ) . '</span>';
 		}
+	}
+	
+	public function after_quote_number() {
+		$output = $this->quote_suffix() . $this->is_duplicate_quote_number();
+		return $output;
+	}
+	
+	public function after_invoice_number() {
+		$output = $this->invoice_suffix() . $this->is_duplicate_invoice_number();
+		return $output;
 	}
 
 }

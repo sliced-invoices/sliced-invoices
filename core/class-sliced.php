@@ -90,7 +90,8 @@ class Sliced_Invoices {
 		 */
 		require_once SLICED_PATH . 'core/class-sliced-loader.php';
 		require_once SLICED_PATH . 'core/class-sliced-i18n.php';
-		require_once SLICED_PATH . 'core/class-slice-base-plugin-updater.php';
+		require_once SLICED_PATH . 'core/class-slice-base-plugin-updater.php'; // currently only used by DAPP, will be removed soon
+		require_once SLICED_PATH . 'core/class-sliced-plugin-updater.php';     // <-- this one is the future
 
 		/**
 		 * The classes responsible for defining all actions that occur in the admin area.
@@ -209,7 +210,10 @@ class Sliced_Invoices {
 		$this->loader->add_filter( 'admin_action_convert_quote_to_invoice', $plugin_admin, 'convert_quote_to_invoice' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'set_published_date_as_created' );
 
-		$this->loader->add_filter( 'load-edit.php', $plugin_admin, 'mark_invoice_overdue' );
+		//$this->loader->add_filter( 'load-edit.php', $plugin_admin, 'mark_quote_expired' );
+		//$this->loader->add_filter( 'load-edit.php', $plugin_admin, 'mark_invoice_overdue' );
+		
+		$this->loader->add_action( 'sliced_invoices_hourly_tasks', $plugin_admin, 'sliced_invoices_hourly_tasks' );
 
 	}
 

@@ -52,6 +52,16 @@ if ( ! function_exists( 'sliced_get_quote_prefix' ) ) :
 endif;
 
 
+if ( ! function_exists( 'sliced_get_quote_suffix' ) ) :
+
+	function sliced_get_quote_suffix( $id = 0 ) {
+		$output = Sliced_Quote::get_suffix( $id );
+		return apply_filters( 'sliced_get_quote_suffix', $output, $id );
+	}
+
+endif;
+
+
 if ( ! function_exists( 'sliced_get_next_quote_number' ) ) :
 
 	function sliced_get_next_quote_number() {

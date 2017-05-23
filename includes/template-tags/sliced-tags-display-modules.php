@@ -63,7 +63,7 @@ if ( ! function_exists( 'sliced_display_invoice_details' ) ) :
 				<?php if( sliced_get_invoice_number() ) : ?>
 					<tr>
 						<td><?php printf( esc_html_x( '%s Number', 'invoice number', 'sliced-invoices' ), sliced_get_invoice_label() ); ?></td>
-						<td><?php echo esc_html( sliced_get_invoice_prefix() ); ?><?php echo esc_html( sliced_get_invoice_number() ); ?></td>
+						<td><?php echo esc_html( sliced_get_invoice_prefix() ); ?><?php echo esc_html( sliced_get_invoice_number() ); ?><?php echo esc_html( sliced_get_invoice_suffix() ); ?></td>
 					</tr>
 				<?php endif; ?>
 
@@ -109,7 +109,7 @@ if ( ! function_exists( 'sliced_display_quote_details' ) ) :
 				<?php if( sliced_get_quote_number() ) : ?>
 					<tr>
 						<td><?php printf( esc_html_x( '%s Number', 'quote number', 'sliced-invoices' ), sliced_get_quote_label() ); ?></td>
-						<td><?php esc_html_e( sliced_get_quote_prefix() ); ?><?php esc_html_e( sliced_get_quote_number() ); ?></td>
+						<td><?php esc_html_e( sliced_get_quote_prefix() ); ?><?php esc_html_e( sliced_get_quote_number() ); ?><?php esc_html_e( sliced_get_quote_suffix() ); ?></td>
 					</tr>
 				<?php endif; ?>
 

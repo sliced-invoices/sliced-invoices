@@ -124,7 +124,7 @@ class Sliced_Payments {
 			<div class="sliced_payment_form_wrap">
 
 				<ul>
-					<li><span><?php _e( 'Invoice Number', 'sliced-invoices' ); ?></span> <?php esc_html_e( sliced_get_invoice_prefix() ); ?><?php esc_html_e( sliced_get_invoice_number() ); ?></li>
+					<li><span><?php _e( 'Invoice Number', 'sliced-invoices' ); ?></span> <?php esc_html_e( sliced_get_invoice_prefix() ); ?><?php esc_html_e( sliced_get_invoice_number() ); ?><?php esc_html_e( sliced_get_invoice_suffix() ); ?></li>
 					<li><span><?php _e( 'Amount Payable', 'sliced-invoices' ); ?></span> <?php _e( sliced_get_invoice_total() ); ?></li>
 					<li><span><?php _e( 'Payment Method', 'sliced-invoices' ); ?></span> <span id="sliced_gateway_readable"></span></li>
 				</ul>
@@ -191,15 +191,19 @@ class Sliced_Payments {
 		
 			if ( has_term( 'declined', 'quote_status' ) ) {
 
-				$output = '<p class="sliced-quote-declined">' . __( 'You have declined this quote.', 'sliced-invoices' ) . '</p>';
+				$output = '<p class="sliced-quote-declined">' . sprintf( __( 'You have declined this %s.', 'sliced-invoices' ), sliced_get_quote_label() ) . '</p>';
 				
 			} elseif ( has_term( 'cancelled', 'quote_status' ) ) {
 			
-				$output = '<p class="sliced-quote-cancelled">' . __( 'This quote has been cancelled.', 'sliced-invoices' ) . '</p>';
+				$output = '<p class="sliced-quote-cancelled">' . sprintf( __( 'This %s has been cancelled.', 'sliced-invoices' ), sliced_get_quote_label() ) . '</p>';
 				
 			} elseif ( has_term( 'accepted', 'quote_status' ) ) {
 				
-				$output = '<p class="sliced-quote-accepted">' . __( 'You have accepted this quote.', 'sliced-invoices' ) . '</p>';
+				$output = '<p class="sliced-quote-accepted">' . sprintf( __( 'You have accepted this %s.', 'sliced-invoices' ), sliced_get_quote_label() ) . '</p>';
+				
+			} elseif ( has_term( 'expired', 'quote_status' ) ) {
+				
+				$output = '<p class="sliced-quote-expired">' . sprintf( __( 'This %s has expired.', 'sliced-invoices' ), sliced_get_quote_label() ) . '</p>';
 				
 			} else {
 			
@@ -232,7 +236,7 @@ class Sliced_Payments {
 			<div class="sliced_accept_quote_form_wrap">
 
 				<ul>
-					<li><span><?php printf( esc_html__( '%s Number', 'sliced-invoices' ), sliced_get_quote_label() ); ?></span> <div class="quote-number"><?php esc_html_e( sliced_get_quote_prefix() ); ?><?php esc_html_e( sliced_get_quote_number() ); ?></div></li>
+					<li><span><?php printf( esc_html__( '%s Number', 'sliced-invoices' ), sliced_get_quote_label() ); ?></span> <div class="quote-number"><?php esc_html_e( sliced_get_quote_prefix() ); ?><?php esc_html_e( sliced_get_quote_number() ); ?><?php esc_html_e( sliced_get_quote_suffix() ); ?></div></li>
 					<li><span><?php printf( esc_html__( '%s Amount', 'sliced-invoices' ), sliced_get_quote_label() ); ?></span> <div class="quote-amount"><?php echo sliced_get_quote_total(); ?></div></li>
 				</ul>
 
@@ -410,11 +414,13 @@ class Sliced_Payments {
 			update_post_meta( $id, '_sliced_invoice_created', current_time( 'timestamp' ) );
 			update_post_meta( $id, '_sliced_invoice_number', sliced_get_next_invoice_number() );
 			update_post_meta( $id, '_sliced_invoice_prefix', sliced_get_invoice_prefix() );
+			update_post_meta( $id, '_sliced_invoice_suffix', sliced_get_invoice_suffix() );
 			update_post_meta( $id, '_sliced_payment_methods', array_keys($payment) );
 
 			delete_post_meta( $id, '_sliced_quote_created' );
 			delete_post_meta( $id, '_sliced_quote_number' );
 			delete_post_meta( $id, '_sliced_quote_prefix' );
+			delete_post_meta( $id, '_sliced_quote_suffix' );
 			delete_post_meta( $id, '_sliced_quote_terms' );
 
 			// update the invoice number
@@ -488,11 +494,13 @@ class Sliced_Payments {
 			update_post_meta( $new_post_id, '_sliced_invoice_created', current_time( 'timestamp' ) );
 			update_post_meta( $new_post_id, '_sliced_invoice_number', sliced_get_next_invoice_number() );
 			update_post_meta( $new_post_id, '_sliced_invoice_prefix', sliced_get_invoice_prefix() );
+			update_post_meta( $new_post_id, '_sliced_invoice_suffix', sliced_get_invoice_suffix() );
 			update_post_meta( $new_post_id, '_sliced_payment_methods', array_keys($payment) );
 
 			delete_post_meta( $new_post_id, '_sliced_quote_created' );
 			delete_post_meta( $new_post_id, '_sliced_quote_number' );
 			delete_post_meta( $new_post_id, '_sliced_quote_prefix' );
+			delete_post_meta( $new_post_id, '_sliced_quote_suffix' );
 			delete_post_meta( $new_post_id, '_sliced_quote_terms' );
 
 			// update the invoice number and set as draft

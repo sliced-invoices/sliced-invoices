@@ -298,17 +298,23 @@ class Sliced_Options {
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'quotes' ), ),
 			'show_names' => true,
 			'fields'     => array(
-
 				array(
 					'name'      => __( 'Prefix', 'sliced-invoices' ),
-					'desc'      => sprintf( __( 'Prefix of each %s. Can be left blank if you don\'t need a prefix.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>' ),
+					'desc'      => sprintf( __( 'Prefix before each %s number. Can be left blank if you don\'t need a prefix.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>' ),
 					'default'   => '',
 					'id'        => 'prefix',
 					'type'      => 'text',
 				),
 				array(
+					'name'      => __( 'Suffix', 'sliced-invoices' ),
+					'desc'      => sprintf( __( 'Suffix after each %s number. Can be left blank if you don\'t need a suffix.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>' ),
+					'default'   => '',
+					'id'        => 'suffix',
+					'type'      => 'text',
+				),
+				array(
 					'name'      => __( 'Auto Increment', 'sliced-invoices' ),
-					'desc'      => __( 'Yes, increment quote numbers by one. Recommended.', 'sliced-invoices' ),
+					'desc'      => sprintf( __( 'Yes, increment %s numbers by one. Recommended.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>' ),
 					'id'        => 'increment',
 					'type'      => 'checkbox',
 				),
@@ -434,12 +440,18 @@ class Sliced_Options {
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'invoices' ), ),
 			'show_names' => true,
 			'fields'     => array(
-
 				array(
 					'name'      => __( 'Prefix', 'sliced-invoices' ),
-					'desc'      => 'Prefix of each <span class="i18n-multilingual-display">'.sprintf( __( '%s', 'sliced-invoices' ), $invoice_label ).'</span>. Can be left blank if you don\'t need a prefix.',
+					'desc'      => sprintf( __( 'Prefix before each %s number. Can be left blank if you don\'t need a prefix.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$invoice_label.'</span>' ),
 					'default'   => '',
 					'id'        => 'prefix',
+					'type'      => 'text',
+				),
+				array(
+					'name'      => __( 'Suffix', 'sliced-invoices' ),
+					'desc'      => sprintf( __( 'Suffix after each %s number. Can be left blank if you don\'t need a suffix.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$invoice_label.'</span>' ),
+					'default'   => '',
+					'id'        => 'suffix',
 					'type'      => 'text',
 				),
 				array(
@@ -577,6 +589,17 @@ class Sliced_Options {
 					)
 				),
 				array(
+					'name'      => __( 'Confirmation Page', 'sliced-invoices' ),
+					'desc'      => __( 'Choose a page to use for PayPal and other <a target="_blank" href="https://slicedinvoices.com/extensions/">available payment gateway</a> messages and other confirmations.<br>A blank page named Confirmation would be perfect.', 'sliced-invoices' ),
+					'default'   => $payments['payment_page'],
+					'type'      => 'select',
+					'id'        => 'payment_page',
+					'options'   => $this->get_the_pages(),
+					'attributes' => array(
+						'required' => 'required',
+					)
+				),
+				array(
 					'name'      => __( 'Tax Percentage', 'sliced-invoices' ),
 					'desc'      => __( 'Global tax percentage. Set to 0 or leave blank for no tax.', 'sliced-invoices' ),
 					'default'   => '10',
@@ -597,17 +620,6 @@ class Sliced_Options {
 					'type'      => 'text',
 					'attributes' => array(
 						'maxlength' => 100,
-					)
-				),
-				array(
-					'name'      => __( 'Confirmation Page', 'sliced-invoices' ),
-					'desc'      => __( 'Choose a page to use for PayPal and other <a target="_blank" href="https://slicedinvoices.com/extensions/">available payment gateway</a> messages and other confirmations.<br>A blank page named Confirmation would be perfect.', 'sliced-invoices' ),
-					'default'   => $payments['payment_page'],
-					'type'      => 'select',
-					'id'        => 'payment_page',
-					'options'   => $this->get_the_pages(),
-					'attributes' => array(
-						'required' => 'required',
 					)
 				),
 				array(
