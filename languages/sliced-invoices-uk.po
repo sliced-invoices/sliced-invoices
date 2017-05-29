@@ -4,7 +4,7 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "Project-Id-Version: Sliced Invoices\n"
 "POT-Creation-Date: 2017-05-04 01:04+0300\n"
-"PO-Revision-Date: 2017-05-29 11:38+0300\n"
+"PO-Revision-Date: 2017-05-29 13:06+0300\n"
 "Language-Team: Sliced Invoices <info@slicedinvoices.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -461,12 +461,17 @@ msgid "<strong>Title</strong> &mdash; Add a title for this line item."
 msgstr "<strong>Назва</strong> &mdash; Назва шаблону."
 
 #: admin/includes/sliced-admin-help.php:80
+#, fuzzy
 msgid ""
 "<strong>Adjust</strong> &mdash; This can be used as an extra Tax field by "
 "adding a positive number, or as a discount field by adding a negative "
 "number. The line item amount will be adjusted by the number (in percentage "
 "%) that is input into this field."
 msgstr ""
+"<strong>Модифікатор</strong> &mdash; Може використовуватись в якості "
+"додаткового податку (додатне число), або в якості знижки (від'ємне число). "
+"The line item amount will be adjusted by the number (in percentage %) that "
+"is input into this field."
 
 #: admin/includes/sliced-admin-help.php:81
 msgid ""
@@ -527,11 +532,11 @@ msgstr ""
 
 #: admin/includes/sliced-admin-help.php:118
 msgid "Click on the help tabs to your left to find out what can be done here."
-msgstr ""
+msgstr "Натисніть довідкову вкладку ліворуч, щоб дізнатись більше."
 
 #: admin/includes/sliced-admin-help.php:122
 msgid "Screen Content"
-msgstr ""
+msgstr "Вміст сторінки"
 
 #: admin/includes/sliced-admin-help.php:124
 msgid ""
@@ -706,7 +711,7 @@ msgstr "Назва запису"
 
 #: admin/includes/sliced-admin-metaboxes.php:115
 msgid "Adjust (%)"
-msgstr ""
+msgstr "Модифікатор (%)"
 
 #: admin/includes/sliced-admin-metaboxes.php:129
 #, php-format
@@ -798,7 +803,7 @@ msgstr "Номер замовлення"
 #: admin/includes/sliced-admin-quick-edit.php:158
 #: includes/template-tags/sliced-tags-display-modules.php:86
 msgid "Due Date"
-msgstr "До"
+msgstr "Дійсне протягом"
 
 #: admin/includes/sliced-admin-metaboxes.php:490
 #: admin/includes/sliced-admin-options.php:614
@@ -813,7 +818,7 @@ msgstr "Інформація про клієнта"
 #: admin/includes/sliced-admin-metaboxes.php:536
 #: admin/includes/sliced-admin-metaboxes.php:588
 msgid "Sliced Invoices Client"
-msgstr ""
+msgstr "Клієнт"
 
 #: admin/includes/sliced-admin-metaboxes.php:537
 msgid "Add a Business/Client Name below to activate this user as a Client."
@@ -949,7 +954,7 @@ msgstr "Переглянути кошторис онлайн"
 #: admin/includes/sliced-admin-options.php:45
 #: admin/includes/sliced-admin-options.php:46
 msgid "Sliced Invoices"
-msgstr ""
+msgstr "Слайсд Інвойсез"
 
 #: admin/includes/sliced-admin-options.php:178
 msgid "General"
@@ -961,7 +966,7 @@ msgstr "Загальні налаштування"
 
 #: admin/includes/sliced-admin-options.php:180
 msgid "Just some general options."
-msgstr "Налаштування загального характеру."
+msgstr "Налаштування загального характеру"
 
 #: admin/includes/sliced-admin-options.php:186
 msgid "Year Start"
@@ -1109,7 +1114,7 @@ msgstr ""
 
 #: admin/includes/sliced-admin-options.php:237
 msgid "The footer will be displayed at the bottom of each "
-msgstr "Підпис буде показано знизу "
+msgstr "Підпис буде показано знизу сторінки. Можете користуватись HTML-тегами "
 
 #: admin/includes/sliced-admin-options.php:250
 msgid "Business Settings"
@@ -1118,7 +1123,7 @@ msgstr "Бізнес налаштування"
 #: admin/includes/sliced-admin-options.php:251
 #, php-format
 msgid "All of the Business Details below will be displayed on the %1s & %2s."
-msgstr "Вся бизнес-информация будет отображена %1s и %2s."
+msgstr "%1s та %2s: ділова інформація"
 
 #: admin/includes/sliced-admin-options.php:257
 msgid "Logo"
@@ -1204,21 +1209,20 @@ msgstr ""
 
 #: admin/includes/sliced-admin-options.php:323
 #: admin/includes/sliced-admin-options.php:470
-#, fuzzy
 msgid "Hide Adjust Field"
-msgstr "Сховати поле з надбавкою"
+msgstr "Сховати поле з модифікатором"
 
 #: admin/includes/sliced-admin-options.php:324
 #: admin/includes/sliced-admin-options.php:471
 msgid "Yes, hide the Adjust field on line items, I won't need this field"
 msgstr ""
-"Так, приховайте поле для введення шаблонів, я не маю намір використовувати "
-"шаблони"
+"Так, приховайте поле модифікатору, я не маю намір використовувати "
+"модифікатор ціни"
 
 #: admin/includes/sliced-admin-options.php:329
 #, php-format
 msgid "%s Valid For"
-msgstr "%s Дійсне протягом"
+msgstr "%s дійсний протягом"
 
 #: admin/includes/sliced-admin-options.php:330
 #, php-format
@@ -1226,8 +1230,8 @@ msgid ""
 "Number of days each %1s is valid for. This will automatically set the date "
 "in the 'Valid Until' field.<br>Can be overriden on individual %2s."
 msgstr ""
-"Кількість днів, протягом яких кожен %1s буде вважатись дійсним. Впливає на "
-"значення поля «Дійсне до». Може бути перевизначене %2s."
+"Кількість днів, протягом яких %1s буде вважатись дійсним. Впливає на "
+"значення поля «Дійсне до». Може бути перевизначене для кожного %2s."
 
 #: admin/includes/sliced-admin-options.php:341
 msgid ""
@@ -1285,14 +1289,14 @@ msgstr "Не робити нічого"
 
 #: admin/includes/sliced-admin-options.php:373
 msgid "Accept Quote Text"
-msgstr "Прийняти текст кошторису"
+msgstr "Підказка"
 
 #: admin/includes/sliced-admin-options.php:374
 msgid ""
 "Text to add on the 'Accept Quote' popup.<br />Should provide some indication "
 "to your client of what happens after accepting the quote."
 msgstr ""
-"Текст, який треба додати до діалогового вікна «Прийняти кошторис».<br>Має "
+"Текст, який можна додати до діалогового вікна «Прийняти кошторис».<br>Має "
 "містити інформацію про те, що відбудеться після підтвердження кошторису."
 
 #: admin/includes/sliced-admin-options.php:380
@@ -1304,7 +1308,7 @@ msgid ""
 "Message to display if client accepts the quote.<br />Leave blank for the "
 "default message."
 msgstr ""
-"Повідомлення, яке буде відображене клієнту, якщо він підтвердить кошторис."
+"Повідомлення, яке буде виведено клієнту, коли він підтвердить кошторис."
 "<br>Залиште пустим, якщо хочете використати значення за замовченням."
 
 #: admin/includes/sliced-admin-options.php:390
@@ -1316,7 +1320,7 @@ msgid ""
 "Message to display if client declines the quote.<br />Leave blank for the "
 "default message."
 msgstr ""
-"Текст, який буде показано клієнту, якщо він відмовиться від кошторису."
+"Текст, який буде виведено клієнту, коли він відмовиться від кошторису."
 "<br>Залиште пустим, щоб скористатись текстом за замовченням."
 
 #: admin/includes/sliced-admin-options.php:400
@@ -1336,7 +1340,9 @@ msgstr "Власний CSS"
 
 #: admin/includes/sliced-admin-options.php:419
 msgid "Add custom CSS to your quotes"
-msgstr "Додати власні CSS-стилі до сторінки кошторису"
+msgstr ""
+"Введіть в це поле власні CSS-стилі до сторінки кошторису, якщо в тому є "
+"потреба"
 
 #: admin/includes/sliced-admin-options.php:433
 msgid ""
@@ -1363,9 +1369,9 @@ msgid ""
 "automatically set the date in the 'Due Date' field.<br>Can be overriden on "
 "individual %2s."
 msgstr ""
-"Кількість днів, протягом яких кожен з %1s буде вважатись дійсним, починаючи "
-"з дати створення. Автоматично змінює дату в полі «Дійсне до».<br>Може бути "
-"перевизначене індивідуально %2s."
+"Кількість днів, протягом яких %1s буде вважатись дійсним, починаючи з дати "
+"створення. Автоматично змінює дату в полі «Дійсне до».<br>Може бути "
+"перевизначене індивідуально."
 
 #: admin/includes/sliced-admin-options.php:477
 msgid ""
@@ -1377,7 +1383,8 @@ msgstr ""
 
 #: admin/includes/sliced-admin-options.php:502
 msgid "Add custom CSS to your invoices."
-msgstr "Додати власні CSS-стилі до сторінки рахунку."
+msgstr ""
+"Введіть в це поле власні CSS-стилі до сторінки рахунку, якщо в тому є потреба"
 
 #: admin/includes/sliced-admin-options.php:515
 msgid "Payments"
@@ -1389,7 +1396,7 @@ msgstr "Налаштування платежів"
 
 #: admin/includes/sliced-admin-options.php:517
 msgid "Here you will find all of the Payment related settings."
-msgstr "Тут ви зможете знайти всі платіжні налаштування."
+msgstr "Платіжні налаштування"
 
 #: admin/includes/sliced-admin-options.php:533
 msgid "Currency Position"
@@ -1401,11 +1408,11 @@ msgstr "Відокремлювач тисяч"
 
 #: admin/includes/sliced-admin-options.php:556
 msgid "Decimal Separator"
-msgstr "Відокремлювач"
+msgstr "Відокремлювач десяткового дробу"
 
 #: admin/includes/sliced-admin-options.php:567
 msgid "Number of Decimals"
-msgstr "Кількість десяткових чисел"
+msgstr "Точність (кількість дробових чисел)"
 
 #: admin/includes/sliced-admin-options.php:580
 msgid "Tax Percentage"
@@ -1442,13 +1449,13 @@ msgstr ""
 
 #: admin/includes/sliced-admin-options.php:621
 msgid "Bank"
-msgstr "Банк"
+msgstr "Банківський рахунок"
 
 #: admin/includes/sliced-admin-options.php:621
 #: admin/includes/sliced-admin-options.php:628
 #, php-format
 msgid "Displayed on the %s"
-msgstr "Виводиться на %s"
+msgstr "Виводиться на сторінці %s"
 
 #: admin/includes/sliced-admin-options.php:622
 msgid ""
@@ -1644,10 +1651,9 @@ msgid ""
 "href=\"https://slicedinvoices.com/extensions/pdf-email\">PDF & Email "
 "extension</a> will add extra options to customize the PDFs."
 msgstr ""
-"Тут ви можете знайти усі налаштування, пов'язані з PDF. Радимо скористатись "
-"розширенням <a target=\"_blank\" href=\"https://slicedinvoices.com/"
-"extensions/pdf-email\">PDF & Email</a>, яке додає багато корисних "
-"можливостей."
+"Налаштування експорту до PDF. Радимо скористатись розширенням <a target="
+"\"_blank\" href=\"https://slicedinvoices.com/extensions/pdf-email\">PDF & "
+"Email</a>, яке додає багато корисних можливостей."
 
 #: admin/includes/sliced-admin-options.php:853
 msgid "Translate"
@@ -1664,10 +1670,9 @@ msgid ""
 "\">Easy Translate extension</a> will allow you to translate every piece of "
 "text shown on invoices and quotes."
 msgstr ""
-"Тут ви можете знайти налаштування перекладу. Радимо встановити розширення <a "
-"target=\"_blank\" href=\"https://slicedinvoices.com/extensions/easy-"
-"translate/\">Easy Translate</a>, щоб отримати набагато більше можливостей з "
-"перекладу."
+"Налаштування перекладу. Радимо встановити розширення <a target=\"_blank\" "
+"href=\"https://slicedinvoices.com/extensions/easy-translate/\">Easy "
+"Translate</a>, щоб отримати набагато більше можливостей з перекладу."
 
 #: admin/includes/sliced-admin-options.php:860
 msgid "Quote Label"
@@ -1731,7 +1736,7 @@ msgstr "Ліцензії"
 
 #: admin/includes/sliced-admin-options.php:1010
 msgid "Licenses allow for one-click updates of extensions."
-msgstr "Оновлення в один клік."
+msgstr "Оновлення в один клік"
 
 #: admin/includes/sliced-admin-options.php:1015
 msgid "Instructions"
@@ -2071,7 +2076,7 @@ msgstr "Від:"
 
 #: includes/template-tags/sliced-tags-display-modules.php:41
 msgid "To:"
-msgstr "До:"
+msgstr "Кому:"
 
 #: includes/template-tags/sliced-tags-display-modules.php:65
 #, php-format
@@ -2088,7 +2093,7 @@ msgstr "%s Дата"
 #: includes/template-tags/sliced-tags-display-modules.php:92
 #: includes/template-tags/sliced-tags-display-modules.php:241
 msgid "Total Due"
-msgstr ""
+msgstr "Дійсне до"
 
 #: includes/template-tags/sliced-tags-display-modules.php:111
 #, php-format
@@ -2116,7 +2121,7 @@ msgstr "Рейт/Ціна"
 
 #: includes/template-tags/sliced-tags-display-modules.php:159
 msgid "Adjust"
-msgstr ""
+msgstr "Модифікатор"
 
 #: includes/template-tags/sliced-tags-display-modules.php:189
 msgid "%"
