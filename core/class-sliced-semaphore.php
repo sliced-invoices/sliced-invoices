@@ -61,15 +61,13 @@ final class Sliced_Semaphore {
 				   SET option_value = '1'
 				 WHERE option_name = 'sliced_semaphore'
 			");
-
-			Social::log('Semaphore reset to 1.');
 		}
 
 		// Set the lock time
 		$wpdb->query($wpdb->prepare("
 			UPDATE $wpdb->options
 			   SET option_value = %s
-			 WHERE option_name = 'social_last_lock_time'
+			 WHERE option_name = 'sliced_last_lock_time'
 		", current_time('mysql', 1)));
 		return true;
 	}
@@ -160,7 +158,7 @@ final class Sliced_Semaphore {
 		$affected = $wpdb->query($wpdb->prepare("
 			UPDATE $wpdb->options
 			   SET option_value = %s
-			 WHERE option_name = 'social_last_lock_time'
+			 WHERE option_name = 'sliced_last_lock_time'
 			   AND option_value <= %s
 		", $current_time, $unlock_time));
 
