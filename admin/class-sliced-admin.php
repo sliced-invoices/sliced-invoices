@@ -1918,11 +1918,19 @@ class Sliced_Admin {
 	 */
 	public function sliced_invoices_hourly_tasks() {
 	
-		$this->mark_quote_expired();
-		$this->mark_invoice_overdue();
+		ini_set( 'max_execution_time', 300 );
+	
+		$semaphore = Sliced_Semaphore::factory();
+		if ( $semaphore->lock() ) {
 		
-		$SN = new Sliced_Notifications();
-		$SN->check_for_reminder_dates();
+			$this->mark_quote_expired();
+			$this->mark_invoice_overdue();
+		
+			$SN = new Sliced_Notifications();
+			$SN->check_for_reminder_dates();
+			
+			$semaphore->unlock();
+		}
 		
 	}
 
