@@ -66,21 +66,28 @@ class Sliced_Public {
 	 * @since   2.0.0
 	 */
 	public function enqueue_styles() {
+		
+		$html = get_transient( 'sliced_public_enqueue_styles_cache' );
+		if ( $html === false ) {
+			ob_start();
+			wp_register_style( 'fontawesome', plugins_url( $this->plugin_name ) . '/public/css/font-awesome.min.css', null, $this->version );
+			wp_register_style( 'bootstrap', plugins_url( $this->plugin_name ) . '/public/css/bootstrap.min.css', null, $this->version );
+			wp_register_style( 'style', plugins_url( $this->plugin_name ) . '/public/css/style.css', null, $this->version );
 
-		wp_register_style( 'fontawesome', plugins_url( $this->plugin_name ) . '/public/css/font-awesome.min.css', null, $this->version );
-		wp_register_style( 'bootstrap', plugins_url( $this->plugin_name ) . '/public/css/bootstrap.min.css', null, $this->version );
-		wp_register_style( 'style', plugins_url( $this->plugin_name ) . '/public/css/style.css', null, $this->version );
+			// only load dashicons on payment
+			$payments = get_option( 'sliced_payments' );
+			if ( is_page( (int)$payments['payment_page'] ) ) {
+				wp_print_styles( 'dashicons' );
+			}
 
-		// only load dashicons on payment
-		$payments = get_option( 'sliced_payments' );
-        if ( is_page( (int)$payments['payment_page'] ) ) {
-			wp_print_styles( 'dashicons' );
+			wp_print_styles( 'open-sans' );
+			wp_print_styles( 'fontawesome' );
+			wp_print_styles( 'bootstrap' );
+			wp_print_styles( 'style' );
+			$html = ob_get_clean();
+			set_transient( 'sliced_public_enqueue_styles_cache', $html, DOING_CRON ? 300 : 3 );
 		}
-
-		wp_print_styles( 'open-sans' );
-		wp_print_styles( 'fontawesome' );
-		wp_print_styles( 'bootstrap' );
-		wp_print_styles( 'style' );
+		echo $html;
 
 	}
 
@@ -91,23 +98,30 @@ class Sliced_Public {
 	 */
 	public function enqueue_invoice_styles() {
 
-		// deregister and register again to remove dependency of dashicons as it messes up PDF output
-		wp_deregister_style( 'thickbox' );
-		wp_register_style( 'thickbox', includes_url( 'js/thickbox/thickbox.css' ), null, $this->version );
+		$html = get_transient( 'sliced_public_enqueue_invoice_styles_cache' );
+		if ( $html === false ) {
+			ob_start();
+			// deregister and register again to remove dependency of dashicons as it messes up PDF output
+			wp_deregister_style( 'thickbox' );
+			wp_register_style( 'thickbox', includes_url( 'js/thickbox/thickbox.css' ), null, $this->version );
 
-		wp_register_style(
-			'template',
-			apply_filters( 'sliced_invoice_template_css', plugins_url( $this->plugin_name ) . '/public/css/' . esc_html( sliced_get_invoice_template() ) . '.css' ),
-			null,
-			$this->version
-		);
+			wp_register_style(
+				'template',
+				apply_filters( 'sliced_invoice_template_css', plugins_url( $this->plugin_name ) . '/public/css/' . esc_html( sliced_get_invoice_template() ) . '.css' ),
+				null,
+				$this->version
+			);
 
-		// add the users custom css - needs to be before printing
-		$custom_css = sliced_get_invoice_css();
-        wp_add_inline_style( 'template', apply_filters( 'sliced_invoice_template_custom_css', esc_html( $custom_css ) ) );
+			// add the users custom css - needs to be before printing
+			$custom_css = sliced_get_invoice_css();
+			wp_add_inline_style( 'template', apply_filters( 'sliced_invoice_template_custom_css', esc_html( $custom_css ) ) );
 
-		wp_print_styles( 'thickbox' );
-		wp_print_styles( 'template' );
+			wp_print_styles( 'thickbox' );
+			wp_print_styles( 'template' );
+			$html = ob_get_clean();
+			set_transient( 'sliced_public_enqueue_invoice_styles_cache', $html, DOING_CRON ? 300 : 3 );
+		}
+		echo $html;
 
 	}
 
@@ -118,7 +132,14 @@ class Sliced_Public {
 	 */
 	public function enqueue_invoice_scripts() {
 
-		wp_print_scripts( 'thickbox' );
+		$html = get_transient( 'sliced_public_enqueue_invoice_scripts_cache' );
+		if ( $html === false ) {
+			ob_start();
+			wp_print_scripts( 'thickbox' );
+			$html = ob_get_clean();
+			set_transient( 'sliced_public_enqueue_invoice_scripts_cache', $html, DOING_CRON ? 300 : 3 );
+		}
+		echo $html;
 
 	}
 
@@ -131,23 +152,30 @@ class Sliced_Public {
 	 */
 	public function enqueue_quote_styles() {
 
-		// deregister and register again to remove dependency of dashicons as it messes up PDF output
-		wp_deregister_style( 'thickbox' );
-		wp_register_style( 'thickbox', includes_url( 'js/thickbox/thickbox.css' ), null, $this->version );
+		$html = get_transient( 'sliced_public_enqueue_quote_styles_cache' );
+		if ( $html === false ) {
+			ob_start();
+			// deregister and register again to remove dependency of dashicons as it messes up PDF output
+			wp_deregister_style( 'thickbox' );
+			wp_register_style( 'thickbox', includes_url( 'js/thickbox/thickbox.css' ), null, $this->version );
 
-		wp_register_style(
-			'template',
-			apply_filters( 'sliced_quote_template_css', plugins_url( $this->plugin_name ) . '/public/css/' . esc_html( sliced_get_quote_template() ) . '.css' ),
-			null,
-			$this->version
-		);
+			wp_register_style(
+				'template',
+				apply_filters( 'sliced_quote_template_css', plugins_url( $this->plugin_name ) . '/public/css/' . esc_html( sliced_get_quote_template() ) . '.css' ),
+				null,
+				$this->version
+			);
 
-		// add the users custom css - needs to be before printing
-		$custom_css = sliced_get_quote_css();
-        wp_add_inline_style( 'template', apply_filters( 'sliced_quote_template_custom_css', esc_html( $custom_css ) ) );
+			// add the users custom css - needs to be before printing
+			$custom_css = sliced_get_quote_css();
+			wp_add_inline_style( 'template', apply_filters( 'sliced_quote_template_custom_css', esc_html( $custom_css ) ) );
 
-        wp_print_styles( 'thickbox' );
-		wp_print_styles( 'template' );
+			wp_print_styles( 'thickbox' );
+			wp_print_styles( 'template' );
+			$html = ob_get_clean();
+			set_transient( 'sliced_public_enqueue_quote_styles_cache', $html, DOING_CRON ? 300 : 3 );
+		}
+		echo $html;
 
 	}
 
@@ -158,7 +186,14 @@ class Sliced_Public {
 	 * @since   2.0.0
 	 */
 	public function enqueue_quote_scripts() {
-		wp_print_scripts( 'thickbox' );
+		$html = get_transient( 'sliced_public_enqueue_quote_scripts_cache' );
+		if ( $html === false ) {
+			ob_start();
+			wp_print_scripts( 'thickbox' );
+			$html = ob_get_clean();
+			set_transient( 'sliced_public_enqueue_quote_scripts_cache', $html, DOING_CRON ? 300 : 3 );
+		}
+		echo $html;
 	}
 
 
