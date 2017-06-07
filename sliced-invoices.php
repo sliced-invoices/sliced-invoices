@@ -17,7 +17,7 @@ if ( ! defined('ABSPATH') ) {
 }
 
 define( 'SLICED_VERSION', '3.4.0' );
-define( 'SLICED_DB_VERSION', '3' );
+define( 'SLICED_DB_VERSION', '4' );
 define( 'SLICED_PATH', plugin_dir_path( __FILE__ ) );
 
 
@@ -74,16 +74,37 @@ add_action( 'plugins_loaded', 'run_sliced_invoices' ); // wait until 'plugins_lo
 ============================================================================== */
 
 /**
+ * 2017-06-06: update from DB 3 to DB 4, for Sliced Invoices versions < 3.4.0
  * 2016-08-30: update from DB 2 to DB 3, for Sliced Invoices versions < 2.873
  */
 function sliced_invoices_db_update() {
-	global $post;
+	
+	global $post, $wpdb;
+	
 	$sliced_db_check = get_option('sliced_general');
+	
 	if ( isset( $sliced_db_check['db_version'] ) && $sliced_db_check['db_version'] >= SLICED_DB_VERSION ) {
-		// okay
-	} else {
-		// update needed
-		
+		// all good
+		return;
+	}
+	
+	// upgrade from v3 to 4
+	if ( ! isset( $sliced_db_check['db_version'] ) || $sliced_db_check['db_version'] < 4 ) {
+		// check semaphore options
+		$results = $wpdb->get_results("
+			SELECT option_id
+			  FROM $wpdb->options
+			 WHERE option_name IN ('sliced_locked', 'sliced_unlocked')
+		");
+		if (!count($results)) {
+			update_option('sliced_unlocked', '1');
+			update_option('sliced_last_lock_time', current_time('mysql', 1));
+			update_option('sliced_semaphore', '0');
+		}
+	}
+	
+	// upgrade from < v3
+	if ( ! isset( $sliced_db_check['db_version'] ) || $sliced_db_check['db_version'] < 3 ) {
 		// quotes:
 		$args = array(
 			'post_type' => 'sliced_quote',
@@ -125,11 +146,12 @@ function sliced_invoices_db_update() {
 			}
 		}
 		wp_reset_postdata();
-		
-		// Done
-		$sliced_db_check['db_version'] = '3';
-		update_option( 'sliced_general', $sliced_db_check );
 	}
+	
+	// Done
+	$sliced_db_check['db_version'] = SLICED_DB_VERSION;
+	update_option( 'sliced_general', $sliced_db_check );
+	
 }
 add_action( 'init', 'sliced_invoices_db_update' );
 

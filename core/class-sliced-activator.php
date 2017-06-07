@@ -14,7 +14,7 @@ class Sliced_Activator {
 
 	public static function activate() {
 
-		global $wp_version;
+		global $wpdb, $wp_version;
 
 		$plugin_name = 'sliced-invoices';
 		$require = array(
@@ -73,8 +73,9 @@ Your City AZ 12345',
 				'pre_defined'   => '
 1 | Web Design | 85 | Design work on the website
 1 | Web Development | 95 | Back end development of website',
-				'footer'        => 'Thanks for choosing <a href="' . get_bloginfo('url') . '">' . get_bloginfo('site_name') . '</a> | <a href="mailto:' . get_bloginfo('admin_email') . '">' . get_bloginfo('admin_email') . '</a>'
-				);
+				'footer'        => 'Thanks for choosing <a href="' . get_bloginfo('url') . '">' . get_bloginfo('site_name') . '</a> | <a href="mailto:' . get_bloginfo('admin_email') . '">' . get_bloginfo('admin_email') . '</a>',
+				'db_version'    => SLICED_DB_VERSION,
+			);
 
 			update_option('sliced_general', $general_array);
 
@@ -413,6 +414,18 @@ Just a friendly reminder that your invoice %number% for %total% %is_was% due on 
 		}
 
 		flush_rewrite_rules();
+		
+		// check semaphore options
+		$results = $wpdb->get_results("
+			SELECT option_id
+			  FROM $wpdb->options
+			 WHERE option_name IN ('sliced_locked', 'sliced_unlocked')
+		");
+		if (!count($results)) {
+			update_option('sliced_unlocked', '1');
+			update_option('sliced_last_lock_time', current_time('mysql', 1));
+			update_option('sliced_semaphore', '0');
+		}
 		
 		// Sliced Recurring Tasks
 		if ( ! wp_next_scheduled ( 'sliced_invoices_hourly_tasks' ) ) {
