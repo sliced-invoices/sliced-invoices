@@ -31,7 +31,18 @@
   height: 14px;
   line-height: 1.85;
 }
-.sliced #minor-publishing { display: none; }
+.sliced #minor-publishing-actions,
+.sliced #misc-publishing-actions .misc-pub-section:not(.sliced-publish-box-buttons) {
+	display: none;
+}
+.sliced #misc-publishing-actions .sliced-publish-box-label {
+	padding-right: 3px;
+	position: relative;
+	top: 4px;
+}
+.sliced #misc-publishing-actions .sliced-publish-box-label:before {
+	padding-right: 3px;
+}
 /*
   client popup form
 */

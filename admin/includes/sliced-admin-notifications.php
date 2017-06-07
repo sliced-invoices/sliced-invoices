@@ -63,7 +63,7 @@ class Sliced_Notifications {
 
 		add_filter( 'sliced_actions_column', array( $this, 'sliced_add_email_button' ) );
 
-		if( $pagenow == 'edit.php' ){
+		if( $pagenow == 'edit.php' || ( $pagenow == 'post.php' && ( sliced_get_the_type() === 'invoice' || sliced_get_the_type() === 'quote' ) ) ) {
 			add_action( 'admin_footer', array( $this, 'email_popup' ) );
 		}
 		add_action( 'wp_ajax_sliced_sure_to_email', array( $this, 'sure_to_email' ) );

@@ -33,11 +33,17 @@ class Sliced_Metaboxes {
 	 */
 	public function __construct() {
 
+		global $pagenow;
+		
 		add_action( 'cmb2_admin_init', array( $this, 'quote_side' ) );
 		add_action( 'cmb2_admin_init', array( $this, 'invoice_side' ) );
 		add_action( 'cmb2_admin_init', array( $this, 'main_section' ) );
 		add_action( 'cmb2_admin_init', array( $this, 'users_new' ) );
 		add_action( 'cmb2_admin_init', array( $this, 'users_existing' ) );
+		
+		if( $pagenow == 'edit.php' || ( $pagenow == 'post.php' && ( sliced_get_the_type() === 'invoice' || sliced_get_the_type() === 'quote' ) ) ) {
+			add_action( 'post_submitbox_misc_actions', array( $this, 'add_to_publish_box' ) );
+		}
 
 	}
 
@@ -626,6 +632,31 @@ class Sliced_Metaboxes {
 		) );
 
 	}
+	
+	
+	/**
+	 * Add buttons in WP Publish metabox.
+	 *
+	 * @since   3.4.1
+	 */
+	public function add_to_publish_box() {
+		
+		if ( get_post_status() === 'publish' ):
+		?>
+		<div class="misc-pub-section sliced-publish-box-buttons">
+			<span class="sliced-publish-box-label dashicons-before dashicons-sliced"> Sliced Invoices: </span>
+			<?php
+			$button = '<a target="_blank" title="' . __( 'View or download as a PDF (extension required)', 'sliced-invoices' ) . '" class="button ui-tip sliced-pdf-button" href="https://slicedinvoices.com/extensions/pdf-email?utm_campaign=Free&utm_medium=link&utm_source=plugin&utm_content=pdf-button"><span class="dashicons dashicons-media-default"></span></a>';
+			$button = apply_filters( 'sliced_actions_column', $button );
+			echo $button;
+			?>
+		</div>
+		<?php
+		endif;
+		
+	}
+	
+	
 
 	/**
 	 * Initate the Sliced_Logs object
