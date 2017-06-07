@@ -70,6 +70,7 @@ class Sliced_Notifications {
 		add_action( 'wp_ajax_sliced-send-email', array( $this, 'send_quote_or_invoice_manually' ) );
 
 		// send notifications
+		// may remove these... need to come up with something better.
 		add_action( 'sliced_send_payment_notification', array( $this, 'payment_received_client'), 9, 2 );
 		add_action( 'sliced_send_payment_notification', array( $this, 'payment_received'), 10, 2 );
 		add_action( 'sliced_send_payment_reminder_notification', array( $this, 'payment_reminder') );
@@ -650,11 +651,10 @@ class Sliced_Notifications {
 					if ( in_array( $today, $sent ) ) {
 						// do nothing if it has already been sent today
 					} else {
-						do_action( 'sliced_send_payment_reminder_notification', $id );
+						$this->payment_reminder( $id );
 					}
-
 				} else {
-					do_action( 'sliced_send_payment_reminder_notification', $id );
+					$this->payment_reminder( $id );
 				}
 
 			}
