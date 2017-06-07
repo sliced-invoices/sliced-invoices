@@ -171,7 +171,7 @@
 
 			// preview updater
 			var currentTime = new Date().valueOf();
-			$($previewDiv).append('<iframe id="sliced-preview-' + currentTime + '" src="' + ajaxurl + '?action=sliced_sure_to_email&id=' + id + '" style="display:none;"></iframe>');
+			$($previewDiv).append('<iframe id="sliced-preview-' + currentTime + '" src="' + ajaxurl + '?action=sliced_sure_to_email&id=' + id + '"></iframe>');
 			$('#sliced-preview-'+currentTime).on( 'load', function() {
 				$($previewDiv).children('.sliced-email-preview-loading').remove();
 				$(this).show();
