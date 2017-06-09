@@ -31,6 +31,9 @@
   height: 14px;
   line-height: 1.85;
 }
+.sliced #misc-publishing-actions {
+	padding: 0;
+}
 .sliced #minor-publishing-actions,
 .sliced #misc-publishing-actions .misc-pub-section:not(.sliced-publish-box-buttons) {
 	display: none;
