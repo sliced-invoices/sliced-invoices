@@ -3,8 +3,8 @@ Contributors: SlicedInvoices
 Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce
 Requires at least: 4.0
-Tested up to: 4.7
-Stable tag: 3.4.0
+Tested up to: 4.8
+Stable tag: 3.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -116,10 +116,6 @@ Yes, your clients can pay online using PayPal, meaning that they can pay with th
 
 Yes, there is a new extension available that gives clients a full dashboard to view thier invoices and quotes as well as update their business details - [Client Area Extension](https://slicedinvoices.com/extensions/client-area/?utm_source=WordPress&utm_medium=Readme-FAQ&utm_content=Client-Area&utm_campaign=Free).
 
-= I need XYZ feature, can Sliced Invoices do this? =
-
-Just ask! If you need a specific feature or you are unsure if Sliced Invoices can do it, simply email us at support(at)slicedinvoices.com and we will see if we can add the feature.
-
 = Can I create PDF invoices and PDF quotes? =
 
 Yes, there is a PDF extension available to do just that (as well as other things like sending emails direct to clients). The [PDF & Email Extension](https://slicedinvoices.com/extensions/pdf-email/?utm_source=WordPress&utm_medium=Readme-FAQ&utm_content=PDF-Email&utm_campaign=Free) will add a 'Print PDF' button to the admin area and also to the top of the invoice, allowing your client to easily print the invoice to PDF.
@@ -153,6 +149,13 @@ Yes, it does!  As of version 3.0.0 you can network activate Sliced Invoices in W
 
 
 == Changelog ==
+= 3.4.1 =
+* NEW: Add "View PDF" (if available) and "Email to client" shortcuts on admin quote and invoice pages (same as the buttons on the quote/invoice listings pages)
+* FIX: issue with payment reminders sending twice in multisite situations
+* FIX: issue with emailed PDFs not formatted correctly when sending multiple
+* FIX: minor display issue
+* UPDATE: Ukrainian and Russian translations
+
 = 3.4.0 =
 * NEW: Add suffix option for quote and invoice numbers
 * NEW: Add "expired" status for quotes, and automatically change to "expired" once "Valid Until" date has passed.
