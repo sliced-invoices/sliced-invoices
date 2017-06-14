@@ -581,6 +581,22 @@ class Sliced_Paypal {
 					}
 					
 					break;
+					
+				case 'recurring_payment':
+				
+					$args = array(
+						'post_type'     =>  'sliced_invoice',
+						'meta_key'      =>  '_sliced_subscription_gateway_subscr_id',
+						'meta_value'    =>  $_POST['recurring_payment_id'],
+					);
+					$query      = get_posts( $args );
+					$id         = $query[0]->ID;
+					
+					if ( class_exists( 'Sliced_Subscriptions' ) ) {
+						Sliced_Subscriptions::create_receipt_invoice( $id, $_POST );
+					}
+					
+					break;
 				
 			}
 			
