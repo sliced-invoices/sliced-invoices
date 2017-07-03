@@ -1912,6 +1912,36 @@ class Sliced_Admin {
 	
 	
 	/**
+	 * @since 3.5.0
+	 */
+	public function settings_check() {
+	
+		if ( ! method_exists( 'Sliced_Admin_Notices', 'add_notice' ) ) {
+			return;
+		}
+		
+		// 1) invalid_payment_page check
+		if ( isset( $_POST['object_id'] ) && $_POST['object_id'] === 'sliced_payments' && isset( $_POST['payment_page'] ) ) {
+			// true if we just hit save from the sliced_payments settings page
+			// CMB2 will not have saved the value in time for this message to fire, so we'll grab it from $_POST:
+			$payments = array( 'payment_page' => $_POST['payment_page'] );
+		} else {
+			$payments = get_option( 'sliced_payments' );
+		}
+		$frontpage_id = get_option( 'page_on_front' );
+		if (
+			$payments['payment_page'] > 0
+			&& (int)$frontpage_id !== (int)$payments['payment_page']
+		) {
+			Sliced_Admin_Notices::remove_notice( 'invalid_payment_page' );
+		} else {
+			Sliced_Admin_Notices::add_notice( 'invalid_payment_page', true );
+		}
+		
+	}
+	
+	
+	/**
 	 * Handle hourly tasks as needed
 	 *
 	 * @since     3.4.0

@@ -431,6 +431,9 @@ Just a friendly reminder that your invoice %number% for %total% %is_was% due on 
 		if ( ! wp_next_scheduled ( 'sliced_invoices_hourly_tasks' ) ) {
 			wp_schedule_event( time(), 'hourly', 'sliced_invoices_hourly_tasks' );
 		}
+		
+		// Done
+		do_action( 'sliced_activated' );
 
 	}
 

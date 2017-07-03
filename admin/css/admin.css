@@ -46,6 +46,29 @@
 .sliced #misc-publishing-actions .sliced-publish-box-label:before {
 	padding-right: 3px;
 }
+.sliced-message {
+	position: relative;
+	overflow: hidden;
+}
+.sliced-message a.sliced-message-close {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 10px 15px 10px 21px;
+	font-size: 13px;
+	line-height: 1.23076923;
+	text-decoration: none;
+}
+.sliced-message a.sliced-message-close:before {
+	position: absolute;
+	top: 8px;
+	left: 0;
+	-webkit-transition: all .1s ease-in-out;
+	transition: all .1s ease-in-out;
+}
+.sliced-message p {
+	margin-right: 80px;
+}
 /*
   client popup form
 */

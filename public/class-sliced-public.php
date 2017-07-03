@@ -257,9 +257,13 @@ class Sliced_Public {
 	public function payment_templates( $template ) {
 
 		$payments = get_option( 'sliced_payments' );
-
-		if ( is_page( (int)$payments['payment_page'] ) ) {
-
+		
+		if (
+			$payments['payment_page'] > 0
+			&& is_page( (int)$payments['payment_page'] )
+			&& ! is_front_page()
+		) {
+		
 			$template = $this->sliced_get_template_part( 'sliced-payment-display' );
 
 		}
