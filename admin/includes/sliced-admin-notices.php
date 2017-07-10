@@ -118,6 +118,11 @@ class Sliced_Admin_Notices {
 
 			$hide_notice = sanitize_text_field( $_GET['sliced-hide-notice'] );
 			self::remove_notice( $hide_notice );
+			
+			if ( isset( $_GET['sliced-hide-transient'] ) && (int)$_GET['sliced-hide-transient'] > 0 ) {
+				set_transient( 'sliced_hide_' . $hide_notice . '_notice', 1, intval( $_GET['sliced-hide-transient'] ) );
+			}
+			
 			do_action( 'sliced_hide_' . $hide_notice . '_notice' );
 		}
 	}
@@ -158,19 +163,14 @@ class Sliced_Admin_Notices {
 	 */
 	public static function output_custom_notices() {
 		$notices = self::get_notices();
-
 		if ( ! empty( $notices ) ) {
 			foreach ( $notices as $notice ) {
 				if ( empty( self::$core_notices[ $notice ] ) ) {
-					$notice_html = get_option( 'sliced_admin_notice_' . $notice );
-
-					if ( $notice_html ) {
-						?>
-						<div class="updated sliced-message">
-							<a class="sliced-message-close notice-dismiss" href="<?php echo esc_url( wp_nonce_url( add_query_arg( 'sliced-hide-notice', 'invalid_payment_page' ), 'sliced_hide_notices_nonce', '_sliced_notice_nonce' ) ); ?>"><?php _e( 'Dismiss', 'sliced-invoices' ); ?></a>
-							<?php echo wp_kses_post( wpautop( $notice_html ) ); ?>
-						</div>
-						<?php
+					if ( ! get_transient( 'sliced_hide_' . $notice . '_notice' ) ) {
+						$notice_html = get_option( 'sliced_admin_notice_' . $notice );
+						if ( $notice_html ) {
+							echo $notice_html;
+						}
 					}
 				}
 			}
