@@ -115,9 +115,18 @@ class Sliced_Admin_Notices {
 			if ( ! current_user_can( 'manage_options' ) ) {
 				wp_die( __( 'Cheatin&#8217; huh?', 'sliced-invoices' ) );
 			}
-
+			
 			$hide_notice = sanitize_text_field( $_GET['sliced-hide-notice'] );
-			self::remove_notice( $hide_notice );
+
+			if ( isset( $_GET['sliced-dismiss'] ) && (int)$_GET['sliced-dismiss'] === 1 ) {
+				
+				update_option( 'sliced_admin_notice_' . $hide_notice, '' );
+				
+			} else {
+			
+				self::remove_notice( $hide_notice );
+				
+			}
 			
 			if ( isset( $_GET['sliced-hide-transient'] ) && (int)$_GET['sliced-hide-transient'] > 0 ) {
 				set_transient( 'sliced_hide_' . $hide_notice . '_notice', 1, intval( $_GET['sliced-hide-transient'] ) );
