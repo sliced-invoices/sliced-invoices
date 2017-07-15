@@ -9,11 +9,22 @@ if ( ! defined('ABSPATH') ) { exit; }
  */
 function sliced_call_columns_class() {
 
+	global $pagenow;
+	
 	// just a double check
-	if( ! is_admin() )
+	if( ! is_admin() ) {
 		return;
+	}
+		
+	$doing_quick_edit = false;
+	if ( isset( $_POST[ '_inline_edit' ] ) && wp_verify_nonce( $_POST[ '_inline_edit' ], 'inlineeditnonce' ) ) {
+		$doing_quick_edit = true;
+	}
 
-	if ( sliced_get_the_type() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+	if (
+		( $pagenow === 'edit.php' && sliced_get_the_type() ) 
+		|| $doing_quick_edit
+	) {
 
 		new Sliced_Columns();
 
