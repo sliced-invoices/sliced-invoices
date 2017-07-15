@@ -13,7 +13,7 @@ function sliced_call_columns_class() {
 	if( ! is_admin() )
 		return;
 
-	if ( sliced_get_the_type() || DOING_AJAX ) {
+	if ( sliced_get_the_type() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 
 		new Sliced_Columns();
 
