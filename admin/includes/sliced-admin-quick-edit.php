@@ -282,11 +282,16 @@ class Sliced_Quick_Edit {
 			}
 
 			// force the status to publish - getting some errors on some server setups
+			/*
 			$wpdb->update( $wpdb->posts, array( 'post_status' => 'publish' ), array( 'ID' => $post_id ) );
 			clean_post_cache( $post_id );
 			$old_status = $post->post_status;
 			$post->post_status = 'publish';
 			wp_transition_post_status( 'publish', $old_status, $post );
+			*/
+			do_action( 'sliced_quick_edit_save_the_data', $post_id, $post );
+			
+			return $post_id;
 
 	}
 

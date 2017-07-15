@@ -13,13 +13,13 @@ function sliced_call_columns_class() {
 	if( ! is_admin() )
 		return;
 
-	if ( sliced_get_the_type() ) {
+	if ( sliced_get_the_type() || DOING_AJAX ) {
 
 		new Sliced_Columns();
 
 	}
 }
-add_action('load-edit.php', 'sliced_call_columns_class');
+add_action('admin_init', 'sliced_call_columns_class');
 
 
 /**
@@ -65,8 +65,16 @@ class Sliced_Columns {
 	 */
 	public function manage_edit_columns( $post_columns ) {
 
-		$post_type 	= $_GET['post_type'];
-
+		$post_type = false;
+		if ( isset( $_GET['post_type'] ) ) {
+			$post_type = $_GET['post_type'];
+		} elseif ( isset( $_POST['post_type'] ) ) {
+			$post_type = $_POST['post_type'];
+		}
+		if ( $post_type !== 'sliced_invoice' && $post_type !== 'sliced_quote' ) {
+			return $post_columns;
+		}
+		
 		$columns    = array();
 		$taxonomies = array();
 
@@ -105,7 +113,7 @@ class Sliced_Columns {
 				$columns[ $key ] = $value;
 			}
 		}
-
+		
 		/* Return the columns. */
 		return apply_filters( 'sliced_edit_admin_columns', $columns );
 
@@ -253,10 +261,12 @@ class Sliced_Columns {
 
 		$type = sliced_get_the_type();
 
-		$columns['sliced_number']  	= 'sliced_number';
-		$columns['sliced_created']  = 'sliced_created';
-		$columns['sliced_total']    = 'sliced_total';
-		$columns['taxonomy-' . $type . '_status'] = 'taxonomy-' . $type . '_status';
+		if ( $type ) {
+			$columns['sliced_number']  	= 'sliced_number';
+			$columns['sliced_created']  = 'sliced_created';
+			$columns['sliced_total']    = 'sliced_total';
+			$columns['taxonomy-' . $type . '_status'] = 'taxonomy-' . $type . '_status';
+		}
 
 		return $columns;
 
@@ -270,6 +280,11 @@ class Sliced_Columns {
 	 */
 	public function initial_orderby_filtering( $query ) {
 
+		// double check to avoid interfering with any ajax requests
+		if ( ! sliced_get_the_type() ) {
+			return;
+		}
+		
 		if ( ! isset( $_GET['order'] ) ) {
 			$query->set('order','DESC');
 		}
