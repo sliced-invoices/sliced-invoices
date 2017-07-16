@@ -403,8 +403,30 @@ class Sliced_Options {
 					)
 				),
 				array(
+					'name'      => __( 'Admin Notices', 'sliced-invoices' ),
+					'desc'      => sprintf ( 
+										__( 'These settings allow you to choose which notices may be displayed in your WordPress Admin area. (Note: this is different from admin emails, which you can configure on the <a href="%s">Email Settings</a> tab.', 'sliced-invoices' ),
+										admin_url( 'admin.php?page=sliced_emails' )
+									),
+					'id'        => 'quote_admin_notices_title',
+					'type'      => 'title',
+				),
+				array(
+					'name'      => __( 'Show me notices when', 'sliced-invoices' ),
+					'desc'      => '',
+					'id'        => 'quote_admin_notices',
+					'type'    => 'multicheck',
+					'options' => array(
+						'quote_viewed' => 'Quote Viewed',
+						'quote_accepted' => 'Quote Accepted',
+					),
+				),
+				array(
 					'name'      => __( 'Template Design', 'sliced-invoices' ),
-					'desc'      => 'For information on customizing your templates, please see our guide <a target="_blank" href="https://slicedinvoices.com/support/quote-invoice-templates/?utm_source=Plugin&utm_medium=Quote-Design&utm_content=Support&utm_campaign=Free" title="Opens in new window">here</a>.',
+					'desc'      => sprintf( 
+										__( 'For information on customizing your templates, please see our guide <a target="_blank" href="%s">here</a>.', 'sliced-invoices' ),
+										'https://slicedinvoices.com/support/quote-invoice-templates/?utm_source=Plugin&utm_medium=Quote-Design&utm_content=Support&utm_campaign=Free'
+									),
 					'id'        => 'quote_design_title',
 					'type'      => 'title',
 				),
@@ -492,8 +514,30 @@ class Sliced_Options {
 					'type'      => 'textarea_small'
 				),
 				array(
+					'name'      => __( 'Admin Notices', 'sliced-invoices' ),
+					'desc'      => sprintf ( 
+										__( 'These settings allow you to choose which notices may be displayed in your WordPress Admin area. (Note: this is different from admin emails, which you can configure on the <a href="%s">Email Settings</a> tab.', 'sliced-invoices' ),
+										admin_url( 'admin.php?page=sliced_emails' )
+									),
+					'id'        => 'invoice_admin_notices_title',
+					'type'      => 'title',
+				),
+				array(
+					'name'      => __( 'Show me notices when', 'sliced-invoices' ),
+					'desc'      => '',
+					'id'        => 'invoice_admin_notices',
+					'type'      => 'multicheck',
+					'options'   => array(
+						'invoice_viewed' => 'Invoice Viewed',
+						'invoice_paid' => 'Invoice Paid',
+					),
+				),
+				array(
 					'name'      => __( 'Template Design', 'sliced-invoices' ),
-					'desc'      => 'For information on customizing your templates, please see our guide <a target="_blank" href="https://slicedinvoices.com/support/quote-invoice-templates/?utm_source=Plugin&utm_medium=Invoice-Design&utm_content=Support&utm_campaign=Free" title="Opens in new window">here</a>.',
+					'desc'      => sprintf( 
+										__( 'For information on customizing your templates, please see our guide <a target="_blank" href="%s">here</a>.', 'sliced-invoices' ),
+										'https://slicedinvoices.com/support/quote-invoice-templates/?utm_source=Plugin&utm_medium=Invoice-Design&utm_content=Support&utm_campaign=Free'
+									),
 					'id'        => 'invoice_design_title',
 					'type'      => 'title',
 				),

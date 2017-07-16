@@ -47,6 +47,11 @@ class Sliced_Logs {
 		// notification sent
 		add_action( 'sliced_quote_available_email_sent', array( &$this, 'quote_sent' ), 99, 1);
 		add_action( 'sliced_invoice_available_email_sent', array( &$this, 'invoice_sent' ), 99, 1);
+		
+		// quote/invoice viewed
+		add_action( 'sliced_quote_before_body', array( &$this, 'views_logger' ), 20 ); // must be > 10 so it runs after Sliced_Secure, if present
+		add_action( 'sliced_invoice_before_body', array( &$this, 'views_logger' ), 20 );
+		
 	}
 
 
@@ -214,6 +219,26 @@ class Sliced_Logs {
 			'by'   => get_current_user_id(), // returns 0 if no user
 		);
 		$result = $this->update_log_meta( $id, $meta_value );
+		
+		// the rest is for showing an admin notice, if needed
+		$settings = array();
+		$quotes = get_option('sliced_quotes');
+		if ( isset( $quotes['quote_admin_notices'] ) && is_array( $quotes['quote_admin_notices'] ) ) {
+			$settings = $quotes['quote_admin_notices'];
+		}
+		if ( in_array( 'quote_accepted', $settings ) ) {
+			$notice_args = array(
+				'class' => 'notice-success',
+				'content' => '<p>' . sprintf(
+						/* translators: %1$s here is a placeholder for the word "Quote"; %2$s is a placeholder for the Quote number; for example: "Quote SI-123 was accepted" */
+						__( '%1$s %2$s was accepted', 'sliced-invoices' ),
+						sliced_get_quote_label(),
+						'<a class="sliced-number" href="' . esc_url( admin_url( 'post.php?post=' . $id ) ) . '&action=edit' . '">' . sliced_get_quote_prefix( $id ) . sliced_get_quote_number( $id ) . sliced_get_quote_suffix( $id ) . '</a>'
+					) . '</p>',
+				'dismissable' => true
+			);
+			Sliced_Admin_Notices::add_custom_notice( 'quote_accepted_'.$id, $notice_args );
+		}
 	}
 
 
@@ -235,6 +260,26 @@ class Sliced_Logs {
 			'by'      => get_current_user_id(), // returns 0 if no user
 		);
 		$result = $this->update_log_meta( $id, $meta_value );
+		
+		// the rest is for showing an admin notice, if needed
+		$settings = array();
+		$invoices = get_option('sliced_invoices');
+		if ( isset( $invoices['invoice_admin_notices'] ) && is_array( $invoices['invoice_admin_notices'] ) ) {
+			$settings = $invoices['invoice_admin_notices'];
+		}
+		if ( in_array( 'invoice_paid', $settings ) ) {
+			$notice_args = array(
+				'class' => 'notice-success',
+				'content' => '<p>' . sprintf(
+						/* translators: %1$s here is a placeholder for the word "Invoice"; %2$s is a placeholder for the Invoice number; for example: "Invoice SI-123 was paid" */
+						__( '%1$s %2$s was paid', 'sliced-invoices' ),
+						sliced_get_invoice_label(),
+						'<a class="sliced-number" href="' . esc_url( admin_url( 'post.php?post=' . $id ) ) . '&action=edit' . '">' . sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id ) . sliced_get_invoice_suffix( $id ) . '</a>'
+					) . '</p>',
+				'dismissable' => true
+			);
+			Sliced_Admin_Notices::add_custom_notice( 'invoice_paid_'.$id, $notice_args );
+		}
 	}
 
 	/**
@@ -361,6 +406,12 @@ class Sliced_Logs {
 					case 'invoice_sent':
 						$message = sprintf( __( '%s was sent.', 'sliced-invoices' ), sliced_get_invoice_label() );
 						break;
+					case 'invoice_viewed':
+						$message = sprintf( __( '%s was viewed.', 'sliced-invoices' ), sliced_get_invoice_label() );
+						break;
+					case 'quote_viewed':
+						$message = sprintf( __( '%s was viewed.', 'sliced-invoices' ), sliced_get_quote_label() );
+						break;
 
 					default:
 						# code...
@@ -397,5 +448,112 @@ class Sliced_Logs {
 		$log_meta[current_time( 'timestamp', 1 )] = $meta_value;
 		return update_post_meta( $id, $this->meta_key, $log_meta );
 	}
+	
+	
+	/**
+	 * Log unique views of quote/invoice, add notifications if applicable
+	 *
+	 * @since 3.5.0
+	 */
+	public function views_logger() {
+
+		// double check here -- technically none of these should be possible at this point, but better safe than sorry
+		if ( is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			return;
+		}
+		
+		// don't log admins looking at their own invoices
+		if ( current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		
+		$type = get_post_type();
+		
+		if ( $type !== 'sliced_invoice' && $type !== 'sliced_quote' ) {
+			return;
+		}
+
+		$id = get_the_ID();
+		
+		if ( ! $id > 0 ) {
+			return;
+		}
+		
+		$log = get_post_meta( $id, '_sliced_log', true );
+		if ( ! is_array( $log ) ) {
+			// something is wrong, abort
+			return;
+		}
+		
+		$meta_value = array(
+			'type'    => ( $type === 'sliced_invoice' ? 'invoice' : 'quote' ) . '_viewed',
+			'by'      => get_current_user_id(), // returns 0 if no user,
+			'ip'      => Sliced_Shared::get_ip(),
+			'secured' => class_exists( 'Sliced_Secure' ) ? 'yes' : 'no',
+		);
+		
+		// make sure visit is "unique"
+		// we'll say an unique visit constitutes a any unique combination of user_id (by) and ip address (ip) within the last 24 hours
+		$now = current_time( 'timestamp', 1 );
+		$one_day = 86400; // 60 * 60 * 24
+		$unique = true;
+		foreach ( $log as $timestamp => $entry ) {
+			if ( isset( $entry['type'] ) && ( $entry['type'] === 'invoice_viewed' || $entry['type'] === 'quote_viewed' ) ) {
+				if (
+					$entry['by'] === $meta_value['by'] &&
+					$entry['ip'] === $meta_value['ip'] &&
+					$timestamp > $now - $one_day
+				) {
+					$unique = false;
+				}
+			}
+		}
+		
+		if ( $unique ) {
+			
+			// save it
+			$this->update_log_meta( $id, $meta_value );
+			
+			// the rest is for showing an admin notice, if needed
+			$settings = array();
+			if ( $type === 'sliced_invoice' ) {
+				$invoices = get_option('sliced_invoices');
+				if ( isset( $invoices['invoice_admin_notices'] ) && is_array( $invoices['invoice_admin_notices'] ) ) {
+					$settings = $invoices['invoice_admin_notices'];
+				}
+			} else {
+				$quotes = get_option('sliced_quotes');
+				if ( isset( $quotes['quote_admin_notices'] ) && is_array( $quotes['quote_admin_notices'] ) ) {
+					$settings = $quotes['quote_admin_notices'];
+				}
+			}
+			
+			// trigger notice
+			if (
+				( $type === 'sliced_invoice' && in_array( 'invoice_viewed', $settings ) ) ||
+				( $type === 'sliced_quote' && in_array( 'quote_viewed', $settings ) )
+			) {
+				$notice_args = array(
+					'class' => 'notice-success',
+					'content' => '<p>' . sprintf(
+							/* translators: %1$s here is a placeholder for the word "Invoice" or "Quote";
+								%2$s is a placeholder for the Invoice or Quote number;
+								for example: "Invoice SI-123 was viewed" */
+							__( '%1$s %2$s was viewed', 'sliced-invoices' ),
+							( $type === 'sliced_invoice' ? sliced_get_invoice_label() : sliced_get_quote_label() ),
+							'<a class="sliced-number" href="' . esc_url( admin_url( 'post.php?post=' . $id ) ) . '&action=edit' . '">' . ( $type === 'sliced_invoice' ? sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id ) . sliced_get_invoice_suffix( $id ) : sliced_get_quote_prefix( $id ) . sliced_get_quote_number( $id ) . sliced_get_quote_suffix( $id ) ) . '</a>'
+						)
+						. ( $meta_value['by'] > 0 ? ' '.__( 'by', 'sliced-invoices' ).' '.get_user_meta( (int)$meta_value['by'], '_sliced_client_business', true ) : '')
+						. ( $meta_value['by'] === 0 && $meta_value['secured'] === 'yes' ? ' '.__( 'using the secure link', 'sliced-invoices' ) : '')
+						. '</p>',
+					'dismissable' => true
+				);
+				Sliced_Admin_Notices::add_custom_notice( ( $type === 'sliced_invoice' ? 'invoice' : 'quote' ).'_viewed_'.$id, $notice_args );
+			}
+		}
+		
+	}
+	
+	
 	
 }
