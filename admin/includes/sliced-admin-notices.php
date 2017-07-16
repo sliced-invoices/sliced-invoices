@@ -28,6 +28,7 @@ class Sliced_Admin_Notices {
 	 * Constructor.
 	 */
 	public static function init() {
+		
 		self::$notices = get_option( 'sliced_admin_notices', array() );
 
 		add_action( 'switch_theme', array( __CLASS__, 'reset_admin_notices' ) );
@@ -38,6 +39,9 @@ class Sliced_Admin_Notices {
 		if ( current_user_can( 'manage_options' ) ) {
 			add_action( 'admin_print_styles', array( __CLASS__, 'add_notices' ) );
 		}
+		
+		add_action( 'wp_ajax_sliced_hide_notice', array( __CLASS__, 'hide_notices_ajax' ) );
+		
 	}
 	
 
@@ -136,6 +140,43 @@ class Sliced_Admin_Notices {
 		}
 	}
 	
+	
+	/**
+	 * Hide a notice for AJAX requests
+	 */
+	public static function hide_notices_ajax() {
+		if ( isset( $_POST['sliced-hide-notice'] ) && isset( $_POST['_sliced_notice_nonce'] ) ) {
+		
+			$notice = sanitize_text_field( $_POST['sliced-hide-notice'] );
+			
+			if ( ! wp_verify_nonce( $_POST['_sliced_notice_nonce'], 'sliced_admin_notice_'.$notice.'_nonce' ) ) {
+				wp_die( __( 'Action failed. Please refresh the page and retry.', 'sliced-invoices' ) );
+			}
+
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_die( __( 'Cheatin&#8217; huh?', 'sliced-invoices' ) );
+			}
+
+			if ( isset( $_POST['sliced-dismiss'] ) && (int)$_POST['sliced-dismiss'] === 1 ) {
+				
+				update_option( 'sliced_admin_notice_' . $notice, '' );
+				
+			} else {
+			
+				self::remove_notice( $notice );
+				
+			}
+			
+			if ( isset( $_POST['sliced-hide-transient'] ) && (int)$_POST['sliced-hide-transient'] > 0 ) {
+				set_transient( 'sliced_hide_' . $notice . '_notice', 1, intval( $_POST['sliced-hide-transient'] ) );
+			}
+			
+			do_action( 'sliced_hide_' . $notice . '_notice' );
+			
+			wp_send_json( array( 'status' => 'success' ) );
+		}
+	}
+	
 
 	/**
 	 * Add notices + styles if needed.
@@ -161,9 +202,9 @@ class Sliced_Admin_Notices {
 	 * @param string $name
 	 * @param string $notice_html
 	 */
-	public static function add_custom_notice( $name, $notice_html ) {
+	public static function add_custom_notice( $name, $data ) {
 		self::add_notice( $name );
-		update_option( 'sliced_admin_notice_' . $name, wp_kses_post( $notice_html ) );
+		update_option( 'sliced_admin_notice_' . $name, $data );
 	}
 	
 
@@ -176,9 +217,41 @@ class Sliced_Admin_Notices {
 			foreach ( $notices as $notice ) {
 				if ( empty( self::$core_notices[ $notice ] ) ) {
 					if ( ! get_transient( 'sliced_hide_' . $notice . '_notice' ) ) {
-						$notice_html = get_option( 'sliced_admin_notice_' . $notice );
-						if ( $notice_html ) {
-							echo $notice_html;
+						$data = get_option( 'sliced_admin_notice_' . $notice );
+						if ( is_array( $data ) ) {
+							$class             = isset( $data['class'] ) ? $data['class'] : '';
+							$content           = isset( $data['content'] ) ? $data['content'] : '';
+							$dismissable       = isset( $data['dismissable'] ) ? $data['dismissable'] : true;
+							$dismiss_permanent = isset( $data['dismiss_permanent'] ) ? $data['dismiss_permanent'] : false;
+							$dismiss_transient = isset( $data['dismiss_transient'] ) ? $data['dismiss_transient'] : false;
+							echo '<div class="notice '.$class.' sliced-message" id="sliced_admin_notice_'.$notice.'">
+								'.( $dismissable ? '<a class="sliced-message-close notice-dismiss" href="' . esc_url( wp_nonce_url( add_query_arg( array( 'sliced-hide-notice' => $notice ) ), 'sliced_hide_notices_nonce', '_sliced_notice_nonce' ) ) . '">' . __( 'Dismiss', 'sliced-invoices' ) . '</a>' : '' ).'
+								'.$content.'
+							</div>';
+							if ( $dismissable ) {
+								echo '<script type="text/javascript">
+									jQuery(document).ready(function($){
+										$("#sliced_admin_notice_'.$notice.' .notice-dismiss").on("click",function(e){
+											e.preventDefault();
+											var data = {
+												action: "sliced_hide_notice",
+												"_sliced_notice_nonce": "'.wp_create_nonce( 'sliced_admin_notice_'.$notice.'_nonce' ).'",
+												'.($dismiss_permanent ? '"sliced-dismiss": "'.$dismiss_permanent.'",' : '').'
+												'.($dismiss_transient ? '"sliced-hide-transient": "'.$dismiss_transient.'",' : '').'
+												"sliced-hide-notice": "'.$notice.'"
+											};
+											$.post(ajaxurl, data, function(response) {
+												if ( response.status === "success" ) {
+													$("#sliced_admin_notice_'.$notice.'").fadeOut();
+												}
+											});
+											return false;
+										});
+									});
+								</script>';
+							}
+						} elseif ( $data ) {
+							echo $data;
 						}
 					}
 				}

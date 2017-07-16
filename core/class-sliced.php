@@ -102,12 +102,12 @@ class Sliced_Invoices {
 		if( $pagenow == 'post.php' || $pagenow == 'post-new.php' || $pagenow == 'user-edit.php' || $pagenow == 'user-new.php' ) {
 			require_once SLICED_PATH . 'admin/includes/sliced-admin-metaboxes.php';
 		}
+		require_once SLICED_PATH . 'admin/includes/sliced-admin-notices.php';
 		require_once SLICED_PATH . 'admin/includes/sliced-admin-notifications.php';
 		require_once SLICED_PATH . 'admin/includes/sliced-admin-columns.php';
 		require_once SLICED_PATH . 'admin/includes/sliced-admin-quick-edit.php';
 
 		if( is_admin() ) {
-			require_once SLICED_PATH . 'admin/includes/sliced-admin-notices.php';
 			require_once SLICED_PATH . 'admin/includes/sliced-admin-reports.php';
 			require_once SLICED_PATH . 'admin/includes/sliced-admin-help.php';
 			require_once SLICED_PATH . 'admin/includes/sliced-admin-tools.php';
