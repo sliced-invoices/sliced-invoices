@@ -5,7 +5,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
 Tested up to: 4.8
-Stable tag: 3.4.1
+Stable tag: 3.5.0
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -136,6 +136,18 @@ Quotes could be renamed to Estimate, Proposal, Tender, Bid or anything else.
 
 Yes, it does!  As of version 3.0.0 you can network activate Sliced Invoices in WP Multisite.
 
+### What languages are available?
+
+This plugin currently includes translations for the following languages:
+
+*   French
+*   Romanian
+*   Russian
+*   Spanish
+*   Ukrainian
+
+There is a Portable Object Template (.POT) available in the "/languages" directory.  If you would like to contribute a translation of your own for a language we don't have yet, please let us know!
+
 
 ## Screenshots
 1. Example invoice using Template 1. There are 3 invoice templates and you can also style using CSS or create your own template
@@ -150,12 +162,22 @@ Yes, it does!  As of version 3.0.0 you can network activate Sliced Invoices in W
 
 
 ## Changelog
+##  3.5.0
+* NEW: Add quote/invoice views tracking feature (allows you to see the exact date and time your client viewed a quote or invoice)
+* NEW: Admin notices feature (intuitively alerts you if there are potential issues needing your attention)
+* NEW: French translation (thanks to WebMat - webmat.pro)
+* NEW: Spanish translation (thanks to Lolo Marchal)
+* NEW: Ukrainian and Russian translations (thanks to Andrew Reva)
+* FIX: display issue with Quick Edit feature
+* FIX: minor CSS display issue
+* UPDATE: PayPal gateway IPN handling improvements
+* UPDATE: Update .pot file
+
 ##  3.4.1
 * NEW: Add "View PDF" (if available) and "Email to client" shortcuts on admin quote and invoice pages (same as the buttons on the quote/invoice listings pages)
 * FIX: issue with payment reminders sending twice in multisite situations
 * FIX: issue with emailed PDFs not formatted correctly when sending multiple
 * FIX: minor display issue
-* UPDATE: Ukrainian and Russian translations
 
 ##  3.4.0
 * NEW: Add suffix option for quote and invoice numbers
