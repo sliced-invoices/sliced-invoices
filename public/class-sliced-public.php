@@ -79,7 +79,7 @@ class Sliced_Public {
 			wp_print_styles( 'bootstrap' );
 			wp_print_styles( 'style' );
 			$html = ob_get_clean();
-			set_transient( 'sliced_public_enqueue_styles_cache', $html, DOING_CRON ? 300 : 3 );
+			set_transient( 'sliced_public_enqueue_styles_cache', $html, defined( 'DOING_CRON' ) && DOING_CRON == true ? : 3 );
 		}
 		echo $html;
 
@@ -113,7 +113,7 @@ class Sliced_Public {
 			wp_print_styles( 'thickbox' );
 			wp_print_styles( 'template' );
 			$html = ob_get_clean();
-			set_transient( 'sliced_public_enqueue_invoice_styles_cache', $html, DOING_CRON ? 300 : 3 );
+			set_transient( 'sliced_public_enqueue_invoice_styles_cache', $html, defined( 'DOING_CRON' ) && DOING_CRON == true ? 300 : 3 );
 		}
 		echo $html;
 
@@ -131,7 +131,7 @@ class Sliced_Public {
 			ob_start();
 			wp_print_scripts( 'thickbox' );
 			$html = ob_get_clean();
-			set_transient( 'sliced_public_enqueue_invoice_scripts_cache', $html, DOING_CRON ? 300 : 3 );
+			set_transient( 'sliced_public_enqueue_invoice_scripts_cache', $html, defined( 'DOING_CRON' ) && DOING_CRON == true ? 300 : 3 );
 		}
 		echo $html;
 
@@ -167,7 +167,7 @@ class Sliced_Public {
 			wp_print_styles( 'thickbox' );
 			wp_print_styles( 'template' );
 			$html = ob_get_clean();
-			set_transient( 'sliced_public_enqueue_quote_styles_cache', $html, DOING_CRON ? 300 : 3 );
+			set_transient( 'sliced_public_enqueue_quote_styles_cache', $html, defined( 'DOING_CRON' ) && DOING_CRON == true ? 300 : 3 );
 		}
 		echo $html;
 
@@ -185,7 +185,7 @@ class Sliced_Public {
 			ob_start();
 			wp_print_scripts( 'thickbox' );
 			$html = ob_get_clean();
-			set_transient( 'sliced_public_enqueue_quote_scripts_cache', $html, DOING_CRON ? 300 : 3 );
+			set_transient( 'sliced_public_enqueue_quote_scripts_cache', $html, defined( 'DOING_CRON' ) && DOING_CRON == true ? 300 : 3 );
 		}
 		echo $html;
 	}
