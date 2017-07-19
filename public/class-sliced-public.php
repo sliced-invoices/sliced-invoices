@@ -67,13 +67,18 @@ class Sliced_Public {
 	 */
 	public function enqueue_styles() {
 		
+		// only load dashicons on payment
+		$payments = get_option( 'sliced_payments' );
+		if ( is_page( (int)$payments['payment_page'] ) ) {
+			wp_print_styles( 'dashicons' );
+		}
+		
 		$html = get_transient( 'sliced_public_enqueue_styles_cache' );
 		if ( $html === false ) {
 			ob_start();
 			wp_register_style( 'fontawesome', plugins_url( $this->plugin_name ) . '/public/css/font-awesome.min.css', null, $this->version );
 			wp_register_style( 'bootstrap', plugins_url( $this->plugin_name ) . '/public/css/bootstrap.min.css', null, $this->version );
 			wp_register_style( 'style', plugins_url( $this->plugin_name ) . '/public/css/style.css', null, $this->version );
-			wp_print_styles( 'dashicons' );
 			wp_print_styles( 'open-sans' );
 			wp_print_styles( 'fontawesome' );
 			wp_print_styles( 'bootstrap' );
