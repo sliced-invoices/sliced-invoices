@@ -4,7 +4,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce
 Requires at least: 4.0
 Tested up to: 4.8
-Stable tag: 3.5.0
+Stable tag: 3.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -161,6 +161,10 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 == Changelog ==
+= 3.5.1 =
+* FIX: display issue with WooCommerce invoices
+* FIX: minor display issues
+
 = 3.5.0 =
 * NEW: Add quote/invoice views tracking feature (allows you to see the exact date and time your client viewed a quote or invoice)
 * NEW: Admin notices feature (intuitively alerts you if there are potential issues needing your attention)
