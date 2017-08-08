@@ -219,8 +219,11 @@ if ( ! function_exists( 'sliced_display_invoice_totals' ) ) :
 		// need to fix this up
 		if( function_exists('sliced_woocommerce_get_order_id') ) {
 			$order_id = sliced_woocommerce_get_order_id( get_the_ID() );
-			if ( $order_id )
+			if ( $order_id ) {
+				$output = ob_get_clean();
+				echo $output;
 				return;
+			}
 		}
 		?>
 
