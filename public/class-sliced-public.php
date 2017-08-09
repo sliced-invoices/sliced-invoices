@@ -30,16 +30,29 @@ class Sliced_Public {
 	 * @since   2.0.0
 	 */
 	private $version;
+	
+	/**
+     * @var  object  Instance of this class
+     */
+    protected static $instance = null;
+
+    public static function get_instance() {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
 
 	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since   2.0.0
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct() {
 
-		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->plugin_name = 'sliced-invoices';
+		$this->version = SLICED_VERSION;
 		
 		add_filter( 'comment_post_redirect', array( $this, 'redirect_after_comment_in_quote' ) );
 		add_filter( 'pre_comment_approved' , array( $this, 'auto_approve_comments_in_quote' ), '99', 2 );

@@ -229,7 +229,7 @@ class Sliced_Invoices {
 	 */
 	private function define_public_hooks() {
 		
-		$plugin_public = new Sliced_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = Sliced_Public::get_instance();
 
 		$this->loader->add_action( 'sliced_head', $plugin_public, 'enqueue_styles' );
 
