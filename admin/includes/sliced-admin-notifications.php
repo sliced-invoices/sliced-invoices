@@ -854,7 +854,7 @@ class Sliced_Notifications {
 																	 <div id='body_content_inner'>";
 
 
-		return apply_filters( 'sliced_email_header', $email_header );
+		return apply_filters( 'sliced_email_header', $email_header, $this->id );
 	}
 
 
@@ -912,7 +912,7 @@ class Sliced_Notifications {
 		 </body>
 		</html>";
 
-		return apply_filters( 'sliced_email_footer', $email_footer );
+		return apply_filters( 'sliced_email_footer', $email_footer, $this->id );
 
 	}
 

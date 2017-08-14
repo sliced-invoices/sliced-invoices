@@ -233,10 +233,12 @@ class Sliced_Shared {
 	 *
 	 * @since   2.0.0
 	 */
-	public static function get_currency_symbol() {
+	public static function get_currency_symbol( $id = 0 ) {
 
-		$id = Sliced_Shared::get_item_id();
-
+		if ( ! $id ) {
+			$id = Sliced_Shared::get_item_id();
+		}
+		
 	    if ( isset( $id ) ) {
 
 	    	$symbol = self::get_sliced_meta( $id, '_sliced_currency_symbol', false );
@@ -246,7 +248,6 @@ class Sliced_Shared {
 	    		$payments 	= self::get_sliced_option( 'payments' );
 	    		$symbol 	= isset( $payments['currency_symbol'] ) ? $payments['currency_symbol'] : '$';
 	    	}
-	    	//var_dump($amount);
 	    } else {
 	    	$payments 	= self::get_sliced_option( 'payments' );
 	    	$symbol 	= isset( $payments['currency_symbol'] ) ? $payments['currency_symbol'] : '$';
@@ -340,9 +341,9 @@ class Sliced_Shared {
 	 *
 	 * @since   2.0.0
 	 */
-	public static function get_formatted_currency( $amount ) {
+	public static function get_formatted_currency( $amount, $id = 0 ) {
 
-	    $symbol 	= sliced_get_currency_symbol();
+	    $symbol 	= sliced_get_currency_symbol( $id );
 	    $position 	= sliced_get_currency_position();
 	    $amount 	= self::get_formatted_number( $amount );
 

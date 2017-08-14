@@ -128,7 +128,7 @@ if ( ! function_exists( 'sliced_get_invoice_sub_total' ) ) :
 
 	function sliced_get_invoice_sub_total( $id = 0 ) {
 		$output = Sliced_Shared::get_totals( $id );
-		$sub_total = Sliced_Shared::get_formatted_currency( $output['sub_total'] );
+		$sub_total = Sliced_Shared::get_formatted_currency( $output['sub_total'], $id );
 		return apply_filters( 'sliced_get_invoice_sub_total', $sub_total, $id );
 	}
 
@@ -138,7 +138,7 @@ if ( ! function_exists( 'sliced_get_invoice_total' ) ) :
 
 	function sliced_get_invoice_total( $id = 0 ) {
 		$output = Sliced_Shared::get_totals( $id );
-		$total = Sliced_Shared::get_formatted_currency( $output['total'] );
+		$total = Sliced_Shared::get_formatted_currency( $output['total'], $id );
 		return apply_filters( 'sliced_get_invoice_total', $total, $id );
 	}
 
@@ -148,7 +148,7 @@ if ( ! function_exists( 'sliced_get_invoice_tax' ) ) :
 
 	function sliced_get_invoice_tax( $id = 0 ) {
 		$output = Sliced_Shared::get_totals( $id );
-		$tax = Sliced_Shared::get_formatted_currency( $output['tax'] );
+		$tax = Sliced_Shared::get_formatted_currency( $output['tax'], $id );
 		return apply_filters( 'sliced_get_invoice_tax', $tax, $id );
 	}
 

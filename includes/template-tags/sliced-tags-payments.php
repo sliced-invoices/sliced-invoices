@@ -32,9 +32,9 @@ endif;
 
 if ( ! function_exists( 'sliced_get_currency_symbol' ) ) :
 
-	function sliced_get_currency_symbol() {
-		$output = Sliced_Shared::get_currency_symbol();
-		return apply_filters( 'sliced_get_currency_symbol', $output );
+	function sliced_get_currency_symbol( $id = 0 ) {
+		$output = Sliced_Shared::get_currency_symbol( $id );
+		return apply_filters( 'sliced_get_currency_symbol', $output, $id );
 	}
 
 endif;
