@@ -23,7 +23,7 @@
         var position        = sliced_payments.currency_pos;
         var thousand_sep    = sliced_payments.thousand_sep;
         var decimal_sep     = sliced_payments.decimal_sep;
-        var decimals        = sliced_payments.decimals;
+        var decimals        = parseInt( sliced_payments.decimals );
 
         // sorts out the number to enable calculations
         function rawNumber(x) {
@@ -53,7 +53,8 @@
         function formattedAmount(amount) {
             // do the symbol position formatting
             var formatted = 0;
-            var amount = ( amount ).toFixed( decimals );
+            var amount = new Decimal( amount );
+			amount = amount.toFixed( decimals );
             switch (position) {
                 case 'left':
                     formatted = symbol + formattedNumber( amount );
@@ -115,7 +116,19 @@
             var raw_tax = 0;
             var raw_total = sum;
         }
-
+		
+		/* Begin DAPP rounding fix.  Temporary pending new DAPP update */
+		if ( typeof window.SlicedDiscountsAndPartialPayment !== "undefined" ) {
+			$('.sliced_discount_value').each( function() {
+				var val = $( this ).val();
+				if ( val > 0 ) {
+					var temp_val = new Decimal(raw_total);
+					raw_total = temp_val.minus(val);
+				}
+			});
+		}
+		/* End DAPP rounding fix */
+		
         $("#_sliced_line_items #sliced_sub_total").html( formattedAmount( sum ) );
         $("#_sliced_line_items #sliced_tax").html( formattedAmount( raw_tax ) );
         $("#_sliced_line_items #sliced_total").html( formattedAmount( raw_total ) );
@@ -123,10 +136,16 @@
 
     };
 
-	$(document).on('keyup change', '.sliced input.item_amount, .sliced input.item_qty, .sliced input.item_tax', function () {
-		workOutTotals();
+	/* DAPP rounding fix, part 2.  Temporary pending new DAPP update */
+	//$(document).on('keyup change', '.sliced input.item_amount, .sliced input.item_qty, .sliced input.item_tax', function () {
+	//	workOutTotals();
+	//});
+	$(document).on('keyup change', '.sliced_discount_value, .sliced input.item_amount, .sliced input.item_qty, .sliced input.item_tax, select.pre_defined_products', function () {
+		setTimeout( function(){ 
+			workOutTotals();
+		}, 2 );
 	});
-
+	/* End DAPP rounding fix, part 2 */
 
     /**
      * add pre-defined items from select into the empty line item fields
@@ -154,7 +173,12 @@
      * on page load
      */
     $(function(){
-        workOutTotals();
+		/* DAPP rounding fix, part 3.  Temporary pending new DAPP update */
+        //workOutTotals();
+		setTimeout( function(){ 
+			workOutTotals();
+		}, 2 );
+		/* End DAPP rounding fix, part 3 */
     });
 
 

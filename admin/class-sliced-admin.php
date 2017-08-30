@@ -133,6 +133,13 @@ class Sliced_Admin {
 		if ( ( $pagenow == 'admin.php' ) && ( $_GET['page'] == 'sliced_reports' ) ) {
 			wp_enqueue_script( $this->plugin_name . '-chart', plugin_dir_url( __FILE__ ) . 'js/Chart.min.js', array( 'jquery' ), $this->version, false );
 		}
+		
+		/*
+		 * Conditionally enqueue decimal.js
+		 */
+		if ( ( $pagenow == 'post.php' || $pagenow == 'post-new.php' ) && ( sliced_get_the_type() ) ) {
+			wp_enqueue_script( $this->plugin_name . '-decimal', plugin_dir_url( __FILE__ ) . 'js/decimal.min.js', array( 'jquery' ), $this->version, false );
+		}
 
 	}
 
