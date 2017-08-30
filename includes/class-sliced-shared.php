@@ -652,9 +652,6 @@ class Sliced_Shared {
 
 				// And if that doesn't work, then we'll try curl
 				$response = self::curl( $url );
-				if( null == $response ) {
-					$response = 0;
-				}
 
 			}
 
@@ -667,7 +664,7 @@ class Sliced_Shared {
 		}
 
 		// try sslverify
-		if( ! $response || $response == false || $response == 0 ) {
+		if( ! $response > '' ) {
 
 			$general = get_option( 'sliced_general' );
 			$sslverify = $general['pdf_ssl'] == 'true' ? true : false;
