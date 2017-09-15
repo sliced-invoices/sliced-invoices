@@ -46,6 +46,8 @@ class Sliced_Columns {
 
 		// initial order and filtering
 		add_action( 'pre_get_posts', array( $this, 'initial_orderby_filtering' ) );
+		// extended search filtering
+		add_action( 'pre_get_posts', array( $this, 'extend_admin_search' ) );
 		/* Validate orderby and filters. */
 		add_filter('request', array( $this, 'ordering') );
 		/* Add dropdown filters. */
@@ -456,6 +458,110 @@ class Sliced_Columns {
 
 	}
 
+
+	/**
+	 * Allow search to include client fields
+	 *
+	 * @since   3.5.3
+	 */
+	public function extend_admin_search( $query ) {
+
+		// Extend search for document post type
+		$post_types = array(
+			'sliced_invoice',
+			'sliced_quote',
+		);
+
+		if( ! is_admin() ) {
+			return;
+		}
+		
+		if ( ! in_array( $query->query['post_type'], $post_types ) ) {
+			return;
+		}
+
+		$search_term = $query->query_vars['s'];
+		
+		if ( $search_term > '' ) {
+		
+			$users1 = get_users( array(
+				'search' => $search_term,
+			) );
+			
+			$users2 = get_users( array(
+				'meta_query' => array(
+					array( 'relation' => 'OR' ),
+					array(
+						'key' => '_sliced_client_business',
+						'value' => $search_term,
+						'compare' => 'LIKE',
+					),
+				),
+			) );
+			
+			$user_ids = array();
+			foreach ( $users1 as $user ) {
+				$user_ids[] = $user->ID;
+			}
+			foreach ( $users2 as $user ) {
+				$user_ids[] = $user->ID;
+			}
+			$user_ids = array_unique( $user_ids );
+			
+			if ( count( $user_ids ) === 0 ) {
+				// nothing to do
+				return;
+			}
+			
+			// else, we go on...
+			
+			// Set to empty here, otherwise it won't find anything...
+			$query->query_vars['s'] = '';
+	
+			// ...but kick search query down the road so it still displays correctly on the results page
+			add_filter( 'get_search_query', array( $this, 'extend_admin_search_return' ) );
+			
+			// prevent recursive calls from pre_get_posts
+			remove_action( 'pre_get_posts', array( $this, 'extend_admin_search' ) );
+			
+			// now run our queries
+			$posts1 = get_posts( array(
+				'post_type' => $query->query['post_type'],
+				'posts_per_page' => -1,
+				's' => $search_term,
+			));
+			$posts2 = get_posts( array(
+				'post_type' => $query->query['post_type'],
+				'posts_per_page' => -1,
+				'meta_query' => array(
+					array(
+						'key' => '_sliced_client',
+						'value' => $user_ids,
+						'compare' => 'IN'
+					)
+				),
+			));
+			
+			$post_ids = array();
+			foreach ( $posts1 as $post ) {
+				$post_ids[] = $post->ID;
+			}
+			foreach ( $posts2 as $post ) {
+				$post_ids[] = $post->ID;
+			}
+			$post_ids = array_unique( $post_ids );
+			
+			$query->set( 'post__in', $post_ids );
+			$query->set( 'ignore_sticky_posts', true );
+		};
+	}
+	
+	public function extend_admin_search_return( $query ) {
+		if ( isset( $_GET['s'] ) ) {
+			$query = esc_attr( $_GET['s'] );
+		}
+		return $query;
+	}
 
 
 }
