@@ -5,7 +5,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
 Tested up to: 4.8
-Stable tag: 3.5.2
+Stable tag: 3.5.3
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -162,6 +162,10 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 ## Changelog
+##  3.5.3
+* FIX: extend admin search feature to include client fields (name, email, etc.)
+* FIX: JavaScript error in console
+
 ##  3.5.2
 * FIX: issue with payment reminder emails showing currency symbol from global settings even if invoice is in a different currency
 * FIX: JavaScript rounding issue in admin area invoice totals display
