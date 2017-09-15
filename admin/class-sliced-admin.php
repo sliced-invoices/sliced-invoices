@@ -218,7 +218,7 @@ class Sliced_Admin {
 		$opts['labels']['new_item']						= __( "New {$single}", 'sliced-invoices' );
 		$opts['labels']['not_found']					= __( "No {$plural} Found", 'sliced-invoices' );
 		$opts['labels']['not_found_in_trash']			= __( "No {$plural} Found in Trash", 'sliced-invoices' );
-		$opts['labels']['parent_item_colon']			= __( "Parent {$plural} :", 'sliced-invoices' );
+		$opts['labels']['parent_item_colon']			= __( "Parent {$single}:", 'sliced-invoices' );
 		$opts['labels']['search_items']					= __( "Search {$plural}", 'sliced-invoices' );
 		$opts['labels']['singular_name']				= __( $single, 'sliced-invoices' );
 		$opts['labels']['view_item']					= __( "View {$single}", 'sliced-invoices' );
@@ -295,7 +295,7 @@ class Sliced_Admin {
 		$opts['labels']['new_item']						= __( "New {$single}", 'sliced-invoices' );
 		$opts['labels']['not_found']					= __( "No {$plural} Found", 'sliced-invoices' );
 		$opts['labels']['not_found_in_trash']			= __( "No {$plural} Found in Trash", 'sliced-invoices' );
-		$opts['labels']['parent_item_colon']			= __( "Parent {$plural} :", 'sliced-invoices' );
+		$opts['labels']['parent_item_colon']			= __( "Parent {$single}:", 'sliced-invoices' );
 		$opts['labels']['search_items']					= __( "Search {$plural}", 'sliced-invoices' );
 		$opts['labels']['singular_name']				= __( $single, 'sliced-invoices' );
 		$opts['labels']['view_item']					= __( "View {$single}", 'sliced-invoices' );
