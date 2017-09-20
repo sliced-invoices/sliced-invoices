@@ -633,8 +633,8 @@ class Sliced_Options {
 					)
 				),
 				array(
-					'name'      => __( 'Confirmation Page', 'sliced-invoices' ),
-					'desc'      => __( 'Choose a page to use for PayPal and other <a target="_blank" href="https://slicedinvoices.com/extensions/">available payment gateway</a> messages and other confirmations.<br>A blank page named Confirmation would be perfect.', 'sliced-invoices' ),
+					'name'      => __( 'Payment Page', 'sliced-invoices' ),
+					'desc'      => __( 'Choose a page to use for PayPal and other <a target="_blank" href="https://slicedinvoices.com/extensions/">available payment gateway</a> messages and other confirmations.<br>A blank page named Payment would be perfect.', 'sliced-invoices' ),
 					'default'   => $payments['payment_page'],
 					'type'      => 'select',
 					'id'        => 'payment_page',
@@ -1094,6 +1094,7 @@ class Sliced_Options {
 	public function get_the_pages() {
 
 		$pages = get_pages();
+		$the_pages = array( '0' => '----' );
 		if( $pages ) {
 			foreach ( $pages as $page ) {
 				$the_pages[$page->ID] = $page->post_title;

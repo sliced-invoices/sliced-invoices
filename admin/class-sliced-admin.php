@@ -1930,9 +1930,13 @@ class Sliced_Admin {
 			$payments = get_option( 'sliced_payments' );
 		}
 		$frontpage_id = get_option( 'page_on_front' );
+		$page = get_post( $payments['payment_page'] );
 		if (
 			$payments['payment_page'] > 0
 			&& (int)$frontpage_id !== (int)$payments['payment_page']
+			&& $page
+			&& isset( $page->post_status )
+			&& $page->post_status !== 'trash'
 		) {
 			Sliced_Admin_Notices::remove_notice( 'invalid_payment_page' );
 		} else {

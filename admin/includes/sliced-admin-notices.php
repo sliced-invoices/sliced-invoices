@@ -267,7 +267,7 @@ class Sliced_Admin_Notices {
 		?>
 		<div class="error sliced-message">
 			<?php /* let's not make this one dismissable for now: <a class="sliced-message-close notice-dismiss" href="<?php echo esc_url( wp_nonce_url( add_query_arg( 'sliced-hide-notice', 'invalid_payment_page' ), 'sliced_hide_notices_nonce', '_sliced_notice_nonce' ) ); ?>"><?php _e( 'Dismiss', 'sliced-invoices' ); ?></a> */ ?>
-			<p><?php printf( __( '<strong>Your Confirmation Page setting is invalid.</strong> Please choose a valid Confirmation Page on the %sPayment Settings page%s. You will not be able to process payments until you do this.', 'sliced-invoices' ), '<a href="' . esc_url( admin_url( 'admin.php?page=sliced_payments' ) ) . '">', '</a>' ); ?></p>
+			<p><?php printf( __( '<strong>Your Payment Page setting is invalid.</strong> Please choose a valid Payment Page on the %sPayment Settings page%s. You will not be able to accept quotes or process payments until you do this.', 'sliced-invoices' ), '<a href="' . esc_url( admin_url( 'admin.php?page=sliced_payments' ) ) . '">', '</a>' ); ?></p>
 		</div>
 		<?php
 	}
