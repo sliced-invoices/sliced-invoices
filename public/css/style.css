@@ -112,7 +112,11 @@ a img {outline:none; border:none;}
   margin-top: 20px;
   padding-top: 20px;
 }
-
+@media screen and (max-width: 768px) {
+	.sliced-wrap {
+		margin-top: 0;
+	}
+}
 /* END BASIC RESETS */
 
 
@@ -296,6 +300,11 @@ p.sliced-quote-declined,
 p.sliced-quote-cancelled,
 p.sliced-quote-expired {
     font-size: 14px;
+}
+@media screen and (max-width: 768px) {
+	.sliced_payment_form #payment-form {
+		padding: 10px 0 0;
+	}
 }
 
 

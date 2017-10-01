@@ -12,16 +12,16 @@
  *
  */
 ob_start();
-?>
-<!doctype html>
+?><!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title><?php esc_html_e( sliced_get_business_name() ) ?></title>
-<meta name="robots" content="noindex">
+	<meta charset="UTF-8">
+	<title><?php esc_html_e( sliced_get_business_name() ) ?></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="robots" content="noindex,nofollow">
 
-<?php do_action('sliced_head'); ?>
-<?php do_action('sliced_payment_head'); ?>
+	<?php do_action('sliced_head'); ?>
+	<?php do_action('sliced_payment_head'); ?>
 
 </head>
 
