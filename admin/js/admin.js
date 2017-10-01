@@ -1,6 +1,10 @@
 (function( $ ) {
 	'use strict';
-
+	
+	if ( typeof window.sliced_invoices === "undefined" ) {
+		window.sliced_invoices = {};
+	}
+	
 
     function clearLineTotal(){
 
@@ -187,33 +191,32 @@
      */
     $(function(){
 
-        $( ".sliced-email-button" ).click(function() {
-
-            var id = jQuery(this).data('id');
-			var $previewDiv = $('.sliced-email-preview');
-			var placeholder = $($previewDiv).html();
-
-			// preview updater
+    	sliced_invoices.sliced_email_cache = {};
+		sliced_invoices.sliced_email_cache.$previewDiv = $('.sliced-email-preview');
+		sliced_invoices.sliced_email_cache.placeholder = $(sliced_invoices.sliced_email_cache.$previewDiv).html();
+		
+		// handler for loading email previews
+		sliced_invoices.sliced_email_preview = function( id ){
 			var currentTime = new Date().valueOf();
-			$($previewDiv).append('<iframe id="sliced-preview-' + currentTime + '" src="' + ajaxurl + '?action=sliced_sure_to_email&id=' + id + '"></iframe>');
+			$(sliced_invoices.sliced_email_cache.$previewDiv).append('<iframe id="sliced-preview-' + currentTime + '" src="' + ajaxurl + '?action=sliced_sure_to_email&id=' + id + '"></iframe>');
 			$('#sliced-preview-'+currentTime).on( 'load', function() {
-				$($previewDiv).children('.sliced-email-preview-loading').remove();
+				$(sliced_invoices.sliced_email_cache.$previewDiv).children('.sliced-email-preview-loading').remove();
 				$(this).show();
 			});
-			
-			// hack to only do this once, even though tb_unload fires twice...
-			var tb_unload_count = 1;
-			jQuery(window).bind('tb_unload', function () {
-				if (tb_unload_count > 1) {
-					tb_unload_count = 1;
-				} else {
-					// restore placeholder
-					$($previewDiv).html(placeholder);
-					tb_unload_count = tb_unload_count + 1;
-				}
-			});
-
-        });
+		};
+		
+		// handler for unloading email previews
+		// hacky solution to do this only once, even though tb_unload fires twice...
+		var tb_unload_count = 1;
+		jQuery(window).bind('tb_unload', function () {
+			if (tb_unload_count > 1) {
+				tb_unload_count = 1;
+			} else {
+				// restore placeholder
+				$(sliced_invoices.sliced_email_cache.$previewDiv).html(sliced_invoices.sliced_email_cache.placeholder);
+				tb_unload_count = tb_unload_count + 1;
+			}
+		});
 
     });
 

@@ -718,7 +718,7 @@ class Sliced_Notifications {
 		$id = sliced_get_the_id();
 		$sent_text = $this->email_sent_text( $id );
 
-		$button = '<a title="' . __( 'Email to client', 'sliced-invoices' ) . '" class="thickbox button ui-tip sliced-email-button" href="#TB_inline?width=760&height=500&inlineId=sliced-email-popup" data-id="' . (int)$id . '"><span class="dashicons dashicons-email-alt"></span></a>';
+		$button = '<a title="' . __( 'Email to client', 'sliced-invoices' ) . '" class="thickbox button ui-tip sliced-email-button" href="#TB_inline?width=760&height=500&inlineId=sliced-email-popup" onclick="sliced_invoices.sliced_email_preview(' . (int)$id . ')"><span class="dashicons dashicons-email-alt"></span></a>';
 		$button .= $sent_text;
 
 		return $button;
