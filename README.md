@@ -5,7 +5,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
 Tested up to: 4.8
-Stable tag: 3.5.3
+Stable tag: 3.5.4
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -162,6 +162,13 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 ## Changelog
+##  3.5.4
+* FIX: issue where "email to client" button stopped working after using Quick Edit feature, until page was reloaded
+* UPDATE: additional checking to make sure the payment page (selected on the Payment Settings tab) exists, else trigger a warning notice
+* UPDATE: minor textual update
+* UPDATE: mobile styling improvements for payment page
+* UPDATE: update .pot file
+
 ##  3.5.3
 * FIX: extend admin search feature to include client fields (name, email, etc.)
 * FIX: JavaScript error in console
