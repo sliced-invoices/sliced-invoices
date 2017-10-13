@@ -421,6 +421,11 @@ class Sliced_Admin {
 	 */
 	public function new_taxonomy_terms() {
 	
+		$bypass = get_transient( 'sliced_taxonomy_terms_check' );
+		if ( $bypass ) {
+			return;
+		}
+		
 		$flush_needed = false;
 	
 		$quote_status = array(
@@ -465,6 +470,8 @@ class Sliced_Admin {
 		if ( $flush_needed ) {
 			flush_rewrite_rules();
 		}
+		
+		set_transient( 'sliced_taxonomy_terms_check', 'ok', 60*60*24 );
 		
 	}
 
