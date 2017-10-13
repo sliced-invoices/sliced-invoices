@@ -463,10 +463,10 @@ class Sliced_Shared {
         $pay_array  = array();
         $payments   = get_option( 'sliced_payments' );
         if ( ! empty( $payments['bank'] ) ) {
-            $pay_array['bank'] = 'Bank';
+            $pay_array['bank'] = __( 'Bank', 'sliced-invoices' );
         }
         if ( ! empty( $payments['generic_pay'] ) ) {
-            $pay_array['generic'] = 'Generic';
+            $pay_array['generic'] = __( 'Generic', 'sliced-invoices' );
         }
         return apply_filters( 'sliced_register_payment_method', $pay_array );
     }
