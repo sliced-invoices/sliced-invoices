@@ -255,7 +255,7 @@ class Sliced_Metaboxes {
 
 			$info = new_cmb2_box( array(
 				'id'           => $prefix . 'quote_notes',
-				'title'        => sprintf( __( '%s Notes', 'sliced-invoices' ), sliced_get_quote_label() ),
+				'title'        => sprintf( __( '%s History', 'sliced-invoices' ), sliced_get_quote_label() ),
 				'object_types' => array( 'sliced_quote' ), // Post type
 				'context'      => 'side',
 				'priority'     => 'low'
@@ -392,7 +392,7 @@ class Sliced_Metaboxes {
 
 			$notes = new_cmb2_box( array(
 				'id'           => $prefix . 'invoice_notes',
-				'title'        => sprintf( __( '%s Notes', 'sliced-invoices' ), sliced_get_invoice_label() ),
+				'title'        => sprintf( __( '%s History', 'sliced-invoices' ), sliced_get_invoice_label() ),
 				'object_types' => array( 'sliced_invoice' ), // Post type
 				'context'      => 'side',
 				'priority'     => 'low'
