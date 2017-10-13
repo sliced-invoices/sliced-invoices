@@ -97,7 +97,7 @@ class Sliced_Public {
 			wp_print_styles( 'bootstrap' );
 			wp_print_styles( 'style' );
 			$html = ob_get_clean();
-			set_transient( 'sliced_public_enqueue_styles_cache', $html, defined( 'DOING_CRON' ) && DOING_CRON == true ? : 3 );
+			set_transient( 'sliced_public_enqueue_styles_cache', $html, defined( 'DOING_CRON' ) && DOING_CRON == true ? 300 : 3 );
 		}
 		echo $html;
 
