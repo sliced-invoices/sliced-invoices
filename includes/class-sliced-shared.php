@@ -473,6 +473,23 @@ class Sliced_Shared {
 
 
 	/**
+	 * Get possible payment statuses
+	 *
+	 * @since   3.6.0
+	 */
+    public static function get_payment_statuses() {
+        $statuses = array(
+			'success'   => __( 'Completed', 'sliced-invoices' ),
+			'pending'   => __( 'Pending', 'sliced-invoices' ),
+			'failed'    => __( 'Failed', 'sliced-invoices' ),
+			'refunded'  => __( 'Refunded', 'sliced-invoices' ),
+			'cancelled' => __( 'Cancelled', 'sliced-invoices' ),
+		);
+        return apply_filters( 'sliced_payment_statuses', $statuses );
+    }
+
+
+	/**
 	 * Get the business details.
 	 *
 	 * @since   2.0.0

@@ -262,7 +262,8 @@
 #_sliced_the_description .cmb2-id--sliced-description, #_sliced_the_invoice_terms .cmb2-id--sliced-invoice-terms {
   padding: 5px 0 0;
 }
-.sliced #_sliced_line_items .cmb-row.cmb-repeat-group-wrap {
+.sliced #_sliced_line_items .cmb-row.cmb-repeat-group-wrap,
+.sliced #_sliced_payments .cmb-row.cmb-repeat-group-wrap {
   padding: 5px 0 0 0;
 }
 .sliced .cmb2-metabox .cmb-repeat-group-wrap {
@@ -291,6 +292,19 @@
 .sliced .repeatable input, .sliced .repeatable textarea, .sliced .repeatable select {
   padding: 3px 5px !important;
 }
+.sliced .repeatable .cmb-type-select {
+  width: 12%;
+  float: left;
+  margin: 0;
+}
+.sliced .repeatable .cmb-type-select select {
+	margin: 0;
+}
+.sliced .repeatable .cmb-type-text-date-timestamp {
+  width: 12%;
+  float: left;
+  margin: 0;
+}
 .sliced .repeatable .cmb-type-text-small {
   width: 12%;
   float: left;
@@ -303,41 +317,50 @@
 }
 
 /* Money field */
-.sliced .repeatable .cmb-type-text-money {
+.sliced #_sliced_items_repeat .cmb-type-text-money {
     width: 23%;
     float: right;
     margin: 0;
 }
-.sliced .repeatable .cmb-type-text-money .cmb-td {
+.sliced #_sliced_items_repeat .cmb-type-text-money .cmb-td {
   line-height: 2.2;
   text-align: right;
   font-size: 14px;
 }
-.sliced .repeatable .cmb-type-text-money label {
+.sliced #_sliced_items_repeat .cmb-type-text-money label {
   float: right;
   width: 100%;
 }
-.sliced .repeatable .cmb-type-text-money label .pull-left {
+.sliced #_sliced_items_repeat .cmb-type-text-money label .pull-left {
   float: left;
 }
-.sliced .repeatable .cmb-type-text-money label .pull-right {
+.sliced #_sliced_items_repeat .cmb-type-text-money label .pull-right {
   float: right;
 }
-.sliced .repeatable .cmb-type-text-money .currency_symbol {
+.sliced #_sliced_items_repeat .cmb-type-text-money .currency_symbol {
   float: left;
   margin: 0 3px 0 10px;
 }
-.sliced .repeatable .cmb-type-text-money input {
+.sliced #_sliced_items_repeat .cmb-type-text-money input {
     float: left;
     margin: 0;
     width: 40%;
 }
-.sliced .repeatable .cmb-type-text-money .line_total_wrap {
+.sliced #_sliced_items_repeat .cmb-type-text-money .line_total_wrap {
   float: right;
   width: 35%;
 }
-.sliced .repeatable .cmb-type-text-money .line_total_wrap  .currency_symbol {
+.sliced #_sliced_items_repeat .cmb-type-text-money .line_total_wrap  .currency_symbol {
   float: none;
+}
+
+.sliced #_sliced_payment_repeat .cmb-type-text-money {
+	float: left;
+	width: 12%;
+    margin: 0;
+}
+.sliced #_sliced_payment_repeat .cmb-type-text-money input {
+	width: 100px;
 }
 
 .sliced .repeatable .cmb-type-text-small input {

@@ -251,9 +251,9 @@ class Sliced_Paypal {
 		}
 		
 		// otherwise, we go on...
-		$payment    = get_post_meta( $id, '_sliced_payment', false );
-		$currency   = sliced_get_invoice_currency( $id );
-		$gateway    = $this->gateway();
+		$gateway  = $this->gateway();
+		$currency = sliced_get_invoice_currency( $id );
+		$currency = $currency !== 'default' ? $currency : $gateway['currency'];
 		
 		/*
 		 * Subscriptions only -- do GetExpressCheckoutDetails 
@@ -286,7 +286,7 @@ class Sliced_Paypal {
 		}
 
 		// if already been paid, print message and die.
-		if( $payment[0]['status'] == 'success' ) {
+		if( has_term( 'paid', 'invoice_status', $id ) ) {
 			sliced_print_message( $id, __( 'This invoice has already been paid.', 'sliced-invoices' ), 'alert' );
 			return;
 		}
@@ -314,7 +314,7 @@ class Sliced_Paypal {
 				'&BILLINGPERIOD=' . $billing_period .
 				'&BILLINGFREQUENCY=' . $billing_frequency .
 				'&TOTALBILLINGCYCLES=' . $total_billing_cycles .
-				'&CURRENCYCODE=' . urlencode( $currency && $currency !== 'default' ? $currency : $gateway['currency'] );
+				'&CURRENCYCODE=' . urlencode( $currency );
 				
 			if ( get_post_meta( $id, '_sliced_subscription_trial', true ) == '1' ) {
 				$trial_billing_period = $this->get_billing_period( get_post_meta( $id, '_sliced_subscription_trial_interval_type', true ) );
@@ -379,21 +379,30 @@ class Sliced_Paypal {
 			 * hence we need to notify user about it and ask them to manually approve the transaction
 			*/
 			if ( isset( $response['PROFILESTATUS'] ) ) {
+				$amount     = urldecode( $response["PAYMENTINFO_0_AMT"] );
+				$payment_id = urldecode( $response['PROFILEID'] );
+				$status     = 'success';
 				$message .= __( 'Subscription has been activated!', 'sliced-invoices' );
 				$message .= '<br />';
-				$message .= __( 'Your PayPal Transaction ID is: ', 'sliced-invoices' ) . urldecode( $response['PROFILEID'] ) .'</p>';
+				$message .= __( 'Your PayPal Transaction ID is: ', 'sliced-invoices' ) . $payment_id .'</p>';
 				$message .= '</p>';
 			} elseif ( 'Completed' == $response["PAYMENTINFO_0_PAYMENTSTATUS"] ) {
+				$amount     = urldecode( $response["PAYMENTINFO_0_AMT"] );
+				$payment_id = urldecode( $response['PAYMENTINFO_0_TRANSACTIONID'] );
+				$status     = 'success';
 				$message .= __( 'Payment has been received!', 'sliced-invoices' );
 				$message .= '<br />';
-				$message .= __( 'Your PayPal Transaction ID is: ', 'sliced-invoices' ) . urldecode( $response["PAYMENTINFO_0_TRANSACTIONID"] ) .'</p>';
+				$message .= __( 'Your PayPal Transaction ID is: ', 'sliced-invoices' ) . $payment_id .'</p>';
 				$message .= '</p>';
 			} elseif ( 'Pending' == $response["PAYMENTINFO_0_PAYMENTSTATUS"] ) {
+				$amount     = urldecode( $response["PAYMENTINFO_0_AMT"] );
+				$payment_id = urldecode( $response['PAYMENTINFO_0_TRANSACTIONID'] );
+				$status     = 'pending';
 				$message .= __( 'Transaction complete, however payment is still pending.', 'sliced-invoices' );
 				$message .= '<br />';
 				$message .= __( 'You need to manually authorize this payment in your <a target="_new" href="http://www.paypal.com">PayPal Account</a>', 'sliced-invoices' );
 				$message .= '<br />';
-				$message .= __( 'Your PayPal Transaction ID is: ', 'sliced-invoices' ) . urldecode( $response["PAYMENTINFO_0_TRANSACTIONID"] ) .'</p>';
+				$message .= __( 'Your PayPal Transaction ID is: ', 'sliced-invoices' ) . $payment_id .'</p>';
 				$message .= '</p>';
 			}
 
@@ -406,12 +415,23 @@ class Sliced_Paypal {
 			/**
 			 * Update payment status
 			 */
-			$payment = get_post_meta( $id, '_sliced_payment', false );
-			$payment[0]['date']     = date("Y-m-d H:i:s");
-			$payment[0]['response'] = $response;
-			$payment[0]['clientip'] = Sliced_Shared::get_ip();
-			$payment[0]['status']   = $response["ACK"];
-			update_post_meta( $id, '_sliced_payment', $payment[0] );
+			$payments = get_post_meta( $id, '_sliced_payment', true );
+			if ( ! is_array( $payments ) ) {
+				$payments = array();
+			}
+			$payments[] = array(
+				'gateway'    => 'paypal',
+				'date'       => date("Y-m-d H:i:s"),
+				'amount'     => $amount,
+				'currency'   => $currency,
+				'payment_id' => $payment_id,
+				'status'     => $status,
+				'extra_data' => json_encode( array( 
+					'response'  => $response,
+					'clientip'  => Sliced_Shared::get_ip(),
+				) ),
+			);
+			update_post_meta( $id, '_sliced_payment', $payments );
 
 			/**
 			 * Print the message
@@ -700,13 +720,9 @@ class Sliced_Paypal {
 		if( 'SUCCESS' == strtoupper( $response["ACK"] ) || 'SUCCESSWITHWARNING' == strtoupper( $response["ACK"] ) ) {
 
 			/*
-			 * Update the payment fields for the invoice
+			 * Save the token
 			 */
-			$data = array(
-				'token' => rawurldecode( $response["TOKEN"] ),
-				'currency' => $gateway['currency'],
-			);
-			$this->update_post_payment_fields( $id, $data );
+			update_post_meta( $id, '_sliced_paypal_token', rawurldecode( $response["TOKEN"] ) );
 
 			/*
 			 * Redirect user to PayPal store with Token received.
@@ -724,28 +740,6 @@ class Sliced_Paypal {
 
 		}
 
-
-	}
-
-
-	/**
-	 * Update the post meta payment field.
-	 *
-	 * @since   2.0.0
-	 */
-	public function update_post_payment_fields( $id, $data ) {
-
-		update_post_meta( $id, '_sliced_paypal_token', $data['token'] );
-		update_post_meta( $id, '_sliced_payment', array(
-			'gateway'  => 'paypal',
-			'token'    => $data['token'],
-			'status'   => 'pending',
-			'response' => '',
-			'date'     => date("Y-m-d H:i:s"),
-			'amount'   => sliced_get_invoice_total( $id ),
-			'currency' => $data['currency'],
-			)
-		);
 
 	}
 

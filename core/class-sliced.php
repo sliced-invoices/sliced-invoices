@@ -187,6 +187,7 @@ class Sliced_Invoices {
 		$this->loader->add_action( 'init', $plugin_admin, 'new_taxonomy_quote_status', 1 );
 		$this->loader->add_action( 'init', $plugin_admin, 'new_taxonomy_invoice_status', 1 );
 		$this->loader->add_action( 'init', $plugin_admin, 'new_taxonomy_terms', 1 );
+		$this->loader->add_action( 'init', $plugin_admin, 'legacy_compatibility' );
 		$this->loader->add_action( 'init', $plugin_admin, 'settings_check' );
 
 		$this->loader->add_filter( 'admin_body_class', $plugin_admin, 'add_admin_body_class' );

@@ -64,6 +64,7 @@ class Sliced_Metaboxes {
 			'context'      => 'normal',
 			'priority'     => 'high',
 		) );
+		
 		$description->add_field( array(
 			'name'    => '',
 			'id'      => $prefix . 'description',
@@ -78,6 +79,9 @@ class Sliced_Metaboxes {
 				'quicktags' => true // load Quicktags, can be used to pass settings directly to Quicktags using an array()
 			),
 		) );
+		
+		do_action( 'sliced_after_description', $description );
+		
 
 		$line_items = new_cmb2_box( array(
 			'id'           => $prefix . 'line_items',
@@ -85,7 +89,7 @@ class Sliced_Metaboxes {
 			'object_types' => array( 'sliced_quote', 'sliced_invoice' ),
 		) );
 
-		$group_field_id = $line_items->add_field( array(
+		$line_items_group_id = $line_items->add_field( array(
 			'id'          => $prefix . 'items',
 			'type'        => 'group',
 			'options'     => array(
@@ -96,7 +100,7 @@ class Sliced_Metaboxes {
 			),
 		) );
 
-		$line_items->add_group_field( $group_field_id, array(
+		$line_items->add_group_field( $line_items_group_id, array(
 			'name'       => __( 'Qty', 'sliced-invoices' ),
 			'id'         => 'qty',
 			'type'       => 'text_small',
@@ -110,14 +114,15 @@ class Sliced_Metaboxes {
 				'min'         => '0'
 			),
 		) );
-		$line_items->add_group_field( $group_field_id, array(
+		
+		$line_items->add_group_field( $line_items_group_id, array(
 			'name' => __( 'Item Title', 'sliced-invoices' ),
 			'id'   => 'title',
 			'type' => 'text',
 		) );
 
 		//if ( sliced_hide_adjust_field() === false ) {
-			$line_items->add_group_field( $group_field_id, array(
+			$line_items->add_group_field( $line_items_group_id, array(
 				'name'       => __( 'Adjust (%)', 'sliced-invoices' ),
 				'id'         => 'tax',
 				'type'       => 'text_small',
@@ -131,7 +136,7 @@ class Sliced_Metaboxes {
 			) );
 		//}
 
-		$line_items->add_group_field( $group_field_id, array(
+		$line_items->add_group_field( $line_items_group_id, array(
 			'name'            => '<span class="pull-left">' . sprintf( __( 'Rate (%s)', 'sliced-invoices' ), sliced_get_currency_symbol() ) . '</span><span class="pull-right">' . sprintf( __( 'Amount (%s)', 'sliced-invoices' ), sliced_get_currency_symbol() ) . '</span>',
 			'id'              => 'amount',
 			'type'            => 'text_money',
@@ -146,7 +151,7 @@ class Sliced_Metaboxes {
 			),
 		) );
 
-		$line_items->add_group_field( $group_field_id, array(
+		$line_items->add_group_field( $line_items_group_id, array(
 			'name'        => __( 'Description', 'sliced-invoices' ),
 			'id'          => 'description',
 			'type'        => 'textarea_small',
@@ -157,7 +162,8 @@ class Sliced_Metaboxes {
 			'after_row' => apply_filters( 'sliced_after_item_row', sliced_get_pre_defined_items() ),
 		) );
 
-		do_action( 'sliced_after_line_items', $group_field_id, $line_items );
+		do_action( 'sliced_after_line_items', $line_items_group_id, $line_items );
+		
 
 		$line_items->add_field( array(
 			'name'  => '',
@@ -170,6 +176,99 @@ class Sliced_Metaboxes {
 			'id'   => $prefix . 'totals_for_ordering',
 			'type' => 'hidden',
 		) );
+		
+		do_action( 'sliced_after_line_items_totals', $line_items_group_id, $line_items );
+		
+		
+		$payments = new_cmb2_box( array(
+			'id'           => $prefix . 'payments',
+			'title'        => __( 'Payments', 'sliced-invoices' ),
+			'object_types' => array( 'sliced_invoice' ),
+			'closed'       => true,
+		) );
+		
+		$payments_group_id = $payments->add_field( array(
+			'id'          => $prefix . 'payment',
+			'type'        => 'group',
+			'options'     => array(
+				'group_title'   => __( 'Payment {#}', 'sliced-invoices' ), // {#} gets replaced by row number
+				'add_button'    => __( 'Add Another Payment', 'sliced-invoices' ),
+				'remove_button' => __( 'Remove Payment', 'sliced-invoices' ),
+				'sortable'      => true, // beta
+			),
+		) );
+
+		$payments->add_group_field( $payments_group_id, array(
+			'name'       => __( 'Date', 'sliced-invoices' ),
+			'id'         => 'date',
+			'type'        => 'text_date_timestamp',
+			'date_format' => 'Y-m-d',
+			//'default'     => array( 'Sliced_Shared', 'get_todays_date_iso8601' ),
+			'attributes'  => array(
+				//'required'  => 'required',
+			),
+		) );
+		
+		$payments->add_group_field( $payments_group_id, array(
+			'name'            => sprintf( __( 'Amount (%s)', 'sliced-invoices' ), sliced_get_currency_symbol() ),
+			'id'              => 'amount',
+			'type'            => 'text_money',
+			'sanitization_cb' => array( $this, 'money_sanitization' ),
+			'before_field'    => ' ',
+			//'after_field'     => '<span class="line_total_wrap"><span class="line_total">0.00</span></span>',
+			'attributes'      => array(
+				//'placeholder' => '0.00',
+				'maxlength'   => '10',
+				'class'       => 'payment_amount',
+				//'required'    => 'required',
+			),
+		) );
+		
+		$payment_methods = array_merge( array( '' => '' ), sliced_get_accepted_payment_methods() );
+		$payments->add_group_field( $payments_group_id, array(
+			'name'       => __( 'Payment Method', 'sliced-invoices' ),
+			'id'         => 'gateway',
+			'type'       => 'select',
+			'options'    => $payment_methods,
+		) );
+		
+		$payments->add_group_field( $payments_group_id, array(
+			'name'       => __( 'Payment ID', 'sliced-invoices' ),
+			'id'         => 'payment_id',
+			'type'       => 'text',
+		) );
+		
+		$payment_statuses = array_merge( array( '' => '' ), Sliced_Shared::get_payment_statuses() );
+		$payments->add_group_field( $payments_group_id, array(
+			'name'       => __( 'Status', 'sliced-invoices' ),
+			'id'         => 'status',
+			'type'       => 'select',
+			'options'    => $payment_statuses,
+		) );
+		
+		$payments->add_group_field( $payments_group_id, array(
+			'name'        => __( 'Memo', 'sliced-invoices' ),
+			'id'          => 'memo',
+			'type'        => 'textarea_small',
+			'attributes'  => array(
+				'cols' => 140,
+			),
+		) );
+		
+		$payments->add_group_field( $payments_group_id, array(
+			'name' => 'currency',
+			'id'   => 'currency',
+			'type' => 'hidden',
+		) );
+		
+		$payments->add_group_field( $payments_group_id, array(
+			'name' => 'extra_data',
+			'id'   => 'extra_data',
+			'type' => 'hidden',
+		) );
+		
+		do_action( 'sliced_after_payments', $payments_group_id, $payments );
+		
 
 		$quote_terms = new_cmb2_box( array(
 			'id'           => $prefix . 'the_quote_terms',
@@ -179,6 +278,7 @@ class Sliced_Metaboxes {
 			'priority'     => 'high',
 			'closed'       => true,
 		) );
+		
 		$quote_terms->add_field( array(
 			 'name'          => '',
 			 'desc'          => '',
@@ -195,6 +295,8 @@ class Sliced_Metaboxes {
 				'quicktags' => true // load Quicktags, can be used to pass settings directly to Quicktags using an array()
 			),
 		) );
+		
+		do_action( 'sliced_after_quote_terms', $quote_terms );
 
 
 		$invoice_terms = new_cmb2_box( array(
@@ -205,6 +307,7 @@ class Sliced_Metaboxes {
 			'priority'     => 'high',
 			'closed'       => true,
 		) );
+		
 		$invoice_terms->add_field( array(
 			'name'    => '',
 			'id'      => $prefix . 'invoice_terms',
@@ -220,6 +323,8 @@ class Sliced_Metaboxes {
 				'quicktags' => true // load Quicktags, can be used to pass settings directly to Quicktags using an array()
 			),
 		) );
+		
+		do_action( 'sliced_after_invoice_terms', $invoice_terms );
 
 	}
 

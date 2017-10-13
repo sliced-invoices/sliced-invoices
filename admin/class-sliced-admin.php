@@ -1920,6 +1920,40 @@ class Sliced_Admin {
 	
 	
 	/**
+	 * Catch-all place to do things to maintain compatibility with previous versions, older extensions, etc.
+	 *
+	 * @since 3.6.0
+	 */
+	public function legacy_compatibility() {
+	
+		// 1) Check if _sliced_payment postmeta is properly wrapped in an array
+		// for use by CMB2.  This is required as of Sliced Invoices v3.6.0,
+		// however if old extensions are still in use they may be saving the
+		// old format.  So we have to keep checking...
+		if ( Sliced_Shared::get_item_id() && sliced_get_the_type() === 'invoice' ) {
+			$id = Sliced_Shared::get_item_id();
+			$update_needed = false;
+			$payments = get_post_meta( $id, '_sliced_payment', true );
+			if ( is_array( $payments ) ) {
+				foreach ( $payments as $payment ) {
+					if ( ! is_array( $payment ) ) {
+						$update_needed = true;
+						break;
+					}
+				}
+			}
+			if ( $update_needed ) {
+				$payments = array( $payments );
+				update_post_meta( $id, '_sliced_payment', $payments );
+			}
+		}
+		
+	}
+	
+	
+	/**
+	 * Trigger notices for any issues with settings, etc.
+	 *
 	 * @since 3.5.0
 	 */
 	public function settings_check() {
