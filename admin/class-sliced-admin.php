@@ -778,7 +778,7 @@ class Sliced_Admin {
 		$invoice = get_option( 'sliced_invoices' );
 		$new_post_id = false;
 		
-		if ( $quotes['accepted_quote_action'] === 'convert' || $quotes['accepted_quote_action'] === 'convert_send' || empty( $quotes['accepted_quote_action'] ) ) {
+		if ( $quotes['accepted_quote_action'] === 'convert' || $quotes['accepted_quote_action'] === 'convert_send' || empty( $quotes['accepted_quote_action'] ) || ( isset( $_REQUEST['action'] ) && 'convert_quote_to_invoice' == $_REQUEST['action'] ) ) {
 			
 			/*
 			 * Convert
