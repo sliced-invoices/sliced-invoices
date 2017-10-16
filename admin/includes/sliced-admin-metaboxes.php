@@ -46,6 +46,17 @@ class Sliced_Metaboxes {
 		}
 
 	}
+	
+	/**
+	 * Only return default value if we don't have a post ID (in the 'post' query variable)
+	 *
+	 * @param  bool  $default On/Off (true/false)
+	 * @return mixed          Returns true or '', the blank default
+	 */
+	public static function cmb2_set_checkbox_default_for_new_post( $default ) {
+		return isset( $_GET['post'] ) ? '' : ( $default ? (string) $default : '' );
+	}
+	
 
 	/**
 	 * Main section metaboxes
@@ -157,13 +168,30 @@ class Sliced_Metaboxes {
 			'type'        => 'textarea_small',
 			'attributes'  => array(
 				'placeholder' => __( 'Brief description of the work carried out for this line item (optional)', 'sliced-invoices' ),
-				'cols' => 140,
+				'cols' => 80,
 			),
-			'after_row' => apply_filters( 'sliced_after_item_row', sliced_get_pre_defined_items() ),
+			
+		) );
+		
+		$line_items->add_group_field( $line_items_group_id, array(
+			'name'        => __( 'Taxable', 'sliced-invoices' ),
+			'id'          => 'taxable',
+			'type'        => 'checkbox',
+			'default'     => $this->cmb2_set_checkbox_default_for_new_post( true ),
+			'attributes'  => array(
+				'class'       => 'item_taxable',
+			),
 		) );
 
 		do_action( 'sliced_after_line_items', $line_items_group_id, $line_items );
 		
+		
+		$line_items->add_group_field( $line_items_group_id, array(
+			'name'          => 'pre_defined_items',
+			'id'            => 'pre_defined_items',
+			'type'          => 'text',
+			'render_row_cb' => 'sliced_get_pre_defined_items',
+		) );
 
 		$line_items->add_field( array(
 			'name'  => '',
@@ -807,7 +835,40 @@ class Sliced_Metaboxes {
 	}
 
 	public function display_the_line_totals() {
-		return apply_filters( 'sliced_display_the_line_totals', sliced_display_the_line_totals() );
+	
+		$type = Sliced_Shared::get_type();
+		if ( ! $type ) {
+			return;
+		}
+
+		$output = '<div class="alignright sliced_totals">';
+		$output .= '<h3>' . sprintf( __( '%s Totals', 'sliced-invoices' ), esc_html( sliced_get_label() ) ) .'</h3>';
+		
+		$output = apply_filters( 'sliced_admin_display_totals_after_header', $output );
+		
+		$output .= '<div class="sub">' . __( 'Sub Total', 'sliced-invoices' ) . ' <span class="alignright"><span id="sliced_sub_total">0.00</span></span></div>';
+		
+		$output = apply_filters( 'sliced_admin_display_totals_after_subtotal', $output );
+		
+		$output .= '<div class="tax">' . sliced_get_tax_name() . ' <span class="alignright"><span id="sliced_tax">0.00</span></span></div>';
+		
+		$output = apply_filters( 'sliced_admin_display_totals_after_tax', $output );
+		
+		$output .= '<div class="total">' . __( 'Total', 'sliced-invoices' ) . ' <span class="alignright"><span id="sliced_total">0.00</span></span></div>';
+		
+		$output = apply_filters( 'sliced_admin_display_totals_after_total', $output );
+		
+		$output .= '</div>';
+
+		// 2017-10-15 filter 'sliced_get_line_item_totals' may be removed in the near future
+		// it is currently used by the following extensions: Additional Tax (<=1.0.0), Discounts and Partial Payments
+		$output = apply_filters( 'sliced_get_line_item_totals', $output );
+		
+		// 2017-10-15 filter 'sliced_display_the_line_totals' may be renamed in the near future
+		// it is currently used by the following extensions: Woo Invoices, Deposit Invoices
+		// proposed new name: 'sliced_admin_display_totals'
+		return apply_filters( 'sliced_display_the_line_totals', $output );
+		
 	}
 
 	public function get_quote_terms() {

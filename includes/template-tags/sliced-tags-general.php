@@ -193,32 +193,10 @@ if ( ! function_exists( 'sliced_get_pre_defined_items' ) ) :
 
 	function sliced_get_pre_defined_items() {
 		$output = Sliced_Admin::get_pre_defined_items();
-		return apply_filters( 'sliced_get_pre_defined_items', $output );
+		echo apply_filters( 'sliced_get_pre_defined_items', $output );
 	}
 
 endif;
-
-
-if ( ! function_exists( 'sliced_display_the_line_totals' ) ) :
-
-	function sliced_display_the_line_totals() {
-
-		$type = Sliced_Shared::get_type();
-		if ( ! $type )
-			return;
-
-		$output = '<div class="alignright sliced_totals">';
-		$output .= '<h3>' . sprintf( __( '%s Totals', 'sliced-invoices' ), esc_html( sliced_get_label() ) ) .'</h3>';
-		$output .= '<div class="sub">' . __( 'Sub Total', 'sliced-invoices' ) . ' <span class="alignright"><span id="sliced_sub_total">0.00</span></span></div>';
-		$output .= '<div class="tax">' . sliced_get_tax_name() . ' <span class="alignright"><span id="sliced_tax">0.00</span></span></div>';
-		$output .= '<div class="total">' . __( 'Total', 'sliced-invoices' ) . ' <span class="alignright"><span id="sliced_total">0.00</span></span></div>
-			</div>';
-
-		return apply_filters( 'sliced_get_line_item_totals', $output );
-	}
-
-endif;
-
 
 
 if ( ! function_exists( 'sliced_print_message' ) ) :

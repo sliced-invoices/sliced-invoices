@@ -5,8 +5,86 @@
 		window.sliced_invoices = {};
 	}
 	
+	
+	/**
+	 * Hooks
+	 */
+	sliced_invoices.hooks = {
+		'sliced_invoice_totals': []
+	};
+	
+	
+	/**
+	 * Utils
+	 */
+	sliced_invoices.utils = {
+		symbol:       sliced_payments.currency_symbol,
+		position:     sliced_payments.currency_pos,
+		thousand_sep: sliced_payments.thousand_sep,
+		decimal_sep:  sliced_payments.decimal_sep,
+		decimals:     parseInt( sliced_payments.decimals )
+	}
+	
+	// sorts out the number to enable calculations
+	sliced_invoices.utils.rawNumber = function (x) {
+		// removes the thousand seperator
+		var parts = x.toString().split(sliced_invoices.utils.thousand_sep);
+		parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '');
+		var amount = parts.join('');
+		// makes the decimal seperator a period
+		var output = amount.toString().replace(/\,/g, '.');
+		output = parseFloat( output );
+		if ( isNaN( output ) ) {
+			output = 0;
+		}
+		return output;
+	}
+	
 
-    function clearLineTotal(){
+	// formats number into users format
+	sliced_invoices.utils.formattedNumber = function (nStr) {
+		var num = nStr.split('.');
+		var x1 = num[0];
+		var x2 = num.length > 1 ? sliced_invoices.utils.decimal_sep + num[1] : '';
+		var rgx = /(\d+)(\d{3})/;
+		while (rgx.test(x1)) {
+			x1 = x1.replace(rgx, '$1' + sliced_invoices.utils.thousand_sep + '$2');
+		}
+		return x1 + x2;
+	}
+
+
+	// format the amounts
+	sliced_invoices.utils.formattedAmount = function (amount) {
+		// do the symbol position formatting
+		var formatted = 0;
+		var amount = new Decimal( amount );
+		amount = amount.toFixed( sliced_invoices.utils.decimals );
+		switch (sliced_invoices.utils.position) {
+			case 'left':
+				formatted = sliced_invoices.utils.symbol + sliced_invoices.utils.formattedNumber( amount );
+				break;
+			case 'right':
+				formatted = sliced_invoices.utils.formattedNumber( amount ) + sliced_invoices.utils.symbol;
+				break;
+			case 'left_space':
+				formatted = sliced_invoices.utils.symbol + ' ' + sliced_invoices.utils.formattedNumber( amount );
+				break;
+			case 'right_space':
+				formatted = sliced_invoices.utils.formattedNumber( amount ) + ' ' + sliced_invoices.utils.symbol;
+				break;
+			default:
+				formatted = sliced_invoices.utils.symbol + sliced_invoices.utils.formattedNumber( amount );
+				break;
+		}
+		return formatted;
+	}
+	
+
+    /**
+	 * Totals
+	 */
+	function clearLineTotal(){
 
         var lastRow = $(this).closest('.cmb-row').prev();
         var index   = $(lastRow).data('iterator');
@@ -17,143 +95,117 @@
     $(document).on( 'click', '.cmb-add-group-row', clearLineTotal );
 
 
-	/**
-     * calculate the totals on the fly when editing or adding a quote or invoice
-     */
+	// calculate the totals on the fly when editing or adding a quote or invoice
  	function workOutTotals(){
 
-        var global_tax      = sliced_payments.tax != 0 ? sliced_payments.tax / 100 : 0;
-        var symbol          = sliced_payments.currency_symbol;
-        var position        = sliced_payments.currency_pos;
-        var thousand_sep    = sliced_payments.thousand_sep;
-        var decimal_sep     = sliced_payments.decimal_sep;
-        var decimals        = parseInt( sliced_payments.decimals );
-
-        // sorts out the number to enable calculations
-        function rawNumber(x) {
-            // removes the thousand seperator
-            var parts = x.toString().split(thousand_sep);
-            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '');
-            var amount = parts.join('');
-            // makes the decimal seperator a period
-            var output = amount.toString().replace(/\,/g, '.');
-            return parseFloat( output );
-        }
-
-        // formats number into users format
-        function formattedNumber(nStr) {
-            var num = nStr.split('.');
-            var x1 = num[0];
-            var x2 = num.length > 1 ? decimal_sep + num[1] : '';
-            var rgx = /(\d+)(\d{3})/;
-            while (rgx.test(x1)) {
-                x1 = x1.replace(rgx, '$1' + thousand_sep + '$2');
-            }
-            return x1 + x2;
+		sliced_invoices.totals = {
+			'sub_total':         new Decimal( 0 ),
+			'sub_total_taxable': new Decimal( 0 ),
+			'tax':               new Decimal( 0 ),
+			'total':             new Decimal( 0 )
+		};
+		
+		var global_tax = new Decimal( 0 );
+        if ( sliced_payments.tax != 0 ) {
+			global_tax = new Decimal( sliced_payments.tax );
+			global_tax = global_tax.div( 100 );
 		}
 
+        // work out the totals
+        $('.sliced input.item_amount').each( function() {
 
-		// format the amounts
-        function formattedAmount(amount) {
-            // do the symbol position formatting
-            var formatted = 0;
-            var amount = new Decimal( amount );
-			amount = amount.toFixed( decimals );
-            switch (position) {
-                case 'left':
-                    formatted = symbol + formattedNumber( amount );
-                    break;
-                case 'right':
-                    formatted = formattedNumber( amount ) + symbol;
-                    break;
-                case 'left_space':
-                    formatted = symbol + ' ' + formattedNumber( amount );
-                    break;
-                case 'right_space':
-                    formatted = formattedNumber( amount ) + ' ' + symbol;
-                    break;
-                default:
-                    formatted = symbol + formattedNumber( amount );
-                    break;
-            }
-            return formatted;
-        }
-
-        // work out the line total
-        var sum = $.map($('.sliced input.item_amount'), function(item) {
-
-            var group       = $(item).parents('.cmb-repeatable-grouping');
-            var index       = group.data('iterator');
-
-	    	var amount      = rawNumber( item.value );
-            var tax_perc    = rawNumber( $(group).find('#_sliced_items_' + index + '_tax').val() );
-            var qty         = rawNumber( $(group).find('#_sliced_items_' + index + '_qty').val() );
-
-            if( isNaN( tax_perc ) ) { tax_perc = 0; }
+            var group = $(this).parents('.cmb-repeatable-grouping');
+            var index = group.data('iterator');
+			
+	    	var qty = new Decimal( sliced_invoices.utils.rawNumber( $(group).find('#_sliced_items_' + index + '_qty').val() ) );
+			var amt = new Decimal( sliced_invoices.utils.rawNumber( $(this).val() ) );
+			
+			// for historical reasons, the "adjust" field is named "tax" internally,
+			// but it is unrelated to the actual tax field(s) in use today.
+            var adj = new Decimal( sliced_invoices.utils.rawNumber( $(group).find('#_sliced_items_' + index + '_tax').val() ) );
+            
+			var taxable = $(group).find('#_sliced_items_' + index + '_taxable').is(":checked");
 
             // work out the line totals and taxes/discounts
-            var line_tax_perc   = tax_perc != 0 ? tax_perc / 100 : 0; // 0.10
-            var line_sub_total  = qty * amount; // 100
-            var line_tax_amt    = line_sub_total * line_tax_perc; // 10
-            var line_total      = line_sub_total + line_tax_amt; // 110
-
-            // display 0 instead of NaN
-            if( isNaN( line_total ) ) { line_total = 0; }
+            var line_adj        = adj.equals( 0 ) ? adj : adj.div( 100 ); // 0.10
+            var line_sub_total  = qty.times( amt ); // 100
+            var line_adj_amt    = line_sub_total.times( line_adj ); // 10
+            var line_total      = line_sub_total.plus( line_adj_amt ); // 110
 
             // display the calculated amount
-            $( item ).parents('.cmb-type-text-money').find('.line_total').html( formattedAmount( line_total ) );
-            // console.log(parseFloat(line_total));
-	        return parseFloat( line_total );
+            $(this).parents('.cmb-type-text-money').find('.line_total').html( sliced_invoices.utils.formattedAmount( line_total.toNumber() ) );
+            
+			sliced_invoices.totals.sub_total = sliced_invoices.totals.sub_total.plus( line_total );
+			if ( taxable ) {
+				sliced_invoices.totals.sub_total_taxable = sliced_invoices.totals.sub_total_taxable.plus( line_total );
+			}
 
-	    }).reduce(function(a, b) {
-	        return a + b;
-	    }, 0);
+	    });
 
-        // display 0 instead of NaN
-	    if( isNaN( sum ) ) { sum = 0; }
-
-        // add global tax if any
-        if ( global_tax > 0 ) {
-            var raw_tax = sum * global_tax;
-            var raw_total = sum + raw_tax;
+        // add global tax, if any
+        if ( global_tax != 0 ) {
+			sliced_invoices.totals.tax = sliced_invoices.totals.sub_total_taxable.times( global_tax );
+			sliced_invoices.totals.total = sliced_invoices.totals.sub_total.plus( sliced_invoices.totals.tax );
         } else {
-            var raw_tax = 0;
-            var raw_total = sum;
+            sliced_invoices.totals.total = sliced_invoices.totals.sub_total;
         }
 		
-		/* Begin DAPP rounding fix.  Temporary pending new DAPP update */
-		if ( typeof window.SlicedDiscountsAndPartialPayment !== "undefined" ) {
-			$('.sliced_discount_value').each( function() {
-				var val = $( this ).val();
-				if ( val > 0 ) {
-					var temp_val = new Decimal(raw_total);
-					raw_total = temp_val.minus(val);
+		// execute hooks from external add-ons, if any
+		$(sliced_invoices.hooks.sliced_invoice_totals).each( function( key, val ) {
+			val();
+		});
+		
+		// process any adjustments from external add-ons here
+		// (avoids any potential race condition by doing this only here)
+		if ( typeof sliced_invoices.totals.addons !== "undefined" ) {
+			$.each( sliced_invoices.totals.addons, function( key, addon ) {
+				if ( typeof addon._adjustments !== "undefined" ) {
+					$.each( addon._adjustments, function( key, adjustment ) {
+						//var adjustment = $(this);
+						var type   = typeof adjustment.type !== "undefined" ? adjustment.type : false;
+						var source = typeof adjustment.source !== "undefined" ? adjustment.source : false;
+						var target = typeof adjustment.target !== "undefined" ? adjustment.target : false;
+						if ( ! type || ! source || ! target ) {
+							return; // if missing required fields, skip
+						}
+						if ( typeof addon[ source ] === "undefined" ) {
+							return; // if can't map source, skip
+						}
+						if ( typeof sliced_invoices.totals[ target ] === "undefined" ) {
+							return; // if can't map target, skip
+						}
+						// we go on...
+						switch ( type ) {
+							case 'add':
+								sliced_invoices.totals[ target ] = sliced_invoices.totals[ target ].plus( addon[ source ] );
+								break;
+							case 'subtract':
+								sliced_invoices.totals[ target ] = sliced_invoices.totals[ target ].minus( addon[ source ] );
+								break;
+						}
+					});
 				}
 			});
 		}
-		/* End DAPP rounding fix */
 		
-        $("#_sliced_line_items #sliced_sub_total").html( formattedAmount( sum ) );
-        $("#_sliced_line_items #sliced_tax").html( formattedAmount( raw_tax ) );
-        $("#_sliced_line_items #sliced_total").html( formattedAmount( raw_total ) );
-        $("input#_sliced_totals_for_ordering").val( formattedAmount( raw_total ) );
+        $("#_sliced_line_items #sliced_sub_total").html( sliced_invoices.utils.formattedAmount( sliced_invoices.totals.sub_total.toNumber() ) );
+        $("#_sliced_line_items #sliced_tax").html( sliced_invoices.utils.formattedAmount( sliced_invoices.totals.tax.toNumber() ) );
+        $("#_sliced_line_items #sliced_total").html( sliced_invoices.utils.formattedAmount( sliced_invoices.totals.total.toNumber() ) );
+        $("input#_sliced_totals_for_ordering").val( sliced_invoices.utils.formattedAmount( sliced_invoices.totals.total.toNumber() ) );
 
     };
 
-	/* DAPP rounding fix, part 2.  Temporary pending new DAPP update */
-	//$(document).on('keyup change', '.sliced input.item_amount, .sliced input.item_qty, .sliced input.item_tax', function () {
-	//	workOutTotals();
-	//});
-	$(document).on('keyup change', '.sliced_discount_value, .sliced input.item_amount, .sliced input.item_qty, .sliced input.item_tax, select.pre_defined_products', function () {
-		setTimeout( function(){ 
-			workOutTotals();
-		}, 2 );
+	$(document).on('keyup change', '.sliced_discount_value, .sliced input.item_amount, .sliced input.item_qty, .sliced input.item_tax, .sliced input.item_taxable, .sliced select.pre_defined_products', function () {
+		workOutTotals();
 	});
-	/* End DAPP rounding fix, part 2 */
+	
+	$(document).on('keyup change', '#_sliced_tax', function() {
+		sliced_payments.tax = sliced_invoices.utils.rawNumber( $(this).val() );
+		workOutTotals();
+	});
+	
 
-    /**
-     * add pre-defined items from select into the empty line item fields
-     */
+    // add pre-defined items from select into the empty line item fields
     $(document).on('change', 'select.pre_defined_products', function () {
 
         var title   = $(this).find(':selected').data('title');
@@ -177,17 +229,12 @@
      * on page load
      */
     $(function(){
-		/* DAPP rounding fix, part 3.  Temporary pending new DAPP update */
-        //workOutTotals();
-		setTimeout( function(){ 
-			workOutTotals();
-		}, 2 );
-		/* End DAPP rounding fix, part 3 */
+		workOutTotals();
     });
 
 
     /**
-     * fetch email preview
+     * email preview
      */
     $(function(){
 

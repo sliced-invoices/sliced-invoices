@@ -392,48 +392,87 @@ class Sliced_Shared {
 		if ( ! $id ) {
 			$id = Sliced_Shared::get_item_id( $id );
 		}
+		
+		$totals = array(
+			'sub_total'         => 0,
+			'sub_total_taxable' => 0,
+			'tax'               => 0,
+			'total'             => 0,
+		);
 
 	    $items = self::get_line_items( $id );
-
+		
 	    // if there are no line items, simply return zero for all amounts
 	    if( ! $items || $items == null || empty( $items ) || empty( $items[0] ) ) {
-	        return array(
-	        	'sub_total' => 0,
-	        	'tax' 		=> 0,
-	        	'total' 	=> 0,
-	        );
+	        return $totals;
 	    }
-
-	    $total = array();
+	    
 	    foreach ( $items[0] as $value ) {
 
 	    	$qty = isset( $value['qty'] ) ? self::get_raw_number( $value['qty'] ) : 0;
 	    	$amt = isset( $value['amount'] ) ? self::get_raw_number( $value['amount'] ) : 0;
-	    	$tax = isset( $value['tax'] ) ? self::get_raw_number( $value['tax'] ) : 0;
+	    	
+			// for historical reasons, the "adjust" field is named "tax" internally,
+			// but it is unrelated to the actual tax field(s) in use today.
+			$adj = isset( $value['tax'] ) ? self::get_raw_number( $value['tax'] ) : 0;
 
-	        $sub_total 	= self::get_line_item_sub_total( $qty, $amt, $tax );
-	        $total[]    = $sub_total;
+	        $line_total = self::get_line_item_sub_total( $qty, $amt, $adj );
+			
+			$totals['sub_total'] = $totals['sub_total'] + $line_total;
+			if ( isset( $value['taxable'] ) && $value['taxable'] === 'on' ) {
+				$totals['sub_total_taxable'] = $totals['sub_total_taxable'] + $line_total;
+			}
 
 	    }
-
-	    $sub_total = array_sum( $total );
 
 	   	$global_tax = apply_filters( 'sliced_totals_global_tax', self::get_tax_amount( $id ), $id );
 
 	    if( $global_tax == '' || $global_tax == '0' || $global_tax == null || $global_tax == '0.00' ) {
-	        $total = $sub_total;
-	        $tax_amount = '0';
+	        $totals['total'] = $totals['sub_total'];
 	    } else {
-	        $tax_percentage = $global_tax / 100;
-	        $tax_amount    	= $sub_total * $tax_percentage;
-	        $total      	= $sub_total + $tax_amount;
+	        $tax_percentage  = $global_tax / 100;
+	        $totals['tax']   = $totals['sub_total_taxable'] * $tax_percentage;
+	        $totals['total'] = $totals['sub_total'] + $totals['tax'];
 	    }
-
-	    return apply_filters( 'sliced_invoice_totals', array(
-	        'sub_total' 		=> $sub_total,
-	        'tax' 				=> $tax_amount,
-	        'total' 			=> $total,
-	    ), $id );
+		
+		$totals = apply_filters( 'sliced_invoice_totals', $totals, $id );
+		
+		// process any adjustments from external add-ons here
+		// (avoids any potential race condition by doing this only here)
+		if ( isset( $totals['addons'] ) && is_array( $totals['addons'] ) ) {
+			foreach ( $totals['addons'] as $addon ) {
+			
+				if ( isset( $addon['_adjustments'] ) && is_array( $addon['_adjustments'] ) ) {
+					foreach ( $addon['_adjustments'] as $adjustment ) {
+						$type   = isset( $adjustment['type'] ) ? $adjustment['type'] : false;
+						$source = isset( $adjustment['source'] ) ? $adjustment['source'] : false;
+						$target = isset( $adjustment['target'] ) ? $adjustment['target'] : false;
+						if ( ! $type || ! $source || ! $target ) {
+							continue; // if missing required fields, skip
+						}
+						if ( ! isset( $addon[ $source ] ) ) {
+							continue; // if can't map source, skip
+						}
+						if ( ! isset( $totals[ $target ] ) ) {
+							continue; // if can't map target, skip
+						}
+						// we go on...
+						switch ( $type ) {
+							case 'add':
+								$totals[ $target ] = $totals[ $target ] + $addon[ $source ];
+								break;
+							case 'subtract':
+								$totals[ $target ] = $totals[ $target ] - $addon[ $source ];
+								break;
+						}
+						
+					}
+				}
+			
+			}
+		}
+		
+		return $totals;
 
 	}
 
@@ -449,7 +488,6 @@ class Sliced_Shared {
         $line_sub_total  	= $qty * $amt; // 100
         $line_tax_amt    	= $line_sub_total * $line_tax_perc; // 10
         $line_total      	= $line_sub_total + $line_tax_amt; // 110
-        // pp($amt);
 	    return apply_filters( 'sliced_get_line_item_sub_total', $line_total );
 	}
 

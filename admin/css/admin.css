@@ -289,8 +289,14 @@
   width: 100%;
 }
 
-.sliced .repeatable input, .sliced .repeatable textarea, .sliced .repeatable select {
+.sliced .repeatable input[type="text"], .sliced .repeatable textarea, .sliced .repeatable select {
   padding: 3px 5px !important;
+}
+.sliced .repeatable .cmb-type-checkbox {
+	width: 12%;
+	float: left;
+	margin: 0;
+	text-align: center;
 }
 .sliced .repeatable .cmb-type-select {
   width: 12%;
@@ -300,9 +306,9 @@
 .sliced .repeatable .cmb-type-select select {
 	margin: 0;
 }
-.sliced .repeatable .cmb-type-text-date-timestamp {
-  width: 12%;
+.sliced .repeatable .cmb-type-text {
   float: left;
+  width: 52%;
   margin: 0;
 }
 .sliced .repeatable .cmb-type-text-small {
@@ -310,17 +316,21 @@
   float: left;
   margin: 0;
 }
-.sliced .repeatable .cmb-type-text {
+.sliced .repeatable .cmb-type-text-date-timestamp {
+  width: 12%;
   float: left;
-  width: 52%;
   margin: 0;
 }
-
-/* Money field */
+.sliced #_sliced_items_repeat .cmb-type-textarea-small {
+	clear: both;
+	float: left;
+	width: 64.3%;
+	margin: 0 0 20px 0;
+}
 .sliced #_sliced_items_repeat .cmb-type-text-money {
     width: 23%;
-    float: right;
-    margin: 0;
+    float: left;
+    margin: 0 0 10px 0;
 }
 .sliced #_sliced_items_repeat .cmb-type-text-money .cmb-td {
   line-height: 2.2;
@@ -343,7 +353,7 @@
 }
 .sliced #_sliced_items_repeat .cmb-type-text-money input {
     float: left;
-    margin: 0;
+    margin: 1px 0 0 0;
     width: 40%;
 }
 .sliced #_sliced_items_repeat .cmb-type-text-money .line_total_wrap {
@@ -352,6 +362,10 @@
 }
 .sliced #_sliced_items_repeat .cmb-type-text-money .line_total_wrap  .currency_symbol {
   float: none;
+}
+.sliced #_sliced_items_repeat .cmb-type-checkbox .cmb-td input {
+  float: none;
+  margin: 10px auto !important;
 }
 
 .sliced #_sliced_payment_repeat .cmb-type-text-money {
@@ -370,10 +384,10 @@
   width: 99%;
 }
 .sliced .repeatable textarea {
-  width: 100%;
+  width: 99%;
   height: 45px;
 }
-.sliced .repeatable .cmb_textarea_small {
+.sliced .repeatable .cmb-textarea-small {
   color: #555;
   font-size: 12px;
 }
@@ -381,8 +395,9 @@
   padding: 5px 0 10px;
 }
 .sliced .pre_defined_products {
-  float: left;
-  margin: 5px 20px 0 0;
+	clear: both;
+	float: left;
+	margin: 0 20px 0 0;
 }
 .sliced .cmb-row.cmb-type-title.cmb2-id--sliced-calc-total {
   margin: -50px 0 0;
@@ -836,32 +851,63 @@ td.taxonomy-invoice_status a[href*="cancelled"], td.taxonomy-quote_status a[href
 }
 
 @media only screen and (min-width : 300px) and (max-width : 489px) {
-  #_sliced_items_repeat .cmb-nested .cmb-row:nth-child(1) {
-    width: 30%;
-  }
-  #_sliced_items_repeat .cmb-nested .cmb-row:nth-child(2) {
-    width: 65%;
-    float: right;
-  }
-  #_sliced_items_repeat .cmb-nested .cmb-row:nth-child(3) {
-    clear: left;
-    width: 30%;
-    margin: 10px 0;
-  }
-  #_sliced_items_repeat .cmb-nested .cmb-row:nth-child(4) {
-    width: 65%;
-    margin: 10px 0;
-  }
-  .sliced .pre_defined_products {
-    margin: 10px 0;
-    width: 100%;
-  }
-  .sliced .cmb-row.cmb-type-title.cmb2-id--sliced-calc-total {
-    margin: 0;
-  }
-  .sliced .sliced_totals {
-    min-width: 100%;
-  }
+	#_sliced_items_repeat .cmb-nested .cmb-row:nth-child(1) {
+		width: 30%;
+	}
+	#_sliced_items_repeat .cmb-nested .cmb-row:nth-child(2) {
+		width: 65%;
+		float: right;
+	}
+	#_sliced_items_repeat .cmb-nested .cmb-row:nth-child(3) {
+		clear: left;
+		width: 30%;
+		margin: 10px 0;
+	}
+	#_sliced_items_repeat .cmb-nested .cmb-row:nth-child(4) {
+		width: 65%;
+		margin: 10px 0;
+	}
+	#_sliced_payment_repeat .cmb-nested .cmb-row:nth-child(1) {
+		width: 49%;
+		margin: 10px 0;
+	}
+	#_sliced_payment_repeat .cmb-nested .cmb-row:nth-child(2) {
+		width: 49%;
+		margin: 10px 0;
+	}
+	#_sliced_payment_repeat .cmb-nested .cmb-row:nth-child(3) {
+		clear: both;
+		width: 49%;
+		margin: 10px 0;
+	}
+	#_sliced_payment_repeat .cmb-nested .cmb-row:nth-child(4) {
+		width: 49%;
+		margin: 10px 0;
+	}
+	#_sliced_payment_repeat .cmb-nested .cmb-row:nth-child(5) {
+		clear: both;
+		width: 49%;
+		margin: 10px 0;
+	}
+	.sliced .repeatable .cmb-th label:after {
+		border-bottom: none;
+	}
+	.sliced .repeatable .cmb-type-textarea-small {
+		width: 100%;
+	}
+	.sliced .repeatable .cmb-type-checkbox {
+		width: 50%;
+	}
+	.sliced .pre_defined_products {
+		margin: 10px 0;
+		width: 100%;
+	}
+	.sliced .cmb-row.cmb-type-title.cmb2-id--sliced-calc-total {
+		margin: 0;
+	}
+	.sliced .sliced_totals {
+		min-width: 100%;
+	}
 
   .sliced #TB_window {
     height: 90% !important;

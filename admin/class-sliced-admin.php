@@ -1751,7 +1751,7 @@ class Sliced_Admin {
 
 		endif;
 
-		$set_items = "<select class='pre_defined_products' id='pre_defined_select'>" . implode( "", $price_array ) . "</select>";
+		$set_items = "<select class='pre_defined_products'>" . implode( "", $price_array ) . "</select>";
 
 		return $set_items;
 
