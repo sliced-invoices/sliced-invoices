@@ -123,6 +123,12 @@ class Sliced_Logs {
 		// if the post is being updated, return
 		if( $post->post_date != $post->post_modified )
 			return;
+			
+		// extra check to prevent duplicate entries
+		$log = get_post_meta( $id, '_sliced_log', true );
+		if ( is_array( $log ) && count( $log ) > 0 ) {
+			return;
+		}
 
 		$meta_value = array(
 			'type' => 'invoice_created',
