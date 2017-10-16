@@ -1835,7 +1835,7 @@ class Sliced_Admin {
 		$args 	= array (
 			'post_type'     => $post_type,
 			'posts_per_page'=> -1,
-			'post_status'   => 'p`ublish',
+			'post_status'   => 'publish',
 			);
 		$the_query = new WP_Query( apply_filters( 'sliced_export_csv_query', $args ) );
 
