@@ -272,6 +272,9 @@ class Sliced_Metaboxes {
 			'id'         => 'status',
 			'type'       => 'select',
 			'options'    => $payment_statuses,
+			'attributes'      => array(
+				'class'       => 'payment_status',
+			),
 		) );
 		
 		$payments->add_group_field( $payments_group_id, array(
@@ -854,7 +857,13 @@ class Sliced_Metaboxes {
 		
 		$output = apply_filters( 'sliced_admin_display_totals_after_tax', $output );
 		
-		$output .= '<div class="total">' . __( 'Total', 'sliced-invoices' ) . ' <span class="alignright"><span id="sliced_total">0.00</span></span></div>';
+		$output .= '<div class="payments">' . __( 'Paid', 'sliced-invoices' )
+					. ' <a id="sliced-totals-payments-edit" href="#"><small>' . __( 'edit', 'sliced-invoices' ) . '</small></a>'
+					. ' <span class="alignright"><span id="sliced_payments">0.00</span></span></div>';
+		
+		$output = apply_filters( 'sliced_admin_display_totals_after_payments', $output );
+		
+		$output .= '<div class="total">' . __( 'Total Due', 'sliced-invoices' ) . ' <span class="alignright"><span id="sliced_total">0.00</span></span></div>';
 		
 		$output = apply_filters( 'sliced_admin_display_totals_after_total', $output );
 		

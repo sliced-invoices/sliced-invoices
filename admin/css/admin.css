@@ -427,6 +427,14 @@
 .sliced .sliced_totals .alignright > span {
   margin: 0 0 0 3px;
 }
+.sliced .sliced_totals .payments #sliced-totals-payments-edit {
+	margin-left: .2em;
+	vertical-align: bottom;
+	display: inline-block;
+}
+.sliced .sliced_totals .payments #sliced_payments {
+	color: red;
+}
 .sliced .sliced_totals .total {
   background: #f8f8f8 none repeat scroll 0 0;
   font-weight: bold;

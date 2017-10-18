@@ -307,7 +307,11 @@ class Sliced_Shared {
 	 *
 	 * @since   2.0.0
 	 */
-	public static function get_raw_number( $amount ) {
+	public static function get_raw_number( $amount, $id = 0 ) {
+		
+		$currency   = sliced_get_currency_symbol( $id );
+		$amount     = str_replace( $currency, '', $amount );
+		
 		$thou_sep 	= sliced_get_thousand_seperator();
 	    $dec_sep 	= sliced_get_decimal_seperator();
 
@@ -370,7 +374,6 @@ class Sliced_Shared {
 	}
 
 
-
 	/**
 	 * Get the line items.
 	 *
@@ -378,6 +381,17 @@ class Sliced_Shared {
 	 */
 	public static function get_line_items( $id = 0 ) {
 		$items = self::get_sliced_meta( $id, '_sliced_items', false );
+		return $items;
+	}
+
+
+	/**
+	 * Get the payments.
+	 *
+	 * @since   3.6.0
+	 */
+	public static function get_payments( $id = 0 ) {
+		$items = self::get_sliced_meta( $id, '_sliced_payment', false );
 		return $items;
 	}
 
@@ -397,7 +411,9 @@ class Sliced_Shared {
 			'sub_total'         => 0,
 			'sub_total_taxable' => 0,
 			'tax'               => 0,
+			'payments'          => 0,
 			'total'             => 0,
+			'total_due'         => 0,
 		);
 
 	    $items = self::get_line_items( $id );
@@ -435,7 +451,24 @@ class Sliced_Shared {
 	        $totals['total'] = $totals['sub_total'] + $totals['tax'];
 	    }
 		
+		$payments = self::get_payments( $id );
+		$payments_total = 0;
+		
+		if ( is_array( $payments ) && isset( $payments[0] ) && is_array( $payments[0] ) ) {
+			foreach ( $payments[0] as $payment ) {
+				$amount = isset( $payment['amount'] ) ? self::get_raw_number( $payment['amount'], $id ) : 0;
+				$payments_total = $payments_total + $amount;
+			}
+			$totals['payments'] = $payments_total;
+		}
+		
+		// apply filters
 		$totals = apply_filters( 'sliced_invoice_totals', $totals, $id );
+		
+		// patch for Deposit Invoices extension < 2.2.0, which overwrites $totals
+		if ( defined( 'SI_DEPOSIT_VERSION' ) && version_compare( SI_DEPOSIT_VERSION, '2.2.0', '<=' ) ) {
+			$totals['payments'] = $payments_total;
+		}
 		
 		// process any adjustments from external add-ons here
 		// (avoids any potential race condition by doing this only here)
@@ -471,6 +504,9 @@ class Sliced_Shared {
 			
 			}
 		}
+
+		// save this for last
+		$totals['total_due'] = $totals['total'] - $totals['payments'];
 		
 		return $totals;
 
