@@ -87,7 +87,7 @@ do_action( 'sliced_before_quote_display' ); ?><!doctype html>
 				</div>
 
 				<div class="col-xs-12 col-sm-5 sliced-totals">
-					<?php sliced_display_invoice_totals(); ?>
+					<?php sliced_display_quote_totals(); ?>
 				</div>
 			</div>
 		</div><!-- END row -->

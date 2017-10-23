@@ -204,6 +204,14 @@ class Sliced_Metaboxes {
 			'id'   => $prefix . 'totals_for_ordering',
 			'type' => 'hidden',
 		) );
+		$line_items->add_field( array(
+			'id'         => 'sliced_invoice_discount',
+			'type'       => 'hidden',
+			'attributes' => array(
+				'class' => 'sliced_discount_value',
+				'step'  => 'any',
+			),
+		) );
 		
 		do_action( 'sliced_after_line_items_totals', $line_items_group_id, $line_items );
 		
@@ -845,27 +853,50 @@ class Sliced_Metaboxes {
 		}
 
 		$output = '<div class="alignright sliced_totals">';
-		$output .= '<h3>' . sprintf( __( '%s Totals', 'sliced-invoices' ), esc_html( sliced_get_label() ) ) .'</h3>';
 		
-		$output = apply_filters( 'sliced_admin_display_totals_after_header', $output );
+		$part = apply_filters( 'sliced_admin_display_totals_header', ''
+					. '<h3>' . sprintf( __( '%s Totals', 'sliced-invoices' ), esc_html( sliced_get_label() ) ) .'</h3>' );
 		
-		$output .= '<div class="sub">' . __( 'Sub Total', 'sliced-invoices' ) . ' <span class="alignright"><span id="sliced_sub_total">0.00</span></span></div>';
+		$output .= $part;
 		
-		$output = apply_filters( 'sliced_admin_display_totals_after_subtotal', $output );
+		$part = apply_filters( 'sliced_admin_display_totals_subtotal', ''
+					. '<div class="sub">' . __( 'Sub Total', 'sliced-invoices' ) . ' <span class="alignright"><span id="sliced_sub_total">0.00</span></span></div>' );
 		
-		$output .= '<div class="tax">' . sliced_get_tax_name() . ' <span class="alignright"><span id="sliced_tax">0.00</span></span></div>';
+		$output .= $part;
 		
+		$part = apply_filters( 'sliced_admin_display_totals_tax', ''
+					. '<div class="tax">' . sliced_get_tax_name() . ' <span class="alignright"><span id="sliced_tax">0.00</span></span></div>' );
+		
+		$output .= $part;
+		
+		// 2017-10-20 filter 'sliced_admin_display_totals_after_tax' will be removed in the near future
+		// it is currently used by the following extension: Additional Tax v1.1.0,
 		$output = apply_filters( 'sliced_admin_display_totals_after_tax', $output );
 		
-		$output .= '<div class="payments">' . __( 'Paid', 'sliced-invoices' )
-					. ' <a id="sliced-totals-payments-edit" href="#"><small>' . __( 'edit', 'sliced-invoices' ) . '</small></a>'
-					. ' <span class="alignright"><span id="sliced_payments">0.00</span></span></div>';
+		$part = apply_filters( 'sliced_admin_display_totals_discounts', '
+					<div class="discounts">' . __( 'Discounts', 'sliced-invoices' ) .'
+						<a id="sliced-totals-discounts-edit" href="#"><small>' . __( 'edit', 'sliced-invoices' ) . '</small></a>
+						<span class="discount-adder hidden">
+							<button type="button" class="button">' . __( 'Apply', 'sliced-invoices' ) . '</button>
+						</span>
+						<span class="alignright"><span id="sliced_discounts">0.00</span></span>
+					</div>' );
 		
-		$output = apply_filters( 'sliced_admin_display_totals_after_payments', $output );
+		$output .= $part;
 		
-		$output .= '<div class="total">' . __( 'Total Due', 'sliced-invoices' ) . ' <span class="alignright"><span id="sliced_total">0.00</span></span></div>';
+		if ( $type === 'invoice' ) {
+			$part = apply_filters( 'sliced_admin_display_totals_payments', ''
+						. '<div class="payments">' . __( 'Paid', 'sliced-invoices' )
+						. ' <a id="sliced-totals-payments-edit" href="#"><small>' . __( 'edit', 'sliced-invoices' ) . '</small></a>'
+						. ' <span class="alignright"><span id="sliced_payments">0.00</span></span></div>' );
+			
+			$output .= $part;
+		}
 		
-		$output = apply_filters( 'sliced_admin_display_totals_after_total', $output );
+		$part = apply_filters( 'sliced_admin_display_totals_total', ''
+					. '<div class="total">' . __( 'Total Due', 'sliced-invoices' ) . ' <span class="alignright"><span id="sliced_total">0.00</span></span></div>' );
+		
+		$output .= $part;
 		
 		$output .= '</div>';
 

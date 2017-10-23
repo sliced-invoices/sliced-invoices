@@ -411,6 +411,7 @@ class Sliced_Shared {
 			'sub_total'         => 0,
 			'sub_total_taxable' => 0,
 			'tax'               => 0,
+			'discounts'         => 0,
 			'payments'          => 0,
 			'total'             => 0,
 			'total_due'         => 0,
@@ -451,6 +452,15 @@ class Sliced_Shared {
 	        $totals['total'] = $totals['sub_total'] + $totals['tax'];
 	    }
 		
+		$discounts = apply_filters( 'sliced_totals_discounts', self::get_raw_number( get_post_meta( $id, 'sliced_invoice_discount', true ), $id ) );
+		
+		if( $discounts == '' || $discounts == '0' || $discounts == null || $discounts == '0.00' ) {
+			$totals['discounts'] = 0;
+		} else {
+			$totals['discounts'] = $discounts;
+			$totals['total'] = $totals['total'] - $totals['discounts'];
+		}
+		
 		$payments = self::get_payments( $id );
 		$payments_total = 0;
 		
@@ -467,6 +477,7 @@ class Sliced_Shared {
 		
 		// patch for Deposit Invoices extension < 2.2.0, which overwrites $totals
 		if ( defined( 'SI_DEPOSIT_VERSION' ) && version_compare( SI_DEPOSIT_VERSION, '2.2.0', '<=' ) ) {
+			$totals['discounts'] = $discounts;
 			$totals['payments'] = $payments_total;
 		}
 		

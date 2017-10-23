@@ -137,9 +137,56 @@ endif;
 if ( ! function_exists( 'sliced_get_invoice_total' ) ) :
 
 	function sliced_get_invoice_total( $id = 0 ) {
-		$output = Sliced_Shared::get_totals( $id );
-		$total = Sliced_Shared::get_formatted_currency( $output['total'], $id );
+		$totals = Sliced_Shared::get_totals( $id );
+		$total = Sliced_Shared::get_formatted_currency( $totals['total'], $id );
+		
+		// the following is a legacy of DAPP and using the same function (i.e. sliced_get_invoice_total())
+		// for both 'total' and 'total_due', depending on the circumstances.
+		// the correct way going forward will be to use sliced_get_invoice_total() or
+		// sliced_get_invoice_total_due() respectively
+		// but for now we need this to maintain compatibility with outdated extensions
+		$payments = get_option('sliced_payments');
+		$payments_page = $payments['payment_page'];
+		$post_id = $id ? $id : get_the_id();
+		$status  = sliced_get_invoice_status( $post_id );
+		$paid    = ( $status === 'paid' ? $totals['total'] : $totals['payments'] );
+		if ( is_singular( 'sliced_invoice' ) ) {
+			// invoice view, we want: total_due
+			return Sliced_Shared::get_formatted_currency( $totals['total_due'] );
+		} elseif ( isset( $_GET['create'] ) && $_GET['create'] === 'pdf' ) {
+			// invoice PDF view, we want: total_due
+			return Sliced_Shared::get_formatted_currency( $totals['total_due'] );
+		} elseif ( (int) $payments_page == get_the_ID() ) {
+			// payments page
+			if ( $status === 'paid' ) {
+				// we've just now made a payment, we want: total
+				return Sliced_Shared::get_formatted_currency( $totals['total'] );
+			} else {
+				// otherwise we want: total_due
+				return Sliced_Shared::get_formatted_currency( $totals['total_due'] );
+			}
+		} else {
+			// partially paid, we want: total ($x paid)
+			if ( $status !== 'paid' && $paid > 0 ) {
+				$paid = Sliced_Shared::get_formatted_currency( $paid );
+				return Sliced_Shared::get_formatted_currency( $totals['total'] ) . ' ' . sprintf( __( '(%s paid)', 'sliced-invoices' ), $paid );
+			}
+			// everything else, we want: total
+			return Sliced_Shared::get_formatted_currency( $totals['total'] );
+		}
+		// end legacy code
+		
 		return apply_filters( 'sliced_get_invoice_total', $total, $id );
+	}
+
+endif;
+
+if ( ! function_exists( 'sliced_get_invoice_total_due' ) ) :
+
+	function sliced_get_invoice_total_due( $id = 0 ) {
+		$output = Sliced_Shared::get_totals( $id );
+		$total = Sliced_Shared::get_formatted_currency( $output['total_due'], $id );
+		return apply_filters( 'sliced_get_invoice_total_due', $total, $id );
 	}
 
 endif;
@@ -167,9 +214,40 @@ endif;
 if ( ! function_exists( 'sliced_get_invoice_total_raw' ) ) :
 
 	function sliced_get_invoice_total_raw( $id = 0 ) {
-		$output = Sliced_Shared::get_totals( $id );
-		$total = round( $output['total'], sliced_get_decimals());
+		$totals = Sliced_Shared::get_totals( $id );
+		$total = round( $totals['total'], sliced_get_decimals());
+		
+		// the following is a legacy of DAPP and using the same function (i.e. sliced_get_invoice_total_raw())
+		// for both 'total' and 'total_due', depending on the circumstances.
+		// the correct way going forward will be to use sliced_get_invoice_total_raw() or
+		// sliced_get_invoice_total_due_raw() respectively
+		// but for now we need this to maintain compatibility with outdated extensions
+		$payments = get_option('sliced_payments');
+		$payments_page = $payments['payment_page'];
+		$post_id = $id ? $id : get_the_id();
+		if ( is_singular( 'sliced_invoice' ) ) {
+			// invoice view, we want: total_due
+			return round( $totals['total_due'], sliced_get_decimals());
+		} elseif ( (int) $payments_page == get_the_ID() ) {
+			// payments page, we want: total_due
+			return round( $totals['total_due'], sliced_get_decimals());
+		} else {
+			// everything else, we want: total
+			return round( $totals['total'], sliced_get_decimals());
+		}
+		// end legacy code
+		
 		return apply_filters( 'sliced_get_invoice_total_raw', $total, $id );
+	}
+
+endif;
+
+if ( ! function_exists( 'sliced_get_invoice_total_due_raw' ) ) :
+
+	function sliced_get_invoice_total_due_raw( $id = 0 ) {
+		$output = Sliced_Shared::get_totals( $id );
+		$total = round( $output['total_due'], sliced_get_decimals());
+		return apply_filters( 'sliced_get_invoice_total_due_raw', $total, $id );
 	}
 
 endif;

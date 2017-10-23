@@ -240,10 +240,56 @@ if ( ! function_exists( 'sliced_display_invoice_totals' ) ) :
 					<td class="total"><?php _e( sliced_get_invoice_tax() ) ?></td>
 				</tr>
 				<?php do_action( 'sliced_invoice_after_tax' ); ?>
-				<tr class="table-active row-total">
-					<td class="rate"><strong><?php _e( 'Total Due', 'sliced-invoices' ) ?></strong></td>
-					<td class="total"><strong><?php _e( sliced_get_invoice_total() ) ?></strong></td>
-				</tr>
+				<?php 
+				$totals = Sliced_Shared::get_totals( get_the_id() );
+				/*
+				if ( $totals['payments'] || $totals['discount'] ) {
+					$total = Sliced_Shared::get_formatted_currency( $totals['total'] );
+					?>
+					<tr class="row-total">
+						<td class="rate"><strong><?php _e( 'Total', 'sliced-invoices' ) ?></strong></td>
+						<td class="total"><?php echo esc_html( $total ) ?></td>
+					</tr>
+					<?php
+				}
+				*/
+				if ( $totals['discounts'] ) {
+					$discount = Sliced_Shared::get_formatted_currency( $totals['discounts'] );
+					?>
+					<tr class="row-discount">
+						<td class="rate"><?php _e( 'Discount', 'sliced-invoices' ) ?></td>
+						<td class="total"><span style="color:red;">-<?php echo esc_html( $discount ) ?></span></td>
+					</tr>
+					<?php
+				}
+
+				if ( $totals['payments'] ) {
+					$paid = Sliced_Shared::get_formatted_currency( $totals['payments'] );
+					?>
+					<tr class="row-paid">
+						<td class="rate"><?php _e( 'Paid', 'sliced-invoices' ) ?></td>
+						<td class="total"><span style="color:red;">-<?php echo esc_html( $paid ) ?></span></td>
+					</tr>
+					<?php
+				}
+				
+				if ( $totals['payments'] || $totals['discount'] ) {
+					$total_due = Sliced_Shared::get_formatted_currency( $totals['total_due'] );
+					?>
+					<tr class="table-active row-total">
+						<td class="rate"><strong><?php _e( 'Total Due', 'sliced-invoices' ) ?></strong></td>
+						<td class="total"><strong><?php echo esc_html( $total_due ) ?></strong></td>
+					</tr>
+					<?php
+				} else {
+					?>
+					<tr class="table-active row-total">
+						<td class="rate"><strong><?php _e( 'Total Due', 'sliced-invoices' ) ?></strong></td>
+						<td class="total"><strong><?php _e( sliced_get_invoice_total() ) ?></strong></td>
+					</tr>
+				<?php
+				}
+				?>
 				<?php do_action( 'sliced_invoice_after_totals' ); ?>
 			</tbody>
 
@@ -270,10 +316,24 @@ if ( ! function_exists( 'sliced_display_quote_totals' ) ) :
 						<td class="rate"><?php echo _e( 'Sub Total', 'sliced-invoices' ); ?></td>
 						<td class="total"><?php echo esc_html( sliced_get_quote_sub_total() ); ?></td>
 					</tr>
+					<?php do_action( 'sliced_invoice_after_sub_total' ); ?>
 					<tr class="row-tax">
 						<td class="rate"><?php echo esc_html( sliced_get_tax_name() ); ?></td>
 						<td class="total"><?php echo esc_html( sliced_get_quote_tax() ); ?></td>
 					</tr>
+					<?php do_action( 'sliced_invoice_after_tax' ); ?>
+					<?php 
+					$totals = Sliced_Shared::get_totals( get_the_id() );
+					if ( $totals['discounts'] ) {
+						$discount = Sliced_Shared::get_formatted_currency( $totals['discounts'] );
+						?>
+						<tr class="row-discount">
+							<td class="rate"><?php _e( 'Discount', 'sliced-invoices' ) ?></td>
+							<td class="total"><span style="color:red;">-<?php echo esc_html( $discount ) ?></span></td>
+						</tr>
+						<?php
+					}
+					?>
 					<tr class="table-active row-total">
 						<td class="rate"><strong><?php echo _e( 'Total', 'sliced-invoices' ); ?></strong></td>
 						<td class="total"><strong><?php echo esc_html( sliced_get_quote_total() ); ?></strong></td>

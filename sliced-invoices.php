@@ -195,6 +195,60 @@ function sliced_filter_for_autoptimize() {
 }
 add_filter('autoptimize_filter_noptimize','sliced_filter_for_autoptimize',10,0);
 
+/*
+ * Kill DAPP, if it is in use
+ */
+function sliced_no_dapp() {
+	global $wp_filter;
+	$tag = 'init';
+	$class_name = 'Sliced_Discounts_And_Partial_Payment';
+	$method_name = 'init';
+	$priority = 10;
+	if ( ! isset( $wp_filter[ $tag ] ) ) {
+		return FALSE;
+	}
+	if ( is_object( $wp_filter[ $tag ] ) && isset( $wp_filter[ $tag ]->callbacks ) ) {
+		$fob       = $wp_filter[ $tag ];
+		$callbacks = &$wp_filter[ $tag ]->callbacks;
+	} else {
+		$callbacks = &$wp_filter[ $tag ];
+	}
+	if ( ! isset( $callbacks[ $priority ] ) || empty( $callbacks[ $priority ] ) ) {
+		return FALSE;
+	}
+	foreach ( (array) $callbacks[ $priority ] as $filter_id => $filter ) {
+		if ( ! isset( $filter['function'] ) || ! is_array( $filter['function'] ) ) {
+			continue;
+		}
+		if ( ! is_object( $filter['function'][0] ) ) {
+			continue;
+		}
+		if ( $filter['function'][1] !== $method_name ) {
+			continue;
+		}
+		if ( get_class( $filter['function'][0] ) === $class_name ) {
+			if ( isset( $fob ) ) {
+				$fob->remove_filter( $tag, $filter['function'], $priority );
+			} else {
+				unset( $callbacks[ $priority ][ $filter_id ] );
+				if ( empty( $callbacks[ $priority ] ) ) {
+					unset( $callbacks[ $priority ] );
+				}
+				if ( empty( $callbacks ) ) {
+					$callbacks = array();
+				}
+				unset( $GLOBALS['merged_filters'][ $tag ] );
+			}
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+if ( class_exists( 'Sliced_Discounts_And_Partial_Payment' ) ) {
+	add_action( 'init', 'sliced_no_dapp', 9 );
+}
+
+
 
 /*
  * Helper function for quick debugging
