@@ -783,7 +783,16 @@ class Sliced_Admin {
 			/*
 			 * Convert
 			 */
-			set_post_type( $id, 'sliced_invoice' );
+			$new_slug = '';
+			$old_post = get_post( $id );
+			if ( $old_post ) {
+				$new_slug = sanitize_title( $old_post->post_title );
+			}
+			wp_update_post( array(
+				'ID' => $id,
+				'post_type' => 'sliced_invoice',
+				'post_name' => $new_slug,
+			) );
 
 			/*
 			 * Update the appropriate post meta
