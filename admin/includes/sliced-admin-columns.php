@@ -416,8 +416,8 @@ class Sliced_Columns {
 
 
 		// Export to CSV button
-		$url = add_query_arg( array( 'export' => 'csv' ) );
-		echo '<a href="' . esc_url( $url ) . '" class="button alignright button-primary" >' . __( 'Export as CSV', 'sliced-invoices' ) . '</a>';
+		$url = add_query_arg( array( 'sliced_export' => 'csv' ) );
+		echo '<a href="' . esc_url( $url ) . '" class="button alignright button-primary sliced-export-csv" >' . __( 'Export as CSV', 'sliced-invoices' ) . '</a>';
 
 
 	}

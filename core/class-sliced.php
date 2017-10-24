@@ -133,7 +133,8 @@ class Sliced_Invoices {
 		require_once SLICED_PATH . 'includes/invoice/class-sliced-invoice.php';
 		require_once SLICED_PATH . 'includes/quote/class-sliced-quote.php';
 
-		require_once SLICED_PATH . 'includes/csv-importer/csv-importer.php';
+		require_once SLICED_PATH . 'includes/csv/csv-importer.php';
+		require_once SLICED_PATH . 'includes/csv/csv-exporter.php';
 
 		require_once SLICED_PATH . 'admin/includes/sliced-admin-logs.php';
 
@@ -211,6 +212,7 @@ class Sliced_Invoices {
 		$this->loader->add_filter( 'enter_title_here', $plugin_admin, 'custom_enter_title' );
 
 		$this->loader->add_action( 'load-edit.php', $plugin_admin, 'export_csv' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'export_csv_full' );
 		$this->loader->add_filter( 'admin_action_convert_quote_to_invoice', $plugin_admin, 'convert_quote_to_invoice' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'set_published_date_as_created' );
 

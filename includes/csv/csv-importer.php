@@ -79,20 +79,29 @@ class Sliced_Csv_Importer {
 		if ('POST' == $_SERVER['REQUEST_METHOD']) {
 			$this->post(compact('post_type'));
 		}
-
+		
+		$exporter_url = add_query_arg( array(
+			'tab' => 'exporter'
+		) );
+		$exporter_url = remove_query_arg( array(
+			'sliced-message'
+		), $exporter_url );
+		
+		
 		// form HTML {{{
 		?>
 
 		<div class="wrap">
 			<h2>Import CSV</h2>
-			<p>The CSV Importer allows you to bulk import quotes and invoices from a standard CSV file (file must be saved with UTF-8 encoding).<br>
+			<p>The CSV Importer allows you to bulk import quotes and invoices from a standard CSV file.  The CSV file must be saved with UTF-8 encoding, and follow a specific format.  Please see Instructions below.<br>
 			<a href="<?php echo esc_url( plugin_dir_url( __FILE__ ) ) ?>examples/sample.csv">Download sample CSV file</a></p>
+			<p>You can also import CSV files created by the Sliced Invoices <a href="<?php echo esc_url( $exporter_url ); ?>">Export CSV</a> feature.</p>
 
 			<form class="add:the-list: validate sliced_import_form" method="post" enctype="multipart/form-data">
 				<!-- Import as draft -->
 <!--                 <p>
 				<input name="_csv_importer_import_as_draft" type="hidden" value="publish" />
-				<label><input name="csv_importer_import_as_draft" type="checkbox" <?php if ('draft' == $opt_draft) { echo 'checked="checked"'; } ?> value="draft" /> Import posts as drafts</label>
+				<label><input name="csv_importer_import_as_draft" type="checkbox" <?php /*if ('draft' == $opt_draft) { echo 'checked="checked"'; } */ ?> value="draft" /> Import posts as drafts</label>
 				</p> -->
 
 				<!-- Parent category -->
@@ -223,16 +232,16 @@ class Sliced_Csv_Importer {
 			$this->print_messages();
 			return;
 		}
-
+		
+		// pad shorter rows with empty values
+		$csv->symmetrize();
+		
 		// check and validate the file before commiting to inserting posts
 		$validate = $this->validate_the_entries( $csv->connect(), $options );
 		if( $validate !== 'ok' ) {
 			$this->print_messages();
 			return;
 		}
-
-		// pad shorter rows with empty values
-		$csv->symmetrize();
 
 		// WordPress sets the correct timezone for date functions somewhere
 		// in the bowels of wp_insert_post(). We need strtotime() to return
@@ -242,9 +251,11 @@ class Sliced_Csv_Importer {
 			date_default_timezone_set($tz);
 		}
 
-
-		foreach ($csv->connect() as $csv_data) {
-			if ($post_id = $this->create_post( $csv_data, $options )) {
+		$imported = 0;
+		$skipped = 0;
+		
+		foreach ($csv->connect() as $csv) {
+			if ($post_id = $this->create_post( $csv, $options )) {
 				$this->update_number( $post_id, $options );
 				$imported++;
 			} else {
@@ -275,9 +286,17 @@ class Sliced_Csv_Importer {
 	function validate_the_entries( $csv_data, $options ) {
 
 		$post_type = $this->set_post_type( $options );
-
+		
 		$count = 1;
 		foreach ($csv_data as $csv) {
+			if ( isset( $csv['__quote_title'] ) ) {
+				// this is a full quote export, bypass
+				return 'ok';
+			}		
+			if ( isset( $csv['__invoice_title'] ) ) {
+				// this is a full invoice export, bypass
+				return 'ok';
+			}
 
 			if( empty( $csv['sliced_client_email'] ) ) {
 				$this->log['error'][$count] = "Client email address is missing in row {$count}";
@@ -339,15 +358,35 @@ class Sliced_Csv_Importer {
 
 		$post_type = $this->set_post_type( $options );
 
-		$data = array_merge($this->defaults, $data);
-
-		$new_post = array(
-			'post_title'   => convert_chars($data['sliced_title']),
-			'post_content' => '',
-			'post_status'  => 'publish',
-			'post_type'    => $post_type,
-			'post_author'  => $this->get_auth_id($data['sliced_author_id']),
-		);
+		if ( isset( $data['__quote_title'] ) ) {
+			// source is a full quote export
+			$new_post = array(
+				'post_title'   => convert_chars($data['__quote_title']),
+				'post_content' => convert_chars($data['__quote_description']),
+				'post_status'  => 'publish',
+				'post_type'    => 'sliced_quote',
+				'post_author'  => $this->get_auth_id(),
+			);
+		} elseif ( isset( $data['__invoice_title'] ) ) {
+			// source is a full invoice export
+			$new_post = array(
+				'post_title'   => convert_chars($data['__invoice_title']),
+				'post_content' => convert_chars($data['__invoice_description']),
+				'post_status'  => 'publish',
+				'post_type'    => 'sliced_invoice',
+				'post_author'  => $this->get_auth_id(),
+			);
+		} else {
+			// source is a manual file
+			$data = array_merge($this->defaults, $data);
+			$new_post = array(
+				'post_title'   => convert_chars($data['sliced_title']),
+				'post_content' => '',
+				'post_status'  => 'publish',
+				'post_type'    => $post_type,
+				'post_author'  => $this->get_auth_id($data['sliced_author_id']),
+			);
+		}
 
 		// create!
 		$id = wp_insert_post($new_post);
@@ -365,100 +404,172 @@ class Sliced_Csv_Importer {
 
 	}
 
+	
 	function set_post_type( $options ) {
-		 $post_type = isset($options['post_type']) ? $options['post_type'] : 'sliced_quote';
-		 return $post_type;
+		$post_type = isset($options['post_type']) ? $options['post_type'] : 'sliced_quote';
+		return $post_type;
 	}
+	
 
 	function add_the_status( $id, $data, $post_type ) {
 
-		// set to a draft if status field is blank
-		$taxonomy = str_replace( 'sliced_', '', $post_type ) . '_status';
-		$status = 'draft';
-		if( !empty( $data['sliced_status'] ) ) {
-			$status = term_exists( trim( strtolower( convert_chars($data['sliced_status'] ) ) ), $taxonomy );
-			if ( $status !== 0 && $status !== null ) {
-				$status = (int)$status['term_id'];
-			} else {
-				$status = 'draft';
+		$status = array();
+		$terms = false;
+		
+		if ( isset( $data['__quote_status'] ) ) {
+			
+			// source is a full quote export
+			$taxonomy = 'quote_status';
+			$terms = explode( ',', $data['__quote_status'] );
+			if ( is_array( $terms ) ) {
+				foreach ( $terms as $term ) {
+					$result = term_exists( trim( strtolower( convert_chars($data['__quote_status'] ) ) ), $taxonomy );
+					if ( $result !== 0 && $result !== null ) {
+						$status[] = (int)$result['term_id'];
+					}
+				}
+				
 			}
+			
+		} elseif ( isset( $data['__invoice_status'] ) ) {
+			
+			// source is a full invoice export
+			$taxonomy = 'invoice_status';
+			$terms = explode( ',', $data['__invoice_status'] );
+			if ( is_array( $terms ) ) {
+				foreach ( $terms as $term ) {
+					$result = term_exists( trim( strtolower( convert_chars($data['__invoice_status'] ) ) ), $taxonomy );
+					if ( $result !== 0 && $result !== null ) {
+						$status[] = (int)$result['term_id'];
+					}
+				}
+				
+			}
+			
+		} else {
+		
+			// source is manual file
+			$taxonomy = str_replace( 'sliced_', '', $post_type ) . '_status';
+			if ( ! empty( $data['sliced_status'] ) ) {
+				$status = term_exists( trim( strtolower( convert_chars($data['sliced_status'] ) ) ), $taxonomy );
+				if ( $status !== 0 && $status !== null ) {
+					$status[] = (int)$status['term_id'];
+				} else {
+					$status = array( 'draft' );
+				}
+			}
+			
 		}
-		wp_set_object_terms( $id, array( $status ), $taxonomy );
+		
+		// set to a draft if status field is blank
+		if ( empty( $status ) ) {
+			$status = array( 'draft' );
+		}
+		
+		wp_set_object_terms( $id, $status, $taxonomy );
 
 	}
 
 
 	function add_custom_fields( $id, $data, $post_type ) {
-
-		// check for data and update if exists
-		foreach ($data as $k => $v) {
-
-			// if the number field is blank, it will look to add these sequentially if auto increment is on
-			// if it is not on and there is no number, it remains blank
-			if( $k == 'sliced_number' ) {
-				if( empty($v) ) {
-					$number = $post_type == 'sliced_invoice' ? sliced_get_next_invoice_number( $id ) : sliced_get_next_quote_number( $id );
-				} else {
-					$number = $v;
-				}
-				add_post_meta( $id, '_' . $post_type . '_number', $number );
-			}
-
-			if( $k == 'sliced_description' && !empty($v) ) {
-				add_post_meta( $id, '_sliced_description', wpautop( convert_chars( $v ) ) );
-			}
-
-			if( $k == 'sliced_created' ) {
-				if( empty($v) ) { // if column is empty, use time()
-					$v = current_time( 'timestamp' );
-				} else {
-					$v = strtotime($v);
-				}
-				add_post_meta( $id, '_' . $post_type . '_created', $v );
-			}
-
-			if( $k == 'sliced_due' && !empty($v) ) {
-				add_post_meta( $id, '_' . $post_type . '_due', strtotime($v) );
-			}
-
-			if( $k == 'sliced_valid' && !empty($v) ) {
-				add_post_meta( $id, '_' . $post_type . '_valid', strtotime($v) );
-			}
-
-		}
-
-		if( !empty( $data['sliced_items'] ) ) {
-			// the line items
-			$items  = explode( "\n", convert_chars( $data['sliced_items'] ) );
-			$items  = array_filter( $items ); // remove any empty items
-
-			if( $items ) :
-				foreach ( $items as $item ) {
-					list( $qty, $title, $desc, $amount ) = explode( '|', $item );
-					$qty    = ! empty($qty) ? trim( $qty ) : '1';
-					$title  = trim( $title );
-					$desc   = trim( $desc );
-					$amount = ! empty($amount) ? trim( $amount ) : '0';
-
-					$items_array[] = array(
-						'qty'           => esc_html( $qty ),
-						'title'         => esc_html( $title ),
-						'description'   => esc_html( $desc ),
-						'amount'        => esc_html( $amount ),
+	
+		if ( isset( $data['__quote_status'] ) || isset( $data['__invoice_status'] ) ) {
+		
+			// source is a full export file, add all fields
+			global $wpdb;
+			
+			foreach ( $data as $key => $value ) {
+				if ( ( substr( $key, 0, 7 ) === '_sliced' || substr( $key, 0, 6 ) === 'sliced' ) && ! empty( $value ) ) {
+					// $value may be serialized data. If we use:
+					// update_post_meta( $id, $key, $value );
+					// ...it will encode the data again, giving us an unusable double-encoded mess.
+					// so we do this instead, which allows us to insert $value verbatim:
+					$wpdb->query(
+						$wpdb->prepare(
+							"INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) VALUES(%s, %s, %s)",
+							$id,
+							$key,
+							$value
+						)
 					);
 				}
-			endif;
-
-			add_post_meta( $id, '_sliced_items', $items_array );
-		}
-
-		// insert the prefix and the number
-		$prefix = $post_type == 'sliced_invoice' ? sliced_get_invoice_prefix() : sliced_get_quote_prefix();
-		add_post_meta( $id, '_' . $post_type . '_prefix', $prefix );
+			}
 		
-		// insert the suffix
-		$suffix = $post_type == 'sliced_invoice' ? sliced_get_invoice_suffix() : sliced_get_quote_suffix();
-		add_post_meta( $id, '_' . $post_type . '_suffix', $suffix );
+		} else {
+		
+			// source is a manual file, process accordingly
+		
+			// check for data and update if exists
+			foreach ($data as $k => $v) {
+
+				// if the number field is blank, it will look to add these sequentially if auto increment is on
+				// if it is not on and there is no number, it remains blank
+				if( $k == 'sliced_number' ) {
+					if( empty($v) ) {
+						$number = $post_type == 'sliced_invoice' ? sliced_get_next_invoice_number( $id ) : sliced_get_next_quote_number( $id );
+					} else {
+						$number = $v;
+					}
+					add_post_meta( $id, '_' . $post_type . '_number', $number );
+				}
+
+				if( $k == 'sliced_description' && !empty($v) ) {
+					add_post_meta( $id, '_sliced_description', wpautop( convert_chars( $v ) ) );
+				}
+
+				if( $k == 'sliced_created' ) {
+					if( empty($v) ) { // if column is empty, use time()
+						$v = current_time( 'timestamp' );
+					} else {
+						$v = strtotime($v);
+					}
+					add_post_meta( $id, '_' . $post_type . '_created', $v );
+				}
+
+				if( $k == 'sliced_due' && !empty($v) ) {
+					add_post_meta( $id, '_' . $post_type . '_due', strtotime($v) );
+				}
+
+				if( $k == 'sliced_valid' && !empty($v) ) {
+					add_post_meta( $id, '_' . $post_type . '_valid', strtotime($v) );
+				}
+
+			}
+
+			if( !empty( $data['sliced_items'] ) ) {
+				// the line items
+				$items  = explode( "\n", convert_chars( $data['sliced_items'] ) );
+				$items  = array_filter( $items ); // remove any empty items
+
+				if( $items ) :
+					foreach ( $items as $item ) {
+						list( $qty, $title, $desc, $amount ) = explode( '|', $item );
+						$qty    = ! empty($qty) ? trim( $qty ) : '1';
+						$title  = trim( $title );
+						$desc   = trim( $desc );
+						$amount = ! empty($amount) ? trim( $amount ) : '0';
+
+						$items_array[] = array(
+							'qty'           => esc_html( $qty ),
+							'title'         => esc_html( $title ),
+							'description'   => esc_html( $desc ),
+							'amount'        => esc_html( $amount ),
+						);
+					}
+				endif;
+
+				add_post_meta( $id, '_sliced_items', $items_array );
+			}
+
+			// insert the prefix and the number
+			$prefix = $post_type == 'sliced_invoice' ? sliced_get_invoice_prefix() : sliced_get_quote_prefix();
+			add_post_meta( $id, '_' . $post_type . '_prefix', $prefix );
+			
+			// insert the suffix
+			$suffix = $post_type == 'sliced_invoice' ? sliced_get_invoice_suffix() : sliced_get_quote_suffix();
+			add_post_meta( $id, '_' . $post_type . '_suffix', $suffix );
+			
+		}
 
 	}
 
@@ -470,16 +581,36 @@ class Sliced_Csv_Importer {
 	 */
 	public function maybe_add_client( $id, $data, $post_type ) {
 
-		// insert or update client
-		$client_array = array(
-			'name'       => trim( convert_chars( $data['sliced_client_name'] ) ),
-			'email'      => trim( convert_chars( $data['sliced_client_email'] ) ),
-			'business'   => convert_chars( $data['sliced_client_business'] ),
-			'address'    => wpautop( convert_chars( $data['sliced_client_address'] ) ),
-			'extra_info' => wpautop( convert_chars( $data['sliced_client_extra'] ) ),
-			'post_id'    => $id,
-
-		);
+		if ( isset( $data['__quote_client'] ) ) {
+			// source is a full quote export
+			$client_array = array(
+				'name'       => trim( convert_chars( $data['__quote_client_name'] ) ),
+				'email'      => trim( convert_chars( $data['__quote_client_email'] ) ),
+				'business'   => convert_chars( $data['__quote_client'] ),
+				'address'    => convert_chars( $data['__quote_client_address'] ),
+				'extra_info' => convert_chars( $data['__quote_client_extra_info'] ),
+				'post_id'    => $id,
+			);
+		} elseif ( isset( $data['__invoice_client'] ) ) {
+			// source is a full invoice export
+			$client_array = array(
+				'name'       => trim( convert_chars( $data['__invoice_client_name'] ) ),
+				'email'      => trim( convert_chars( $data['__invoice_client_email'] ) ),
+				'business'   => convert_chars( $data['__invoice_client'] ),
+				'address'    => convert_chars( $data['__invoice_client_address'] ),
+				'extra_info' => convert_chars( $data['__invoice_client_extra_info'] ),
+				'post_id'    => $id,
+			);
+		} else {
+			$client_array = array(
+				'name'       => trim( convert_chars( $data['sliced_client_name'] ) ),
+				'email'      => trim( convert_chars( $data['sliced_client_email'] ) ),
+				'business'   => convert_chars( $data['sliced_client_business'] ),
+				'address'    => wpautop( convert_chars( $data['sliced_client_address'] ) ),
+				'extra_info' => wpautop( convert_chars( $data['sliced_client_extra'] ) ),
+				'post_id'    => $id,
+			);
+		}
 
 		// if client does not exist, create one
 		if( ! email_exists( $client_array['email'] ) ) {
@@ -529,7 +660,8 @@ class Sliced_Csv_Importer {
 	}
 
 
-	function get_auth_id($author_id) {
+	function get_auth_id( $author_id = false ) {
+		
 		if (is_numeric($author_id)) {
 			return $author_id;
 		}
@@ -539,6 +671,7 @@ class Sliced_Csv_Importer {
 
 		return ($author_id) ? $author_id : 1;
 	}
+	
 
 	/**
 	 * Convert date in CSV file to 1999-12-31 23:52:00 format

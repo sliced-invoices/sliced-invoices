@@ -590,7 +590,8 @@
 #sliced_extras .button-primary {
   display: none;
 }
-.sliced_import_form {
+.sliced_import_form,
+.sliced_export_form {
   background: #fff none repeat scroll 0 0;
   border: 1px solid #ddd;
   padding: 10px 30px 5px;
@@ -774,6 +775,9 @@ td.taxonomy-invoice_status a[href*="cancelled"], td.taxonomy-quote_status a[href
 .sliced #wpbody-content .quick-edit-row-post .inline-edit-col-left {
   width: 48%;
   margin: 0 1%;
+}
+.tablenav a.sliced-export-csv {
+	margin-top: 1px;
 }
 
 

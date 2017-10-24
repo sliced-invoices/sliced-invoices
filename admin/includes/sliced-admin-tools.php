@@ -1,14 +1,4 @@
 <?php
-/**
- * Tools
- *
- * These are functions used for displaying sliced tools such as the import/export system.
- *
- * @package     sliced
- * @subpackage  Admin/Tools
- * @copyright   Copyright (c) 2015, Pippin Williamson
- * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
- */
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -24,8 +14,10 @@ class Sliced_Tools {
     public function __construct() {
 
     	$importer = new Sliced_Csv_Importer();
+		$exporter = new Sliced_Csv_Exporter();
     	add_action( 'sliced_tools_tab_system_info', array(&$this, 'sliced_tools_system_info_display' ) );
     	add_action( 'sliced_tools_tab_importer', array(&$importer, 'display_importer_page' ) );
+		add_action( 'sliced_tools_tab_exporter', array(&$exporter, 'display_exporter_page' ) );
     	add_action( 'admin_init', array( &$this, 'sliced_tools_system_info_download' ) );
 
     }
@@ -38,11 +30,11 @@ class Sliced_Tools {
      */
     public function display_tools_page() {
 
-	$active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'system_info';
+		$active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'system_info';
 		?>
 		<div class="wrap">
-			<?php screen_icon(); ?>
-			<h1 class="nav-tab-wrapper">
+			<h2><?php _e( 'Sliced Invoices Tools', 'sliced-invoices' ); ?></h2>
+			<h2 class="nav-tab-wrapper">
 				<?php
 				foreach( $this->sliced_get_tools_tabs() as $tab_id => $tab_name ) {
 
@@ -59,14 +51,14 @@ class Sliced_Tools {
 
 				}
 				?>
-			</h1>
+			</h2>
 			<div class="metabox-holder">
 				<?php
 				do_action( 'sliced_tools_tab_' . $active_tab );
 				?>
 			</div><!-- .metabox-holder -->
 		</div><!-- .wrap -->
-	<?php
+		<?php
 	}
 
 
@@ -80,7 +72,8 @@ class Sliced_Tools {
 
 		$tabs                  	= array();
 		$tabs['system_info']   	= __( 'System Info', 'sliced-invoices' );
-		$tabs['importer'] 		= __( 'CSV Importer', 'sliced-invoices' );
+		$tabs['importer'] 		= __( 'Import CSV', 'sliced-invoices' );
+		$tabs['exporter'] 		= __( 'Export CSV', 'sliced-invoices' );
 
 		return apply_filters( 'sliced_tools_tabs', $tabs );
 	}

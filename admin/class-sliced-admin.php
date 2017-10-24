@@ -1799,7 +1799,6 @@ class Sliced_Admin {
 	}
 
 
-
 	/**
 	 * export to csv
 	 *
@@ -1807,40 +1806,37 @@ class Sliced_Admin {
 	 */
 	public function export_csv() {
 
-		/*
-		 * Do the checks
-		 */
-		if ( ! isset( $_GET['export'] ) )
+		// Do the checks
+		if ( ! isset( $_GET['sliced_export'] ) ) {
 			return;
+		}
 
-		if ( $_GET['export'] != 'csv' )
+		if ( $_GET['sliced_export'] != 'csv' ) {
 			return;
+		}
 
-		/*
-		 * Work out the post type
-		 */
+		// Work out the post type
 		$post_type = esc_html( $_GET['post_type'] );
 		$type = sliced_get_the_type();
 
-		/*
-		 * Create the header rows for the CSV
-		 */
+		// Create the header rows for the CSV
 		$header_row = array(
-			0 => __( 'Number', 'sliced-invoices' ),
-			1 => __( 'Title', 'sliced-invoices' ),
-			2 => __( 'Client', 'sliced-invoices' ),
-			3 => __( 'Status', 'sliced-invoices' ),
-			4 => __( 'Created', 'sliced-invoices' ),
-			5 => __( 'Sub Total', 'sliced-invoices' ),
-			6 => __( 'Tax', 'sliced-invoices' ),
-			7 => __( 'Total', 'sliced-invoices' ),
+			0  => __( 'Number', 'sliced-invoices' ),
+			1  => __( 'Title', 'sliced-invoices' ),
+			2  => __( 'Client', 'sliced-invoices' ),
+			3  => __( 'Client Email', 'sliced-invoices' ),
+			4  => __( 'Client Address', 'sliced-invoices' ),
+			5  => __( 'Client Extra Info', 'sliced-invoices' ),
+			6  => __( 'Status', 'sliced-invoices' ),
+			7  => __( 'Created', 'sliced-invoices' ),
+			8  => __( 'Sub Total', 'sliced-invoices' ),
+			9  => __( 'Tax', 'sliced-invoices' ),
+			10 => __( 'Total', 'sliced-invoices' ),
 		);
 
 		$data_rows = array();
 
-		/*
-		 * Query the posts
-		 */
+		// Query the posts
 		$args 	= array (
 			'post_type'     => $post_type,
 			'posts_per_page'=> -1,
@@ -1848,9 +1844,7 @@ class Sliced_Admin {
 			);
 		$the_query = new WP_Query( apply_filters( 'sliced_export_csv_query', $args ) );
 
-		/*
-		 * Filter the query if they are active
-		 */
+		// Filter the query if they are active/
 		if ( isset( $_GET['sliced_client'] ) && $_GET['sliced_client'] ) {
 			$the_query->query_vars['meta_query'] = array(
 				array(
@@ -1875,9 +1869,7 @@ class Sliced_Admin {
 		if ( $the_query->have_posts() ) :
 			while ( $the_query->have_posts() ) : $the_query->the_post();
 
-			/*
-			 * Get statuses and create a comma separated list if more than one status exists
-			 */
+			// Get statuses and create a comma separated list if more than one status exists
 			$status_array = array();
 			$statuses     = get_the_terms( Sliced_Shared::get_item_id(), $type . '_status' );
 			if ( ! empty( $statuses ) && ! is_wp_error( $statuses ) ) {
@@ -1886,30 +1878,176 @@ class Sliced_Admin {
 				}
 			}
 
-			if ( isset( $_GET[$type . '_status'] ) && $_GET[$type . '_status'] && ! in_array( ucfirst($_GET[$type . '_status'] ), $status_array) )
+			if ( isset( $_GET[$type . '_status'] ) && $_GET[$type . '_status'] && ! in_array( ucfirst($_GET[$type . '_status'] ), $status_array) ) {
 				continue;
-
-			/*
-			 * Put each posts data into the appropriate cell
-			 */
+			}
+			
+			// Put each posts data into the appropriate cell
 			$row = array();
-			$row[0] = sliced_get_prefix() . sliced_get_number() . sliced_get_suffix();
-			$row[1] = wp_kses_decode_entities( get_the_title() );
-			$row[2] = sliced_get_client_business();
-			$row[3] = rtrim( implode( ',', $status_array ), ',' );
-			$row[4] = date_i18n( get_option( 'date_format' ), (int) sliced_get_created() );
-			$row[5] = sliced_get_sub_total();
-			$row[6] = sliced_get_tax_total();
-			$row[7] = sliced_get_total();
-
+			$row[0]  = sliced_get_prefix() . sliced_get_number() . sliced_get_suffix();
+			$row[1]  = wp_kses_decode_entities( get_the_title() );
+			$row[2]  = sliced_get_client_business();
+			$row[3]  = sliced_get_client_email();
+			$row[4]  = sliced_get_client_address();
+			$row[5]  = sliced_get_client_extra_info();
+			$row[6]  = rtrim( implode( ',', $status_array ), ',' );
+			$row[7]  = date_i18n( get_option( 'date_format' ), (int) sliced_get_created() );
+			$row[8]  = sliced_get_sub_total();
+			$row[9]  = sliced_get_tax_total();
+			$row[10] = sliced_get_total();
+			
+			$row = apply_filters( 'sliced_export_csv_row', $row, get_the_ID() );
 			$data_rows[] = $row;
 
 			endwhile;
 		endif;
+		
+		$header_row = apply_filters( 'sliced_export_csv_headers', $header_row );
+		$data_rows = apply_filters( 'sliced_export_csv_data', $data_rows );
 
-		/*
-		 * Create the filename
-		 */
+		// Create the filename
+		$filename = sanitize_file_name( $type . '-export-' . date( 'Y-m-d' ) . '.csv' );
+
+		$this->set_csv_headers( $filename );
+
+		$fh = @fopen( 'php://output', 'w' );
+		fprintf( $fh, chr(0xEF) . chr(0xBB) . chr(0xBF) );
+		fputcsv( $fh, $header_row );
+
+		foreach ( $data_rows as $data_row ) {
+			fputcsv( $fh, $data_row );
+		}
+
+		fclose( $fh );
+		die();
+
+	}
+
+
+	/**
+	 * export full data to csv (for Tools -> Export CSV)
+	 *
+	 * @since 	3.6.0
+	 */
+	public function export_csv_full() {
+
+		// Do the checks
+		if ( ! isset( $_POST['csv_exporter_type'] ) ) {
+			return;
+		}
+		
+		if ( $_POST['csv_exporter_type'] === 'sliced_quote' ) {
+			$post_type = 'sliced_quote';
+			$type = 'quote';
+		} elseif ( $_POST['csv_exporter_type'] === 'sliced_invoice' ) {
+			$post_type = 'sliced_invoice';
+			$type = 'invoice';
+		} else {
+			return;
+		}
+
+		global $wpdb;
+		
+		$header_row = array();
+		$data_rows = array();
+
+		// Query the posts
+		$args 	= array (
+			'post_type'     => $post_type,
+			'posts_per_page'=> -1,
+			'post_status'   => 'publish',
+			);
+		$the_query = new WP_Query( apply_filters( 'sliced_export_csv_query', $args ) );
+
+		if ( $the_query->have_posts() ) :
+		
+			// post meta header row
+			$postmeta_headers = array();
+			while ( $the_query->have_posts() ) : $the_query->the_post();
+				$id = get_the_ID();
+				$post_metas = get_post_meta( $id, '', true );
+				foreach ( $post_metas as $key => $value ) {
+					if ( substr( $key, 0, 7 ) === '_sliced' || substr( $key, 0, 6 ) === 'sliced' ) {
+						if ( ! in_array( $key, $postmeta_headers ) ) {
+							$postmeta_headers[] = $key;
+						}
+					}
+				}
+			endwhile;
+			
+			sort( $postmeta_headers );
+			
+			// header row
+			$header_row = array(
+				0  => '__'.$type.'_title',
+				1  => '__'.$type.'_description',
+				2  => '__'.$type.'_client',
+				3  => '__'.$type.'_client_name',
+				4  => '__'.$type.'_client_email',
+				5  => '__'.$type.'_client_address',
+				6  => '__'.$type.'_client_extra_info',
+				7  => '__'.$type.'_status',
+				8  => '__'.$type.'_created',
+			);
+			$header_row = array_merge( $header_row, $postmeta_headers );
+			$columns = count( $header_row );
+		
+			// reset to start populating data
+			rewind_posts();
+			
+			while ( $the_query->have_posts() ) : $the_query->the_post();
+
+				// Get statuses and create a comma separated list if more than one status exists
+				$status_array = array();
+				$statuses     = get_the_terms( Sliced_Shared::get_item_id(), $type . '_status' );
+				if ( ! empty( $statuses ) && ! is_wp_error( $statuses ) ) {
+					foreach ( $statuses as $status ) {
+						$status_array[] = $status->name;
+					}
+				}
+				
+				// Get client name
+				$client_id = sliced_get_client_id();
+				$client = get_userdata( $client_id );
+				
+				// initialize row with empty cells
+				$row = array();
+				for ( $i = 0; $i < $columns; $i++ ) {
+					$row[$i] = '';
+				}
+				
+				// Put each posts data into the appropriate cell
+				$row[0]  = wp_kses_decode_entities( get_the_title() );
+				$row[1]  = wp_kses_decode_entities( get_the_content() );
+				$row[2]  = sliced_get_client_business();
+				$row[3]  = empty( $client ) ? sliced_get_client_email() : $client->user_login;
+				$row[4]  = sliced_get_client_email();
+				$row[5]  = sliced_get_client_address();
+				$row[6]  = sliced_get_client_extra_info();
+				$row[7]  = rtrim( implode( ',', $status_array ), ',' );
+				$row[8]  = date_i18n( get_option( 'date_format' ), (int) sliced_get_created() );
+				
+				// grab the remaining fields for a complete record
+				$id = get_the_ID();
+				$post_metas = get_post_meta( $id, '', true );
+				foreach ( $post_metas as $key => $value ) {
+					if ( substr( $key, 0, 7 ) === '_sliced' || substr( $key, 0, 6 ) === 'sliced' ) {
+						$index = array_search( $key, $header_row );
+						$row[ $index ] = is_array( $value ) ? $value[0] : $value;
+					}
+				}
+				
+				$row = apply_filters( 'sliced_export_csv_row', $row, get_the_ID(), $header_row );
+				$data_rows[] = $row;
+
+			endwhile;
+			
+		endif;
+		
+		$header_row = apply_filters( 'sliced_export_csv_headers', $header_row );
+		$data_rows = apply_filters( 'sliced_export_csv_data', $data_rows );
+
+		// Create the filename
 		$filename = sanitize_file_name( $type . '-export-' . date( 'Y-m-d' ) . '.csv' );
 
 		$this->set_csv_headers( $filename );
