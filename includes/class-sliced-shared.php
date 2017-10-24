@@ -134,7 +134,11 @@ class Sliced_Shared {
 			$type = self::get_type();
 		}
 		$statuses = wp_get_post_terms( $id, $type . '_status', array( 'fields' => 'names' ) );
-		return $statuses[0];
+		if ( is_array( $statuses ) && ! empty( $statuses ) ) {
+			return $statuses[0];
+		} else {
+			return false;
+		}
 	}
 
 
@@ -420,7 +424,7 @@ class Sliced_Shared {
 	    $items = self::get_line_items( $id );
 		
 	    // if there are no line items, simply return zero for all amounts
-	    if( ! $items || $items == null || empty( $items ) || empty( $items[0] ) ) {
+	    if( ! $items || $items == null || empty( $items ) || empty( $items[0] ) || ! is_array( $items[0] ) ) {
 	        return $totals;
 	    }
 	    
