@@ -54,9 +54,12 @@ class Sliced_Reports {
 	?>
 
 	<div class="wrap">
-	<div id="dashboard-widgets-wrap">
-
-		<h2><?php _e( 'Reports', 'sliced-invoices' ) ?></h2>
+		
+		<h2><?php _e( 'Sliced Invoices Reports', 'sliced-invoices' ); ?></h2>
+		
+		<br />
+		
+		<div id="dashboard-widgets-wrap">
 
 			<?php
 				$screen = get_current_screen();
@@ -86,7 +89,7 @@ class Sliced_Reports {
 			wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
 			?>
 
-	</div>
+		</div>
 
 	</div>
 
@@ -364,8 +367,10 @@ class Sliced_Reports {
 
 		return array(
 			'draft'     => 'rgba(37, 177, 209, 1)',
+			'accepted'  => 'rgba(96, 173, 93, 1)',
 			'paid'      => 'rgba(96, 173, 93, 1)',
-			'sent'      => 'rgba(96, 173, 93, 1)',
+			'sent'      => 'rgba(155, 204, 153, 1)',
+			'expired'   => 'rgba(237, 144, 78, 1)',
 			'unpaid'    => 'rgba(237, 144, 78, 1)',
 			'overdue'   => 'rgba(216, 92, 39, 1)',
 			'declined'  => 'rgba(216, 92, 39, 1)',
