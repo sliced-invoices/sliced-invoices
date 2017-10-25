@@ -696,7 +696,7 @@ class Sliced_Options {
 			'id'         => $prefix . 'emails',
 			'title'      => __( 'Emails', 'sliced-invoices' ),
 			'menu_title' => __( 'Email Settings', 'sliced-invoices' ),
-			'desc'          => __( 'Here you will find all of the Email related settings. The <a target="_blank" href="https://slicedinvoices.com/extensions/pdf-email">PDF & Email extension</a> will add extra options to customize the emails.', 'sliced-invoices' ),
+			'desc'          => __( 'Here you will find all of the Email related settings. The <a target="_blank" href="https://slicedinvoices.com/extensions/pdf-email?utm_source=Plugin&utm_medium=Email-Settings-Page&utm_content=PDF-Email&utm_campaign=Free">PDF & Email extension</a> will add extra options to customize the emails.', 'sliced-invoices' ),
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'emails' ), ),
 			'show_names' => true,
 			'fields'     => array(
@@ -896,7 +896,7 @@ class Sliced_Options {
 			'id'         => $prefix . 'pdf',
 			'title'      => __( 'PDF', 'sliced-invoices' ),
 			'menu_title' => __( 'PDF Settings', 'sliced-invoices' ),
-			'desc'          => __( 'Here you will find all of the PDF related settings. The <a target="_blank" href="https://slicedinvoices.com/extensions/pdf-email">PDF & Email extension</a> will add extra options to customize the PDFs.', 'sliced-invoices' ),
+			'desc'          => __( 'Here you will find all of the PDF related settings. The <a target="_blank" href="https://slicedinvoices.com/extensions/pdf-email?utm_source=Plugin&utm_medium=PDF-Settings-Page&utm_content=PDF-Email&utm_campaign=Free">PDF & Email extension</a> will add extra options to customize the PDFs.', 'sliced-invoices' ),
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'emails' ), ),
 			'show_names' => true,
 			'fields'     => array(
@@ -908,7 +908,7 @@ class Sliced_Options {
 			'id'         => $prefix . 'translate',
 			'title'      => __( 'Translate', 'sliced-invoices' ),
 			'menu_title' => __( 'Translate Settings', 'sliced-invoices' ),
-			'desc'       => __( 'Here you will find all of the Translation related settings. The <a target="_blank" href="https://slicedinvoices.com/extensions/easy-translate/">Easy Translate extension</a> will allow you to translate every piece of text shown on invoices and quotes.', 'sliced-invoices' ),
+			'desc'       => __( 'Here you can translate strings into your own language, or simply change the text to suit your needs. The <a target="_blank" href="https://slicedinvoices.com/extensions/easy-translate/?utm_source=Plugin&utm_medium=Translate-Settings-Page&utm_content=Easy-Translate&utm_campaign=Free">Easy Translate extension</a> adds many more fields here, allowing you to translate every piece of text shown on invoices and quotes.', 'sliced-invoices' ),
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'translate' ), ),
 			'show_names' => true,
 			'fields'     => array(
@@ -947,6 +947,69 @@ class Sliced_Options {
 					'desc'      => __( 'The plural of the above', 'sliced-invoices' ),
 					'default'   => 'Invoices',
 					'id'        => 'invoice-label-plural',
+					'type'      => 'text',
+					'attributes' => array(
+						'class'      => 'i18n-multilingual regular-text',
+					),
+				),
+				array(
+					'name'      => __( 'Hrs/Qty', 'sliced-invoices' ),
+					'default'   => 'Hrs/Qty',
+					'id'        => 'hrs_qty',
+					'type'      => 'text',
+					'attributes' => array(
+						'class'      => 'i18n-multilingual regular-text',
+					),
+				),
+				array(
+					'name'      => __( 'Service', 'sliced-invoices' ),
+					'default'   => 'Service',
+					'id'        => 'service',
+					'type'      => 'text',
+					'attributes' => array(
+						'class'      => 'i18n-multilingual regular-text',
+					),
+				),
+				array(
+					'name'      => __( 'Rate/Price', 'sliced-invoices' ),
+					'default'   => 'Rate/Price',
+					'id'        => 'rate_price',
+					'type'      => 'text',
+					'attributes' => array(
+						'class'      => 'i18n-multilingual regular-text',
+					),
+				),
+				array(
+					'name'      => __( 'Adjust', 'sliced-invoices' ),
+					'default'   => 'Adjust',
+					'id'        => 'adjust',
+					'type'      => 'text',
+					'attributes' => array(
+						'class'      => 'i18n-multilingual regular-text',
+					),
+				),
+				array(
+					'name'      => __( 'Sub Total', 'sliced-invoices' ),
+					'default'   => 'Sub Total',
+					'id'        => 'sub_total',
+					'type'      => 'text',
+					'attributes' => array(
+						'class'      => 'i18n-multilingual regular-text',
+					),
+				),
+				array(
+					'name'      => __( 'Total', 'sliced-invoices' ),
+					'default'   => 'Total',
+					'id'        => 'total',
+					'type'      => 'text',
+					'attributes' => array(
+						'class'      => 'i18n-multilingual regular-text',
+					),
+				),
+				array(
+					'name'      => __( 'Total Due', 'sliced-invoices' ),
+					'default'   => 'Total Due',
+					'id'        => 'total_due',
 					'type'      => 'text',
 					'attributes' => array(
 						'class'      => 'i18n-multilingual regular-text',
