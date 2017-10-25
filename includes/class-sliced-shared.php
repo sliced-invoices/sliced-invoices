@@ -714,11 +714,16 @@ class Sliced_Shared {
 	 */
 	private static function curl( $url ) {
 
+		if ( ! function_exists( 'curl_init' ) ) {
+			return false;
+		}
+		
 		$curl = curl_init( $url );
 
 		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
 		curl_setopt( $curl, CURLOPT_HEADER, 0 );
-		curl_setopt( $curl, CURLOPT_USERAGENT, '' );
+		curl_setopt( $curl, CURLOPT_USERAGENT, 'Sliced Invoices/'.SLICED_VERSION.' (via cURL)' );
+		curl_setopt( $curl, CURLOPT_CONNECTTIMEOUT, 10 );
 		curl_setopt( $curl, CURLOPT_TIMEOUT, 20 );
 		curl_setopt( $curl, CURLOPT_TIMEOUT_MS, 20000 );
 		curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false);
@@ -745,11 +750,11 @@ class Sliced_Shared {
 	public static function request_data( $url ) {
 
 		$response = null;
-
+		
 		// First, we try to use wp_remote_get
 		$response = wp_remote_get( $url, array( 'timeout' => 10 ) );
 
-		if( is_wp_error( $response ) ) {
+		if( ! $response || is_wp_error( $response ) ) {
 
 			// If that doesn't work, then we'll try file_get_contents
 			$response = @file_get_contents( $url );
@@ -758,7 +763,7 @@ class Sliced_Shared {
 
 				// And if that doesn't work, then we'll try curl
 				$response = self::curl( $url );
-
+				
 			}
 
 		}
