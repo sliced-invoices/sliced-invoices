@@ -107,8 +107,8 @@ class Sliced_Admin {
 		 * Conditionally enqueue the new client script
 		 */
 		if ( ( $pagenow == 'post.php' || $pagenow == 'post-new.php' ) && ( sliced_get_the_type() ) ) {
-			wp_enqueue_script( $this->plugin_name . '-new-client', plugin_dir_url( __FILE__ ) . 'js/new-client.js', array( 'jquery' ), $this->version, false );
-			wp_localize_script( $this->plugin_name . '-new-client' , 'sliced_new_client', array( 'sliced_ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+			//wp_enqueue_script( $this->plugin_name . '-new-client', plugin_dir_url( __FILE__ ) . 'js/new-client.js', array( 'jquery' ), $this->version, false );
+			//wp_localize_script( $this->plugin_name . '-new-client' , 'sliced_new_client', array( 'sliced_ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 			wp_enqueue_script( 'password-strength-meter' );
 			wp_enqueue_script( 'user-profile' );
 		}
@@ -1081,7 +1081,6 @@ class Sliced_Admin {
 	}
 
 
-
 	/**
 	 * Get the list of clients for the metabox and for the client filter.
 	 *
@@ -1121,6 +1120,48 @@ class Sliced_Admin {
 
 
 	/**
+	 * Get the list of users who are not yet clients, for the add client dialog box
+	 *
+	 * @since 	3.6.0
+	 */
+	public static function get_non_client_users() {
+
+		global $current_user;
+
+		if( ! function_exists('wp_get_current_user')) {
+			include(ABSPATH . "wp-includes/pluggable.php");
+		}
+
+		$current_user = wp_get_current_user();
+
+		$args = array(
+			'orderby'    => 'meta_value',
+			'order'      => 'ASC',
+			'exclude'    => $current_user->ID,
+			'meta_query' => array(
+				array(
+					'key'  => '_sliced_client_business',
+					'compare'   => 'NOT EXISTS',
+				),
+			),
+		);
+
+		$user_query = new WP_User_Query( $args );
+
+		$user_options = array( '' => __( 'Choose user', 'sliced-invoices' ) );
+
+		if ( ! empty( $user_query->results ) ) {
+			foreach ( $user_query->results as $user ) {
+				$user_options[$user->ID] = $user->user_login;
+			}
+		}
+
+		return $user_options;
+
+	}
+
+
+	/**
 	 * New client registration form. Hidden in the footer until required
 	 *
 	 * @since 	2.0.0
@@ -1147,6 +1188,8 @@ class Sliced_Admin {
 			$new_user_role = $creating && isset( $_POST['role'] ) ? wp_unslash( $_POST['role'] ) : '';
 			$new_user_send_password = $creating && isset( $_POST['send_password'] ) ? wp_unslash( $_POST['send_password'] ) : true;
 			$new_user_ignore_pass = $creating && isset( $_POST['noconfirmation'] ) ? wp_unslash( $_POST['noconfirmation'] ) : '';
+			
+			$non_client_users = $this->get_non_client_users();
 
 			/*
 			 * The form is basically copied from the core new user page.
@@ -1154,15 +1197,77 @@ class Sliced_Admin {
 			?>
 			<div id="add-ajax-user" style="display:none">
 
-				<div class="alert result-message">&nbsp;</div>
+				<div class="result-message"></div>
 
-				<p>Add a new client here. This will create a new WordPress User in the database.<br>
-				<span class="description">NOTE: To show an existing user in the Client dropdown, simply edit that user and fill in the Business/Client Name field.</span></p>
+				<p><span class="description"><?php printf( __( 'To create a new client, choose either an existing WordPress user to associate with the client, or create a new user.  For help see our support page about <a href="%s" target="_blank">Clients</a>.', 'sliced-invoices' ), 'https://slicedinvoices.com/support/clients/' ); ?></span></p>
 
-				<form action="" method="post" name="create-user" id="create-user" class="validate sliced-new-client" novalidate="novalidate"<?php do_action( 'user_new_form_tag' );?>>
+				<p><?php _e( 'Add new client from:', 'sliced-invoices' ); ?></p>
+				
+				<?php if ( current_user_can('create_users') ): ?>
+				<p><input type="radio" name="sliced_add_client_type" id="sliced_add_client_type_existing" value="existing" /> <label for="sliced_add_client_type_existing"><?php _e( 'Existing User', 'sliced-invoices' ); ?></label></p>
+				<?php else: ?>
+				<div class="notice notice-error inline"><p><?php _e( 'Error: you do not have sufficient permissions to manage users.  Please contact an admin for assistance.', 'sliced-invoices' ); ?></p></div>				
+				<?php endif; ?>
+				
+				<form action="" method="post" name="sliced-update-user" id="sliced-update-user" class="validate sliced-new-client" novalidate="novalidate"<?php do_action( 'user_new_form_tag' );?> style="display:none;">
 
-					<input name="action" type="hidden" value="create-user" />
-					<?php wp_nonce_field( 'create-user', '_wpnonce_create-user' ); ?>
+					<input name="action" type="hidden" value="sliced-update-user" />
+					<?php wp_nonce_field( 'sliced-update-user', '_wpnonce_sliced-update-user' ); ?>
+
+					<table class="form-table popup-form">
+
+					<tbody>
+						<tr class="form-field form-required">
+							<th scope="row"><label for="sliced_update_user_user"><?php _e( 'Select Existing User:', 'sliced-invoices' ); ?>*</label></th>
+							<td>
+								<select name="sliced_update_user_user" id="sliced_update_user_user">
+									<?php
+									foreach ($non_client_users as $id => $username) {
+										echo '<option value="' . esc_attr( $id ) . '">' . esc_html( $username ) . '</option>';
+									}
+									?>
+								</select>
+							</td>
+						</tr>
+
+						<tr class="form-field form-required">
+							<th scope="row">
+								<label for="_sliced_client_business"><?php _e( 'Business/Client Name', 'sliced-invoices' ); ?>*</label>
+							</th>
+							<td><input name="_sliced_client_business" value="" type="text" /></td>
+						</tr>
+
+						<tr class="form-field">
+							<th scope="row">
+								<label for="_sliced_client_address"><?php _e( 'Address', 'sliced-invoices' ); ?></label>
+							</th><td>
+								<textarea class="regular-text" name="_sliced_client_address"></textarea></td>
+						</tr>
+
+						<tr class="form-field">
+							<th scope="row">
+								<label for="_sliced_client_extra_info"><?php _e( 'Extra Info', 'sliced-invoices' ); ?></label>
+							</th><td>
+								<textarea class="regular-text" name="_sliced_client_extra_info"></textarea></td>
+						</tr>
+
+					</tbody>
+					</table>
+
+					<?php submit_button( __( 'Add New Client ', 'sliced-invoices' ), 'primary', 'sliced-update-user', true, array( 'id' => 'sliced-update-user-submit', 'class' => 'submit button button-primary button-large' ) ); ?>
+
+					<div class="indicator" style="display:none"><?php _e( 'Please wait...', 'sliced-invoices' ); ?></div>
+
+				</form>
+				
+				<?php if ( current_user_can('create_users') ): ?>
+				<p><input type="radio" name="sliced_add_client_type" id="sliced_add_client_type_new" value="new" /> <label for="sliced_add_client_type_new"><?php _e( 'Create New User', 'sliced-invoices' ); ?></label></p>
+				<?php endif; ?>
+				
+				<form action="" method="post" name="sliced-create-user" id="sliced-create-user" class="validate sliced-new-client" novalidate="novalidate"<?php do_action( 'user_new_form_tag' );?> style="display:none;">
+
+					<input name="action" type="hidden" value="sliced-create-user" />
+					<?php wp_nonce_field( 'sliced-create-user', '_wpnonce_sliced-create-user' ); ?>
 
 					<table class="form-table popup-form">
 
@@ -1180,21 +1285,21 @@ class Sliced_Admin {
 							<th scope="row">
 								<label for="_sliced_client_business"><?php _e( 'Business/Client Name', 'sliced-invoices' ); ?>*</label>
 							</th>
-							<td><input name="_sliced_client_business" id="_sliced_client_business" value="" type="text" /></td>
+							<td><input name="_sliced_client_business" value="" type="text" /></td>
 						</tr>
 
 						<tr class="form-field">
 							<th scope="row">
 								<label for="_sliced_client_address"><?php _e( 'Address', 'sliced-invoices' ); ?></label>
 							</th><td>
-								<textarea class="regular-text" name="_sliced_client_address" id="_sliced_client_address"></textarea></td>
+								<textarea class="regular-text" name="_sliced_client_address"></textarea></td>
 						</tr>
 
 						<tr class="form-field">
 							<th scope="row">
 								<label for="_sliced_client_extra_info"><?php _e( 'Extra Info', 'sliced-invoices' ); ?></label>
 							</th><td>
-								<textarea class="regular-text" name="_sliced_client_extra_info" id="_sliced_client_extra_info"></textarea></td>
+								<textarea class="regular-text" name="_sliced_client_extra_info"></textarea></td>
 						</tr>
 
 						<tr class="form-field">
@@ -1256,11 +1361,12 @@ class Sliced_Admin {
 					</tbody>
 					</table>
 
-					<?php submit_button( __( 'Add New User ', 'sliced-invoices' ), 'primary', 'create-user', true, array( 'id' => 'submit', 'class' => 'submit button button-primary button-large' ) ); ?>
+					<?php submit_button( __( 'Add New Client ', 'sliced-invoices' ), 'primary', 'sliced-create-user', true, array( 'id' => 'sliced-create-user-submit', 'class' => 'submit button button-primary button-large' ) ); ?>
 
 					<div class="indicator" style="display:none"><?php _e( 'Please wait...', 'sliced-invoices' ); ?></div>
 
 				</form>
+				
 			</div>
 			
 			<div id="sliced-ajax-update-client" style="display:none;">
@@ -1341,6 +1447,109 @@ class Sliced_Admin {
 			
 			<script type="text/javascript">
 				jQuery(document).ready(function($) {
+				
+					/*
+					 * "Add New Client" button actions
+					 */
+					 
+					// Toggle
+					$('input[name="sliced_add_client_type"]').on('click',function(e){
+						var type = $(this).val();
+						if ( type === 'existing' ) {
+							$('#sliced-create-user').hide();
+							$('#sliced-update-user').slideDown();
+						}
+						if ( type === 'new' ) {
+							$('#sliced-create-user').slideDown();
+							$('#sliced-update-user').hide();
+						}
+					});
+					
+					// Update existing user
+					$('#sliced-update-user-submit').click( function(event) {
+						
+						if (event.preventDefault) {
+							event.preventDefault();
+						} else {
+							event.returnValue = false;
+						}
+						
+						$('#_sliced_client .cmb2-metabox-description span').remove();
+						$('.indicator').show();
+						$('.result-message').hide();
+						
+						data = {
+							action:                    'sliced-update-user',
+							user_id:                   $('#sliced_update_user_user').val(),
+							nonce:                     $('#_wpnonce_sliced-update-user').val(),
+							_sliced_client_business:   $('#sliced-update-user input[name="_sliced_client_business"]').val(),
+							_sliced_client_address:    $('#sliced-update-user textarea[name="_sliced_client_address"]').val(),
+							_sliced_client_extra_info: $('#sliced-update-user textarea[name="_sliced_client_extra_info"]').val()
+						};
+						
+						$.post( ajaxurl, data, function(response) {
+							$('.indicator').hide();
+							if( response != 'Error adding the new client.' ) {
+								$("#_sliced_client").html(response);
+								tb_remove();
+								$('<span class="updated"><?php _e( 'New Client Successfully Added', 'sliced-invoices' ); ?></span>').insertAfter('select#_sliced_client');
+							} else {
+								$('.result-message').addClass('form-invalid error notice notice-error inline');
+								$('.result-message').show();
+								$('.result-message').html('<p><?php _e( 'Please check that all required fields are filled in.', 'sliced-invoices' ); ?></p>');
+								$('.form-required').addClass('form-invalid');
+							}
+						});
+						
+					});
+					
+					// Create new user
+					$('#sliced-create-user-submit').click( function(event) {
+						
+						if (event.preventDefault) {
+							event.preventDefault();
+						} else {
+							event.returnValue = false;
+						}
+
+						$('#_sliced_client .cmb2-metabox-description span').remove();
+						$('.indicator').show();
+						$('.result-message').hide();
+
+						data = {
+							action:     'sliced-create-user',
+							nonce:      $('#_wpnonce_sliced-create-user').val(),
+							user_login: $('#user_login').val(),
+							password:   $('#pass1').val(),
+							email:      $('#email').val(),
+							first_name: $('#first_name').val(),
+							last_name:  $('#last_name').val(),
+							website:    $('#url').val(),
+							business:   $('#sliced-create-user input[name="_sliced_client_business"]').val(),
+							address:    $('#sliced-create-user textarea[name="_sliced_client_address"]').val(),
+							extra_info: $('#sliced-create-user textarea[name="_sliced_client_extra_info"]').val(),
+						};
+
+						$.post( ajaxurl, data, function(response) {
+							$('.indicator').hide();
+							if( response != 'Error adding the new user.' ) {
+								$("#_sliced_client").html(response);
+								tb_remove();
+								$('<span class="updated"><?php _e( 'New Client Successfully Added', 'sliced-invoices' ); ?></span>').insertAfter('select#_sliced_client');
+							} else {
+								$('.result-message').addClass('form-invalid error notice notice-error inline');
+								$('.result-message').show();
+								$('.result-message').html('<p><?php _e( 'Please check that all required fields are filled in, and that this user does not already exist.', 'sliced-invoices' ); ?></p>');
+								$('.form-required').addClass('form-invalid');
+							}
+						});
+
+					});
+					
+				
+					/*
+					 * "Edit Client" button actions
+					 */
 					$('a[href*="sliced-ajax-update-client"]').on('click',function(e){
 						var user_id = $('#_sliced_client.cmb2_select').val();
 						if ( ! user_id > '' ) {
@@ -1408,9 +1617,9 @@ class Sliced_Admin {
 								tb_remove();
 								$('<span class="updated"><?php _e( 'Client successfully updated', 'sliced-invoices' ); ?></span>').insertAfter('select#_sliced_client');
 							} else {
-								$('.result-message').addClass('form-invalid error');
+								$('.result-message').addClass('form-invalid error notice notice-error inline');
 								$('.result-message').show();
-								$('.result-message').html('<?php _e( 'Please check that all required fields are filled in.', 'sliced-invoices' ); ?>');
+								$('.result-message').html('<p><?php _e( 'Please check that all required fields are filled in.', 'sliced-invoices' ); ?></p>');
 								$('.form-required').addClass('form-invalid');
 							}
 						});
@@ -1428,7 +1637,7 @@ class Sliced_Admin {
 	 *
 	 * @since 	2.0.0
 	 */
-	public function register_client() {
+	public function create_user() {
 
 		/*
 		 * Verify the nonce
@@ -1436,7 +1645,7 @@ class Sliced_Admin {
 		if ( ! current_user_can('create_users') )
 			wp_die( __( 'Cheatin&#8217; uh?' ), 403 );
 
-		if( !isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'create-user' ) )
+		if( !isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'sliced-create-user' ) )
 			wp_die( 'Ooops, something went wrong, please try again later.' );
 
 		if( empty( $_POST['business'] ) ) {
@@ -1487,6 +1696,67 @@ class Sliced_Admin {
 
 		} else {
 
+
+			die( 'Error adding the new user.' );
+
+		}
+
+		die();
+
+	}
+
+
+	/**
+	 * Action to register existing user as new client
+	 *
+	 * @since 	3.6.0
+	 */
+	public function update_user() {
+
+		/*
+		 * Verify the nonce
+		 */
+		if ( ! current_user_can('create_users') )
+			wp_die( __( 'Cheatin&#8217; uh?' ), 403 );
+
+		if( !isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'sliced-update-user' ) )
+			wp_die( 'Ooops, something went wrong, please try again later.' );
+
+		if( empty( $_POST['user_id'] ) || empty( $_POST['_sliced_client_business'] ) ) {
+			wp_die( 'Error adding the new client.' );
+		}
+
+		/*
+		 * Inserts the user into the database
+		 */
+		$user_id = intval( sanitize_text_field( $_POST['user_id'] ) );
+
+		/*
+		 * Add the custom user meta
+		 */
+		update_user_meta( $user_id, 'show_admin_bar_front', 'false' );
+		update_user_meta( $user_id, '_sliced_client_business', sanitize_text_field( $_POST['_sliced_client_business'] ) );
+		update_user_meta( $user_id, '_sliced_client_address', wp_kses_post( $_POST['_sliced_client_address'] ) );
+		update_user_meta( $user_id, '_sliced_client_extra_info', wp_kses_post( $_POST['_sliced_client_extra_info'] ) );
+
+		/*
+		 * Returns the updated client select input
+		 */
+		if( ! is_wp_error( $user_id ) ) {
+
+			$clients = $this->get_clients();
+
+			$option = '';
+
+			foreach ($clients as $id => $business_name) {
+				$option .= '<option value="' . esc_attr( $id ) . '"' . ( $id == $user_id ? ' selected' : '' ) . '>';
+				$option .= esc_html( $business_name );
+				$option .= '</option>';
+			}
+
+			echo $option;
+
+		} else {
 
 			die( 'Error adding the new user.' );
 
