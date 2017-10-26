@@ -3,8 +3,8 @@ Contributors: SlicedInvoices
 Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce
 Requires at least: 4.0
-Tested up to: 4.8
-Stable tag: 3.5.4
+Tested up to: 4.9
+Stable tag: 3.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -161,6 +161,20 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 == Changelog ==
+= 3.6.0 =
+* NEW: Payments section. This box allows you to see detailed payment history for each invoice, add memos to payments, or enter manual payments from the admin side.
+* NEW: Taxable checkbox. This allows you to specify whether a line item is taxable or not.  For example, if you have line items for both products and services on the same invoice and only want the products to be taxable, you can now check the "taxable" box just for those line items.
+* NEW: revamped "Add New Client" dialog box, adding option to select from existing users (without having to navigate away to WP Users page)
+* FIX: minor CSS issues, styling updates
+* FIX: redirect issue when quote converted to invoice when another invoice already has an identical URL slug
+* UPDATE: add additional translatable fields
+* UPDATE: changed title of "invoice notes" and "quote notes" sections to "invoice history" and "quote history", respectively
+* UPDATE: force admin "convert quote to invoice" button to convert regardless of "accepted quote action" setting (for example, even if "accepted quote action" is set to "do nothing")
+* UPDATE: improved CSV import/export features
+* UPDATE: optimize some queries for enhanced performance
+* UPDATE: update .pot file
+* UPDATE: various other performance updates, internal enhancements, code refactoring
+
 = 3.5.4 =
 * FIX: issue where "email to client" button stopped working after using Quick Edit feature, until page was reloaded
 * UPDATE: additional checking to make sure the payment page (selected on the Payment Settings tab) exists, else trigger a warning notice
