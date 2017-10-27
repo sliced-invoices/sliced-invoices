@@ -339,7 +339,7 @@ class Sliced_Shared {
 	    $dec_sep 	= sliced_get_decimal_seperator();
 	    $decimals 	= sliced_get_decimals();
 
-	    $formatted 	= number_format( (float)$amount, (int)$decimals, $dec_sep, $thou_sep );
+	    $formatted 	= number_format( round( (float)$amount, $decimals ), (int)$decimals, $dec_sep, $thou_sep );
 
 	    return apply_filters( 'sliced_get_formatted_number', $formatted );
 	}
@@ -462,6 +462,7 @@ class Sliced_Shared {
 		
 		if( $discounts == '' || $discounts == '0' || $discounts == null || $discounts == '0.00' ) {
 			$totals['discounts'] = 0;
+			$discounts = 0;
 		} else {
 			$totals['discounts'] = $discounts;
 			$totals['total'] = $totals['total'] - $totals['discounts'];
@@ -477,16 +478,16 @@ class Sliced_Shared {
 			}
 			$totals['payments'] = $payments_total;
 		}
-		
+
 		// apply filters
 		$totals = apply_filters( 'sliced_invoice_totals', $totals, $id );
-		
+
 		// patch for Deposit Invoices extension < 2.2.0, which overwrites $totals
 		if ( defined( 'SI_DEPOSIT_VERSION' ) && version_compare( SI_DEPOSIT_VERSION, '2.2.0', '<=' ) ) {
 			$totals['discounts'] = $discounts;
 			$totals['payments'] = $payments_total;
 		}
-		
+
 		// process any adjustments from external add-ons here
 		// (avoids any potential race condition by doing this only here)
 		if ( isset( $totals['addons'] ) && is_array( $totals['addons'] ) ) {
@@ -524,7 +525,7 @@ class Sliced_Shared {
 
 		// save this for last
 		$totals['total_due'] = $totals['total'] - $totals['payments'];
-		
+
 		return $totals;
 
 	}
