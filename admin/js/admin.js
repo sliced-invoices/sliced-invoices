@@ -152,7 +152,7 @@
 
         // add global tax, if any
         if ( ! global_tax.equals( 0 ) ) {
-			sliced_invoices.totals.tax = sliced_invoices.totals.sub_total_taxable.times( global_tax );
+			sliced_invoices.totals.tax = sliced_invoices.totals.sub_total_taxable.times( global_tax ).toDecimalPlaces( sliced_invoices.utils.decimals );
 			sliced_invoices.totals.total = sliced_invoices.totals.sub_total.plus( sliced_invoices.totals.tax );
         } else {
             sliced_invoices.totals.total = sliced_invoices.totals.sub_total;

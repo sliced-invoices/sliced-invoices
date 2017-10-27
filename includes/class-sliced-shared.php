@@ -421,7 +421,9 @@ class Sliced_Shared {
 			'total_due'         => 0,
 		);
 
-	    $items = self::get_line_items( $id );
+	    $decimals = self::get_decimals();
+		
+		$items = self::get_line_items( $id );
 		
 	    // if there are no line items, simply return zero for all amounts
 	    if( ! $items || $items == null || empty( $items ) || empty( $items[0] ) || ! is_array( $items[0] ) ) {
@@ -452,7 +454,7 @@ class Sliced_Shared {
 	        $totals['total'] = $totals['sub_total'];
 	    } else {
 	        $tax_percentage  = $global_tax / 100;
-	        $totals['tax']   = $totals['sub_total_taxable'] * $tax_percentage;
+	        $totals['tax']   = round( $totals['sub_total_taxable'] * $tax_percentage, $decimals );
 	        $totals['total'] = $totals['sub_total'] + $totals['tax'];
 	    }
 		
