@@ -5,7 +5,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
 Tested up to: 4.9
-Stable tag: 3.6.0
+Stable tag: 3.6.1
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -162,6 +162,11 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 ## Changelog
+##  3.6.1
+* UPDATE: minor text change
+* FIX: issue with showing more decimal places than allowed in settings
+* FIX: don't show "Discount" line if it equals 0.00
+
 ##  3.6.0
 * NEW: Payments section. This box allows you to see detailed payment history for each invoice, add memos to payments, or enter manual payments from the admin side.
 * NEW: Taxable checkbox. This allows you to specify whether a line item is taxable or not.  For example, if you have line items for both products and services on the same invoice and only want the products to be taxable, you can now check the "taxable" box just for those line items.
