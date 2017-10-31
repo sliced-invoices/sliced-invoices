@@ -998,6 +998,15 @@ class Sliced_Options {
 					),
 				),
 				array(
+					'name'      => __( 'Discount', 'sliced-invoices' ),
+					'default'   => 'Discount',
+					'id'        => 'discount',
+					'type'      => 'text',
+					'attributes' => array(
+						'class'      => 'i18n-multilingual regular-text',
+					),
+				),
+				array(
 					'name'      => __( 'Total', 'sliced-invoices' ),
 					'default'   => 'Total',
 					'id'        => 'total',
