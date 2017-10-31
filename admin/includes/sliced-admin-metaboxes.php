@@ -874,7 +874,7 @@ class Sliced_Metaboxes {
 		$output = apply_filters( 'sliced_admin_display_totals_after_tax', $output );
 		
 		$part = apply_filters( 'sliced_admin_display_totals_discounts', '
-					<div class="discounts">' . __( 'Discounts', 'sliced-invoices' ) .'
+					<div class="discounts">' . __( 'Discount', 'sliced-invoices' ) .'
 						<a id="sliced-totals-discounts-edit" href="#"><small>' . __( 'edit', 'sliced-invoices' ) . '</small></a>
 						<span class="discount-adder hidden">
 							<button type="button" class="button">' . __( 'Apply', 'sliced-invoices' ) . '</button>
