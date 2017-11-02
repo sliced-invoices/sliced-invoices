@@ -56,7 +56,11 @@ endif;
 
 if ( ! function_exists( 'sliced_display_invoice_details' ) ) :
 
-	function sliced_display_invoice_details() { ?>
+	function sliced_display_invoice_details() {
+
+		$translate = get_option( 'sliced_translate' );
+
+		?>
 
 			<table class="table table-bordered table-sm">
 
@@ -89,7 +93,7 @@ if ( ! function_exists( 'sliced_display_invoice_details' ) ) :
 				<?php endif; ?>
 
 					<tr class="table-active">
-						<td><strong><?php _e( 'Total Due', 'sliced-invoices' ) ?></strong></td>
+						<td><strong><?php echo ( isset( $translate['total_due'] ) ? $translate['total_due'] : __( 'Total Due', 'sliced-invoices') ); ?></strong></td>
 						<td><strong><?php echo sliced_get_invoice_total(); ?></strong></td>
 					</tr>
 
@@ -102,7 +106,11 @@ endif;
 
 if ( ! function_exists( 'sliced_display_quote_details' ) ) :
 
-	function sliced_display_quote_details() { ?>
+	function sliced_display_quote_details() {
+
+		$translate = get_option( 'sliced_translate' );
+
+		?>
 
 			<table class="table table-bordered table-sm">
 
@@ -130,7 +138,7 @@ if ( ! function_exists( 'sliced_display_quote_details' ) ) :
 				<?php endif; ?>
 
 					<tr class="table-active">
-						<td><strong><?php _e( 'Total', 'sliced-invoices' ) ?></strong></td>
+						<td><strong><?php echo ( isset( $translate['total'] ) ? $translate['total'] : __( 'Total', 'sliced-invoices') ); ?></strong></td>
 						<td><strong><?php echo sliced_get_quote_total(); ?></strong></td>
 					</tr>
 
@@ -146,61 +154,62 @@ endif;
 if ( ! function_exists( 'sliced_display_line_items' ) ) :
 
 	function sliced_display_line_items() {
-
+	
 		$shared = new Sliced_Shared;
+		$translate = get_option( 'sliced_translate' );
 
-			$output = '<table class="table table-sm table-bordered table-striped">
-				<thead>
-					<tr>
-						<th class="qty"><strong>' . __( "Hrs/Qty", "sliced-invoices" ) . '</strong></th>
-						<th class="service"><strong>' . __( "Service", "sliced-invoices" ) . '</strong></th>
-						<th class="rate"><strong>' . __( "Rate/Price", "sliced-invoices" ) . '</strong></th>';
-						if ( sliced_hide_adjust_field() === false ) {
-							$output .= '<th class="adjust"><strong>' . __( "Adjust", "sliced-invoices" ) . '</strong></th>';
-						}
-						$output .= '<th class="total"><strong>' . __( "Sub Total", "sliced-invoices" ) . '</strong></th>
-					</tr>
-				</thead>
-				<tbody>';
-
-				$count = 0;
-				$items = sliced_get_invoice_line_items(); // gets quote and invoice
-				if( !empty( $items ) && !empty( $items[0] ) ) :
-
-					foreach ( $items[0] as $item ) {
-
-						$class = ($count % 2 == 0) ? "even" : "odd";
-
-						$qty = isset( $item["qty"] ) ? $shared->get_raw_number( $item["qty"] ) : 0;
-						$amt = isset( $item["amount"] ) ? $shared->get_raw_number( $item["amount"] ) : 0;
-						$tax = isset( $item["tax"] ) ? $shared->get_raw_number( $item["tax"] ) : "0.00";
-						$line_total = $shared->get_line_item_sub_total( $qty, $amt, $tax );
-
-							$output .= '<tr class="row_' . $class . ' sliced-item">
-
-								<td class="qty">' . esc_html__( $shared->get_formatted_number( $qty ) ) . '</td>
-								<td class="service">' . esc_html__( isset( $item["title"] ) ? $item["title"] : "" );
-									if ( isset( $item["description"] ) ) :
-										$output .= '<br/><span class="description">' . wpautop( wp_kses_post( $item["description"] ) ) . '</span>';
-									endif;
-								$output .= '</td>
-								<td class="rate">' . esc_html__( $shared->get_formatted_currency( $amt ) ) . '</td>';
-								if ( sliced_hide_adjust_field() === false) {
-									$output .= '<td class="adjust">' . esc_html__( $tax . "%" ) . '</td>';
-								}
-								$output .= '<td class="total">' . esc_html__( $shared->get_formatted_currency( $line_total ) ) . '</td>
-
-							</tr>';
-
-					$count++;
+		$output = '<table class="table table-sm table-bordered table-striped">
+			<thead>
+				<tr>
+					<th class="qty"><strong>' . ( isset( $translate['hrs_qty'] ) ? $translate['hrs_qty'] : __( 'Hrs/Qty', 'sliced-invoices') ) . '</strong></th>
+					<th class="service"><strong>' . ( isset( $translate['service'] ) ? $translate['service'] : __( 'Service', 'sliced-invoices') ) . '</strong></th>
+					<th class="rate"><strong>' . ( isset( $translate['rate_price'] ) ? $translate['rate_price'] : __( 'Rate/Price', 'sliced-invoices') ) . '</strong></th>';
+					if ( sliced_hide_adjust_field() === false ) {
+						$output .= '<th class="adjust"><strong>' . ( isset( $translate['adjust'] ) ? $translate['adjust'] : __( 'Adjust', 'sliced-invoices') ) . '</strong></th>';
 					}
-				endif;
+					$output .= '<th class="total"><strong>' . ( isset( $translate['sub_total'] ) ? $translate['sub_total'] : __( 'Sub Total', 'sliced-invoices') ) . '</strong></th>
+				</tr>
+			</thead>
+			<tbody>';
 
-				$output .= '</tbody></table>';
+			$count = 0;
+			$items = sliced_get_invoice_line_items(); // gets quote and invoice
+			if( !empty( $items ) && !empty( $items[0] ) ) :
 
-				$output = apply_filters( 'sliced_invoice_line_items_output', $output );
+				foreach ( $items[0] as $item ) {
 
-			echo $output;
+					$class = ($count % 2 == 0) ? "even" : "odd";
+
+					$qty = isset( $item["qty"] ) ? $shared->get_raw_number( $item["qty"] ) : 0;
+					$amt = isset( $item["amount"] ) ? $shared->get_raw_number( $item["amount"] ) : 0;
+					$tax = isset( $item["tax"] ) ? $shared->get_raw_number( $item["tax"] ) : "0.00";
+					$line_total = $shared->get_line_item_sub_total( $qty, $amt, $tax );
+
+						$output .= '<tr class="row_' . $class . ' sliced-item">
+
+							<td class="qty">' . esc_html__( $shared->get_formatted_number( $qty ) ) . '</td>
+							<td class="service">' . esc_html__( isset( $item["title"] ) ? $item["title"] : "" );
+								if ( isset( $item["description"] ) ) :
+									$output .= '<br/><span class="description">' . wpautop( wp_kses_post( $item["description"] ) ) . '</span>';
+								endif;
+							$output .= '</td>
+							<td class="rate">' . esc_html__( $shared->get_formatted_currency( $amt ) ) . '</td>';
+							if ( sliced_hide_adjust_field() === false) {
+								$output .= '<td class="adjust">' . esc_html__( $tax . "%" ) . '</td>';
+							}
+							$output .= '<td class="total">' . esc_html__( $shared->get_formatted_currency( $line_total ) ) . '</td>
+
+						</tr>';
+
+				$count++;
+				}
+			endif;
+
+			$output .= '</tbody></table>';
+
+			$output = apply_filters( 'sliced_invoice_line_items_output', $output );
+
+		echo $output;
 
 	}
 
@@ -211,6 +220,8 @@ endif;
 if ( ! function_exists( 'sliced_display_invoice_totals' ) ) :
 
 	function sliced_display_invoice_totals() {
+	
+		$translate = get_option( 'sliced_translate' );
 
 		ob_start();
 		
@@ -231,7 +242,7 @@ if ( ! function_exists( 'sliced_display_invoice_totals' ) ) :
 			<tbody>
 				<?php do_action( 'sliced_invoice_before_totals' ); ?>
 				<tr class="row-sub-total">
-					<td class="rate"><?php _e( 'Sub Total', 'sliced-invoices' ) ?></td>
+					<td class="rate"><?php echo ( isset( $translate['sub_total'] ) ? $translate['sub_total'] : __( 'Sub Total', 'sliced-invoices') ); ?></td>
 					<td class="total"><?php _e( sliced_get_invoice_sub_total() ) ?></td>
 				</tr>
 				<?php do_action( 'sliced_invoice_after_sub_total' ); ?>
@@ -257,7 +268,7 @@ if ( ! function_exists( 'sliced_display_invoice_totals' ) ) :
 					$discount = Sliced_Shared::get_formatted_currency( $totals['discounts'] );
 					?>
 					<tr class="row-discount">
-						<td class="rate"><?php _e( 'Discount', 'sliced-invoices' ) ?></td>
+						<td class="rate"><?php echo ( isset( $translate['discount'] ) ? $translate['discount'] : __( 'Discount', 'sliced-invoices') ); ?></td>
 						<td class="total"><span style="color:red;">-<?php echo esc_html( $discount ) ?></span></td>
 					</tr>
 					<?php
@@ -277,14 +288,14 @@ if ( ! function_exists( 'sliced_display_invoice_totals' ) ) :
 					$total_due = Sliced_Shared::get_formatted_currency( $totals['total_due'] );
 					?>
 					<tr class="table-active row-total">
-						<td class="rate"><strong><?php _e( 'Total Due', 'sliced-invoices' ) ?></strong></td>
+						<td class="rate"><strong><?php echo ( isset( $translate['total_due'] ) ? $translate['total_due'] : __( 'Total Due', 'sliced-invoices') ); ?></strong></td>
 						<td class="total"><strong><?php echo esc_html( $total_due ) ?></strong></td>
 					</tr>
 					<?php
 				} else {
 					?>
 					<tr class="table-active row-total">
-						<td class="rate"><strong><?php _e( 'Total Due', 'sliced-invoices' ) ?></strong></td>
+						<td class="rate"><strong><?php echo ( isset( $translate['total_due'] ) ? $translate['total_due'] : __( 'Total Due', 'sliced-invoices') ); ?></strong></td>
 						<td class="total"><strong><?php _e( sliced_get_invoice_total() ) ?></strong></td>
 					</tr>
 				<?php
@@ -306,14 +317,18 @@ endif;
 
 if ( ! function_exists( 'sliced_display_quote_totals' ) ) :
 
-	function sliced_display_quote_totals() { ?>
+	function sliced_display_quote_totals() {
+	
+		$translate = get_option( 'sliced_translate' );
+		
+		?>
 
 			<table class="table table-sm table-bordered">
 
 				<tbody>
 					<?php do_action( 'sliced_quote_before_totals' ); ?>
 					<tr class="row-sub-total">
-						<td class="rate"><?php echo _e( 'Sub Total', 'sliced-invoices' ); ?></td>
+						<td class="rate"><?php echo ( isset( $translate['sub_total'] ) ? $translate['sub_total'] : __( 'Sub Total', 'sliced-invoices') ); ?></td>
 						<td class="total"><?php echo esc_html( sliced_get_quote_sub_total() ); ?></td>
 					</tr>
 					<?php do_action( 'sliced_invoice_after_sub_total' ); ?>
@@ -328,14 +343,14 @@ if ( ! function_exists( 'sliced_display_quote_totals' ) ) :
 						$discount = Sliced_Shared::get_formatted_currency( $totals['discounts'] );
 						?>
 						<tr class="row-discount">
-							<td class="rate"><?php _e( 'Discount', 'sliced-invoices' ) ?></td>
+							<td class="rate"><?php echo ( isset( $translate['discount'] ) ? $translate['discount'] : __( 'Discount', 'sliced-invoices') ); ?></td>
 							<td class="total"><span style="color:red;">-<?php echo esc_html( $discount ) ?></span></td>
 						</tr>
 						<?php
 					}
 					?>
 					<tr class="table-active row-total">
-						<td class="rate"><strong><?php echo _e( 'Total', 'sliced-invoices' ); ?></strong></td>
+						<td class="rate"><strong><?php echo ( isset( $translate['total'] ) ? $translate['total'] : __( 'Total', 'sliced-invoices') ); ?></strong></td>
 						<td class="total"><strong><?php echo esc_html( sliced_get_quote_total() ); ?></strong></td>
 					</tr>
 					<?php do_action( 'sliced_quote_after_totals' ); ?>
