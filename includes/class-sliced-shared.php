@@ -474,7 +474,11 @@ class Sliced_Shared {
 		if ( is_array( $payments ) && isset( $payments[0] ) && is_array( $payments[0] ) ) {
 			foreach ( $payments[0] as $payment ) {
 				$amount = isset( $payment['amount'] ) ? self::get_raw_number( $payment['amount'], $id ) : 0;
-				$payments_total = $payments_total + $amount;
+				$status = isset( $payment['status'] ) ? $payment['status'] : false;
+				if ( $status === 'success' ) {
+					// only count "Completed" payments
+					$payments_total = $payments_total + $amount;
+				}
 			}
 			$totals['payments'] = $payments_total;
 		}
