@@ -17,7 +17,7 @@ if ( ! defined('ABSPATH') ) {
 }
 
 define( 'SLICED_VERSION', '3.6.1' );
-define( 'SLICED_DB_VERSION', '5' );
+define( 'SLICED_DB_VERSION', '6' );
 define( 'SLICED_PATH', plugin_dir_path( __FILE__ ) );
 
 
@@ -75,9 +75,10 @@ add_action( 'plugins_loaded', 'run_sliced_invoices' ); // wait until 'plugins_lo
 
 /**
  * History:
- * 2017-10-16 -- update from DB 4 to DB 5, for Sliced Invoices versions < 3.6.0
- * 2017-06-06 -- update from DB 3 to DB 4, for Sliced Invoices versions < 3.4.0
- * 2016-08-30 -- update from DB 2 to DB 3, for Sliced Invoices versions < 2.873
+ * 2017-11-03 -- update DB from 5 to 6, for Sliced Invoices versions < 3.6.1
+ * 2017-10-16 -- update DB from 4 to 5, for Sliced Invoices versions < 3.6.0
+ * 2017-06-06 -- update DB from 3 to 4, for Sliced Invoices versions < 3.4.0
+ * 2016-08-30 -- update DB from 2 to 3, for Sliced Invoices versions < 2.873
  */
 function sliced_invoices_db_update() {
 	
@@ -88,6 +89,31 @@ function sliced_invoices_db_update() {
 	if ( isset( $sliced_db_check['db_version'] ) && $sliced_db_check['db_version'] >= SLICED_DB_VERSION ) {
 		// all good
 		return;
+	}
+	
+	// upgrade from v5 to 6
+	if ( ! isset( $sliced_db_check['db_version'] ) || $sliced_db_check['db_version'] < 6 ) {
+		$args = array(
+			'post_type' => 'sliced_invoice',
+			'posts_per_page' => -1,
+		);
+		$query = new WP_Query( $args );
+		if ( $query->have_posts() ) { 
+			while ( $query->have_posts() ) {
+				$query->the_post();
+				$old_payments = get_post_meta( $post->ID, 'sliced_invoice_paid', true );
+				$new_payments = get_post_meta( $post->ID, '_sliced_payment', true );
+				if ( $old_payments && ! $new_payments ) {
+					if ( update_post_meta( $post->ID, '_sliced_payment', array( array(
+						'amount'     => $old_payments,
+						'status'     => 'success',
+					) ) ) ) {
+						delete_post_meta( $post->ID, 'sliced_invoice_paid' );
+					}
+				}
+			}
+		}
+		wp_reset_postdata();
 	}
 	
 	// upgrade from v4 to 5
