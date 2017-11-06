@@ -5,7 +5,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
 Tested up to: 4.9
-Stable tag: 3.6.1
+Stable tag: 3.6.2
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -162,6 +162,11 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 ## Changelog
+##  3.6.2
+* FIX: new translatable strings not reflecting changes
+* FIX: only count completed payments in totals column
+* FIX: PHP notice
+
 ##  3.6.1
 * UPDATE: minor text change
 * FIX: issue with showing more decimal places than allowed in settings
