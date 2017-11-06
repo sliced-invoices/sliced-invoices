@@ -284,7 +284,7 @@ if ( ! function_exists( 'sliced_display_invoice_totals' ) ) :
 					<?php
 				}
 				
-				if ( $totals['payments'] || $totals['discount'] ) {
+				if ( $totals['payments'] || $totals['discounts'] ) {
 					$total_due = Sliced_Shared::get_formatted_currency( $totals['total_due'] );
 					?>
 					<tr class="table-active row-total">
