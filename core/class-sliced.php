@@ -191,7 +191,7 @@ class Sliced_Invoices {
 		$this->loader->add_action( 'init', $plugin_admin, 'legacy_compatibility' );
 		$this->loader->add_action( 'init', $plugin_admin, 'settings_check' );
 
-		$this->loader->add_filter( 'admin_body_class', $plugin_admin, 'add_admin_body_class' );
+		$this->loader->add_filter( 'admin_body_class', $plugin_admin, 'add_admin_body_class', 11 );
 		$this->loader->add_filter( 'add_meta_boxes', $plugin_admin, 'remove_some_junk', 11 );
 
 		$this->loader->add_filter( 'plugin_action_links_' . trailingslashit( $this->get_plugin_name() ) . $this->get_plugin_name() . '.php', $plugin_admin, 'plugin_action_links' );
