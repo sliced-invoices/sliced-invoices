@@ -133,9 +133,10 @@ class Sliced_Shared {
 		if ( ! $type ) {
 			$type = self::get_type();
 		}
-		$statuses = wp_get_post_terms( $id, $type . '_status', array( 'fields' => 'names' ) );
+		$statuses = wp_get_post_terms( $id, $type . '_status' );
 		if ( is_array( $statuses ) && ! empty( $statuses ) ) {
-			return $statuses[0];
+			$term = $statuses[0];
+			return $term->slug;
 		} else {
 			return false;
 		}
