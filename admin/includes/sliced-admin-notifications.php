@@ -413,7 +413,7 @@ class Sliced_Notifications {
 		$output = 'From: ' . $email_name . ' <' . $this->settings['from'] . '>' . "\r\n";
 
 		if( in_array( $type, $this->client_emails ) && $this->settings['bcc'] == 'on' ) {
-			$output .= 'Bcc: ' . $this->settings['name'] . ' <' . $this->settings['from'] . '>' . "\r\n";
+			$output .= 'Bcc: ' . $this->settings['from'] . "\r\n";
 		}
 		return $output;
 	}
