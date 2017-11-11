@@ -794,7 +794,7 @@ class Sliced_Notifications {
 			'%client_first_name%' => sliced_get_client_first_name( $this->id ),
 			'%client_last_name%'  => sliced_get_client_last_name( $this->id ),
 			'%client_email%'      => sliced_get_client_email( $this->id ),
-			'%link%'              => "<a href='" . esc_url( sliced_get_the_link( $this->id ) ) . "'>" . esc_url( sliced_get_the_link( $this->id ) ) . "</a>",
+			'%link%'              => "<a href='" . sliced_get_the_link( $this->id ) . "'>" . sliced_get_the_link( $this->id ) . "</a>",
 			'%due_date%'          => date_i18n( get_option( 'date_format' ), (int) sliced_get_invoice_due( $this->id ) ),
 			'%created%'           => date_i18n( get_option( 'date_format' ), (int) sliced_get_created( $this->id ) ),
 			'%total%'             => sliced_get_total( $this->id ),
@@ -876,7 +876,7 @@ class Sliced_Notifications {
 			$button_text = $this->settings['quote_available_button'] > '' ? $this->settings['quote_available_button'] : __( 'View this quote online', 'sliced-invoices' );
 		}
 		
-		$email_footer .= "<br><a href='" . esc_url( sliced_get_the_link( $this->id ) ) . "' style='font-size: 100%; line-height: 2; color: #ffffff; border-radius: 5px; display: inline-block; cursor: pointer; font-weight: bold; text-decoration: none; background: #60ad5d; margin: 30px 0 10px 0; padding: 0; border-color: #60ad5d; border-style: solid; border-width: 10px 20px;'>" . esc_html( $button_text ) . "</a>";
+		$email_footer .= "<br><a href='" . sliced_get_the_link( $this->id ) . "' style='font-size: 100%; line-height: 2; color: #ffffff; border-radius: 5px; display: inline-block; cursor: pointer; font-weight: bold; text-decoration: none; background: #60ad5d; margin: 30px 0 10px 0; padding: 0; border-color: #60ad5d; border-style: solid; border-width: 10px 20px;'>" . esc_html( $button_text ) . "</a>";
 
 		$email_footer .=  "</div><!-- End body_content_inner -->
 													</td>
