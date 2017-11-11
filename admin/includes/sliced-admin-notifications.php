@@ -408,7 +408,9 @@ class Sliced_Notifications {
 	 */
 	public function get_the_headers( $type ) {
 
-		$output = 'From: ' . $this->settings['name'] . ' <' . $this->settings['from'] . '>' . "\r\n";
+		// make sure the From name it's properly quoted, remove any extra double quotes from inside
+		$email_name = '"' . str_replace( '"', '', $this->settings['name'] ) . '"';
+		$output = 'From: ' . $email_name . ' <' . $this->settings['from'] . '>' . "\r\n";
 
 		if( in_array( $type, $this->client_emails ) && $this->settings['bcc'] == 'on' ) {
 			$output .= 'Bcc: ' . $this->settings['name'] . ' <' . $this->settings['from'] . '>' . "\r\n";
