@@ -204,6 +204,29 @@ class Sliced_Tools {
 		$invoices_opt = get_option('sliced_invoices');
 		$quotes_opt   = get_option('sliced_quotes');
 		$email_opt    = get_option('sliced_emails');
+		
+		// mask sensitive info
+		$sensitive_infos = array(
+			'paypal_username',
+			'paypal_password',
+			'paypal_signature',
+			'2checkout_account',
+			'2checkout_secret_word',
+			'2checkout_publishable_key',
+			'2checkout_private_key',
+			'2checkout_admin_api_username',
+			'2checkout_admin_api_password',
+			'braintree_merchant_id',
+			'braintree_public_key',
+			'braintree_private_key',
+			'stripe_secret',
+			'stripe_publishable',
+		);
+		foreach ( $sensitive_infos as $sensitive_info ) {
+			if ( isset( $payment_opt[$sensitive_info] ) ) {
+				$payment_opt[$sensitive_info] = empty( $payment_opt[$sensitive_info] ) ? '<not set>' : '<set>';
+			}
+		}
 
 		$return .= "\n" . '/////-- Sliced Invoices Configuration' . "\n\n";
 		$return .= 'Version:                  ' . $plugin_data['Version'] . "\n";
