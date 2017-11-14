@@ -5,7 +5,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
 Tested up to: 4.9
-Stable tag: 3.6.2
+Stable tag: 3.6.3
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -162,6 +162,15 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 ## Changelog
+##  3.6.3
+* FIX: change the way links are encoded in emails, to get around mailgun/sendgrid issues with ampersands (e.g. https://wordpress.org/support/topic/value-in-url-is-changing-to-038/)
+* FIX: get quote/invoice status by slug instead of by name
+* FIX: increase priority on admin_body_class hook to avoid conflicts with plugins that misuse this filter (for example, avoids a conflict caused by the plugin "WP-CRM")
+* FIX: issue with admin BCC's when using SendGrid
+* FIX: issue with %valid_until% and %due_date% showing "January 1, 1970" if blank
+* UPDATE: add new hook 'sliced_admin_col_after_quote_number'
+* UPDATE: mask some sensitive info in the System Info File
+
 ##  3.6.2
 * FIX: new translatable strings not reflecting changes
 * FIX: only count completed payments in totals column
