@@ -280,8 +280,8 @@ class Sliced_Notifications {
 		if( in_array( $type, $this->client_emails) )
 			return $message;
 
-		$message = null;
-		$message = $this->get_email_header();
+		$output = null;
+		$output = $this->get_email_header();
 
 		switch ( $type ) {
 
@@ -300,7 +300,7 @@ class Sliced_Notifications {
 				);
 				 $content .= '<br>';
 
-				 $message .= wp_kses_post( wpautop( stripslashes( $this->replace_wildcards( apply_filters( 'sliced_admin_notification_quote_accepted', $content, $this->id ) ) ) ) );
+				 $output .= wp_kses_post( wpautop( stripslashes( $this->replace_wildcards( apply_filters( 'sliced_admin_notification_quote_accepted', $content, $this->id ) ) ) ) );
 
 				 break;
 
@@ -316,7 +316,7 @@ class Sliced_Notifications {
 
 				$content .= get_post_meta( $id, '_sliced_declined_reason', true );
 
-				$message .= wp_kses_post( wpautop( stripslashes( $this->replace_wildcards( apply_filters( 'sliced_admin_notification_quote_declined', $content, $this->id ) ) ) ) );
+				$output .= wp_kses_post( wpautop( stripslashes( $this->replace_wildcards( apply_filters( 'sliced_admin_notification_quote_declined', $content, $this->id ) ) ) ) );
 
 				break;
 
@@ -346,15 +346,19 @@ class Sliced_Notifications {
 				 );
 				 $content .= '<br>';
 
-				$message .= wp_kses_post( wpautop( stripslashes( $this->replace_wildcards( apply_filters( 'sliced_admin_notification_payment_received', $content, $this->id ) ) ) ) );
+				$output .= wp_kses_post( wpautop( stripslashes( $this->replace_wildcards( apply_filters( 'sliced_admin_notification_payment_received', $content, $this->id ) ) ) ) );
 
+				break;
+			
+			default:
+				return $message;
 				break;
 		}
 
 
-		$message .= $this->get_email_footer();
+		$output .= $this->get_email_footer();
 
-		return $message;
+		return $output;
 	}
 
 	/**
