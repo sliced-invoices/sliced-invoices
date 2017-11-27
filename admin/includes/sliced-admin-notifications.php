@@ -252,19 +252,22 @@ class Sliced_Notifications {
 		if( in_array( $type, $this->client_emails) )
 			return $subject;
 
-		$subject = null;
+		$output = null;
 		switch ( $type ) {
 			case 'quote_accepted':
-				$subject = sprintf( __( 'Your %s has been accepted', 'sliced-invoices' ), sliced_get_quote_label() );
+				$output = sprintf( __( 'Your %s has been accepted', 'sliced-invoices' ), sliced_get_quote_label() );
 				break;
 			case 'quote_declined':
-				$subject = sprintf( __( 'Your %s has been declined', 'sliced-invoices' ), sliced_get_quote_label() );
+				$output = sprintf( __( 'Your %s has been declined', 'sliced-invoices' ), sliced_get_quote_label() );
 				break;
 			case 'payment_received':
-				$subject = __( 'You\'ve received a payment!', 'sliced-invoices' );
+				$output = __( 'You\'ve received a payment!', 'sliced-invoices' );
+				break;
+			default:
+				$output = $subject;
 				break;
 		}
-		return $subject;
+		return $output;
 	}
 
 	/**
