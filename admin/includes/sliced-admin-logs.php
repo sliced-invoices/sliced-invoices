@@ -49,8 +49,8 @@ class Sliced_Logs {
 		add_action( 'sliced_invoice_available_email_sent', array( &$this, 'invoice_sent' ), 99, 1);
 		
 		// quote/invoice viewed
-		add_action( 'sliced_quote_before_body', array( &$this, 'views_logger' ), 20 ); // must be > 10 so it runs after Sliced_Secure, if present
-		add_action( 'sliced_invoice_before_body', array( &$this, 'views_logger' ), 20 );
+		add_action( 'shutdown', array( &$this, 'views_logger' ) ); // must run after Sliced_Secure, if present
+		add_action( 'shutdown', array( &$this, 'views_logger' ) );
 		
 	}
 
@@ -470,6 +470,11 @@ class Sliced_Logs {
 		
 		// don't log admins looking at their own invoices
 		if ( current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		
+		// don't log if access was denied
+		if ( defined( 'SLICED_SECURE_ACCESS_DENIED' ) && SLICED_SECURE_ACCESS_DENIED ) {
 			return;
 		}
 		
