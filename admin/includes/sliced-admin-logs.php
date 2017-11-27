@@ -520,7 +520,7 @@ class Sliced_Logs {
 			// save it
 			$this->update_log_meta( $id, $meta_value );
 			
-			// the rest is for showing an admin notice, if needed
+			// show admin notice, if needed
 			$settings = array();
 			if ( $type === 'sliced_invoice' ) {
 				$invoices = get_option('sliced_invoices');
@@ -533,8 +533,6 @@ class Sliced_Logs {
 					$settings = $quotes['quote_admin_notices'];
 				}
 			}
-			
-			// trigger notice
 			if (
 				( $type === 'sliced_invoice' && in_array( 'invoice_viewed', $settings ) ) ||
 				( $type === 'sliced_quote' && in_array( 'quote_viewed', $settings ) )
@@ -556,6 +554,15 @@ class Sliced_Logs {
 				);
 				Sliced_Admin_Notices::add_custom_notice( ( $type === 'sliced_invoice' ? 'invoice' : 'quote' ).'_viewed_'.$id, $notice_args );
 			}
+			
+		}
+		
+		if ( $type === 'sliced_invoice' ) {
+			do_action( 'sliced_invoice_viewed', $id, $meta_value, $unique );
+		}
+		
+		if ( $type === 'sliced_quote' ) {
+			do_action( 'sliced_quote_viewed', $id, $meta_value, $unique );
 		}
 		
 	}
