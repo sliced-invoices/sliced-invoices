@@ -4,7 +4,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce
 Requires at least: 4.0
 Tested up to: 4.9
-Stable tag: 3.6.3
+Stable tag: 3.6.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -161,6 +161,11 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 == Changelog ==
+= 3.6.4 =
+* UPDATE: add CSS fallback in case logo is too large for email template
+* UPDATE: add new actions 'sliced_invoice_viewed', 'sliced_quote_viewed'
+* UPDATE: minor code refactoring
+
 = 3.6.3 =
 * FIX: change the way links are encoded in emails, to get around mailgun/sendgrid issues with ampersands (e.g. https://wordpress.org/support/topic/value-in-url-is-changing-to-038/)
 * FIX: get quote/invoice status by slug instead of by name
