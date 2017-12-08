@@ -657,7 +657,7 @@ class Sliced_Admin {
 
 			remove_meta_box('pageparentdiv', 'sliced_' . $type, 'side');
 			remove_meta_box( $type . '_statusdiv', 'sliced_' . $type, 'side' );
-			remove_meta_box('mymetabox_revslider_0', 'sliced_' . $type, 'post' );
+			remove_meta_box('mymetabox_revslider_0', 'sliced_' . $type, 'normal' );
 
 		}
 
