@@ -2156,16 +2156,16 @@ class Sliced_Admin {
 			// Put each posts data into the appropriate cell
 			$row = array();
 			$row[0]  = sliced_get_prefix() . sliced_get_number() . sliced_get_suffix();
-			$row[1]  = wp_kses_decode_entities( get_the_title() );
+			$row[1]  = html_entity_decode( get_the_title() );
 			$row[2]  = sliced_get_client_business();
 			$row[3]  = sliced_get_client_email();
 			$row[4]  = sliced_get_client_address();
 			$row[5]  = sliced_get_client_extra_info();
 			$row[6]  = rtrim( implode( ',', $status_array ), ',' );
 			$row[7]  = date_i18n( get_option( 'date_format' ), (int) sliced_get_created() );
-			$row[8]  = sliced_get_sub_total();
-			$row[9]  = sliced_get_tax_total();
-			$row[10] = sliced_get_total();
+			$row[8]  = html_entity_decode( sliced_get_sub_total() );
+			$row[9]  = html_entity_decode( sliced_get_tax_total() );
+			$row[10] = html_entity_decode( sliced_get_total() );
 			
 			$row = apply_filters( 'sliced_export_csv_row', $row, get_the_ID() );
 			$data_rows[] = $row;
