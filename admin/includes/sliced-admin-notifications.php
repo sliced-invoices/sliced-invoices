@@ -841,7 +841,7 @@ class Sliced_Notifications {
 										  <a href='" . esc_url( sliced_get_business_website() ) . "'>";
 
 										  if ( sliced_get_business_logo() ) {
-											$email_header .= "<img src='" . esc_url( sliced_get_business_logo() ) . "' style='width: 100%; height: auto;' />";
+											$email_header .= "<img src='" . esc_url( sliced_get_business_logo() ) . "' style='max-width: 100%; height: auto;' />";
 										  } else {
 											$email_header .= esc_html( sliced_get_business_name() );
 										  }
