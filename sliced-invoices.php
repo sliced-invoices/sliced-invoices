@@ -70,10 +70,10 @@ add_action( 'plugins_loaded', 'run_sliced_invoices' ); // wait until 'plugins_lo
 
 
 
-/* DATABASE UPDATES
-============================================================================== */
-
-/**
+/* ==============================================================================
+ * DATABASE UPDATES
+ * ==============================================================================
+ *
  * History:
  * 2017-11-03 -- update DB from 5 to 6, for Sliced Invoices versions < 3.6.1
  * 2017-10-16 -- update DB from 4 to 5, for Sliced Invoices versions < 3.6.0
@@ -210,20 +210,17 @@ add_action( 'init', 'sliced_invoices_db_update' );
 
 
 
-/* FILTERS AND ACTIONS TO AVOID PLUGIN AND THEME CONFLICTS
-============================================================================== */
+/* ==============================================================================
+ * FILTERS AND ACTIONS TO AVOID PLUGIN AND THEME CONFLICTS
+ * ============================================================================== */
 
-/*
- * Ignore autoptimize plugin
- */
+// Ignore autoptimize plugin
 function sliced_filter_for_autoptimize() {
 	return (bool) sliced_get_the_type();
 }
 add_filter('autoptimize_filter_noptimize','sliced_filter_for_autoptimize',10,0);
 
-/*
- * Kill DAPP, if it is in use
- */
+// Kill DAPP, if it's in use. (all of DAPP's features are now built-in as of v3.6.0)
 function sliced_no_dapp() {
 	global $wp_filter;
 	$tag = 'init';
@@ -274,9 +271,7 @@ if ( class_exists( 'Sliced_Discounts_And_Partial_Payment' ) ) {
 	add_action( 'init', 'sliced_no_dapp', 9 );
 }
 
-/*
- * Patch for Sage-based themes
- */
+// Patch for Sage-based themes
 function sliced_patch_for_sage_based_themes() {
 	// The following is our own solution to the problem of Sage-based themes
 	// which force their own "wrapper", injecting code into our templates where
@@ -325,22 +320,6 @@ add_action( 'get_template_part_sliced-quote-display', 'sliced_patch_for_sage_bas
 add_action( 'get_template_part_sliced-payment-display', 'sliced_patch_for_sage_based_themes' );
 
 
-/*
- * Helper function for quick debugging
- */
-if (!function_exists('pp')) {
-	function pp( $array ) {
-		echo '<pre style="white-space:pre-wrap;">';
-			print_r( $array );
-		echo '</pre>';
-	}
-}
 
 
-/*
- * For quick debugging
- */
-// add_action( 'shutdown', function(){
-//     pp( $GLOBALS['wp_actions'] );
-//     die;
-// });
+/* That's all folks. Happy invoicing! */
