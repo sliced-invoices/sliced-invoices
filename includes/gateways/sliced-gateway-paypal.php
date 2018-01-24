@@ -422,7 +422,7 @@ class Sliced_Paypal {
 			$payments[] = array(
 				'gateway'    => 'paypal',
 				'date'       => date("Y-m-d H:i:s"),
-				'amount'     => $amount,
+				'amount'     => Sliced_Shared::get_formatted_number( $amount ),
 				'currency'   => $currency,
 				'payment_id' => $payment_id,
 				'status'     => $status,
