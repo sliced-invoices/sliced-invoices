@@ -5,7 +5,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
 Tested up to: 4.9
-Stable tag: 3.6.6
+Stable tag: 3.6.7
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -162,6 +162,9 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 ## Changelog
+##  3.6.7
+* FIX: issue with PayPal payments showing the wrong decimal separator (for example, currencies that use a comma "," instead of a period ".")
+
 ##  3.6.6
 * UPDATE: workaround for Sage-based themes that break our templates
 * FIX: issue with "invoice viewed" and "quote viewed" admin notices not being displayed
