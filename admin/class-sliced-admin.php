@@ -2288,8 +2288,8 @@ class Sliced_Admin {
 				}
 				
 				// Put each posts data into the appropriate cell
-				$row[0]  = wp_kses_decode_entities( get_the_title() );
-				$row[1]  = wp_kses_decode_entities( get_the_content() );
+				$row[0]  = html_entity_decode( get_the_title() );
+				$row[1]  = html_entity_decode( get_the_content() );
 				$row[2]  = sliced_get_client_business();
 				$row[3]  = empty( $client ) ? sliced_get_client_email() : $client->user_login;
 				$row[4]  = sliced_get_client_email();
