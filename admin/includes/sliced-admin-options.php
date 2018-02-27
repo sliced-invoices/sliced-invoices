@@ -1135,7 +1135,7 @@ class Sliced_Options {
 			'id'         => $prefix . 'licenses',
 			'title'      => __( 'Licenses', 'sliced-invoices' ),
 			'menu_title' => __( 'Licenses', 'sliced-invoices' ),
-			'desc'       => __( 'Licenses allow for one-click updates of extensions.', 'sliced-invoices' ),
+			'desc'       => __( 'This page is where you enter any license keys for extensions you have purchased from <a target="_blank" href="https://slicedinvoices.com">Sliced Invoices</a>.', 'sliced-invoices' ),
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'licenses' ), ),
 			'show_names' => true,
 			'fields'     => array(
@@ -1143,11 +1143,25 @@ class Sliced_Options {
 					'name' => __( 'Instructions', 'sliced-invoices' ),
 					'id'   => 'licenses_instructions',
 					'type' => 'title',
-					'desc' => 'You should have received a Purchase Receipt email that contains the license key for each extension you have purchased from <a target="_blank" href="https://slicedinvoices.com">Sliced Invoices</a>.<br>
-					If you have lost the email, you can login to your account at Sliced Invoices <a target="_blank" href="https://slicedinvoices.com/login/">here</a> to get your license key(s).<br><br>
-					1. Copy the license key for your extension(s) and paste it into the field(s) below <strong>and then hit Save.</strong><br>
-					2. <strong>After</strong> hitting the Save button, you can now hit the <strong>Activate License</strong> button for your extension(s).<br>
-					3. Once the license is activated, an update notification will appear whenever there is an update.<br><br>',
+					'desc' => __( sprintf( 'Before you can enter your license keys here, you must install and activate the extensions first.  You can do this from your <a href="%s" target="_blank">Plugins</a> page.<br>'.
+						'For step-by-step instructions, please read our FAQ page <a href="https://slicedinvoices.com/question/install-activate-extensions/" target="_blank">How do I install and activate Sliced Invoices extensions?</a><br><br>'.
+						'Once your extensions are installed and activated, you can activate your license keys by doing the following:<br><br>'.
+						'1. Copy the license key for your extension(s) and paste it into the field(s) below <strong>and then hit Save.</strong><br>'.
+						'2. <strong>After</strong> hitting the Save button, you can now hit the <strong>Activate License</strong> button for your extension(s).<br>'.
+						'3. That\'s it!  Be sure to watch for any new updates for your extensions.<br><br>', admin_url( 'plugins.php' ) ), 'sliced-invoices' ),
+				),
+				array(
+					'name' => __( 'Where can I find my license keys?', 'sliced-invoices' ),
+					'id'   => 'licenses_where_to_find',
+					'type' => 'title',
+					'desc' => __( 'You should have received a Purchase Receipt email that contains the license key for each extension you have purchased from Sliced Invoices.<br>'.
+						'If you have lost the email, you can login to your account at Sliced Invoices <a target="_blank" href="https://slicedinvoices.com/login/">here</a> to get your license key(s).<br><br>', 'sliced-invoices' ),
+				),
+				array(
+					'name' => '',
+					'id'   => 'licenses_divider',
+					'type' => 'title',
+					'desc' => '',
 				),
 			)
 		) );
