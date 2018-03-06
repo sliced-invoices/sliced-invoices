@@ -637,7 +637,7 @@ class Sliced_Admin {
 
 		if ( sliced_get_the_type() || ( isset( $_GET['page'] ) && strpos( $_GET['page'], 'sliced') ) ) {
 
-			$footer_text = sprintf( __( 'If you like <strong>Sliced Invoices</strong> please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating. A huge thank you in advance!', 'sliced-invoices' ), '<a href="https://wordpress.org/support/view/plugin-reviews/sliced-invoices?filter=5#postform" target="_blank" class="">', '</a>' );
+			$footer_text = sprintf( __( 'If you like <strong>Sliced Invoices</strong> please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating. A huge thank you in advance!', 'sliced-invoices' ), '<a href="https://wordpress.org/support/plugin/sliced-invoices/reviews/?filter=5#postform" target="_blank" class="">', '</a>' );
 
 		}
 
