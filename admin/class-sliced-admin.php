@@ -749,7 +749,34 @@ class Sliced_Admin {
 			add_action( 'save_post', array( $this, 'set_published_date_as_created' ) );
 		}
 	}
+	
+	
+	/**
+	 * Set quote/invoice number for search
+	 *
+	 * @since 	3.7.0
+	 */
+	public function set_number_for_search( $post_id ) {
+		
+		if ( ! $_POST ) {
+			return;
+		}
 
+		$type = sliced_get_the_type( $post_id );
+		
+		if ( ! $type ) {
+			return;
+		}
+
+		$prefix = isset( $_POST['_sliced_'.$type.'_prefix'] ) ? $_POST['_sliced_'.$type.'_prefix'] : '';
+		$number = isset( $_POST['_sliced_'.$type.'_number'] ) ? $_POST['_sliced_'.$type.'_number'] : '';
+		$suffix = isset( $_POST['_sliced_'.$type.'_suffix'] ) ? $_POST['_sliced_'.$type.'_suffix'] : '';
+		
+		$number_for_search = $prefix . $number . $suffix;
+		
+		update_post_meta( $post_id, '_sliced_number', $number_for_search );
+		
+	}
 
 
 	/**
@@ -798,12 +825,14 @@ class Sliced_Admin {
 			/*
 			 * Update the appropriate post meta
 			 */
+			$number = sliced_get_next_invoice_number();
 			$payment = sliced_get_accepted_payment_methods();
 			update_post_meta( $id, '_sliced_invoice_terms', $invoice['terms'] );
 			update_post_meta( $id, '_sliced_invoice_created', current_time( 'timestamp' ) );
-			update_post_meta( $id, '_sliced_invoice_number', sliced_get_next_invoice_number() );
+			update_post_meta( $id, '_sliced_invoice_number', $number );
 			update_post_meta( $id, '_sliced_invoice_prefix', sliced_get_invoice_prefix() );
 			update_post_meta( $id, '_sliced_invoice_suffix', sliced_get_invoice_suffix() );
+			update_post_meta( $id, '_sliced_number', sliced_get_invoice_prefix() . $number . sliced_get_invoice_suffix() );
 			update_post_meta( $id, '_sliced_payment_methods', array_keys($payment) );
 
 			delete_post_meta( $id, '_sliced_quote_created' );
@@ -872,12 +901,14 @@ class Sliced_Admin {
 			/*
 			 * Update the appropriate post meta on the new post
 			 */
+			$number = sliced_get_next_invoice_number();
 			$payment = sliced_get_accepted_payment_methods();
 			update_post_meta( $new_post_id, '_sliced_invoice_terms', $invoice['terms'] );
 			update_post_meta( $new_post_id, '_sliced_invoice_created', current_time( 'timestamp' ) );
-			update_post_meta( $new_post_id, '_sliced_invoice_number', sliced_get_next_invoice_number() );
+			update_post_meta( $new_post_id, '_sliced_invoice_number', $number );
 			update_post_meta( $new_post_id, '_sliced_invoice_prefix', sliced_get_invoice_prefix() );
 			update_post_meta( $new_post_id, '_sliced_invoice_suffix', sliced_get_invoice_suffix() );
+			update_post_meta( $new_post_id, '_sliced_number', sliced_get_invoice_prefix() . $number . sliced_get_invoice_suffix() );
 			update_post_meta( $new_post_id, '_sliced_payment_methods', array_keys($payment) );
 
 			delete_post_meta( $new_post_id, '_sliced_quote_created' );

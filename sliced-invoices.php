@@ -17,7 +17,7 @@ if ( ! defined('ABSPATH') ) {
 }
 
 define( 'SLICED_VERSION', '3.6.7' );
-define( 'SLICED_DB_VERSION', '6' );
+define( 'SLICED_DB_VERSION', '7' );
 define( 'SLICED_PATH', plugin_dir_path( __FILE__ ) );
 
 
@@ -75,10 +75,11 @@ add_action( 'plugins_loaded', 'run_sliced_invoices' ); // wait until 'plugins_lo
  * ==============================================================================
  *
  * History:
- * 2017-11-03 -- update DB from 5 to 6, for Sliced Invoices versions < 3.6.1
- * 2017-10-16 -- update DB from 4 to 5, for Sliced Invoices versions < 3.6.0
- * 2017-06-06 -- update DB from 3 to 4, for Sliced Invoices versions < 3.4.0
- * 2016-08-30 -- update DB from 2 to 3, for Sliced Invoices versions < 2.873
+ * 2018-03-06 -- DB 7, for Sliced Invoices versions < 3.7.0
+ * 2017-11-03 -- DB 6, for Sliced Invoices versions < 3.6.1
+ * 2017-10-16 -- DB 5, for Sliced Invoices versions < 3.6.0
+ * 2017-06-06 -- DB 4, for Sliced Invoices versions < 3.4.0
+ * 2016-08-30 -- DB 3, for Sliced Invoices versions < 2.873
  */
 function sliced_invoices_db_update() {
 	
@@ -89,6 +90,59 @@ function sliced_invoices_db_update() {
 	if ( isset( $sliced_db_check['db_version'] ) && $sliced_db_check['db_version'] >= SLICED_DB_VERSION ) {
 		// all good
 		return;
+	}
+	
+	// upgrade from v6 to 7
+	if ( ! isset( $sliced_db_check['db_version'] ) || $sliced_db_check['db_version'] < 7 ) {
+		// quotes:
+		$args = array(
+			'post_type' => 'sliced_quote',
+			'posts_per_page' => -1,
+			'meta_query' =>
+				array(
+					array(
+						'key'     => '_sliced_number',
+						'compare' => 'NOT EXISTS'
+					)
+				)
+			);
+		$query = new WP_Query( $args );
+		if ( $query->have_posts() ) { 
+			while ( $query->have_posts() ) {
+				$query->the_post();
+				$prefix = get_post_meta( $post->ID, '_sliced_quote_prefix', true );
+				$number = get_post_meta( $post->ID, '_sliced_quote_number', true );
+				$suffix = get_post_meta( $post->ID, '_sliced_quote_suffix', true );
+				$number_for_search = $prefix . $number . $suffix;
+				update_post_meta( $post->ID, '_sliced_number', $number_for_search );
+			}
+		}
+		wp_reset_postdata();
+
+		// invoices:
+		$args = array(
+			'post_type' => 'sliced_invoice',
+			'posts_per_page' => -1,
+			'meta_query' =>
+				array(
+					array(
+						'key'     => '_sliced_number',
+						'compare' => 'NOT EXISTS'
+					)
+				)
+			);
+		$query = new WP_Query( $args );
+		if ( $query->have_posts() ) { 
+			while ( $query->have_posts() ) {
+				$query->the_post();
+				$prefix = get_post_meta( $post->ID, '_sliced_invoice_prefix', true );
+				$number = get_post_meta( $post->ID, '_sliced_invoice_number', true );
+				$suffix = get_post_meta( $post->ID, '_sliced_invoice_suffix', true );
+				$number_for_search = $prefix . $number . $suffix;
+				update_post_meta( $post->ID, '_sliced_number', $number_for_search );
+			}
+		}
+		wp_reset_postdata();
 	}
 	
 	// upgrade from v5 to 6

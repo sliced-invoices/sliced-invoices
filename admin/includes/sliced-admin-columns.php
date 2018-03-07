@@ -461,7 +461,7 @@ class Sliced_Columns {
 
 
 	/**
-	 * Allow search to include client fields
+	 * Allow search to include various custom fields
 	 *
 	 * @since   3.5.3
 	 */
@@ -484,11 +484,14 @@ class Sliced_Columns {
 		$search_term = $query->query_vars['s'];
 		
 		if ( $search_term > '' ) {
-		
+
+			// 1) search clients
+			// if any clients match the search term, add their IDs to $user_ids for our meta query
+			// we search 2 different ways, then combine the results
 			$users1 = get_users( array(
 				'search' => $search_term,
 			) );
-			
+
 			$users2 = get_users( array(
 				'meta_query' => array(
 					array( 'relation' => 'OR' ),
@@ -499,7 +502,7 @@ class Sliced_Columns {
 					),
 				),
 			) );
-			
+
 			$user_ids = array();
 			foreach ( $users1 as $user ) {
 				$user_ids[] = $user->ID;
@@ -508,15 +511,29 @@ class Sliced_Columns {
 				$user_ids[] = $user->ID;
 			}
 			$user_ids = array_unique( $user_ids );
-			
-			if ( count( $user_ids ) === 0 ) {
-				// nothing to do
-				return;
+
+
+			// 2) build our meta query, including clients and/or other fields
+			$meta_query = array(
+				'relation' => 'OR',
+				array(
+					'key' => '_sliced_number',
+					'value' => $search_term,
+					'compare' => 'LIKE'
+				),
+			);
+			if ( count( $user_ids ) > 0 ) {
+				$meta_query[] = array(
+					'key' => '_sliced_client',
+					'value' => $user_ids,
+					'compare' => 'IN'
+				);
 			}
 			
-			// else, we go on...
 			
-			// Set to empty here, otherwise it won't find anything...
+			// 3) Now do the search
+			
+			// Set the query var to empty here, otherwise it won't find anything...
 			$query->query_vars['s'] = '';
 	
 			// ...but kick search query down the road so it still displays correctly on the results page
@@ -534,13 +551,7 @@ class Sliced_Columns {
 			$posts2 = get_posts( array(
 				'post_type' => $query->query['post_type'],
 				'posts_per_page' => -1,
-				'meta_query' => array(
-					array(
-						'key' => '_sliced_client',
-						'value' => $user_ids,
-						'compare' => 'IN'
-					)
-				),
+				'meta_query' => $meta_query,
 			));
 			
 			$post_ids = array();
@@ -551,6 +562,11 @@ class Sliced_Columns {
 				$post_ids[] = $post->ID;
 			}
 			$post_ids = array_unique( $post_ids );
+			
+			if ( count( $post_ids ) === 0 ) {
+				// no results
+				$post_ids = array( 0 );
+			}
 			
 			$query->set( 'post__in', $post_ids );
 			$query->set( 'ignore_sticky_posts', true );
