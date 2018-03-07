@@ -521,6 +521,11 @@ class Sliced_Columns {
 					'value' => $search_term,
 					'compare' => 'LIKE'
 				),
+				array(
+					'key' => '_sliced_order_number',
+					'value' => $search_term,
+					'compare' => 'LIKE'
+				),
 			);
 			if ( count( $user_ids ) > 0 ) {
 				$meta_query[] = array(
