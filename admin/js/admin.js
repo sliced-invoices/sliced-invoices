@@ -332,6 +332,7 @@
 			$(sliced_invoices.sliced_email_cache.$previewDiv).append('<iframe id="sliced-preview-' + currentTime + '" src="' + ajaxurl + '?action=sliced_sure_to_email&id=' + id + '"></iframe>');
 			$('#sliced-preview-'+currentTime).on( 'load', function() {
 				$(sliced_invoices.sliced_email_cache.$previewDiv).children('.sliced-email-preview-loading').remove();
+				$(sliced_invoices.sliced_email_cache.$previewDiv).children('.sliced-email-preview-menu').show();
 				$(this).show();
 			});
 		};
@@ -348,6 +349,23 @@
 				tb_unload_count = tb_unload_count + 1;
 			}
 		});
+		
+		// handler for switching email templates
+		sliced_invoices.sliced_email_preview_switch = function( id, template ){
+			// restore placeholder
+			$(sliced_invoices.sliced_email_cache.$previewDiv).html(sliced_invoices.sliced_email_cache.placeholder);
+			// load new preview
+			var currentTime = new Date().valueOf();
+			$(sliced_invoices.sliced_email_cache.$previewDiv).append('<iframe id="sliced-preview-' + currentTime + '" src="' + ajaxurl + '?action=sliced_sure_to_email&id=' + id + '&template=' + template + '"></iframe>');
+			$('#sliced-preview-'+currentTime).on( 'load', function() {
+				$(sliced_invoices.sliced_email_cache.$previewDiv).children('.sliced-email-preview-loading').remove();
+				$(sliced_invoices.sliced_email_cache.$previewDiv).children('.sliced-email-preview-menu').show()
+					.find('.nav-tab').removeClass('nav-tab-active');
+				$(sliced_invoices.sliced_email_cache.$previewDiv).children('.sliced-email-preview-menu')
+					.find('[data-sliced-email-template="'+template+'"]').addClass('nav-tab-active');
+				$(this).show();
+			});
+		};
 
     });
 

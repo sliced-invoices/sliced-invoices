@@ -67,7 +67,7 @@ class Sliced_Notifications {
 			add_action( 'admin_footer', array( $this, 'email_popup' ) );
 		}
 		add_action( 'wp_ajax_sliced_sure_to_email', array( $this, 'sure_to_email' ) );
-		add_action( 'wp_ajax_sliced-send-email', array( $this, 'send_quote_or_invoice_manually' ) );
+		add_action( 'wp_ajax_sliced-send-email', array( $this, 'send_email' ) );
 
 		// send notifications
 		// may remove these... need to come up with something better.
@@ -94,8 +94,9 @@ class Sliced_Notifications {
 	 * @return string
 	 */
 	public function payment_received( $id, $status ) {
-		if ( $status != 'success' )
+		if ( $status != 'success' ) {
 			return;
+		}
 		$this->id = $id;
 		$this->type = 'invoice';
 		$type = 'payment_received';
@@ -108,12 +109,14 @@ class Sliced_Notifications {
 	 * @return string
 	 */
 	public function payment_received_client( $id, $status ) {
-		if ( $status != 'success' )
+		if ( $status !== 'success' && $status !== 'manual' ) {
 			return;
+		}
 		$this->id = $id;
 		$this->type = 'invoice';
 		$type = 'payment_received_client';
 		$this->send_mail( $type );
+		do_action( "sliced_invoice_payment_received_email_sent", $this->id, $status );
 	}
 
 
@@ -177,6 +180,7 @@ class Sliced_Notifications {
 		$type = 'payment_reminder';
 		$this->send_mail( $type );
 		$this->payment_reminder_sent( $this->id );
+		do_action( "sliced_invoice_payment_reminder_email_sent", $this->id );
 	}
 
 	/**
@@ -184,23 +188,34 @@ class Sliced_Notifications {
 	 *
 	 * @since 1.0.0
 	 */
-	public function send_quote_or_invoice_manually() {
-
+	public function send_email() {
+	
 		if ( ! isset( $_POST['send_email'] ) || ! wp_verify_nonce( $_POST['send_email'], 'sliced-send-email') )
 			return;
 
 		if ( ! isset( $_POST['id'] ) )
 			return;
 
-		// get the ID and the type
-		$id 	= $_POST['id'];
-		$type 	= sliced_get_the_type( $id );
-
-		if( $type == 'invoice' ) {
-			$this->send_the_invoice( $id );
-		} else {
-			$this->send_the_quote( $id );
+		$id       = $_POST['id'];
+		$template = isset( $_POST['template'] ) ? $_POST['template'] : 'default';
+		$type     = sliced_get_the_type( $id );
+		
+		switch ( $template ) {
+			case 'payment_reminder':
+				$this->payment_reminder( $id );
+				break;
+			case 'payment_received':
+				$this->payment_received_client( $id, 'manual' );
+				break;
+			default:
+				if( $type == 'invoice' ) {
+					$this->send_the_invoice( $id );
+				} else {
+					$this->send_the_quote( $id );
+				}
+				break;
 		}
+		
 		?>
 		<html>
 			<head>
@@ -489,14 +504,25 @@ class Sliced_Notifications {
 	 *
 	 * @since 1.0.0
 	 */
-	public function email_popup() {	?>
+	public function email_popup() {
 
+		$id = sliced_get_the_id();
+		$type = sliced_get_the_type();
+		?>
+		
 		<div id="sliced-email-popup" style="display:none;">
 			<div class="sliced-email-preview">
 				<div class="sliced-email-preview-loading">
 					<div class="spinner" style="visibility: visible; float: left;"></div>
 					<p><?php _e( 'Loading the email preview....', 'sliced-invoices' ) ?></p>
 				</div>
+				<?php if ( $type === 'invoice' ): ?>
+				<div class="nav-tab-wrapper sliced-email-preview-menu" style="display:none;">
+					<a class="nav-tab nav-tab-active" data-sliced-email-template="default" onclick="sliced_invoices.sliced_email_preview_switch(<?php echo (int)$id; ?>, 'default')">Invoice Available</a>
+					<a class="nav-tab" data-sliced-email-template="payment_reminder" onclick="sliced_invoices.sliced_email_preview_switch(<?php echo (int)$id; ?>, 'payment_reminder')">Payment Reminder</a>
+					<a class="nav-tab" data-sliced-email-template="payment_received" onclick="sliced_invoices.sliced_email_preview_switch(<?php echo (int)$id; ?>, 'payment_received')">Payment Received</a>
+				</div>
+				<?php endif; ?>
 			</div>			
 		</div>
 
@@ -511,10 +537,26 @@ class Sliced_Notifications {
 	public function sure_to_email() {
 
 		$id        = $_GET['id'];
-		$type      = sliced_get_the_type( $id );
-		$content   = $this->get_preview_content( "${type}_available" );
-		$subject   = $this->get_subject( "${type}_available" );
-		$recipient = $this->get_recipient( "${type}_available" );
+		$template  = isset( $_GET['template'] ) ? $_GET['template'] : 'default';
+		
+		switch ( $template ) {
+			case 'payment_reminder':
+				$content   = $this->get_preview_content( "payment_reminder" );
+				$subject   = $this->get_subject( "payment_reminder" );
+				$recipient = $this->get_recipient( "payment_reminder" );
+				break;
+			case 'payment_received':
+				$content   = $this->get_preview_content( "payment_received_client" );
+				$subject   = $this->get_subject( "payment_received_client" );
+				$recipient = $this->get_recipient( "payment_received_client" );
+				break;
+			default:
+				$type      = sliced_get_the_type( $id );
+				$content   = $this->get_preview_content( "${type}_available" );
+				$subject   = $this->get_subject( "${type}_available" );
+				$recipient = $this->get_recipient( "${type}_available" );
+				break;
+		}
 
 		$args = array(
 			'wpautop'       => true,
@@ -546,6 +588,7 @@ class Sliced_Notifications {
 
 					<input name="action" type="hidden" value="sliced-send-email" />
 					<input name="id" type="hidden" value="<?php echo (int)$id; ?>" />
+					<input name="template" type="hidden" value="<?php echo $template; ?>" />
 					<?php wp_nonce_field( 'sliced-send-email', 'send_email' ); ?>
 
 					<table class="form-table popup-form">
@@ -727,7 +770,7 @@ class Sliced_Notifications {
 		$id = sliced_get_the_id();
 		$sent_text = $this->email_sent_text( $id );
 
-		$button = '<a title="' . __( 'Email to client', 'sliced-invoices' ) . '" class="thickbox button ui-tip sliced-email-button" href="#TB_inline?width=760&height=500&inlineId=sliced-email-popup" onclick="sliced_invoices.sliced_email_preview(' . (int)$id . ')"><span class="dashicons dashicons-email-alt"></span></a>';
+		$button = '<a title="' . __( 'Email to client', 'sliced-invoices' ) . '" class="thickbox button ui-tip sliced-email-button" href="#TB_inline?width=760&height=550&inlineId=sliced-email-popup" onclick="sliced_invoices.sliced_email_preview(' . (int)$id . ')"><span class="dashicons dashicons-email-alt"></span></a>';
 		$button .= $sent_text;
 
 		return $button;

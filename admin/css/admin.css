@@ -114,7 +114,6 @@
   font-weight: bold;
   margin: 10px 0 5px;
   float: left;
-  width: 100%;
 }
 
 /*
@@ -177,6 +176,9 @@
 }
 .sliced-email-ajax-page p.submit {
 	padding-bottom: 5px;
+}
+.sliced-email-preview-menu .nav-tab {
+	cursor: pointer;
 }
 
 /*
