@@ -42,11 +42,13 @@ class Sliced_Logs {
 		add_action( 'sliced_manual_convert_quote_to_invoice', array( &$this, 'quote_to_invoice' ) );
 
 		// client makes a payment
-		add_action( 'sliced_payment_made', array( &$this, 'payment_made' ), 10, 3);
+		add_action( 'sliced_payment_made', array( &$this, 'payment_made' ), 10, 3 );
 
 		// notification sent
-		add_action( 'sliced_quote_available_email_sent', array( &$this, 'quote_sent' ), 99, 1);
-		add_action( 'sliced_invoice_available_email_sent', array( &$this, 'invoice_sent' ), 99, 1);
+		add_action( 'sliced_quote_available_email_sent', array( &$this, 'quote_sent' ), 99, 1 );
+		add_action( 'sliced_invoice_available_email_sent', array( &$this, 'invoice_sent' ), 99, 1 );
+		add_action( 'sliced_invoice_payment_reminder_email_sent', array( &$this, 'payment_reminder_sent' ), 99, 1 );
+		add_action( 'sliced_invoice_payment_received_email_sent', array( &$this, 'payment_received_sent' ), 99, 2 );
 		
 		// quote/invoice viewed
 		add_action( 'shutdown', array( &$this, 'views_logger' ) ); // must run after Sliced_Secure, if present
@@ -62,9 +64,11 @@ class Sliced_Logs {
 	 */
 	public function quote_sent( $id ) {
 
-		if( ! $id || ! isset( $id ) )
+		if ( ! $id || ! isset( $id ) ) {
 			return;
+		}
 
+		/*
 		$post = get_post( $id );
 
 		if( ! $post || ! isset( $post ) )
@@ -73,10 +77,13 @@ class Sliced_Logs {
 		// if the post is being updated, return
 		if( $post->post_date != $post->post_modified )
 			return;
+		*/
+		
+		$user_id = $this->identify_the_user();
 
 		$meta_value = array(
 			'type'      => 'quote_sent',
-			'by'        => get_current_user_id(), // returns 0 if no user
+			'by'        => $user_id,
 		);
 		$result = $this->update_log_meta( $id, $meta_value );
 	}
@@ -88,9 +95,11 @@ class Sliced_Logs {
 	 */
 	public function invoice_sent( $id ) {
 
-		if( ! $id || ! isset( $id ) )
+		if ( ! $id || ! isset( $id ) ) {
 			return;
+		}
 
+		/*
 		$post = get_post( $id );
 
 		if( ! $post || ! isset( $post ) )
@@ -99,13 +108,64 @@ class Sliced_Logs {
 		// if the post is being updated, return
 		//if( $post->post_date != $post->post_modified )
 			//return;
+		*/
+			
+		$user_id = $this->identify_the_user();
 
 		$meta_value = array(
 			'type'      => 'invoice_sent',
-			'by'        => get_current_user_id(), // returns 0 if no user
+			'by'        => $user_id,
 		);
 		$result = $this->update_log_meta( $id, $meta_value );
 	}
+	
+	
+	/**
+	 * Log when payment reminder email sent
+	 *
+	 * @since 3.7.0
+	 */
+	public function payment_reminder_sent( $id ) {
+
+		if ( ! $id || ! isset( $id ) ) {
+			return;
+		}
+
+		$user_id = $this->identify_the_user();
+		
+		$meta_value = array(
+			'type'      => 'payment_reminder_sent',
+			'by'        => $user_id,
+		);
+		$result = $this->update_log_meta( $id, $meta_value );
+	}
+	
+	
+	/**
+	 * Log when payment reminder email sent
+	 *
+	 * @since 3.7.0
+	 */
+	public function payment_received_sent( $id, $status ) {
+
+		if ( ! $id || ! isset( $id ) ) {
+			return;
+		}
+		
+		// we only log it if the email was sent manually
+		if ( $status !== 'manual' ) {
+			return;
+		}
+
+		$user_id = $this->identify_the_user();
+		
+		$meta_value = array(
+			'type'      => 'payment_received_sent',
+			'by'        => $user_id,
+		);
+		$result = $this->update_log_meta( $id, $meta_value );
+	}
+	
 
 	/**
 	 * Invoice creation
@@ -114,25 +174,30 @@ class Sliced_Logs {
 	 */
 	public function create_invoice( $id, $post ) {
 
-		if( ! $id || ! isset( $id ) )
+		if ( ! $id || ! isset( $id ) ) {
 			return;
+		}
 
-		if( ! $post || ! isset( $post ) )
+		if ( ! $post || ! isset( $post ) ) {
 			return;
+		}
 
 		// if the post is being updated, return
-		if( $post->post_date != $post->post_modified )
+		if ( $post->post_date != $post->post_modified ) {
 			return;
+		}
 			
 		// extra check to prevent duplicate entries
 		$log = get_post_meta( $id, '_sliced_log', true );
 		if ( is_array( $log ) && count( $log ) > 0 ) {
 			return;
 		}
+		
+		$user_id = $this->identify_the_user();
 
 		$meta_value = array(
 			'type' => 'invoice_created',
-			'by'   => get_current_user_id(), // returns 0 if no user
+			'by'   => $user_id,
 		);
 		$result = $this->update_log_meta( $id, $meta_value );
 	}
@@ -144,19 +209,24 @@ class Sliced_Logs {
 	 */
 	public function create_quote( $id, $post ) {
 
-		if( ! $id || ! isset( $id ) )
+		if ( ! $id || ! isset( $id ) ) {
 			return;
+		}
 
-		if( ! $post || ! isset( $post ) )
+		if ( ! $post || ! isset( $post ) ) {
 			return;
+		}
 
 		// if the post is being updated, return
-		if( $post->post_date != $post->post_modified )
+		if ( $post->post_date != $post->post_modified ) {
 			return;
+		}
+		
+		$user_id = $this->identify_the_user();
 
 		$meta_value = array(
 			'type' => 'quote_created',
-			'by'   => get_current_user_id(), // returns 0 if no user
+			'by'   => $user_id,
 		);
 		$result = $this->update_log_meta( $id, $meta_value );
 	}
@@ -169,23 +239,27 @@ class Sliced_Logs {
 	public function status_change( $id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids ) {
 		
 		// if no change, return
-		if( $tt_ids == $old_tt_ids || ! isset( $id ) )
+		if ( $tt_ids == $old_tt_ids || ! isset( $id ) ) {
 			return;
+		}
 
-		if( ! isset( $tt_ids[0] ) || ! isset( $old_tt_ids[0] ) )
+		if ( ! isset( $tt_ids[0] ) || ! isset( $old_tt_ids[0] ) ) {
 			return;
+		}
 
 		$new = get_term_by( 'term_taxonomy_id', $tt_ids[0], $taxonomy );
 		$new_status = $new->name;
 		$old = get_term_by( 'term_taxonomy_id', $old_tt_ids[0], $taxonomy );
 		$old_status = $old->name;
+		
+		$user_id = $this->identify_the_user();
 
 		$meta_value = array(
 			'type'     => 'status_update',
 			'taxonomy' => $taxonomy,
 			'from'     => $old_status,
 			'to'       => $new_status,
-			'by'       => get_current_user_id(), // returns 0 if no user
+			'by'       => $user_id,
 		);
 		$result = $this->update_log_meta( $id, $meta_value );
 	}
@@ -198,13 +272,16 @@ class Sliced_Logs {
 	 */
 	public function client_declined_quote( $id, $reason ) {
 
-		if( ! isset( $id ) )
+		if ( ! isset( $id ) ) {
 			return;
+		}
+		
+		$user_id = $this->identify_the_user();
 
 		$meta_value = array(
 			'type'   => 'client_declined_quote',
 			'reason' => $reason,
-			'by'     => get_current_user_id(), // returns 0 if no user
+			'by'     => $user_id,
 		);
 		$result = $this->update_log_meta( $id, $meta_value );
 	}
@@ -217,12 +294,15 @@ class Sliced_Logs {
 	 */
 	public function client_accepted_quote( $id ) {
 
-		if( ! isset( $id ) )
+		if ( ! isset( $id ) ) {
 			return;
+		}
+		
+		$user_id = $this->identify_the_user();
 
 		$meta_value = array(
 			'type' => 'client_accepted_quote',
-			'by'   => get_current_user_id(), // returns 0 if no user
+			'by'   => $user_id,
 		);
 		$result = $this->update_log_meta( $id, $meta_value );
 		
@@ -256,14 +336,17 @@ class Sliced_Logs {
 	public function payment_made( $id, $gateway, $status ) {
 
 		// if no gateway, return
-		if( ! isset( $gateway ) || ! isset( $id ) )
+		if ( ! isset( $gateway ) || ! isset( $id ) ) {
 			return;
+		}
+		
+		$user_id = $this->identify_the_user();
 
 		$meta_value = array(
 			'type'    => 'payment_made',
 			'gateway' => $gateway,
 			'status'  => $status,
-			'by'      => get_current_user_id(), // returns 0 if no user
+			'by'      => $user_id,
 		);
 		$result = $this->update_log_meta( $id, $meta_value );
 		
@@ -294,28 +377,35 @@ class Sliced_Logs {
 	 * @since 2.20
 	 */
 	public function marked_as_paid( $id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids ) {
+		
 		// if no change, return
-		if( $tt_ids == $old_tt_ids )
+		if( $tt_ids == $old_tt_ids ) {
 			return;
+		}
 
 		// if not an invoice, return
-		if( $taxonomy != 'invoice_status' )
+		if( $taxonomy != 'invoice_status' ) {
 			return;
+		}
 
-		if( ! isset( $tt_ids[0] ) )
+		if( ! isset( $tt_ids[0] ) ) {
 			return;
+		}
 
 		$term = get_term_by( 'term_taxonomy_id', $tt_ids[0], $taxonomy );
 		$status = $term->slug;
 
-		if( $status != 'paid' )
+		if( $status != 'paid' ) {
 			return;
+		}
+		
+		$user_id = $this->identify_the_user();
 
 		$meta_value = array(
 			'type' => 'marked_as_paid',
 			'from' => $old_tt_ids,
 			'to'   => $tt_ids,
-			'by'   => get_current_user_id(), // returns 0 if no user
+			'by'   => $user_id,
 		);
 		$result = $this->update_log_meta( $id, $meta_value );
 	}
@@ -327,10 +417,12 @@ class Sliced_Logs {
 	 * @since 2.20
 	 */
 	public function quote_to_invoice( $id ) {
+	
+		$user_id = $this->identify_the_user();
 
 		$meta_value = array(
 			'type' => 'quote_to_invoice',
-			'by'   => get_current_user_id(), // returns 0 if no user
+			'by'   => $user_id,
 		);
 		$result = $this->update_log_meta( $id, $meta_value );
 
@@ -352,10 +444,28 @@ class Sliced_Logs {
 
 
 
+	/**
+	 * Identify the current user
+	 * 
+	 *   returns:
+	 *     $user_id = -1: System
+	 *     $user_id = 0: Guest (or unknown)
+	 *     $user_id = x: user with ID x
+	 *
+	 * @since 3.7.0
+	 */
+	public function identify_the_user() {
+		if ( defined( 'DOING_CRON' ) && DOING_CRON ) {
+			$user_id = -1;
+		} else {
+			$user_id = get_current_user_id(); // returns 0 if no user
+		}
+		return $user_id;
+	}
 
 
 	/**
-	 * Dispaly the logs within the invoice or quote
+	 * Display the logs within the invoice or quote
 	 *
 	 * @since 2.20
 	 */
@@ -373,8 +483,14 @@ class Sliced_Logs {
 			foreach ($log_meta as $time => $log) {
 
 				// get the user, date and time
-				$user_info  = get_userdata( $log['by'] );
-				$user_name  = $user_info ? $user_info->user_login : 'Guest';
+				if ( $log['by'] == -1 ) {
+					$user_name = __( 'System', 'sliced-invoices' );
+				} elseif ( $log['by'] == 0 ) {
+					$user_name = __( 'Guest', 'sliced-invoices' );
+				} else {
+					$user_info = get_userdata( $log['by'] );
+					$user_name = $user_info ? $user_info->user_login : $log['by'];
+				}
 				$the_date   = get_date_from_gmt ( date( 'Y-m-d H:i:s', (int) $time ), get_option('date_format') );
 				$the_time   = get_date_from_gmt ( date( 'Y-m-d H:i:s', (int) $time ), get_option('time_format') );
 				$time_date  = sprintf( __( '%1s on %2s', 'sliced-invoices' ), $the_time, $the_date );
@@ -412,6 +528,12 @@ class Sliced_Logs {
 					case 'invoice_sent':
 						$message = sprintf( __( '%s was sent.', 'sliced-invoices' ), sliced_get_invoice_label() );
 						break;
+					case 'payment_reminder_sent':
+						$message = __( 'Payment reminder email was sent.', 'sliced-invoices' );
+						break;
+					case 'payment_received_sent':
+						$message = __( 'Payment received email was sent.', 'sliced-invoices' );
+						break;
 					case 'invoice_viewed':
 						$message = sprintf( __( '%s was viewed.', 'sliced-invoices' ), sliced_get_invoice_label() );
 						break;
@@ -426,7 +548,9 @@ class Sliced_Logs {
 
 				$notes .= '<li class="note">';
 				$notes .= '<div class="note_content">' . esc_html( $message ) . '</div>';
-				$notes .= '<p class="meta">' . esc_html( $time_date ) . '<br>' . esc_html( $by ) . '</p>';
+				$notes .= '<p class="meta">' . esc_html( $time_date ) . '<br>' . esc_html( $by );
+				$notes .= ( $log['by'] === 0 && $log['secured'] === 'yes' ? ', '.__( 'using the secure link', 'sliced-invoices' ) : '' );
+				$notes .= '</p>';
 				$notes .= '</li>';
 
 			}
@@ -465,6 +589,11 @@ class Sliced_Logs {
 
 		// double check here -- technically none of these should be possible at this point, but better safe than sorry
 		if ( is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			return;
+		}
+		
+		// don't log cron-initiated "views" (e.g. grabbing the invoice to make a PDF)
+		if ( defined( 'DOING_CRON' ) && DOING_CRON ) {
 			return;
 		}
 		
