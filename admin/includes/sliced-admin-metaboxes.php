@@ -40,7 +40,8 @@ class Sliced_Metaboxes {
 		add_action( 'cmb2_admin_init', array( $this, 'main_section' ) );
 		add_action( 'cmb2_admin_init', array( $this, 'users_new' ) );
 		add_action( 'cmb2_admin_init', array( $this, 'users_existing' ) );
-		
+		add_action( 'do_meta_boxes', array( $this, 'metabox_order' ), 10, 3 );
+
 		if( $pagenow == 'edit.php' || ( $pagenow == 'post.php' && ( sliced_get_the_type() === 'invoice' || sliced_get_the_type() === 'quote' ) ) ) {
 			add_action( 'post_submitbox_misc_actions', array( $this, 'add_to_publish_box' ) );
 		}
@@ -800,6 +801,55 @@ class Sliced_Metaboxes {
 		
 	}
 	
+	
+	/**
+	 * Ensure Sliced Invoices metaboxes are added in the correct order
+	 *
+	 * @since   3.7.0
+	 */
+	public function metabox_order( $screen, $context, $object ) {
+		
+		global $wp_meta_boxes;
+		$sliced_post_types = array( 'sliced_quote', 'sliced_invoice' );
+		$protected_metaboxes = array( 'submitdiv', 'pageparentdiv', 'commentsdiv', 'commentstatusdiv', 'quote_statusdiv', 'invoice_statusdiv', 'slugdiv' );
+		
+		if ( ! is_array( $wp_meta_boxes ) ) {
+			return;
+		}
+		if ( ! in_array( $screen, $sliced_post_types ) ) {
+			return;
+		}
+		
+		foreach ( $sliced_post_types as $sliced_post_type ) {
+			if ( isset( $wp_meta_boxes[ $sliced_post_type ] ) ) {
+				$new_array = array();
+				foreach ( $wp_meta_boxes[ $sliced_post_type ] as $context => $priorities ) {
+					foreach ( $priorities as $priority => $metaboxes ) {
+						foreach ( $metaboxes as $id => $metabox ) {
+							if (
+								in_array( $id, $protected_metaboxes ) ||
+								substr( $id, 0, 6 ) === 'sliced' ||
+								substr( $id, 0, 7 ) === '_sliced'
+							) {
+								// add all core and sliced metaboxes first, as is
+								$new_array[$context][$priority][$id] = $metabox;
+							} else {
+								// add all the non-sliced metaboxes second
+								if ( $context === 'side' ) {
+									$new_array[$context]['low'][$id] = $metabox;
+								} elseif ( $context === 'normal' ) {
+									$new_array['advanced']['high'][$id] = $metabox;
+								} else {
+									$new_array['advanced']['low'][$id] = $metabox;
+								}
+							}
+						}
+					}
+				}
+				$wp_meta_boxes[ $sliced_post_type ] = $new_array;
+			}
+		}
+	}
 	
 
 	/**
