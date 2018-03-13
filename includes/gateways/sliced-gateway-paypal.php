@@ -674,7 +674,7 @@ class Sliced_Paypal {
 			$payment_data .= '&L_BILLINGTYPE0=RecurringPayments' .
 				'&L_BILLINGAGREEMENTDESCRIPTION0='.urlencode( sliced_get_invoice_label( $id ) . ' ' . sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id ) . sliced_get_invoice_suffix( $id ) );
 			
-			$payment_data_transient = '&AMT=' . urlencode( sliced_get_invoice_total_raw( $id ) );
+			$payment_data_transient = '&AMT=' . urlencode( sliced_get_invoice_total_due_raw( $id ) );
 			set_transient( 'sliced_paypal_'.$id, $payment_data_transient , 60*60*24 );
 				
 		} else {
@@ -684,12 +684,12 @@ class Sliced_Paypal {
 				'&PAYMENTREQUEST_0_PAYMENTACTION=' . urlencode("SALE") .
 				'&L_PAYMENTREQUEST_0_NAME0=' . urlencode( sliced_get_invoice_label() ) .
 				'&L_PAYMENTREQUEST_0_NUMBER0=' . urlencode( sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id ) . sliced_get_invoice_suffix( $id ) ) .
-				'&L_PAYMENTREQUEST_0_AMT0=' . urlencode( sliced_get_invoice_total_raw( $id ) ) .
+				'&L_PAYMENTREQUEST_0_AMT0=' . urlencode( sliced_get_invoice_total_due_raw( $id ) ) .
 				'&L_PAYMENTREQUEST_0_QTY0='. urlencode( 1 ) .
 				'&NOSHIPPING=1'. //set 1 to hide buyer's shipping address, in-case products that does not require shipping
-				'&PAYMENTREQUEST_0_ITEMAMT=' . urlencode( sliced_get_invoice_total_raw( $id ) ) .
+				'&PAYMENTREQUEST_0_ITEMAMT=' . urlencode( sliced_get_invoice_total_due_raw( $id ) ) .
 				//'&PAYMENTREQUEST_0_TAXAMT=' . urlencode( sliced_get_invoice_tax_raw( $id ) ) .
-				'&PAYMENTREQUEST_0_AMT=' . urlencode( sliced_get_invoice_total_raw( $id ) ) .
+				'&PAYMENTREQUEST_0_AMT=' . urlencode( sliced_get_invoice_total_due_raw( $id ) ) .
 				'&SOLUTIONTYPE=Sole'. // to make PayPal account not required
 				'&LANDINGPAGE=Billing'. // this too
 				'&LOCALECODE='. urlencode( get_option( 'WPLANG' ) ? get_option( 'WPLANG' ) : 'en_US' ) . //PayPal pages to match the language on your website.

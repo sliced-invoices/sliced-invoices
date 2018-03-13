@@ -227,13 +227,13 @@ if ( ! function_exists( 'sliced_get_invoice_total_raw' ) ) :
 		$post_id = $id ? $id : get_the_id();
 		if ( is_singular( 'sliced_invoice' ) ) {
 			// invoice view, we want: total_due
-			return round( $totals['total_due'], sliced_get_decimals());
+			$total = round( $totals['total_due'], sliced_get_decimals());
 		} elseif ( (int) $payments_page == get_the_ID() ) {
 			// payments page, we want: total_due
-			return round( $totals['total_due'], sliced_get_decimals());
+			$total = round( $totals['total_due'], sliced_get_decimals());
 		} else {
 			// everything else, we want: total
-			return round( $totals['total'], sliced_get_decimals());
+			$total = round( $totals['total'], sliced_get_decimals());
 		}
 		// end legacy code
 		

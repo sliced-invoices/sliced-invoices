@@ -8,7 +8,7 @@ if ( ! defined('ABSPATH') ) { exit; }
  * Calls the class.
  */
 function sliced_call_payments_class() {
-	new Sliced_Payments();
+	return Sliced_Payments::get_instance();
 }
 add_action( 'sliced_loaded', 'sliced_call_payments_class' );
 
@@ -20,12 +20,18 @@ class Sliced_Payments {
 
 
 	/**
+     * @var  object  Instance of this class
+     */
+    protected static $instance;
+
+
+	/**
 	 * Hook into the appropriate actions when the class is constructed.
 	 */
 	public function __construct() {
 
 		add_action( 'sliced_invoice_top_bar_left', array( $this, 'get_gateway_buttons') );
-		//add_filter( 'sliced_invoice_footer', array( $this, 'create_payment_popup') );
+		add_filter( 'sliced_invoice_footer', array( $this, 'create_payment_popup') );
 
 		add_action( 'sliced_quote_top_bar_left', array( $this, 'get_accept_decline_quote_buttons') );
 		add_filter( 'sliced_quote_footer', array( $this, 'create_accept_quote_popup') );
@@ -33,12 +39,17 @@ class Sliced_Payments {
 
 		add_action( 'sliced_payment_made', array( $this, 'completed_payment'), 10, 3 );
 
-		//add_action( 'init', array( $this, 'convert_quote_to_invoice') );
 		add_action( 'sliced_do_payment', array( $this, 'client_accept_quote') );
 		add_action( 'sliced_do_payment', array( $this, 'client_decline_quote') );
 
-
 	}
+	
+	public static function get_instance() {
+        if ( ! ( self::$instance instanceof self ) ) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
 
 
 	/**
@@ -66,16 +77,20 @@ class Sliced_Payments {
 		// create the buttons
 		if( ! empty( $online_gateways ) ) {
 			foreach ( $online_gateways as $gateway => $readable) {
-				$this->create_payment_button_inline( $gateway, $readable );
+				$button_type = apply_filters( 'sliced_payment_button_type', 'inline', $gateway );
+				if ( $button_type === 'inline' ) {
+					$this->create_payment_button_inline( $gateway, $readable );
+				} elseif ( $button_type === 'popup' ) {
+					$this->create_payment_button_popup( $gateway, $readable );
+				}
 			}
 		}
 
 	}
 
 
-
 	/**
-	 * Payment button inline form
+	 * Payment button for inline form
 	 *
 	 * @since   3.1.0
 	 */
@@ -107,10 +122,40 @@ class Sliced_Payments {
 		<?php
 
 	}
+
+
+	/**
+	 * Payment button for popup form
+	 *
+	 * @since   3.7.0 (resuscitated from 3.1.0)
+	 */
+	public function create_payment_button_popup( $gateway, $readable ) {
+
+		$payments = get_option( 'sliced_payments' );
+		
+		?>
+		<div class="sliced_gateway_button">
+			<a href="#TB_inline?height=500&width=450&inlineId=sliced_payment_form" title="<?php _e( 'Pay This Invoice', 'sliced-invoices' ); ?>" class="gateway btn btn-success thickbox btn-sm" data-gateway-readable="<?php esc_html_e( $readable ) ?>" data-gateway="<?php esc_html_e( $gateway ) ?>">
+			<?php
+			if ( function_exists('sliced_get_gateway_'.$gateway.'_label') ) {
+				echo call_user_func( 'sliced_get_gateway_'.$gateway.'_label' );
+			} else {
+				_e( 'Pay with', 'sliced-invoices' );
+				echo ' ';
+				esc_html_e( $readable );
+			}
+			?>
+			</a>
+		</div>
+		<?php
+
+	}
 	
 	
 	/**
 	 * Payment popup form
+	 *
+	 * UN-DEPRECATED as of 3.7.0, maybe we'll keep it after all
 	 * DEPRECATED as of 3.1.0, may be removed in the future
 	 * @since   2.0.0
 	 */
@@ -125,45 +170,44 @@ class Sliced_Payments {
 
 				<ul>
 					<li><span><?php _e( 'Invoice Number', 'sliced-invoices' ); ?></span> <?php esc_html_e( sliced_get_invoice_prefix() ); ?><?php esc_html_e( sliced_get_invoice_number() ); ?><?php esc_html_e( sliced_get_invoice_suffix() ); ?></li>
-					<li><span><?php _e( 'Amount Payable', 'sliced-invoices' ); ?></span> <?php _e( sliced_get_invoice_total() ); ?></li>
-					<li><span><?php _e( 'Payment Method', 'sliced-invoices' ); ?></span> <span id="sliced_gateway_readable"></span></li>
+					<li><span><?php _e( 'Total Due', 'sliced-invoices' ); ?></span> <?php _e( sliced_get_invoice_total() ); ?></li>
 				</ul>
 
 				<form method="POST" action="<?php echo esc_url( get_permalink( (int)$payments['payment_page'] ) ) ?>">
-					<?php do_action( 'sliced_before_payment_form_fields' ) ?>
+					<?php do_action( 'sliced_payment_popup_before_form_fields' ) ?>
 
 					<?php wp_nonce_field( 'sliced_invoices_payment', 'sliced_payment_nonce' ); ?>
 					<input type="hidden" name="sliced_payment_invoice_id" id="sliced_payment_invoice_id" value="<?php the_ID(); ?>">
 					<input type="hidden" name="sliced_gateway" id="sliced_gateway" />
 					<input type="submit" name="start-payment" class="btn btn-success btn-lg" id="start-payment" value="<?php _e( 'Pay Now', 'sliced-invoices' ) ?>">
 
-					<?php do_action( 'sliced_after_payment_form_fields' ) ?>
+					<?php do_action( 'sliced_payment_popup_after_form_fields' ) ?>
 				</form>
 
 				<?php do_action( 'sliced_after_payment_form' ) ?>
 
 				<div class="gateway-image" id="sliced_gateway_image">
-
+					
 				</div>
 
 			</div>
 
 		</div>
-
+		
 		<script type="text/javascript">
 			( function( $ ) {
 				$(document).ready(function(){
 					$( 'a.gateway' ).click(function(){
-
+						/*
 						var readable = $( this ).data( 'gateway-readable' );
 						$( '#sliced_gateway_readable' ).html( readable );
-
+						*/
 						var gateway  = $( this ).data( 'gateway' );
 						$( '#sliced_gateway' ).val( gateway );
-
+						/*
 						var src = "<?php echo plugin_dir_url( dirname( dirname( __FILE__ ) ) ) ?>public/images/accept-" + gateway + ".png";
 						$( '#sliced_gateway_image' ).html( '<img src="' + src + '" />' );
-
+						*/
 					});
 				});
 			} )( jQuery );
