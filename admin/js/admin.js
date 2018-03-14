@@ -33,9 +33,14 @@
 		// remove currency symbol, if any
 		x = x.replace(sliced_invoices.utils.symbol, '');
 		// removes the thousand seperator
-		var parts = x.toString().split(sliced_invoices.utils.thousand_sep);
-		parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '');
-		var amount = parts.join('');
+		if ( sliced_invoices.utils.thousand_sep > '' ) {
+			var parts = x.toString().split(sliced_invoices.utils.thousand_sep);
+			console.log(parts);
+			parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '');
+			var amount = parts.join('');
+		} else {
+			var amount = x.toString();
+		}
 		// makes the decimal seperator a period
 		var output = amount.toString().replace(/\,/g, '.');
 		output = parseFloat( output );
@@ -51,9 +56,11 @@
 		var num = nStr.split('.');
 		var x1 = num[0];
 		var x2 = num.length > 1 ? sliced_invoices.utils.decimal_sep + num[1] : '';
-		var rgx = /(\d+)(\d{3})/;
-		while (rgx.test(x1)) {
-			x1 = x1.replace(rgx, '$1' + sliced_invoices.utils.thousand_sep + '$2');
+		if ( sliced_invoices.utils.thousand_sep > '' ) {
+			var rgx = /(\d+)(\d{3})/;
+			while (rgx.test(x1)) {
+				x1 = x1.replace(rgx, '$1' + sliced_invoices.utils.thousand_sep + '$2');
+			}
 		}
 		return x1 + x2;
 	}

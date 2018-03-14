@@ -600,13 +600,14 @@ class Sliced_Options {
 				array(
 					'name'      => __( 'Thousand Separator', 'sliced-invoices' ),
 					'desc'      => __( '', 'sliced-invoices' ),
-					'default'   => ',',
+					//'default'   => ',',
 					'type'      => 'text',
 					'id'        => 'thousand_sep',
 					'attributes' => array(
-						'required' => 'required',
+						//'required' => 'required', // allow empty
 						'placeholder' => ',',
-					)
+					),
+					'sanitization_cb' => false, // allow whitespace
 				),
 				array(
 					'name'      => __( 'Decimal Separator', 'sliced-invoices' ),
@@ -617,7 +618,7 @@ class Sliced_Options {
 					'attributes' => array(
 						'required' => 'required',
 						'placeholder' => '.',
-					)
+					),
 				),
 				array(
 					'name'      => __( 'Number of Decimals', 'sliced-invoices' ),

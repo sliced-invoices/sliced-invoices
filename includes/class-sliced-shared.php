@@ -302,7 +302,7 @@ class Sliced_Shared {
 	 */
 	public static function get_thousand_seperator() {
 	    $payments 	= self::get_sliced_option( 'payments' );
-	    $thousand 	= isset( $payments['thousand_sep'] ) ? $payments['thousand_sep'] : ',';
+	    $thousand 	= isset( $payments['thousand_sep'] ) ? $payments['thousand_sep'] : '';
 	    return $thousand;
 	}
 
