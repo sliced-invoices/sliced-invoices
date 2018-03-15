@@ -180,14 +180,14 @@ if ( ! function_exists( 'sliced_display_line_items' ) ) :
 
 					$class = ($count % 2 == 0) ? "even" : "odd";
 
-					$qty = isset( $item["qty"] ) ? $shared->get_raw_number( $item["qty"] ) : 0;
+					$qty = isset( $item["qty"] ) ? $item["qty"] : 0;
 					$amt = isset( $item["amount"] ) ? $shared->get_raw_number( $item["amount"] ) : 0;
 					$tax = isset( $item["tax"] ) ? $shared->get_raw_number( $item["tax"] ) : "0.00";
 					$line_total = $shared->get_line_item_sub_total( $qty, $amt, $tax );
 
 						$output .= '<tr class="row_' . $class . ' sliced-item">
 
-							<td class="qty">' . esc_html__( $shared->get_formatted_number( $qty ) ) . '</td>
+							<td class="qty">' . esc_html__( $qty ) . '</td>
 							<td class="service">' . esc_html__( isset( $item["title"] ) ? $item["title"] : "" );
 								if ( isset( $item["description"] ) ) :
 									$output .= '<br/><span class="description">' . wpautop( wp_kses_post( $item["description"] ) ) . '</span>';
