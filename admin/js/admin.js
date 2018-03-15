@@ -335,6 +335,7 @@
 		
 		// handler for loading email previews
 		sliced_invoices.sliced_email_preview = function( id ){
+			sliced_invoices.sliced_email_preview_id = id;
 			var currentTime = new Date().valueOf();
 			$(sliced_invoices.sliced_email_cache.$previewDiv).append('<iframe id="sliced-preview-' + currentTime + '" src="' + ajaxurl + '?action=sliced_sure_to_email&id=' + id + '"></iframe>');
 			$('#sliced-preview-'+currentTime).on( 'load', function() {
@@ -358,7 +359,8 @@
 		});
 		
 		// handler for switching email templates
-		sliced_invoices.sliced_email_preview_switch = function( id, template ){
+		sliced_invoices.sliced_email_preview_switch = function( template ){
+			var id = sliced_invoices.sliced_email_preview_id;
 			// restore placeholder
 			$(sliced_invoices.sliced_email_cache.$previewDiv).html(sliced_invoices.sliced_email_cache.placeholder);
 			// load new preview

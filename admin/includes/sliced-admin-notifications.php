@@ -518,9 +518,9 @@ class Sliced_Notifications {
 				</div>
 				<?php if ( $type === 'invoice' ): ?>
 				<div class="nav-tab-wrapper sliced-email-preview-menu" style="display:none;">
-					<a class="nav-tab nav-tab-active" data-sliced-email-template="default" onclick="sliced_invoices.sliced_email_preview_switch(<?php echo (int)$id; ?>, 'default')">Invoice Available</a>
-					<a class="nav-tab" data-sliced-email-template="payment_reminder" onclick="sliced_invoices.sliced_email_preview_switch(<?php echo (int)$id; ?>, 'payment_reminder')">Payment Reminder</a>
-					<a class="nav-tab" data-sliced-email-template="payment_received" onclick="sliced_invoices.sliced_email_preview_switch(<?php echo (int)$id; ?>, 'payment_received')">Payment Received</a>
+					<a class="nav-tab nav-tab-active" data-sliced-email-template="default" onclick="sliced_invoices.sliced_email_preview_switch('default')">Invoice Available</a>
+					<a class="nav-tab" data-sliced-email-template="payment_reminder" onclick="sliced_invoices.sliced_email_preview_switch('payment_reminder')">Payment Reminder</a>
+					<a class="nav-tab" data-sliced-email-template="payment_received" onclick="sliced_invoices.sliced_email_preview_switch('payment_received')">Payment Received</a>
 				</div>
 				<?php endif; ?>
 			</div>			
