@@ -64,7 +64,7 @@ class Sliced_Admin {
 		/*
 		 * Enqueue thickbox
 		 */
-		if ( ( $pagenow == 'post.php' || $pagenow == 'edit.php' ) && sliced_get_the_type() ) {
+		if ( ( $pagenow === 'post.php' || $pagenow === 'post-new.php' || $pagenow === 'edit.php' ) && sliced_get_the_type() ) {
 			wp_enqueue_style( 'thickbox' );
 		}
 
@@ -1142,7 +1142,12 @@ class Sliced_Admin {
 
 		if ( ! empty( $user_query->results ) ) {
 			foreach ( $user_query->results as $user ) {
-				$user_options[$user->ID] = get_user_meta( $user->ID, '_sliced_client_business', true );
+				$name = get_user_meta( $user->ID, '_sliced_client_business', true );
+				$name .= $user->user_email ? ' (' . $user->user_email . ')' : '';
+				if ( ! $name ) {
+					$name = __( 'User ID:', 'sliced-invoices' ) . ' ' . $user->ID;
+				}
+				$user_options[$user->ID] = apply_filters( 'sliced_client_query_display_name', $name, $user );
 			}
 		}
 
@@ -1238,7 +1243,7 @@ class Sliced_Admin {
 				<?php if ( current_user_can('create_users') ): ?>
 				<p><input type="radio" name="sliced_add_client_type" id="sliced_add_client_type_existing" value="existing" /> <label for="sliced_add_client_type_existing"><?php _e( 'Existing User', 'sliced-invoices' ); ?></label></p>
 				<?php else: ?>
-				<div class="notice notice-error inline"><p><?php _e( 'Error: you do not have sufficient permissions to manage users.  Please contact an admin for assistance.', 'sliced-invoices' ); ?></p></div>				
+				<div class="notice notice-error inline"><p><?php _e( 'Error: you do not have sufficient permissions to manage users.  Please contact an admin for assistance.', 'sliced-invoices' ); ?></p></div>
 				<?php endif; ?>
 				
 				<form action="" method="post" name="sliced-update-user" id="sliced-update-user" class="validate sliced-new-client" novalidate="novalidate"<?php do_action( 'user_new_form_tag' );?> style="display:none;">
@@ -1611,7 +1616,7 @@ class Sliced_Admin {
 								});
 							},
 							error: function(errorThrown){
-								console.log(errorThrown);
+								$('#sliced-update-client-loading').html("<p>"+errorThrown.responseText+"</p>").addClass("notice notice-error inline");
 							}
 						});  
 					});
@@ -1807,18 +1812,23 @@ class Sliced_Admin {
 	public function get_client() {
 		
 		if ( ! current_user_can('create_users') ) {
-			wp_die( __( 'Cheatin&#8217; uh?' ), 403 );
+			wp_die( __( 'Error: you do not have sufficient permissions to manage users.  Please contact an admin for assistance.', 'sliced-invoices' ), 403 );
 		}
 
 		if( !isset( $_GET['nonce'] ) || ! wp_verify_nonce( $_GET['nonce'], 'sliced-update-client' ) ) {
-			wp_die( 'Ooops, something went wrong, please try again later.' );
+			wp_die( __( 'Ooops, something went wrong, please try again later.', 'sliced-invoices' ), 403 );
 		}
 		
 		if( ! isset( $_GET['client_id'] ) || empty( $_GET['client_id'] ) ) {
-			wp_die( 'No client selected.' );
+			wp_die( __( 'No client selected.', 'sliced-invoices' ), 403 );
 		}
 		
 		$client = get_userdata( intval( $_GET['client_id'] ) );
+		
+		if ( ! current_user_can('manage_options') && user_can( $client->ID, 'manage_options' ) ) {
+			// don't allow non-admins to edit admins
+			wp_die( __( 'Error: you do not have sufficient permissions to edit this user. Please contact an admin for assistance.', 'sliced-invoices' ), 403 );
+		}
 		
 		$return = array(
 			'user_login'                => $client->user_login,
@@ -1845,22 +1855,27 @@ class Sliced_Admin {
 	public function update_client() {
 		
 		if ( ! current_user_can('create_users') ) {
-			wp_die( __( 'Cheatin&#8217; uh?' ), 403 );
+			wp_die( __( 'Error: you do not have sufficient permissions to manage users.  Please contact an admin for assistance.', 'sliced-invoices' ), 403 );
 		}
 
 		if( !isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'sliced-update-client' ) ) {
-			wp_die( 'Ooops, something went wrong, please try again later.' );
+			wp_die( __( 'Ooops, something went wrong, please try again later.', 'sliced-invoices' ), 403 );
 		}
 		
 		if( ! isset( $_POST['client_id'] ) || empty( $_POST['client_id'] ) ) {
-			wp_die( 'No client selected.' );
+			wp_die( __( 'No client selected.', 'sliced-invoices' ), 403 );
+		}
+		
+		$client_id = intval( $_POST['client_id'] );
+		
+		if ( ! current_user_can('manage_options') && user_can( $client_id, 'manage_options' ) ) {
+			// don't allow non-admins to edit admins
+			wp_die( __( 'Error: you do not have sufficient permissions to edit this user. Please contact an admin for assistance.', 'sliced-invoices' ), 403 );
 		}
 		
 		/*
 		 * Do the updates
 		 */
-		$client_id = intval( $_POST['client_id'] );
-		
 		$userdata = array(
 			'ID'            => $client_id,
 			'user_login' 	=> sanitize_text_field( $_POST['user_login'] ),

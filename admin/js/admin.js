@@ -35,7 +35,6 @@
 		// removes the thousand seperator
 		if ( sliced_invoices.utils.thousand_sep > '' ) {
 			var parts = x.toString().split(sliced_invoices.utils.thousand_sep);
-			console.log(parts);
 			parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '');
 			var amount = parts.join('');
 		} else {
