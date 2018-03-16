@@ -45,6 +45,7 @@ class Sliced_Activator {
 		$business_exists = get_option('sliced_business');
 		$general_exists  = get_option('sliced_general');
 		$payment_exists  = get_option('sliced_payments');
+		$tax_exists      = get_option('sliced_tax');
 		$invoices_exists = get_option('sliced_invoices');
 		$quotes_exists   = get_option('sliced_quotes');
 		$email           = get_option('sliced_emails');
@@ -100,12 +101,22 @@ Your City AZ 12345',
 				'thousand_sep'      => ',',
 				'decimal_sep'       => '.',
 				'decimals'          => '2',
-				'tax'               => '10',
-				'tax_name'          => 'Tax',
 				'payment_page'      => $payment_id,
 			);
 
 			update_option('sliced_payments', $payment_array);
+
+		}
+		
+		if( ! $tax_exists ) {
+
+			$tax_array = array(
+				'tax_calc_method'   => 'exclusive',
+				'tax'               => '10',
+				'tax_name'          => 'Tax',
+			);
+
+			update_option( 'sliced_tax' , $tax_array );
 
 		}
 

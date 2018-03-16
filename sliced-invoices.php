@@ -94,6 +94,17 @@ function sliced_invoices_db_update() {
 	
 	// upgrade from v6 to 7
 	if ( ! isset( $sliced_db_check['db_version'] ) || $sliced_db_check['db_version'] < 7 ) {
+		// tax:
+		$payments = get_option('sliced_payments');
+		$tax = get_option('sliced_tax');
+		if ( ! $tax ) {
+			$tax = array();
+		}
+		$tax['tax_calc_method'] = 'exclusive';
+		$tax['tax']             = isset( $payments['tax'] ) ? $payments['tax'] : '10';
+		$tax['tax_name']        = isset( $payments['tax_name'] ) ? $payments['tax_name'] : 'Tax';
+		update_option( 'sliced_tax' , $tax );
+		
 		// quotes:
 		$args = array(
 			'post_type' => 'sliced_quote',

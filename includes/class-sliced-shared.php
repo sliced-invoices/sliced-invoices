@@ -177,8 +177,8 @@ class Sliced_Shared {
 	 * @since   2.0.0
 	 */
 	public static function get_tax_name() {
-		$payments 	= self::get_sliced_option( 'payments' );
-	    $name 		= $payments['tax_name'] ? $payments['tax_name'] : __( 'Tax', 'sliced-invoices' );
+		$tax  = self::get_sliced_option( 'tax' );
+	    $name = $tax['tax_name'] ? $tax['tax_name'] : __( 'Tax', 'sliced-invoices' );
     	return $name;
 	}
 
@@ -198,13 +198,13 @@ class Sliced_Shared {
 	    	if( ! empty( $amount ) ) {
 	    		$amount 	= $amount[0];
 	    	} else {
-	    		$payments 	= self::get_sliced_option( 'payments' );
-	    		$amount 	= isset( $payments['tax'] ) ? $payments['tax'] : '0.00';
+	    		$tax    = self::get_sliced_option( 'tax' );
+	    		$amount = isset( $tax['tax'] ) ? $tax['tax'] : '0.00';
 	    	}
 	    	
 	    } else {
-	    	$payments 	= self::get_sliced_option( 'payments' );
-	    	$amount 	= isset( $payments['tax'] ) ? $payments['tax'] : '0.00';
+	    	$tax    = self::get_sliced_option( 'tax' );
+	    	$amount = isset( $tax['tax'] ) ? $tax['tax'] : '0.00';
 	    }
 
 		if ( $formatted ) {

@@ -453,7 +453,6 @@ class Sliced_Options {
 			) )
 		);
 
-
 		$this->option_metabox[] = apply_filters( 'sliced_invoice_option_fields', array(
 			'id'         => $prefix . 'invoices',
 			'title'      => $invoice_label_plural,
@@ -565,7 +564,6 @@ class Sliced_Options {
 			) )
 		);
 
-
 		$this->option_metabox[] = apply_filters( 'sliced_payment_option_fields', array(
 			'id'         => $prefix . 'payments',
 			'title'      => __( 'Payments', 'sliced-invoices' ),
@@ -645,29 +643,6 @@ class Sliced_Options {
 					)
 				),
 				array(
-					'name'      => __( 'Tax Percentage', 'sliced-invoices' ),
-					'desc'      => __( 'Global tax percentage. Set to 0 or leave blank for no tax.', 'sliced-invoices' ),
-					'default'   => '10',
-					'id'        => 'tax',
-					'type'      => 'text',
-					'attributes'    => array(
-						'placeholder'   => '10',
-						'maxlength'     => '6',
-						'type'          => 'number',
-						'step'          => 'any',
-					),
-				),
-				array(
-					'name'      => __( 'Tax Name', 'sliced-invoices' ),
-					'desc'      => __( 'The name of the tax for your country/region. GST, VAT, Tax etc', 'sliced-invoices' ),
-					'default'   => '',
-					'id'        => 'tax_name',
-					'type'      => 'text',
-					'attributes' => array(
-						'maxlength' => 100,
-					)
-				),
-				array(
 					'name'      => __( 'Payment Methods', 'sliced-invoices' ),
 					'desc'      => __( '', 'sliced-invoices' ),
 					'default'   => '',
@@ -690,6 +665,51 @@ class Sliced_Options {
 				),
 
 
+			)
+		) );
+		
+		$this->option_metabox[] = apply_filters( 'sliced_tax_option_fields', array(
+			'id'         => $prefix . 'tax',
+			'title'      => __( 'Tax', 'sliced-invoices' ),
+			'menu_title' => __( 'Tax Settings', 'sliced-invoices' ),
+			'desc'       => __( 'Here you will find all Tax-related settings.', 'sliced-invoices' ),
+			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'tax' ), ),
+			'show_names' => true,
+			'fields'     => array(
+				array(
+					'name'      => __( 'Prices entered with tax', 'sliced-invoices' ),
+					'desc'      => __( '', 'sliced-invoices' ),
+					'default'   => 'exclusive',
+					'type'      => 'radio',
+					'id'        => 'tax_calc_method',
+					'options'   => array(
+						'inclusive' => __( 'Yes, I will enter prices inclusive of tax', 'sliced-invoices' ),
+						'exclusive' => __( 'No, I will enter prices exclusive of tax', 'sliced-invoices' ),
+					)
+				),
+				array(
+					'name'      => __( 'Tax Percentage', 'sliced-invoices' ),
+					'desc'      => __( 'Default tax percentage. Set to 0 or leave blank for no tax.', 'sliced-invoices' ),
+					'default'   => '10',
+					'id'        => 'tax',
+					'type'      => 'text',
+					'attributes'    => array(
+						'placeholder'   => '10',
+						'maxlength'     => '6',
+						'type'          => 'number',
+						'step'          => 'any',
+					),
+				),
+				array(
+					'name'      => __( 'Tax Name', 'sliced-invoices' ),
+					'desc'      => __( 'The name of the tax for your country/region. GST, VAT, Tax etc', 'sliced-invoices' ),
+					'default'   => '',
+					'id'        => 'tax_name',
+					'type'      => 'text',
+					'attributes' => array(
+						'maxlength' => 100,
+					)
+				),
 			)
 		) );
 
