@@ -42,12 +42,13 @@ class Sliced_Shared {
 
 
 	private static $options = array(
-		'general' =>  'sliced_general',
-		'business' =>  'sliced_business',
-		'quotes' =>  'sliced_quotes',
-		'invoices' =>  'sliced_invoices',
-		'payments' =>  'sliced_payments',
-		'translate' =>  'sliced_translate'
+		'general'   => 'sliced_general',
+		'business'  => 'sliced_business',
+		'quotes'    => 'sliced_quotes',
+		'invoices'  => 'sliced_invoices',
+		'payments'  => 'sliced_payments',
+		'tax'       => 'sliced_tax',
+		'translate' => 'sliced_translate'
 	);
 
 
@@ -212,6 +213,32 @@ class Sliced_Shared {
 		} else {
 			return self::get_raw_number( $amount );
 		}
+	}
+	
+	/**
+	 * Get the tax calculation method (exclusive or inclusive).
+	 *
+	 * @since   3.7.0
+	 */
+	public static function get_tax_calc_method( $id = 0 ) {
+
+		$id = Sliced_Shared::get_item_id( $id );
+
+	    if ( isset( $id ) ) {
+
+	    	$method = self::get_sliced_meta( $id, '_sliced_tax_calc_method', true );
+
+	    	if( ! $method ) {
+	    		$tax    = self::get_sliced_option( 'tax' );
+	    		$method = isset( $tax['tax_calc_method'] ) ? $tax['tax_calc_method'] : 'exclusive';
+	    	}
+	    	
+	    } else {
+	    	$tax    = self::get_sliced_option( 'tax' );
+	    	$method = isset( $tax['tax_calc_method'] ) ? $tax['tax_calc_method'] : 'exclusive';
+	    }
+
+		return $method;
 	}
 	
 	/**
@@ -412,6 +439,10 @@ class Sliced_Shared {
 			$id = Sliced_Shared::get_item_id( $id );
 		}
 		
+		$decimals = self::get_decimals();
+		$items = self::get_line_items( $id );
+		$tax_calc_method = self::get_tax_calc_method( $id );
+		
 		$totals = array(
 			'sub_total'         => 0,
 			'sub_total_taxable' => 0,
@@ -421,10 +452,6 @@ class Sliced_Shared {
 			'total'             => 0,
 			'total_due'         => 0,
 		);
-
-	    $decimals = self::get_decimals();
-		
-		$items = self::get_line_items( $id );
 		
 	    // if there are no line items, simply return zero for all amounts
 	    if( ! $items || $items == null || empty( $items ) || empty( $items[0] ) || ! is_array( $items[0] ) ) {
@@ -448,15 +475,25 @@ class Sliced_Shared {
 			}
 
 	    }
-
-	   	$global_tax = apply_filters( 'sliced_totals_global_tax', self::get_tax_amount( $id ), $id );
-
-	    if( $global_tax == '' || $global_tax == '0' || $global_tax == null || $global_tax == '0.00' ) {
+		
+	   	$tax_amount = apply_filters( 'sliced_totals_global_tax', self::get_tax_amount( $id ), $id );
+		
+	    if( $tax_amount == '' || $tax_amount == '0' || $tax_amount == null || $tax_amount == '0.00' ) {
 	        $totals['total'] = $totals['sub_total'];
 	    } else {
-	        $tax_percentage  = $global_tax / 100;
-	        $totals['tax']   = round( $totals['sub_total_taxable'] * $tax_percentage, $decimals );
-	        $totals['total'] = $totals['sub_total'] + $totals['tax'];
+	        $tax_percentage  = $tax_amount / 100;
+			if ( $tax_calc_method === 'inclusive' ) {
+				// europe:
+				$totals['tax']   = round(
+					$totals['sub_total_taxable'] - ( $totals['sub_total_taxable'] / ( 1 + $tax_percentage ) ),
+					$decimals 
+				);
+				$totals['total'] = $totals['sub_total'];
+			} else {
+				// everybody else:
+				$totals['tax']   = round( $totals['sub_total_taxable'] * $tax_percentage, $decimals );
+				$totals['total'] = $totals['sub_total'] + $totals['tax'];
+			}
 	    }
 		
 		$discounts = apply_filters( 'sliced_totals_discounts', self::get_raw_number( get_post_meta( $id, 'sliced_invoice_discount', true ), $id ) );

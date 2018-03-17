@@ -90,6 +90,7 @@ class Sliced_Admin {
 		wp_enqueue_script( $this->plugin_name . '-decimal', plugin_dir_url( __FILE__ ) . 'js/decimal.min.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script( $this->plugin_name , 'sliced_payments', apply_filters( 'sliced_payments_localized_script', array(
 			'tax' => sliced_get_tax_amount(),
+			'tax_calc_method' => Sliced_Shared::get_tax_calc_method(),
 			'currency_symbol' => sliced_get_currency_symbol(),
 			'currency_pos' => sliced_get_currency_position(),
 			'thousand_sep' => sliced_get_thousand_seperator(),

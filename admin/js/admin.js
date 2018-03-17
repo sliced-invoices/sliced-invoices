@@ -118,12 +118,6 @@
 			'total':             new Decimal( 0 ),
 			'total_due':         new Decimal( 0 )
 		};
-		
-		var global_tax = new Decimal( 0 );
-        if ( sliced_payments.tax != 0 ) {
-			global_tax = new Decimal( sliced_payments.tax );
-			global_tax = global_tax.div( 100 );
-		}
 
         // work out the line item totals
         $('.sliced input.item_amount').each( function() {
@@ -155,11 +149,26 @@
 			}
 
 	    });
+		
+		var tax_percentage = new Decimal( 0 );
+        if ( sliced_payments.tax != 0 ) {
+			tax_percentage = new Decimal( sliced_payments.tax );
+			tax_percentage = tax_percentage.div( 100 );
+		}
 
-        // add global tax, if any
-        if ( ! global_tax.equals( 0 ) ) {
-			sliced_invoices.totals.tax = sliced_invoices.totals.sub_total_taxable.times( global_tax ).toDecimalPlaces( sliced_invoices.utils.decimals );
-			sliced_invoices.totals.total = sliced_invoices.totals.sub_total.plus( sliced_invoices.totals.tax );
+        // add tax, if any
+        if ( ! tax_percentage.equals( 0 ) ) {
+			if ( sliced_payments.tax_calc_method === 'inclusive' ) {
+				// europe:
+				var tax_percentage_1 = tax_percentage.plus( 1 );
+				var tax_amount_1 = sliced_invoices.totals.sub_total_taxable.div( tax_percentage_1 );
+				sliced_invoices.totals.tax = sliced_invoices.totals.sub_total_taxable.minus( tax_amount_1 ).toDecimalPlaces( sliced_invoices.utils.decimals );
+				sliced_invoices.totals.total = sliced_invoices.totals.sub_total;
+			} else {
+				// everybody else:
+				sliced_invoices.totals.tax = sliced_invoices.totals.sub_total_taxable.times( tax_percentage ).toDecimalPlaces( sliced_invoices.utils.decimals );
+				sliced_invoices.totals.total = sliced_invoices.totals.sub_total.plus( sliced_invoices.totals.tax );
+			}
         } else {
             sliced_invoices.totals.total = sliced_invoices.totals.sub_total;
         }
@@ -243,6 +252,11 @@
 	
 	$(document).on('keyup change', '#_sliced_tax', function() {
 		sliced_payments.tax = sliced_invoices.utils.rawNumber( $(this).val() );
+		workOutTotals();
+	});
+	
+	$(document).on('change', '#_sliced_tax_calc_method', function() {
+		sliced_payments.tax_calc_method = $(this).val();
 		workOutTotals();
 	});
 
