@@ -503,6 +503,17 @@ class Sliced_Metaboxes {
 			),
 		) );
 		$info->add_field( array(
+			'name'       => __( 'Prices entered with tax', 'sliced-invoices' ),
+			'desc'       => '',
+			'id'         => $prefix . 'tax_calc_method',
+			'type'       => 'select',
+			'default'    => array( 'Sliced_Shared', 'get_tax_calc_method' ),
+			'options'    => array(
+				'inclusive' => __( 'Yes, I will enter prices inclusive of tax', 'sliced-invoices' ),
+				'exclusive' => __( 'No, I will enter prices exclusive of tax', 'sliced-invoices' ) . ' ' . __( '(default)', 'sliced-invoices' ),
+			),
+		) );
+		$info->add_field( array(
 			'name'       => __( 'Tax Rate', 'sliced-invoices' ),
 			'desc'       => '',
 			'id'         => $prefix . 'tax',
