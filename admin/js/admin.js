@@ -95,15 +95,18 @@
     /**
 	 * Totals
 	 */
-	function clearLineTotal(){
-
-        var lastRow = $(this).closest('.cmb-row').prev();
-        var index   = $(lastRow).data('iterator');
-
-        $(lastRow).find('.line_total').html('0.00');
+	function setupNewLine( $newRow ){
+	
+		var lastRow = $($newRow.target).children('.cmb-repeatable-grouping').last();
+		
+		// clear line total
+        $(lastRow).find('.line_total').html( sliced_invoices.utils.formattedAmount(0) );
+		
+		// set checkbox defaults
+		$(lastRow).find('input[type="checkbox"]').attr('checked',true);
 
     };
-    $(document).on( 'click', '.cmb-add-group-row', clearLineTotal );
+    $(document).on( 'cmb2_add_row', setupNewLine );
 
 
 	// calculate the totals on the fly when editing or adding a quote or invoice
