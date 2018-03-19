@@ -48,6 +48,7 @@ class Sliced_Metaboxes {
 
 	}
 	
+	
 	/**
 	 * Only return default value if we don't have a post ID (in the 'post' query variable)
 	 *
@@ -56,6 +57,26 @@ class Sliced_Metaboxes {
 	 */
 	public static function cmb2_set_checkbox_default_for_new_post( $default ) {
 		return isset( $_GET['post'] ) ? '' : ( $default ? (string) $default : '' );
+	}
+	
+	public static function collapsible_group_before( $field_args, $field ) {
+		?>
+		<table class="widefat sliced-collapsible-group-wrapper">
+			<tr class="sliced-collapsible-group-header">
+				<th class="row-title"><span><?php echo $field_args['collapsible_group_title']; ?></span></th>
+				<th class="row-toggle"><span class="dashicons dashicons-arrow-down sliced-collapsible-group-settings-toggle"></span></th>
+			</tr>
+			<tr class="sliced-collapsible-group-settings" style="display:none;">
+				<td colspan="2">
+		<?php
+	}
+	
+	public static function collapsible_group_after() {
+		?>
+				</td>
+			</tr>
+		</table>
+		<?php
 	}
 	
 
@@ -491,6 +512,8 @@ class Sliced_Metaboxes {
 			'type'       => 'select',
 			'default'    => 'default',
 			'options'    => Sliced_Shared::currency_options(),
+			'before_row' => array( $this, 'collapsible_group_before' ),
+			'collapsible_group_title' => __( 'Payment Settings', 'sliced-invoices' ),
 		) );
 		$info->add_field( array(
 			'name'       => __( 'Currency Symbol', 'sliced-invoices' ),
@@ -501,6 +524,7 @@ class Sliced_Metaboxes {
 			'attributes' => array(
 				'placeholder'   => '$',
 			),
+			'after_row' => array( $this, 'collapsible_group_after' ),
 		) );
 		$info->add_field( array(
 			'name'       => __( 'Prices entered with tax', 'sliced-invoices' ),
@@ -512,9 +536,11 @@ class Sliced_Metaboxes {
 				'inclusive' => __( 'Yes, I will enter prices inclusive of tax', 'sliced-invoices' ),
 				'exclusive' => __( 'No, I will enter prices exclusive of tax', 'sliced-invoices' ) . ' ' . __( '(default)', 'sliced-invoices' ),
 			),
+			'before_row' => array( $this, 'collapsible_group_before' ),
+			'collapsible_group_title' => __( 'Tax Settings', 'sliced-invoices' ),
 		) );
 		$info->add_field( array(
-			'name'       => __( 'Tax Rate', 'sliced-invoices' ),
+			'name'       => __( 'Tax Rate (%)', 'sliced-invoices' ),
 			'desc'       => '',
 			'id'         => $prefix . 'tax',
 			'type'       => 'text',
@@ -525,6 +551,7 @@ class Sliced_Metaboxes {
 				//'type'      => 'number',
 				//'step'      => 'any',
 			),
+			'after_row' => array( $this, 'collapsible_group_after' ),
 		) );
 
 
@@ -647,6 +674,8 @@ class Sliced_Metaboxes {
 			'type'       => 'select',
 			'default'    => 'default',
 			'options'    => Sliced_Shared::currency_options(),
+			'before_row' => array( $this, 'collapsible_group_before' ),
+			'collapsible_group_title' => __( 'Payment Settings', 'sliced-invoices' ),
 		) );
 		$info->add_field( array(
 			'name'       => __( 'Currency Symbol', 'sliced-invoices' ),
@@ -666,6 +695,7 @@ class Sliced_Metaboxes {
 			'select_all_button' => false,
 			'default'           => array( $this, 'accepted_payment_method_keys' ),
 			'options_cb'        => 'sliced_get_accepted_payment_methods',
+			'after_row' => array( $this, 'collapsible_group_after' ),
 		) );
 		$info->add_field( array(
 			'name'       => __( 'Prices entered with tax', 'sliced-invoices' ),
@@ -677,9 +707,11 @@ class Sliced_Metaboxes {
 				'inclusive' => __( 'Yes, I will enter prices inclusive of tax', 'sliced-invoices' ),
 				'exclusive' => __( 'No, I will enter prices exclusive of tax', 'sliced-invoices' ) . ' ' . __( '(default)', 'sliced-invoices' ),
 			),
+			'before_row' => array( $this, 'collapsible_group_before' ),
+			'collapsible_group_title' => __( 'Tax Settings', 'sliced-invoices' ),
 		) );
 		$info->add_field( array(
-			'name'       => __( 'Tax Rate', 'sliced-invoices' ),
+			'name'       => __( 'Tax Rate (%)', 'sliced-invoices' ),
 			'desc'       => '',
 			'id'         => $prefix . 'tax',
 			'type'       => 'text',
@@ -690,6 +722,7 @@ class Sliced_Metaboxes {
 				//'type'          => 'number',
 				//'step'          => 'any',
 			),
+			'after_row' => array( $this, 'collapsible_group_after' ),
 		) );
 
 	}

@@ -326,6 +326,24 @@
 			hideDiscountBox();
 		}
 	});
+	
+	
+	/**
+	 * collapsible toggler
+	 */
+	$(function(){
+		$('.sliced-collapsible-group-header').click(function(){
+			var settingsElem = $(this).parent().find('.sliced-collapsible-group-settings');
+			var toggleElem = $(this).parent().find('.sliced-collapsible-group-settings-toggle');
+			if ( $(settingsElem).is(':visible') ) {
+				$(settingsElem).slideUp();
+				$(toggleElem).removeClass('dashicons-arrow-up').addClass('dashicons-arrow-down');
+			} else {
+				$(settingsElem).slideDown();
+				$(toggleElem).removeClass('dashicons-arrow-down').addClass('dashicons-arrow-up');
+			}
+		});
+	});
 
 
     /**
