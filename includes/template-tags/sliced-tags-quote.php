@@ -187,6 +187,15 @@ if ( ! function_exists( 'sliced_get_quote_terms' ) ) :
 
 endif;
 
+if ( ! function_exists( 'sliced_get_quote_footer' ) ) :
+
+	function sliced_get_quote_footer() {
+		$output = Sliced_Quote::get_footer();
+		return apply_filters( 'sliced_get_quote_footer', $output );
+	}
+
+endif;
+
 if ( ! function_exists( 'sliced_get_quote_template' ) ) :
 
 	function sliced_get_quote_template( $id = 0 ) {

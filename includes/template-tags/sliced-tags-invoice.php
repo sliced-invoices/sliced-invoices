@@ -280,6 +280,14 @@ if ( ! function_exists( 'sliced_get_invoice_terms' ) ) :
 
 endif;
 
+if ( ! function_exists( 'sliced_get_invoice_footer' ) ) :
+
+	function sliced_get_invoice_footer() {
+		$output = Sliced_Invoice::get_footer();
+		return apply_filters( 'sliced_get_invoice_footer', $output );
+	}
+
+endif;
 
 if ( ! function_exists( 'sliced_get_invoice_payment_methods' ) ) :
 

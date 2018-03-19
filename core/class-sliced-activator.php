@@ -41,7 +41,9 @@ class Sliced_Activator {
 
         set_transient( 'sliced_activation_warning', $error, 5 );
 
-		// add default options
+		/**
+		 * if new install, add default options
+		 */
 		$business_exists = get_option('sliced_business');
 		$general_exists  = get_option('sliced_general');
 		$payment_exists  = get_option('sliced_payments');
@@ -50,8 +52,7 @@ class Sliced_Activator {
 		$quotes_exists   = get_option('sliced_quotes');
 		$email           = get_option('sliced_emails');
 
-
-		if( ! $business_exists) {
+		if( ! $business_exists ) {
 
 			$business_array = array(
 				'name'      => get_bloginfo('name'),
@@ -66,7 +67,7 @@ Your City AZ 12345',
 
 		}
 
-		if( ! $general_exists) {
+		if( ! $general_exists ) {
 
 			$general_array = array(
 				'year_start'    => '07',
@@ -74,7 +75,6 @@ Your City AZ 12345',
 				'pre_defined'   => '
 1 | Web Design | 85 | Design work on the website
 1 | Web Development | 95 | Back end development of website',
-				'footer'        => 'Thanks for choosing <a href="' . get_bloginfo('url') . '">' . get_bloginfo('site_name') . '</a> | <a href="mailto:' . get_bloginfo('admin_email') . '">' . get_bloginfo('admin_email') . '</a>',
 				'db_version'    => SLICED_DB_VERSION,
 			);
 
@@ -82,7 +82,7 @@ Your City AZ 12345',
 
 		}
 
-		if( ! $payment_exists) {
+		if( ! $payment_exists ) {
 
 			// Create post object
 			$payment_page = array(
@@ -120,10 +120,11 @@ Your City AZ 12345',
 
 		}
 
-		if( ! $invoices_exists) {
+		if( ! $invoices_exists ) {
 
 			$invoice_array = array(
 				'terms'         => 'Payment is due within 30 days from date of invoice. Late payment is subject to fees of 5% per month.',
+				'footer'        => 'Thanks for choosing <a href="' . get_bloginfo('url') . '">' . get_bloginfo('site_name') . '</a> | <a href="mailto:' . get_bloginfo('admin_email') . '">' . get_bloginfo('admin_email') . '</a>',
 				'css'           => 'body {}',
 				'number'        => '0001',
 				'prefix'        => 'INV-',
@@ -135,10 +136,11 @@ Your City AZ 12345',
 
 		}
 
-		if( ! $quotes_exists) {
+		if( ! $quotes_exists ) {
 
 			$quote_array = array(
 				'terms'         => 'This is a fixed price quote. If accepted, we require a 25% deposit upfront before work commences.',
+				'footer'        => 'Thanks for choosing <a href="' . get_bloginfo('url') . '">' . get_bloginfo('site_name') . '</a> | <a href="mailto:' . get_bloginfo('admin_email') . '">' . get_bloginfo('admin_email') . '</a>',
 				'css'               => 'body {}',
 				'number'            => '0001',
 				'prefix'            => 'QUO-',
@@ -152,7 +154,6 @@ Your City AZ 12345',
 
 		}
 
-		// if a new install
 		if( ! $email ) {
 
 			$email['from'] = get_option( 'admin_email' );
@@ -185,6 +186,7 @@ Just a friendly reminder that your invoice %number% for %total% %is_was% due on 
 
 		}
 
+
 		// call the custom posts and taxonomnies
 		//$admin = new Sliced_Admin( $plugin_name, SLICED_VERSION );
 		//$admin->new_cpt_quote();
@@ -193,6 +195,7 @@ Just a friendly reminder that your invoice %number% for %total% %is_was% due on 
 		//$admin->new_taxonomy_invoice_status();
 		
 		/**
+		 * register our custom post types & taxonomies
 		 * for WP Multisite compatibility, do this instead:
 		 */
 		

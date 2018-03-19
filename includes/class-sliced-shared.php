@@ -640,7 +640,7 @@ class Sliced_Shared {
 	        'website'			=> isset( $options['business']['website'] ) ? $options['business']['website'] : '',
 	        'bank'				=> isset( $options['payments']['bank'] ) ? $options['payments']['bank'] : '',
 	        'generic_pay'		=> isset( $options['payments']['generic_pay'] ) ? $options['payments']['generic_pay'] : '',
-	        'footer'			=> isset( $options['general']['footer'] ) ? $options['general']['footer'] : '',
+	        'footer'			=> isset( $options['payments']['footer'] ) ? $options['payments']['footer'] : '',
 	    ) );
 
 	}

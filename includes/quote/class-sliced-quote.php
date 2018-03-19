@@ -147,8 +147,10 @@ class Sliced_Quote {
 		return $description;
 	}
 
-	public static function get_terms() {
-		$id = Sliced_Shared::get_item_id();
+	public static function get_terms( $id = 0 ) {
+		if ( ! $id ) {
+			$id = Sliced_Shared::get_item_id();
+		}
 
 		if ( isset( $id ) && 'auto-draft' !== get_post( $id )->post_status ) {
 			$terms = self::get_sliced_meta( $id, self::$meta_key['terms'] );
@@ -160,10 +162,16 @@ class Sliced_Quote {
 		return $terms;
 
 	}
+	
+	public static function get_footer() {
+		$quotes = get_option( 'sliced_quotes' );
+		$footer = isset( $quotes['footer'] ) ? $quotes['footer'] : '';
+		return $footer;
+	}
 
 	public static function get_prefix( $id = 0 ) {
-		 if ( ! $id ) {
-			 $id = Sliced_Shared::get_item_id();
+		if ( ! $id ) {
+			$id = Sliced_Shared::get_item_id();
 		}
 		$prefix = null;
 		if ( isset( $id ) ) {

@@ -170,8 +170,10 @@ class Sliced_Invoice {
 		return $payment_methods;
 	}
 
-	public static function get_terms() {
-		$id = Sliced_Shared::get_item_id();
+	public static function get_terms( $id = 0 ) {
+		if ( ! $id ) {
+			$id = Sliced_Shared::get_item_id();
+		}
 
 		if ( isset( $id ) && 'auto-draft' !== get_post( $id )->post_status ) {
 			$terms = self::get_sliced_meta( $id, self::$meta_key['terms'] );
@@ -180,6 +182,12 @@ class Sliced_Invoice {
 			$terms    = isset( $invoices['terms'] ) ? $invoices['terms'] : '';
 		}
 		return $terms;
+	}
+	
+	public static function get_footer() {
+		$invoices = get_option( 'sliced_invoices' );
+		$footer   = isset( $invoices['footer'] ) ? $invoices['footer'] : '';
+		return $footer;
 	}
 
 	public static function get_prefix( $id = 0 ) {

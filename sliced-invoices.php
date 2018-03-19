@@ -94,6 +94,25 @@ function sliced_invoices_db_update() {
 	
 	// upgrade from v6 to 7
 	if ( ! isset( $sliced_db_check['db_version'] ) || $sliced_db_check['db_version'] < 7 ) {
+		
+		// options re-shuffle:
+		$general  = get_option( 'sliced_general' );
+		$invoices = get_option( 'sliced_invoices' );
+		$quotes   = get_option( 'sliced_quotes' );
+		$payments = get_option( 'sliced_payments' );
+		if ( ! isset( $invoices['footer'] ) && isset( $general['footer'] ) ) {
+			$invoices['footer'] = $general['footer'];
+			update_option( 'sliced_invoices', $invoices );
+		}
+		if ( ! isset( $quotes['footer'] ) && isset( $general['footer'] ) ) {
+			$quotes['footer'] = $general['footer'];
+			update_option( 'sliced_quotes', $quotes );
+		}
+		if ( ! isset( $payments['footer'] ) && isset( $general['footer'] ) ) {
+			$payments['footer'] = $general['footer'];
+			update_option( 'sliced_payments', $payments );
+		}
+		
 		// tax:
 		$payments = get_option('sliced_payments');
 		$tax = get_option('sliced_tax');
@@ -103,7 +122,7 @@ function sliced_invoices_db_update() {
 		$tax['tax_calc_method'] = 'exclusive';
 		$tax['tax']             = isset( $payments['tax'] ) ? $payments['tax'] : '10';
 		$tax['tax_name']        = isset( $payments['tax_name'] ) ? $payments['tax_name'] : 'Tax';
-		update_option( 'sliced_tax' , $tax );
+		update_option( 'sliced_tax', $tax );
 		
 		// quotes:
 		$args = array(

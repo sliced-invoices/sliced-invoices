@@ -103,7 +103,7 @@ do_action( 'sliced_before_quote_display' ); ?><!doctype html>
 
 			<div class="row sliced-footer">
 				<div class="col-sm-12">
-					<div class="footer-text"><?php echo sliced_get_business_footer(); ?></div>
+					<div class="footer-text"><?php echo sliced_get_quote_footer(); ?></div>
 					<div class="print-only"><?php _e( 'Page ', 'sliced-invoices') ?> {PAGENO}/{nbpg}</div>
 				</div>
 			</div><!-- END row -->

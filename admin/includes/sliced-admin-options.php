@@ -232,14 +232,6 @@ class Sliced_Options {
 						'placeholder' => '1 | Title goes here | 85 | Description goes here and basic HTML is allowed.',
 					)
 				),
-				array(
-					'name'      => __( 'Footer<br><small>' . sprintf( __( 'Displayed on %1s & %2s', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label_plural.'</span>', '<span class="i18n-multilingual-display">'.$invoice_label_plural.'</span>' ) . '</small>', 'sliced-invoices' ),
-					'desc'      => __( 'The footer will be displayed at the bottom of each ' . sprintf( __( '%1s & %2s', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>', '<span class="i18n-multilingual-display">'.$invoice_label.'</span>' ) . '. Basic HTML is allowed.', 'sliced-invoices' ),
-					'default'   => '',
-					'id'        => 'footer',
-					'type'      => 'textarea_small',
-				),
-
 
 			) )
 		);
@@ -348,6 +340,13 @@ class Sliced_Options {
 					'default'   => '',
 					'id'        => 'terms',
 					'type'      => 'textarea_small'
+				),
+				array(
+					'name'      => __( 'Footer', 'sliced-invoices' ),
+					'desc'      => sprintf( __( 'The footer will be displayed at the bottom of each %1s. Basic HTML is allowed.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>' ),
+					'default'   => '',
+					'id'        => 'footer',
+					'type'      => 'textarea_small',
 				),
 				array(
 					'name'      => __( 'Accept Quotes', 'sliced-invoices' ),
@@ -513,6 +512,13 @@ class Sliced_Options {
 					'type'      => 'textarea_small'
 				),
 				array(
+					'name'      => __( 'Footer', 'sliced-invoices' ),
+					'desc'      => sprintf( __( 'The footer will be displayed at the bottom of each %1s. Basic HTML is allowed.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$invoice_label.'</span>' ),
+					'default'   => '',
+					'id'        => 'footer',
+					'type'      => 'textarea_small',
+				),
+				array(
 					'name'      => __( 'Admin Notices', 'sliced-invoices' ),
 					'desc'      => sprintf ( 
 										__( 'These settings allow you to choose which notices may be displayed in your WordPress Admin area. (Note: this is different from admin emails, which you can configure on the <a href="%s">Email Settings</a> tab.', 'sliced-invoices' ),
@@ -641,6 +647,13 @@ class Sliced_Options {
 					'attributes' => array(
 						'required' => 'required',
 					)
+				),
+				array(
+					'name'      => __( 'Payment Page Footer', 'sliced-invoices' ),
+					'desc'      => __( 'The footer will be displayed at the bottom of the payment page. Basic HTML is allowed.<br>Use this to provide additional payment instructions, if desired.', 'sliced-invoices' ),
+					'default'   => '',
+					'id'        => 'footer',
+					'type'      => 'textarea_small',
 				),
 				array(
 					'name'      => __( 'Payment Methods', 'sliced-invoices' ),
