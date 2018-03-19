@@ -21,7 +21,8 @@ class Sliced_Admin_Notices {
 	 * @var array
 	 */
 	private static $core_notices = array(
-		'invalid_payment_page' => 'invalid_payment_page_notice',
+		'invalid_payment_page'         => 'invalid_payment_page_notice',
+		'update_needed_additional_tax' => 'update_needed_additional_tax_notice',
 	);
 
 	/**
@@ -268,6 +269,21 @@ class Sliced_Admin_Notices {
 		<div class="error sliced-message">
 			<?php /* let's not make this one dismissable for now: <a class="sliced-message-close notice-dismiss" href="<?php echo esc_url( wp_nonce_url( add_query_arg( 'sliced-hide-notice', 'invalid_payment_page' ), 'sliced_hide_notices_nonce', '_sliced_notice_nonce' ) ); ?>"><?php _e( 'Dismiss', 'sliced-invoices' ); ?></a> */ ?>
 			<p><?php printf( __( '<strong>Your Payment Page setting is invalid.</strong> Please choose a valid Payment Page on the %sPayment Settings page%s. You will not be able to accept quotes or process payments until you do this.', 'sliced-invoices' ), '<a href="' . esc_url( admin_url( 'admin.php?page=sliced_invoices_settings&tab=payments' ) ) . '">', '</a>' ); ?></p>
+		</div>
+		<?php
+	}
+	
+	
+	/**
+	 * @since 3.7.0
+	 */
+	public static function update_needed_additional_tax_notice() {
+		?>
+		<div class="error sliced-message">
+			<a class="sliced-message-close notice-dismiss" href="<?php echo esc_url( wp_nonce_url( add_query_arg( 'sliced-hide-notice', 'update_needed_additional_tax' ), 'sliced_hide_notices_nonce', '_sliced_notice_nonce' ) ); ?>"><?php _e( 'Dismiss', 'sliced-invoices' ); ?></a>
+			<p><?php printf( __( 'The plugin "Sliced Invoices Additional Tax" is out of date and not fully compatible with this version of Sliced Invoices. Please go to your %sPlugins page%s and update it now.', 'sliced-invoices' ), '<a href="' . esc_url( admin_url( 'plugins.php' ) ) . '">', '</a>' ); ?>
+			<br /><?php printf( __( '<strong>You have:</strong> Sliced Invoices Additional Tax version %s.', 'sliced-invoices' ), SI_ADD_TAX_VERSION ); ?>
+			<br /><?php _e( '<strong>Required:</strong> Sliced Invoices Additional Tax version 1.3.0 or newer', 'sliced-invoices' ); ?></p>
 		</div>
 		<?php
 	}

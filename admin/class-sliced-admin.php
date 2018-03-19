@@ -821,6 +821,7 @@ class Sliced_Admin {
 				'ID' => $id,
 				'post_type' => 'sliced_invoice',
 				'post_name' => $new_slug,
+				'comment_status' => 'closed',
 			) );
 
 			/*
@@ -858,7 +859,7 @@ class Sliced_Admin {
 			$post = get_post( $id );
 				
 			$args = array(
-				'comment_status' => $post->comment_status,
+				'comment_status' => 'closed',
 				'ping_status'    => $post->ping_status,
 				'post_author'    => $post->post_author,
 				'post_content'   => $post->post_content,
@@ -2448,6 +2449,15 @@ class Sliced_Admin {
 				Sliced_Admin_Notices::remove_notice( 'invalid_payment_page' );
 			} else {
 				Sliced_Admin_Notices::add_notice( 'invalid_payment_page', true );
+			}
+		}
+		
+		// 2) Additional Tax compatibility check
+		if ( is_admin() ) {
+			if ( defined('SI_ADD_TAX_VERSION') && version_compare( SI_ADD_TAX_VERSION, '1.3.0', '<' ) ) {
+				Sliced_Admin_Notices::add_notice( 'update_needed_additional_tax', true );
+			} else {
+				Sliced_Admin_Notices::remove_notice( 'update_needed_additional_tax' );
 			}
 		}
 		
