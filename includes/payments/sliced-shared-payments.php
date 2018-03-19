@@ -483,7 +483,8 @@ class Sliced_Payments {
 			Sliced_Invoice::update_invoice_number( $id );
 
 			// Set the status as draft
-			Sliced_Invoice::set_as_draft( $id );
+			wp_set_object_terms( $id, null, 'quote_status' ); // clear old status
+			Sliced_Invoice::set_as_draft( $id ); // set new status
 			
 			// maybe send it
 			if ( $quotes['accepted_quote_action'] === 'convert_send' ) {
