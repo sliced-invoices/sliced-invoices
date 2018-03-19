@@ -75,31 +75,38 @@ class Sliced_Options {
 	public function add_options_page() {
 
 		$option_tabs = self::option_fields();
-		foreach ($option_tabs as $index => $option_tab) {
-			if ( $index == 0) {
-				$this->options_pages[] = add_menu_page( $this->title, $this->menu_title, 'manage_options', $option_tab['id'], array( $this, 'admin_page_display' ), 'dashicons-sliced'
-				); //Link admin menu to first tab
-
-				add_submenu_page( $option_tabs[0]['id'], $this->menu_title, $option_tab['menu_title'], 'manage_options', $option_tab['id'], array( $this, 'admin_page_display' ) ); //Duplicate menu link for first submenu page
-			} else {
-				$this->options_pages[] = add_submenu_page( $option_tabs[0]['id'], $this->menu_title, $option_tab['menu_title'], 'manage_options', $option_tab['id'], array( $this, 'admin_page_display' ) );
-			}
-		}
-
-		// add the extra page
+		
+		// Link admin menu to first tab
+		$this->options_pages[] = add_menu_page( $this->title, $this->menu_title, 'manage_options', 'sliced_invoices_settings', array( $this, 'admin_page_display' ), 'dashicons-sliced' );
+		
+		// Duplicate menu link for first submenu page
+		add_submenu_page( 'sliced_invoices_settings', $this->menu_title, __( 'Settings', 'sliced-invoices' ), 'manage_options', 'sliced_invoices_settings', array( $this, 'admin_page_display' ) );
+		
+		// add special pages
 		$plugin_reports = new Sliced_Reports();
 		$plugin_tools = new Sliced_Tools();
-
-		$reports_page = add_submenu_page( $option_tabs[0]['id'], 'Reports', 'Reports', 'manage_options', 'sliced_reports', array( $plugin_reports, 'display_reports_page' )  );
-		$tools_page = add_submenu_page( $option_tabs[0]['id'], 'Tools', 'Tools', 'manage_options', 'sliced_tools', array( $plugin_tools, 'display_tools_page' )  );
-
-		$this->options_pages[] = $reports_page;
-		$this->options_pages[] = $tools_page;
-
+		$this->options_pages[] = add_submenu_page( 'sliced_invoices_settings', 'Reports', 'Reports', 'manage_options', 'sliced_reports', array( $plugin_reports, 'display_reports_page' )  );
+		$this->options_pages[] = add_submenu_page( 'sliced_invoices_settings', 'Tools', 'Tools', 'manage_options', 'sliced_tools', array( $plugin_tools, 'display_tools_page' )  );
+		
+		// add "pinned" settings pages
+		$this->options_pages[] = add_submenu_page( 'sliced_invoices_settings', $this->menu_title, 'Extras', 'manage_options', 'sliced_extras', array( $this, 'admin_page_display' ) );
+		$this->options_pages[] = add_submenu_page( 'sliced_invoices_settings', $this->menu_title, 'Licenses', 'manage_options', 'sliced_licenses', array( $this, 'admin_page_display' ) );
+		
+		// for backwards compatibility (will be removed at some point in the future...)
+		$this->options_pages[] = add_submenu_page( null, $this->menu_title, 'General Settings', 'manage_options', 'sliced_general', array( $this, 'admin_page_display' ) );
+		$this->options_pages[] = add_submenu_page( null, $this->menu_title, 'Business Settings', 'manage_options', 'sliced_business', array( $this, 'admin_page_display' ) );
+		$this->options_pages[] = add_submenu_page( null, $this->menu_title, 'Quotes Settings', 'manage_options', 'sliced_quotes', array( $this, 'admin_page_display' ) );
+		$this->options_pages[] = add_submenu_page( null, $this->menu_title, 'Invoices Settings', 'manage_options', 'sliced_invoices', array( $this, 'admin_page_display' ) );
+		$this->options_pages[] = add_submenu_page( null, $this->menu_title, 'Payments Settings', 'manage_options', 'sliced_payments', array( $this, 'admin_page_display' ) );
+		$this->options_pages[] = add_submenu_page( null, $this->menu_title, 'Email Settings', 'manage_options', 'sliced_emails', array( $this, 'admin_page_display' ) );
+		$this->options_pages[] = add_submenu_page( null, $this->menu_title, 'PDF Settings', 'manage_options', 'sliced_pdf', array( $this, 'admin_page_display' ) );
+		$this->options_pages[] = add_submenu_page( null, $this->menu_title, 'Translate Settings', 'manage_options', 'sliced_translate', array( $this, 'admin_page_display' ) );
+		
+		// Include CMB CSS in the head to avoid FOUC
 		foreach ( $this->options_pages as $page ) {
-			// Include CMB CSS in the head to avoid FOUC
 			add_action( "admin_print_styles-{$page}", array( 'CMB2_hookup', 'enqueue_cmb_css' ) );
 		}
+		
 	}
 
 
@@ -112,9 +119,18 @@ class Sliced_Options {
 		global $pagenow;
 
 		// check we are on the network settings page
-		if( $pagenow != 'admin.php' )
+		if( $pagenow != 'admin.php' ) {
 			return;
-
+		}
+		
+		if ( isset( $_GET['page'] ) && $_GET['page'] === 'sliced_extras' ) {
+			$current_tab = 'extras';
+		} elseif ( isset( $_GET['page'] ) && $_GET['page'] === 'sliced_licenses' ) {
+			$current_tab = 'licenses';
+		} else {
+			$current_tab = empty( $_GET['tab'] ) ? 'general' : sanitize_title( $_GET['tab'] );
+		}
+		
 		$option_tabs = self::option_fields(); //get all option tabs
 		$tab_forms = array();
 
@@ -128,16 +144,21 @@ class Sliced_Options {
 				<?php foreach ($option_tabs as $option_tab) :
 					$tab_slug = $option_tab['id'];
 					$nav_class = 'i18n-multilingual-display nav-tab';
-					if ( $tab_slug == $_GET['page'] ) {
+					if ( $tab_slug === 'sliced_'.$current_tab ) {
 						$nav_class .= ' nav-tab-active'; //add active class to current tab
 						$tab_forms[] = $option_tab; //add current tab to forms to be rendered
 					}
-				?>
-				<a class="<?php echo esc_attr( $nav_class ); ?>" href="<?php esc_url( menu_page_url( $tab_slug ) ); ?>"><?php esc_attr_e( $option_tab['title'], 'sliced-invoices' ); ?></a>
+					if ( $tab_slug === 'sliced_extras' || $tab_slug === 'sliced_licenses' ) {
+						$admin_url = admin_url( 'admin.php?page='.$tab_slug );
+					} else {
+						$admin_url = admin_url( 'admin.php?page=sliced_invoices_settings&tab=' . str_replace( 'sliced_', '', $tab_slug ) );
+					}
+					?>
+					<a class="<?php echo esc_attr( $nav_class ); ?>" href="<?php echo $admin_url; ?>"><?php esc_attr_e( $option_tab['title'], 'sliced-invoices' ); ?></a>
 				<?php endforeach; ?>
 			</h2>
-			<!-- End of Nav Tabs -->
 
+			<!-- End of Nav Tabs -->
 			<?php foreach ($tab_forms as $tab_form) : //render all tab forms (normaly just 1 form) ?>
 			<div id="<?php esc_attr_e($tab_form['id']); ?>" class="cmb-form group">
 				<div class="metabox-holder">
@@ -405,7 +426,7 @@ class Sliced_Options {
 					'name'      => __( 'Admin Notices', 'sliced-invoices' ),
 					'desc'      => sprintf ( 
 										__( 'These settings allow you to choose which notices may be displayed in your WordPress Admin area. (Note: this is different from admin emails, which you can configure on the <a href="%s">Email Settings</a> tab.', 'sliced-invoices' ),
-										admin_url( 'admin.php?page=sliced_emails' )
+										admin_url( 'admin.php?page=sliced_invoices_settings&tab=emails' )
 									),
 					'id'        => 'quote_admin_notices_title',
 					'type'      => 'title',
@@ -522,7 +543,7 @@ class Sliced_Options {
 					'name'      => __( 'Admin Notices', 'sliced-invoices' ),
 					'desc'      => sprintf ( 
 										__( 'These settings allow you to choose which notices may be displayed in your WordPress Admin area. (Note: this is different from admin emails, which you can configure on the <a href="%s">Email Settings</a> tab.', 'sliced-invoices' ),
-										admin_url( 'admin.php?page=sliced_emails' )
+										admin_url( 'admin.php?page=sliced_invoices_settings&tab=emails' )
 									),
 					'id'        => 'invoice_admin_notices_title',
 					'type'      => 'title',

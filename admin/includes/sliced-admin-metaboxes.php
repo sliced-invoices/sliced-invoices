@@ -567,7 +567,7 @@ class Sliced_Metaboxes {
 
 		// Start with an underscore to hide fields from custom fields list
 		$prefix = '_sliced_';
-		$payment_methods = sliced_get_accepted_payment_methods() ? '' : __( '<a target="_blank" class="button" href="' . esc_url( admin_url( 'admin.php?page=sliced_payments' ) ) . '">Enable Payment Method</a>', 'sliced-invoices' );
+		$payment_methods = sliced_get_accepted_payment_methods() ? '' : __( '<a target="_blank" class="button" href="' . esc_url( admin_url( 'admin.php?page=sliced_invoices_settings&tab=payments' ) ) . '">Enable Payment Method</a>', 'sliced-invoices' );
 
 		if ( isset( $_GET['post'] ) ) :
 

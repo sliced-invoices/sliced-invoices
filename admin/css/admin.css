@@ -976,3 +976,36 @@ td.taxonomy-invoice_status a[href*="cancelled"], td.taxonomy-quote_status a[href
   }
 
 }
+
+
+/* Backwards compatibility for v3.7.0 changes. Will be removed soon. */
+#sliced-2checkout-settings-header,
+#sliced-braintree-settings-header,
+#sliced-stripe-settings-header {
+	background: #f8f8f8 none repeat scroll 0 0;
+	border: 1px solid #e5e5e5;
+	border-radius: 3px;
+	margin: 10px 20px;
+	padding: 15px 25px 15px 12px;
+}
+#sliced-2checkout-settings-header th,
+#sliced-braintree-settings-header th,
+#sliced-stripe-settings-header th {
+	cursor: pointer;
+	padding-bottom: 10px;
+}
+#sliced-2checkout-settings-header .row-toggle,
+#sliced-braintree-settings-header .row-toggle,
+#sliced-stripe-settings-header .row-toggle {
+	text-align: right;
+}
+#sliced-2checkout-settings-header .row-title,
+#sliced-braintree-settings-header .row-title,
+#sliced-stripe-settings-header .row-title {
+	padding: 0 20px 0 20px;
+}
+#sliced-2checkout-settings > td,
+#sliced-braintree-settings > td,
+#sliced-stripe-settings > td {
+	padding-left: 40px;
+}

@@ -618,7 +618,7 @@ class Sliced_Admin {
 	 */
 	public function plugin_action_links( $links ) {
 
-		$links[] = '<a href="'. esc_url( get_admin_url( null, 'admin.php?page=sliced_general' ) ) .'">' . __( 'Settings', 'sliced-invoices' ) . '</a>';
+		$links[] = '<a href="'. esc_url( get_admin_url( null, 'admin.php?page=sliced_invoices_settings' ) ) .'">' . __( 'Settings', 'sliced-invoices' ) . '</a>';
 		$links[] = '<a href="https://slicedinvoices.com/extensions/?utm_source=Plugin&utm_medium=Plugins-Page&utm_content=Extensions&utm_campaign=Free" target="_blank">' . __( 'Extensions', 'sliced-invoices' ) . '</a>';
 		return $links;
 
