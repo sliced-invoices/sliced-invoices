@@ -4,7 +4,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce
 Requires at least: 4.0
 Tested up to: 4.9
-Stable tag: 3.6.7
+Stable tag: 3.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -140,6 +140,7 @@ Yes, it does!  As of version 3.0.0 you can network activate Sliced Invoices in W
 This plugin currently includes translations for the following languages:
 
 *   French
+*   German
 *   Romanian
 *   Russian
 *   Spanish
@@ -161,6 +162,24 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 == Changelog ==
+= 3.7.0 =
+* NEW: add new Tax Settings tab; reorganize settings pages & menu slightly
+* NEW: option to show prices inclusive of tax/VAT
+* NEW: updated "Email to Client" window; you can now manually send "payment received" and "payment reminder" emails on demand
+* NEW: German translation (thanks to Reinhard Frenzel)
+* FIX: allow line items quantity field to be formatted with or without decimal places
+* FIX: allow thousands separator to contain whitespace, or be empty
+* FIX: extend admin search feature to include quote/invoice number, order number
+* FIX: issue where quote status counts not updated after quote converted to invoice
+* FIX: issue with character encoding in CSV exports
+* FIX: issue with "warning: duplicate invoice number" message not displaying
+* UPDATE: consolidate some invoice/quote side options into collapsibles
+* UPDATE: minor changes to client chooser / client filter dropdowns, to make it easier to find clients
+* UPDATE: separate footer options for quotes, invoices, payment page
+* UPDATE: updated logging system to record when payment reminder emails are sent, etc.
+* UPDATE: various CSS/styling tweaks, textual changes, minor code refactoring
+* UPDATE: update .pot file for translations
+
 = 3.6.7 =
 * FIX: issue with PayPal payments showing the wrong decimal separator (for example, currencies that use a comma "," instead of a period ".")
 
