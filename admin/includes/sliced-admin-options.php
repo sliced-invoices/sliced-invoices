@@ -326,12 +326,6 @@ class Sliced_Options {
 					'type'      => 'text',
 				),
 				array(
-					'name'      => __( 'Hide Adjust Field', 'sliced-invoices' ),
-					'desc'      => __( 'Yes, hide the Adjust field on line items, I won\'t need this field', 'sliced-invoices' ),
-					'id'        => 'adjustment',
-					'type'      => 'checkbox',
-				),
-				array(
 					'name'      => sprintf( __( '%s Valid For', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label_plural.'</span>' ),
 					'desc'      => sprintf( __( 'Number of days each %1s is valid for. This will automatically set the date in the \'Valid Until\' field.<br>Can be overriden on individual %2s.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>', '<span class="i18n-multilingual-display">'.$quote_label_plural.'</span>' ),
 					'default'   => '',
@@ -341,6 +335,12 @@ class Sliced_Options {
 						'type' => 'number',
 						'placeholder' => '30',
 					)
+				),
+				array(
+					'name'      => __( 'Hide Adjust Field', 'sliced-invoices' ),
+					'desc'      => __( 'Yes, hide the Adjust field on line items, I won\'t need this field', 'sliced-invoices' ),
+					'id'        => 'adjustment',
+					'type'      => 'checkbox',
 				),
 				array(
 					'name'      => __( 'Terms & Conditions', 'sliced-invoices' ),
