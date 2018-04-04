@@ -152,27 +152,27 @@ if ( ! function_exists( 'sliced_get_invoice_total' ) ) :
 		$paid    = ( $status === 'paid' ? $totals['total'] : $totals['payments'] );
 		if ( is_singular( 'sliced_invoice' ) ) {
 			// invoice view, we want: total_due
-			return Sliced_Shared::get_formatted_currency( $totals['total_due'] );
+			return Sliced_Shared::get_formatted_currency( $totals['total_due'], $id );
 		} elseif ( isset( $_GET['create'] ) && $_GET['create'] === 'pdf' ) {
 			// invoice PDF view, we want: total_due
-			return Sliced_Shared::get_formatted_currency( $totals['total_due'] );
+			return Sliced_Shared::get_formatted_currency( $totals['total_due'], $id );
 		} elseif ( (int) $payments_page == get_the_ID() ) {
 			// payments page
 			if ( $status === 'paid' ) {
 				// we've just now made a payment, we want: total
-				return Sliced_Shared::get_formatted_currency( $totals['total'] );
+				return Sliced_Shared::get_formatted_currency( $totals['total'], $id );
 			} else {
 				// otherwise we want: total_due
-				return Sliced_Shared::get_formatted_currency( $totals['total_due'] );
+				return Sliced_Shared::get_formatted_currency( $totals['total_due'], $id );
 			}
 		} else {
 			// partially paid, we want: total ($x paid)
 			if ( $status !== 'paid' && $paid > 0 ) {
-				$paid = Sliced_Shared::get_formatted_currency( $paid );
-				return Sliced_Shared::get_formatted_currency( $totals['total'] ) . ' ' . sprintf( __( '(%s paid)', 'sliced-invoices' ), $paid );
+				$paid = Sliced_Shared::get_formatted_currency( $paid, $id );
+				return Sliced_Shared::get_formatted_currency( $totals['total'], $id ) . ' ' . sprintf( __( '(%s paid)', 'sliced-invoices' ), $paid );
 			}
 			// everything else, we want: total
-			return Sliced_Shared::get_formatted_currency( $totals['total'] );
+			return Sliced_Shared::get_formatted_currency( $totals['total'], $id );
 		}
 		// end legacy code
 		
