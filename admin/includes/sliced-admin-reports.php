@@ -365,7 +365,7 @@ class Sliced_Reports {
 	 */
 	private function get_reporting_colors() {
 
-		return array(
+		return apply_filters( 'sliced_reporting_colors', array(
 			'draft'     => 'rgba(37, 177, 209, 1)',
 			'accepted'  => 'rgba(96, 173, 93, 1)',
 			'paid'      => 'rgba(96, 173, 93, 1)',
@@ -375,7 +375,7 @@ class Sliced_Reports {
 			'overdue'   => 'rgba(216, 92, 39, 1)',
 			'declined'  => 'rgba(216, 92, 39, 1)',
 			'cancelled' => 'rgba(163, 151, 127, 1)',
-		);
+		) );
 
 	}
 
