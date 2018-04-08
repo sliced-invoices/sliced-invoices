@@ -174,7 +174,7 @@ Your City AZ 12345',
 							You have a new invoice available ( %number% ) which can be viewed at %link%.<br>';
 			$email['payment_received_client_content'] = 'Thanks for your payment, %client_first_name%.
 
-Your recent payment for %total% on invoice %number% has been successful.<br>';
+Your recent payment for %last_payment% on invoice %number% has been successful.<br>';
 			$email['payment_reminder_content'] = 'Hi %client_first_name%,
 
 Just a friendly reminder that your invoice %number% for %total% %is_was% due on %due_date%.';

@@ -932,6 +932,8 @@ class Sliced_Options {
 						%link% : URL to the quote<br>
 						%number% : The quote or invoice number<br>
 						%total% : The quote or invoice total<br>
+						%last_payment% : The amount of the last payment. (returns "N/A" if no payments)<br>
+						%balance% : The balance outstanding on the quote or invoice<br>
 						%created% : The quote or invoice created date<br>
 						%valid_until% : The date the quote is valid until<br>
 						%due_date% : The date the invoice is due<br>

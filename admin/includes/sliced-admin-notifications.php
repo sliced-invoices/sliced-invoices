@@ -337,29 +337,16 @@ class Sliced_Notifications {
 
 			case 'payment_received':
 			
-				// temporary hack to fix total amount in email confirmation after paypal payments
-				$total = false;
-				$payment_data = get_transient( 'sliced_paypal_'.$id );
-				if ( $payment_data ) {
-					foreach ( explode( '&', $payment_data ) as $chunk ) {
-						$param = explode( "=", $chunk );
-						if ( $param[0] === 'PAYMENTREQUEST_0_AMT' ) {
-							$total = Sliced_Shared::get_formatted_currency( urldecode( $param[1] ) );
-							break;
-						}
-					}
-				}
-
-				 $content = __( 'You\'ve received a payment!', 'sliced-invoices' );
-				 $content .= '<br/>';
-				 $content .= sprintf(
+				$content = __( 'You\'ve received a payment!', 'sliced-invoices' );
+				$content .= '<br/>';
+				$content .= sprintf(
 					__( '%1s has made a payment for %2s on %3s %4s.', 'sliced-invoices' ),
 					sliced_get_client_business( $this->id ),
-					( $total ? $total : sliced_get_total( $this->id ) ), //hack
+					sliced_get_last_payment_amount( $this->id ),
 					sliced_get_invoice_label(),
 					sliced_get_invoice_prefix( $this->id ) . sliced_get_invoice_number( $this->id ) . sliced_get_invoice_suffix( $this->id )
-				 );
-				 $content .= '<br>';
+				);
+				$content .= '<br>';
 
 				$output .= wp_kses_post( wpautop( stripslashes( $this->replace_wildcards( apply_filters( 'sliced_admin_notification_payment_received', $content, $this->id ) ) ) ) );
 
@@ -840,7 +827,7 @@ class Sliced_Notifications {
 	 * @since 1.0.0
 	 */
 	public function replace_wildcards( $string ) {
-
+	
 		$replace_array = array(
 			'%client_business%'   => sliced_get_client_business( $this->id ),
 			'%client_first_name%' => sliced_get_client_first_name( $this->id ),
@@ -850,6 +837,8 @@ class Sliced_Notifications {
 			'%due_date%'          => sliced_get_invoice_due( $this->id ) > 0 ? date_i18n( get_option( 'date_format' ), (int) sliced_get_invoice_due( $this->id ) ) : '',
 			'%created%'           => date_i18n( get_option( 'date_format' ), (int) sliced_get_created( $this->id ) ),
 			'%total%'             => sliced_get_total( $this->id ),
+			'%last_payment%'      => sliced_get_last_payment_amount( $this->id ),
+			'%balance%'           => sliced_get_balance_outstanding( $this->id ),
 			'%order_number%'      => sliced_get_invoice_order_number( $this->id ),
 			'%number%'            => sliced_get_prefix( $this->id ) . sliced_get_number( $this->id ) . sliced_get_suffix( $this->id ),
 			'%valid_until%'       => sliced_get_quote_valid( $this->id ) > 0 ? date_i18n( get_option( 'date_format' ), (int) sliced_get_quote_valid( $this->id ) ) : '',

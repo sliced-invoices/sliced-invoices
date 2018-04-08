@@ -174,3 +174,35 @@ if ( ! function_exists( 'sliced_get_tax_total' ) ) :
 	}
 
 endif;
+
+if ( ! function_exists( 'sliced_get_last_payment_amount' ) ) :
+
+	function sliced_get_last_payment_amount( $id = 0 ) {
+		if ( ! $id ) {
+			$id = Sliced_Shared::get_item_id();
+		}
+		$output = __( 'N/A', 'sliced-invoices' );
+		$payments = get_post_meta( $id, '_sliced_payment', true );
+		if ( $payments ) {
+			$last_payment = end( $payments );
+			$total_raw = Sliced_Shared::get_raw_number( $last_payment['amount'] );
+			$output = Sliced_Shared::get_formatted_currency( $total_raw, $id );
+		}
+		return apply_filters( 'sliced_get_last_payment_amount', $output, $id );
+	}
+
+endif;
+
+if ( ! function_exists( 'sliced_get_balance_outstanding' ) ) :
+
+	function sliced_get_balance_outstanding( $id = 0 ) {
+		if ( ! $id ) {
+			$id = Sliced_Shared::get_item_id();
+		}
+		$totals = Sliced_Shared::get_totals( $id );
+		$balance = $totals['total'] - $totals['payments'];
+		$output = Sliced_Shared::get_formatted_currency( $balance, $id );
+		return apply_filters( 'sliced_get_balance_outstanding', $output, $id );
+	}
+
+endif;
