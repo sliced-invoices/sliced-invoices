@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Sliced Invoices\n"
-"POT-Creation-Date: 2018-03-19 15:17-0700\n"
+"POT-Creation-Date: 2018-04-09 15:37-0700\n"
 "PO-Revision-Date: 2017-01-15 20:46-0800\n"
 "Last-Translator: \n"
 "Language-Team: Sliced Invoices <info@slicedinvoices.com>\n"
@@ -228,9 +228,9 @@ msgid "Password"
 msgstr ""
 
 #: admin/class-sliced-admin.php:1362 admin/class-sliced-admin.php:1386
+#: admin/includes/sliced-admin-notifications.php:585
+#: admin/includes/sliced-admin-notifications.php:592
 #: admin/includes/sliced-admin-notifications.php:598
-#: admin/includes/sliced-admin-notifications.php:605
-#: admin/includes/sliced-admin-notifications.php:611
 msgid "(required)"
 msgstr ""
 
@@ -378,10 +378,10 @@ msgstr ""
 
 #: admin/class-sliced-admin.php:2152
 #: admin/includes/sliced-admin-metaboxes.php:968
-#: admin/includes/sliced-admin-options.php:1047
+#: admin/includes/sliced-admin-options.php:1049
 #: includes/template-tags/sliced-tags-display-modules.php:170
 #: includes/template-tags/sliced-tags-display-modules.php:245
-#: includes/template-tags/sliced-tags-display-modules.php:331
+#: includes/template-tags/sliced-tags-display-modules.php:344
 msgid "Sub Total"
 msgstr ""
 
@@ -393,9 +393,9 @@ msgstr ""
 
 #: admin/class-sliced-admin.php:2154
 #: admin/includes/sliced-admin-columns.php:117
-#: admin/includes/sliced-admin-options.php:1065
+#: admin/includes/sliced-admin-options.php:1067
 #: includes/template-tags/sliced-tags-display-modules.php:141
-#: includes/template-tags/sliced-tags-display-modules.php:353
+#: includes/template-tags/sliced-tags-display-modules.php:366
 msgid "Total"
 msgstr ""
 
@@ -873,7 +873,7 @@ msgstr ""
 #: admin/includes/sliced-admin-metaboxes.php:473
 #: admin/includes/sliced-admin-metaboxes.php:629
 #: admin/includes/sliced-admin-quick-edit.php:92
-#: includes/payments/sliced-shared-payments.php:283
+#: includes/payments/sliced-shared-payments.php:287
 #, php-format
 msgid "%s Number"
 msgstr ""
@@ -996,9 +996,9 @@ msgid "%s Totals"
 msgstr ""
 
 #: admin/includes/sliced-admin-metaboxes.php:982
-#: admin/includes/sliced-admin-options.php:1056
+#: admin/includes/sliced-admin-options.php:1058
 #: includes/template-tags/sliced-tags-display-modules.php:271
-#: includes/template-tags/sliced-tags-display-modules.php:346
+#: includes/template-tags/sliced-tags-display-modules.php:359
 msgid "Discount"
 msgstr ""
 
@@ -1018,8 +1018,8 @@ msgid "Paid"
 msgstr ""
 
 #: admin/includes/sliced-admin-metaboxes.php:1002
-#: admin/includes/sliced-admin-options.php:1074
-#: includes/payments/sliced-shared-payments.php:173
+#: admin/includes/sliced-admin-options.php:1076
+#: includes/payments/sliced-shared-payments.php:177
 #: includes/template-tags/sliced-tags-display-modules.php:96
 #: includes/template-tags/sliced-tags-display-modules.php:291
 #: includes/template-tags/sliced-tags-display-modules.php:298
@@ -1087,7 +1087,7 @@ msgid "Your %s has been declined"
 msgstr ""
 
 #: admin/includes/sliced-admin-notifications.php:279
-#: admin/includes/sliced-admin-notifications.php:353
+#: admin/includes/sliced-admin-notifications.php:340
 msgid "You've received a payment!"
 msgstr ""
 
@@ -1106,24 +1106,24 @@ msgstr ""
 msgid "%1s has declined your %2s of %3s."
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:356
+#: admin/includes/sliced-admin-notifications.php:343
 #, php-format
 msgid "%1s has made a payment for %2s on %3s %4s."
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:517
+#: admin/includes/sliced-admin-notifications.php:504
 msgid "Loading the email preview...."
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:598
+#: admin/includes/sliced-admin-notifications.php:585
 msgid "Send To"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:600
+#: admin/includes/sliced-admin-notifications.php:587
 msgid "Use comma to separate multiple recipients"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:605
+#: admin/includes/sliced-admin-notifications.php:592
 #: admin/includes/sliced-admin-options.php:786
 #: admin/includes/sliced-admin-options.php:822
 #: admin/includes/sliced-admin-options.php:858
@@ -1131,41 +1131,41 @@ msgstr ""
 msgid "Subject"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:611
+#: admin/includes/sliced-admin-notifications.php:598
 msgid "Email Content"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:619
+#: admin/includes/sliced-admin-notifications.php:606
 msgid "Send The Email"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:773
+#: admin/includes/sliced-admin-notifications.php:760
 msgid "Email to client"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:798
+#: admin/includes/sliced-admin-notifications.php:785
 #, php-format
 msgctxt "sliced-invoices"
 msgid "%s ago"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:800
+#: admin/includes/sliced-admin-notifications.php:787
 msgid "Sent "
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:833
+#: admin/includes/sliced-admin-notifications.php:820
 msgid "was"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:833
+#: admin/includes/sliced-admin-notifications.php:820
 msgid "is"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:926
+#: admin/includes/sliced-admin-notifications.php:915
 msgid "View this invoice online"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:928
+#: admin/includes/sliced-admin-notifications.php:917
 msgid "View this quote online"
 msgstr ""
 
@@ -1810,6 +1810,9 @@ msgid ""
 "\t\t\t\t\t\t%link% : URL to the quote<br>\n"
 "\t\t\t\t\t\t%number% : The quote or invoice number<br>\n"
 "\t\t\t\t\t\t%total% : The quote or invoice total<br>\n"
+"\t\t\t\t\t\t%last_payment% : The amount of the last payment. (returns \"N/A"
+"\" if no payments)<br>\n"
+"\t\t\t\t\t\t%balance% : The balance outstanding on the quote or invoice<br>\n"
 "\t\t\t\t\t\t%created% : The quote or invoice created date<br>\n"
 "\t\t\t\t\t\t%valid_until% : The date the quote is valid until<br>\n"
 "\t\t\t\t\t\t%due_date% : The date the invoice is due<br>\n"
@@ -1820,15 +1823,15 @@ msgid ""
 "\t\t\t\t\t\t"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:952
+#: admin/includes/sliced-admin-options.php:954
 msgid "PDF"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:953
+#: admin/includes/sliced-admin-options.php:955
 msgid "PDF Settings"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:954
+#: admin/includes/sliced-admin-options.php:956
 msgid ""
 "Here you will find all of the PDF related settings. The <a target=\"_blank\" "
 "href=\"https://slicedinvoices.com/extensions/pdf-email?"
@@ -1837,15 +1840,15 @@ msgid ""
 "to customize the PDFs."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:964
+#: admin/includes/sliced-admin-options.php:966
 msgid "Translate"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:965
+#: admin/includes/sliced-admin-options.php:967
 msgid "Translate Settings"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:966
+#: admin/includes/sliced-admin-options.php:968
 msgid ""
 "Here you can translate strings into your own language, or simply change the "
 "text to suit your needs. The <a target=\"_blank\" href=\"https://"
@@ -1856,100 +1859,100 @@ msgid ""
 "and quotes."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:971
+#: admin/includes/sliced-admin-options.php:973
 msgid "Quote Label"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:972
+#: admin/includes/sliced-admin-options.php:974
 msgid ""
 "You can change this from Quote to Estimate or Proposal (or any other word "
 "you like)."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:981
+#: admin/includes/sliced-admin-options.php:983
 msgid "Quote Label Plural"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:982
-#: admin/includes/sliced-admin-options.php:1002
+#: admin/includes/sliced-admin-options.php:984
+#: admin/includes/sliced-admin-options.php:1004
 msgid "The plural of the above"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:991
+#: admin/includes/sliced-admin-options.php:993
 msgid "Invoice Label"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:992
+#: admin/includes/sliced-admin-options.php:994
 msgid ""
 "You can change this from Invoice to Tax Invoice (or any other word you like)."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1001
+#: admin/includes/sliced-admin-options.php:1003
 msgid "Invoice Label Plural"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1011
+#: admin/includes/sliced-admin-options.php:1013
 #: includes/template-tags/sliced-tags-display-modules.php:164
 msgid "Hrs/Qty"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1020
+#: admin/includes/sliced-admin-options.php:1022
 #: includes/template-tags/sliced-tags-display-modules.php:165
 msgid "Service"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1029
+#: admin/includes/sliced-admin-options.php:1031
 #: includes/template-tags/sliced-tags-display-modules.php:166
 msgid "Rate/Price"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1038
+#: admin/includes/sliced-admin-options.php:1040
 #: includes/template-tags/sliced-tags-display-modules.php:168
 msgid "Adjust"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1087
-#: admin/includes/sliced-admin-options.php:1088
+#: admin/includes/sliced-admin-options.php:1089
+#: admin/includes/sliced-admin-options.php:1090
 msgid "Extras"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1089
+#: admin/includes/sliced-admin-options.php:1091
 msgid "Just a page with some advertising and a cry for help ;-)"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1094
+#: admin/includes/sliced-admin-options.php:1096
 msgid "We'd Love Your Support"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1104
+#: admin/includes/sliced-admin-options.php:1106
 msgid "Sign up for our newsletter"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1133
+#: admin/includes/sliced-admin-options.php:1135
 msgid "Extend Sliced Invoices"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1191
-#: admin/includes/sliced-admin-options.php:1192
+#: admin/includes/sliced-admin-options.php:1193
+#: admin/includes/sliced-admin-options.php:1194
 msgid "Licenses"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1193
+#: admin/includes/sliced-admin-options.php:1195
 msgid ""
 "This page is where you enter any license keys for extensions you have "
 "purchased from <a target=\"_blank\" href=\"https://slicedinvoices.com"
 "\">Sliced Invoices</a>."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1198
+#: admin/includes/sliced-admin-options.php:1200
 msgid "Instructions"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1209
+#: admin/includes/sliced-admin-options.php:1211
 msgid "Where can I find my license keys?"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1212
+#: admin/includes/sliced-admin-options.php:1214
 msgid ""
 "You should have received a Purchase Receipt email that contains the license "
 "key for each extension you have purchased from Sliced Invoices.<br>If you "
@@ -2209,7 +2212,7 @@ msgid "This invoice has already been paid."
 msgstr ""
 
 #: includes/gateways/sliced-gateway-paypal.php:374
-#: includes/payments/sliced-shared-payments.php:605
+#: includes/payments/sliced-shared-payments.php:609
 msgid "Success"
 msgstr ""
 
@@ -2247,64 +2250,64 @@ msgid "There was an error with the form submission, please try again."
 msgstr ""
 
 #: includes/payments/sliced-shared-payments.php:113
-#: includes/payments/sliced-shared-payments.php:143
+#: includes/payments/sliced-shared-payments.php:147
 msgid "Pay with"
 msgstr ""
 
-#: includes/payments/sliced-shared-payments.php:138
+#: includes/payments/sliced-shared-payments.php:142
 msgid "Pay This Invoice"
 msgstr ""
 
-#: includes/payments/sliced-shared-payments.php:172
+#: includes/payments/sliced-shared-payments.php:176
 msgid "Invoice Number"
 msgstr ""
 
-#: includes/payments/sliced-shared-payments.php:182
+#: includes/payments/sliced-shared-payments.php:186
 msgid "Pay Now"
-msgstr ""
-
-#: includes/payments/sliced-shared-payments.php:238
-#, php-format
-msgid "You have declined this %s."
 msgstr ""
 
 #: includes/payments/sliced-shared-payments.php:242
 #, php-format
-msgid "This %s has been cancelled."
+msgid "You have declined this %s."
 msgstr ""
 
 #: includes/payments/sliced-shared-payments.php:246
 #, php-format
-msgid "You have accepted this %s."
+msgid "This %s has been cancelled."
 msgstr ""
 
 #: includes/payments/sliced-shared-payments.php:250
 #, php-format
-msgid "This %s has expired."
+msgid "You have accepted this %s."
 msgstr ""
 
 #: includes/payments/sliced-shared-payments.php:254
-#: includes/payments/sliced-shared-payments.php:292
+#, php-format
+msgid "This %s has expired."
+msgstr ""
+
+#: includes/payments/sliced-shared-payments.php:258
+#: includes/payments/sliced-shared-payments.php:296
 #, php-format
 msgid "Accept %s"
 msgstr ""
 
-#: includes/payments/sliced-shared-payments.php:255
-#: includes/payments/sliced-shared-payments.php:330
+#: includes/payments/sliced-shared-payments.php:259
+#: includes/payments/sliced-shared-payments.php:334
 #, php-format
 msgid "Decline %s"
 msgstr ""
 
-#: includes/payments/sliced-shared-payments.php:284
+#: includes/payments/sliced-shared-payments.php:288
 #, php-format
 msgid "%s Amount"
 msgstr ""
 
-#: includes/payments/sliced-shared-payments.php:328
+#: includes/payments/sliced-shared-payments.php:332
 msgid "Reason for declining"
 msgstr ""
 
-#: includes/payments/sliced-shared-payments.php:403
+#: includes/payments/sliced-shared-payments.php:407
 msgid "Bummer"
 msgstr ""
 
@@ -2355,6 +2358,10 @@ msgstr ""
 #: includes/template-tags/sliced-tags-invoice.php:172
 #, php-format
 msgid "(%s paid)"
+msgstr ""
+
+#: includes/template-tags/sliced-tags-payments.php:184
+msgid "N/A"
 msgstr ""
 
 #: includes/template-tags/sliced-tags-quote.php:9
@@ -2555,7 +2562,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: public/class-sliced-public.php:440
+#: public/class-sliced-public.php:386
 #, php-format
 msgctxt "comments title"
 msgid "One comment"
@@ -2563,11 +2570,11 @@ msgid_plural "%1$s comments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: public/class-sliced-public.php:460
+#: public/class-sliced-public.php:406
 msgid "Comments are closed."
 msgstr ""
 
-#: public/class-sliced-public.php:467
+#: public/class-sliced-public.php:413
 msgid "Add a comment"
 msgstr ""
 
