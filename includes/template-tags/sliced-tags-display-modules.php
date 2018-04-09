@@ -94,7 +94,7 @@ if ( ! function_exists( 'sliced_display_invoice_details' ) ) :
 
 					<tr class="table-active">
 						<td><strong><?php echo ( isset( $translate['total_due'] ) ? $translate['total_due'] : __( 'Total Due', 'sliced-invoices') ); ?></strong></td>
-						<td><strong><?php echo sliced_get_invoice_total(); ?></strong></td>
+						<td><strong><?php echo sliced_get_invoice_total_due(); ?></strong></td>
 					</tr>
 
 			</table>
@@ -296,7 +296,7 @@ if ( ! function_exists( 'sliced_display_invoice_totals' ) ) :
 					?>
 					<tr class="table-active row-total">
 						<td class="rate"><strong><?php echo ( isset( $translate['total_due'] ) ? $translate['total_due'] : __( 'Total Due', 'sliced-invoices') ); ?></strong></td>
-						<td class="total"><strong><?php _e( sliced_get_invoice_total() ) ?></strong></td>
+						<td class="total"><strong><?php _e( sliced_get_invoice_total_due() ) ?></strong></td>
 					</tr>
 				<?php
 				}
