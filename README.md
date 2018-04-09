@@ -5,7 +5,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
 Tested up to: 4.9
-Stable tag: 3.7.1
+Stable tag: 3.7.2
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -163,6 +163,15 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 ## Changelog
+##  3.7.2
+* FIX: issue with formatting settings (Settings page incorrectly overriding quote/invoice-specific settings)
+* FIX: issue with thickbox dimensions being ignored (minor styling issue)
+* UPDATE: add filter 'sliced_reporting_colors'
+* UPDATE: add new email wildcards %last_payment% and %balance%
+* UPDATE: compatibility updates to support new Partial Payments Extension (to be released soon)
+* UPDATE: some code refactoring
+* UPDATE: update .pot file for translations
+
 ##  3.7.1
 * FIX: issue with Woo Invoices quote display
 * FIX: localization issue with subtotal decimal formatting (thanks to J. van Leeuwen for reporting this)
