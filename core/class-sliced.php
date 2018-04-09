@@ -236,13 +236,13 @@ class Sliced_Invoices {
 		
 		$plugin_public = Sliced_Public::get_instance();
 
-		$this->loader->add_action( 'sliced_head', $plugin_public, 'enqueue_styles' );
+		$this->loader->add_action( 'sliced_head', $plugin_public, 'output_styles' );
 
-		$this->loader->add_action( 'sliced_invoice_head', $plugin_public, 'enqueue_invoice_scripts' );
-		$this->loader->add_action( 'sliced_invoice_head', $plugin_public, 'enqueue_invoice_styles' );
+		$this->loader->add_action( 'sliced_invoice_head', $plugin_public, 'output_invoice_scripts' );
+		$this->loader->add_action( 'sliced_invoice_head', $plugin_public, 'output_invoice_styles' );
 
-		$this->loader->add_action( 'sliced_quote_head', $plugin_public, 'enqueue_quote_scripts' );
-		$this->loader->add_action( 'sliced_quote_head', $plugin_public, 'enqueue_quote_styles' );
+		$this->loader->add_action( 'sliced_quote_head', $plugin_public, 'output_quote_scripts' );
+		$this->loader->add_action( 'sliced_quote_head', $plugin_public, 'output_quote_styles' );
 
 		$this->loader->add_action( 'sliced_quote_footer', $plugin_public, 'display_quote_comments' );
 
