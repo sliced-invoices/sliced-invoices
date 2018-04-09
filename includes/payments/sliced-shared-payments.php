@@ -131,11 +131,15 @@ class Sliced_Payments {
 	 */
 	public function create_payment_button_popup( $gateway, $readable ) {
 
-		$payments = get_option( 'sliced_payments' );
-		
+		$url = add_query_arg( array(
+			'height'   => '500',
+			'width'    => '450',
+			'inlineId' => 'sliced_payment_form',
+		) );
+		$url = parse_url( $url );
 		?>
 		<div class="sliced_gateway_button">
-			<a href="#TB_inline?height=500&width=450&inlineId=sliced_payment_form" title="<?php _e( 'Pay This Invoice', 'sliced-invoices' ); ?>" class="gateway btn btn-success thickbox btn-sm" data-gateway-readable="<?php esc_html_e( $readable ) ?>" data-gateway="<?php esc_html_e( $gateway ) ?>">
+			<a href="<?php echo $url['path']; ?>#TB_inline?<?php echo $url['query']; ?>" title="<?php _e( 'Pay This Invoice', 'sliced-invoices' ); ?>" class="gateway btn btn-success thickbox btn-sm" data-gateway-readable="<?php esc_html_e( $readable ) ?>" data-gateway="<?php esc_html_e( $gateway ) ?>">
 			<?php
 			if ( function_exists('sliced_get_gateway_'.$gateway.'_label') ) {
 				echo call_user_func( 'sliced_get_gateway_'.$gateway.'_label' );
