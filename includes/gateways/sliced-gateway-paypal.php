@@ -36,7 +36,6 @@ class Sliced_Paypal {
 		
 		add_filter( 'sliced_payment_option_fields', array( $this, 'add_options_fields') );
 		add_filter( 'sliced_register_payment_method', array( $this, 'add_payment_method') );
-		add_filter( 'sliced_business_details', array( $this, 'get_field_values') );
 		add_action( 'sliced_do_payment', array( $this, 'process_payment') );
 		add_action( 'sliced_do_payment', array( $this, 'payment_return'), 10 );
 
@@ -164,25 +163,6 @@ class Sliced_Paypal {
 		$gateway['cancel_page']  = esc_url( get_permalink( (int)$payments['payment_page'] ) ); //Cancel URL if user clicks cancel
 
 		return $gateway;
-	}
-	
-	
-	/**
-	 * Make the field values available.
-	 *
-	 * @since   2.0.0
-	 */
-	public function get_field_values( $fields ) {
-
-		$payments = get_option( 'sliced_payments' );
-
-		$fields['paypal_username']  = isset( $payments['paypal_username'] ) ? $payments['paypal_username'] : '';
-		$fields['paypal_password']  = isset( $payments['paypal_password'] ) ? $payments['paypal_password'] : '';
-		$fields['paypal_signature'] = isset( $payments['paypal_signature'] ) ? $payments['paypal_signature'] : '';
-		$fields['paypal_mode']      = isset( $payments['paypal_mode'] ) ? $payments['paypal_mode'] : '';
-
-		return $fields;
-
 	}
 	
 	
