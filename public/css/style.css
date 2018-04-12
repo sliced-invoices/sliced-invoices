@@ -261,6 +261,7 @@ a img {outline:none; border:none;}
 /* Form specific */
 .sliced_gateway_button {
     display: inline-block;
+	margin-bottom: 5px;
 }
 .sliced_payment_form #payment-form {
   padding: 10px 130px 0;
