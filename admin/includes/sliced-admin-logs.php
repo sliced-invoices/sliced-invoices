@@ -549,7 +549,7 @@ class Sliced_Logs {
 				$notes .= '<li class="note">';
 				$notes .= '<div class="note_content">' . esc_html( $message ) . '</div>';
 				$notes .= '<p class="meta">' . esc_html( $time_date ) . '<br>' . esc_html( $by );
-				$notes .= ( $log['by'] === 0 && $log['secured'] === 'yes' ? ', '.__( 'using the secure link', 'sliced-invoices' ) : '' );
+				$notes .= ( $log['by'] === 0 && isset( $log['secured'] ) && $log['secured'] === 'yes' ? ', '.__( 'using the secure link', 'sliced-invoices' ) : '' );
 				$notes .= '</p>';
 				$notes .= '</li>';
 
