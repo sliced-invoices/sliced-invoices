@@ -93,7 +93,6 @@ class Sliced_Shared {
 		} else if ( isset( $_POST['sliced_payment_invoice_id'] ) && ! empty( $_POST['sliced_payment_invoice_id'] ) && $_POST['sliced_payment_invoice_id'] != $payment_page ) {
 			return (int) $_POST['sliced_payment_invoice_id'];
 		}
-
 		return null;
 
 	}
@@ -190,9 +189,11 @@ class Sliced_Shared {
 	 */
 	public static function get_tax_amount( $id = 0, $formatted = false ) {
 
-		$id = Sliced_Shared::get_item_id( $id );
+		if ( ! $id ) {
+			$id = Sliced_Shared::get_item_id( $id );
+		}
 
-	    if ( isset( $id ) ) {
+	    if ( $id ) {
 
 	    	$amount = self::get_sliced_meta( $id, '_sliced_tax', false );
 
@@ -222,9 +223,11 @@ class Sliced_Shared {
 	 */
 	public static function get_tax_calc_method( $id = 0 ) {
 
-		$id = Sliced_Shared::get_item_id( $id );
+		if ( ! $id ) {
+			$id = Sliced_Shared::get_item_id( $id );
+		}
 
-	    if ( isset( $id ) ) {
+	    if ( $id ) {
 
 	    	$method = self::get_sliced_meta( $id, '_sliced_tax_calc_method', true );
 
@@ -250,7 +253,7 @@ class Sliced_Shared {
 
 		$currency = false;
 		
-		if ( ! $id > 0 ) {
+		if ( ! $id ) {
 			$id = Sliced_Shared::get_item_id();
 		}
 		
@@ -353,7 +356,7 @@ class Sliced_Shared {
 
 		$amount 	= (float)$whole . '.' . $decimals;
 
-	    return apply_filters( 'sliced_get_raw_number', $amount );
+	    return apply_filters( 'sliced_get_raw_number', $amount, $id );
 	}
 
 	/**
@@ -434,7 +437,7 @@ class Sliced_Shared {
 	 * @since   2.0.0
 	 */
 	public static function get_totals( $id ) {
-
+	
 		if ( ! $id ) {
 			$id = Sliced_Shared::get_item_id( $id );
 		}
@@ -460,12 +463,12 @@ class Sliced_Shared {
 	    
 	    foreach ( $items[0] as $value ) {
 
-	    	$qty = isset( $value['qty'] ) ? self::get_raw_number( $value['qty'] ) : 0;
-	    	$amt = isset( $value['amount'] ) ? self::get_raw_number( $value['amount'] ) : 0;
+	    	$qty = isset( $value['qty'] ) ? self::get_raw_number( $value['qty'], $id ) : 0;
+	    	$amt = isset( $value['amount'] ) ? self::get_raw_number( $value['amount'], $id ) : 0;
 	    	
 			// for historical reasons, the "adjust" field is named "tax" internally,
 			// but it is unrelated to the actual tax field(s) in use today.
-			$adj = isset( $value['tax'] ) ? self::get_raw_number( $value['tax'] ) : 0;
+			$adj = isset( $value['tax'] ) ? self::get_raw_number( $value['tax'], $id ) : 0;
 
 	        $line_total = self::get_line_item_sub_total( $qty, $amt, $adj );
 			
