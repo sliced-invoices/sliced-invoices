@@ -125,7 +125,7 @@ class Sliced_Invoices {
 		 * sides of the site.
 		 */
 		require_once SLICED_PATH . 'includes/class-sliced-shared.php';
-		require_once SLICED_PATH . 'includes/vendor/metabox/init.php';
+		require_once SLICED_PATH . 'includes/vendor/cmb2/init.php';
 
 		require_once SLICED_PATH . 'includes/payments/sliced-shared-payments.php';
 		require_once SLICED_PATH . 'includes/gateways/sliced-gateway-paypal.php';
