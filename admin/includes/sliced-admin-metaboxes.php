@@ -45,6 +45,9 @@ class Sliced_Metaboxes {
 		if( $pagenow == 'edit.php' || ( $pagenow == 'post.php' && ( sliced_get_the_type() === 'invoice' || sliced_get_the_type() === 'quote' ) ) ) {
 			add_action( 'post_submitbox_misc_actions', array( $this, 'add_to_publish_box' ) );
 		}
+		
+		// allow translating of status taxonomies
+		add_filter( 'get_terms', array( $this, 'pre_get_terms' ), 10, 4 );
 
 	}
 	
@@ -904,6 +907,28 @@ class Sliced_Metaboxes {
 				$wp_meta_boxes[ $sliced_post_type ] = $new_array;
 			}
 		}
+	}
+	
+	
+	/**
+	 * Translate statuses on quote/invoice edit pages (for CMB2)
+	 * see also Sliced_Columns::pre_get_the_terms()
+	 *
+	 * @since   3.7.3
+	 */
+	public function pre_get_terms( $terms, $taxonomies, $args, $term_query ) {
+		
+		if ( in_array( 'invoice_status', $taxonomies ) || in_array( 'quote_status', $taxonomies ) ) {
+		
+			$translate = get_option( 'sliced_translate' );
+			
+			foreach ( $terms as &$term ) {
+				$term->name = ( isset( $translate[$term->slug] ) && class_exists( 'Sliced_Translate' ) ) ? $translate[$term->slug] : __( ucfirst( $term->name ), 'sliced-invoices' );
+			}
+			
+		}
+		
+		return $terms;
 	}
 	
 
