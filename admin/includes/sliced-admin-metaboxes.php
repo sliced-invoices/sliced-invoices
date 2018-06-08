@@ -347,7 +347,7 @@ class Sliced_Metaboxes {
 			 'name'          => '',
 			 'desc'          => '',
 			 'id'            => $prefix . 'quote_terms',
-			 'default'       => array( $this, 'get_quote_terms' ),
+			 'default'       => $this->get_quote_terms(),
 			 'type'          => 'wysiwyg',
 			 'options' => array(
 				'wpautop' => true, // use wpautop?
@@ -375,7 +375,7 @@ class Sliced_Metaboxes {
 		$invoice_terms->add_field( array(
 			'name'    => '',
 			'id'      => $prefix . 'invoice_terms',
-			'default' => array( $this, 'get_invoice_terms' ),
+			'default' => $this->get_invoice_terms(),
 			'type'    => 'wysiwyg',
 			'options' => array(
 				'wpautop' => true, // use wpautop?
@@ -470,20 +470,20 @@ class Sliced_Metaboxes {
 		$info->add_field( array(
 			'id'      => $prefix . 'quote_prefix',
 			'type'    => 'hidden',
-			'default' => array( $this, 'get_quote_prefix' ),
+			'default' => $this->get_quote_prefix(),
 		) );
 		$info->add_field( array(
 			'name'    => sprintf( __( '%s Number', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.sliced_get_quote_label(),'</span>' ),
 			'id'      => $prefix . 'quote_number',
 			'type'    => 'text',
-			'default' => 'sliced_get_next_quote_number',
+			'default' => sliced_get_next_quote_number(),
 			'before'  => array( $this, 'quote_prefix' ),
 			'after'   => array( $this, 'after_quote_number' ),
 		) );
 		$info->add_field( array(
 			'id'      => $prefix . 'quote_suffix',
 			'type'    => 'hidden',
-			'default' => array( $this, 'get_quote_suffix' ),
+			'default' => $this->get_quote_suffix(),
 		) );
 		$info->add_field( array(
 			'name'        => __( 'Created Date', 'sliced-invoices' ),
@@ -491,7 +491,7 @@ class Sliced_Metaboxes {
 			'id'          => $prefix . 'quote_created',
 			'type'        => 'text_date_timestamp',
 			'date_format' => 'Y-m-d',
-			'default'     => array( 'Sliced_Shared', 'get_todays_date_iso8601' ),
+			'default'     => Sliced_Shared::get_todays_date_iso8601(),
 			'attributes'  => array(
 				'required'  => 'required',
 				'readonly'  => 'readonly',
@@ -503,7 +503,7 @@ class Sliced_Metaboxes {
 			'id'          => $prefix . 'quote_valid_until',
 			'type'        => 'text_date_timestamp',
 			'date_format' => 'Y-m-d',
-			'default'     => array( 'Sliced_Quote', 'get_auto_valid_until_date' ),
+			'default'     => Sliced_Quote::get_auto_valid_until_date(),
 			'attributes'  => array(
 				'readonly'  => 'readonly',
 			),
@@ -523,7 +523,7 @@ class Sliced_Metaboxes {
 			'desc'       => '',
 			'id'         => $prefix . 'currency_symbol',
 			'type'       => 'text',
-			'default'    => 'sliced_get_currency_symbol',
+			'default'    => sliced_get_currency_symbol(),
 			'attributes' => array(
 				'placeholder'   => '$',
 			),
@@ -534,7 +534,7 @@ class Sliced_Metaboxes {
 			'desc'       => '',
 			'id'         => $prefix . 'tax_calc_method',
 			'type'       => 'select',
-			'default'    => array( 'Sliced_Shared', 'get_tax_calc_method' ),
+			'default'    => Sliced_Shared::get_tax_calc_method(),
 			'options'    => array(
 				'inclusive' => __( 'Yes, I will enter prices inclusive of tax', 'sliced-invoices' ),
 				'exclusive' => __( 'No, I will enter prices exclusive of tax', 'sliced-invoices' ) . ' ' . __( '(default)', 'sliced-invoices' ),
@@ -547,7 +547,7 @@ class Sliced_Metaboxes {
 			'desc'       => '',
 			'id'         => $prefix . 'tax',
 			'type'       => 'text',
-			'default'    => 'sliced_get_tax_amount_formatted',
+			'default'    => sliced_get_tax_amount_formatted(),
 			'attributes' => array(
 				'placeholder' => '10',
 				'maxlength'   => '6',
@@ -626,20 +626,20 @@ class Sliced_Metaboxes {
 		$info->add_field( array(
 			'id'      => $prefix . 'invoice_prefix',
 			'type'    => 'hidden',
-			'default' => array( $this, 'get_invoice_prefix' ),
+			'default' => $this->get_invoice_prefix(),
 		) );
 		$info->add_field( array(
 			'name'    => sprintf( __( '%s Number', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.sliced_get_invoice_label().'</span>' ),
 			'id'      => $prefix . 'invoice_number',
 			'type'    => 'text',
-			'default' => 'sliced_get_next_invoice_number',
+			'default' => sliced_get_next_invoice_number(),
 			'before'  => array( $this, 'invoice_prefix' ),
 			'after'   => array( $this, 'after_invoice_number' ),
 		) );
 		$info->add_field( array(
 			'id'      => $prefix . 'invoice_suffix',
 			'type'    => 'hidden',
-			'default' => array( $this, 'get_invoice_suffix' ),
+			'default' => $this->get_invoice_suffix(),
 		) );
 		$info->add_field( array(
 			'name' => __( 'Order Number', 'sliced-invoices' ),
@@ -653,7 +653,7 @@ class Sliced_Metaboxes {
 			'id'          => $prefix . 'invoice_created',
 			'type'        => 'text_date_timestamp',
 			'date_format' => 'Y-m-d',
-			'default'     => array( 'Sliced_Shared', 'get_todays_date_iso8601' ),
+			'default'     => Sliced_Shared::get_todays_date_iso8601(),
 			'attributes'  => array(
 				'required'  => 'required',
 				'readonly'  => 'readonly',
@@ -665,7 +665,7 @@ class Sliced_Metaboxes {
 			'id'          => $prefix . 'invoice_due',
 			'type'        => 'text_date_timestamp',
 			'date_format' => 'Y-m-d',
-			'default'     => array( 'Sliced_Invoice', 'get_auto_due_date' ),
+			'default'     => Sliced_Invoice::get_auto_due_date(),
 			'attributes'  => array(
 				'readonly'  => 'readonly',
 			),
@@ -685,7 +685,7 @@ class Sliced_Metaboxes {
 			'desc'       => '',
 			'id'         => $prefix . 'currency_symbol',
 			'type'       => 'text',
-			'default'    => 'sliced_get_currency_symbol',
+			'default'    => sliced_get_currency_symbol(),
 			'attributes' => array(
 				'placeholder'   => '$',
 			),
@@ -696,7 +696,7 @@ class Sliced_Metaboxes {
 			'id'                => $prefix . 'payment_methods',
 			'type'              => 'multicheck',
 			'select_all_button' => false,
-			'default'           => array( $this, 'accepted_payment_method_keys' ),
+			'default'           => $this->accepted_payment_method_keys(),
 			'options_cb'        => 'sliced_get_accepted_payment_methods',
 			'after_row' => array( $this, 'collapsible_group_after' ),
 		) );
@@ -705,7 +705,7 @@ class Sliced_Metaboxes {
 			'desc'       => '',
 			'id'         => $prefix . 'tax_calc_method',
 			'type'       => 'select',
-			'default'    => array( 'Sliced_Shared', 'get_tax_calc_method' ),
+			'default'    => Sliced_Shared::get_tax_calc_method(),
 			'options'    => array(
 				'inclusive' => __( 'Yes, I will enter prices inclusive of tax', 'sliced-invoices' ),
 				'exclusive' => __( 'No, I will enter prices exclusive of tax', 'sliced-invoices' ) . ' ' . __( '(default)', 'sliced-invoices' ),
@@ -718,7 +718,7 @@ class Sliced_Metaboxes {
 			'desc'       => '',
 			'id'         => $prefix . 'tax',
 			'type'       => 'text',
-			'default'    => 'sliced_get_tax_amount_formatted',
+			'default'    => sliced_get_tax_amount_formatted(),
 			'attributes' => array(
 				'placeholder'   => '10',
 				'maxlength'     => '6',
