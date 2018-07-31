@@ -923,6 +923,9 @@ class Sliced_Metaboxes {
 			$translate = get_option( 'sliced_translate' );
 			
 			foreach ( $terms as &$term ) {
+				if ( ! is_object( $term ) ) {
+					continue;
+				}
 				$term->name = ( isset( $translate[$term->slug] ) && class_exists( 'Sliced_Translate' ) ) ? $translate[$term->slug] : __( ucfirst( $term->name ), 'sliced-invoices' );
 			}
 			
