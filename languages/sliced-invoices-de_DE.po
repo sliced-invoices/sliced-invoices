@@ -3,7 +3,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "Project-Id-Version: Sliced Invoices\n"
 "POT-Creation-Date: 2017-10-25 19:44-0700\n"
-"PO-Revision-Date: 2018-08-20 09:51+0300\n"
+"PO-Revision-Date: 2018-08-20 10:32+0300\n"
 "Last-Translator: admin <schatzmeister@segelnmitfreddy.de>\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -752,7 +752,7 @@ msgstr "Dieser %s ist abgelaufen."
 #: includes/payments/sliced-shared-payments.php:248
 #, php-format
 msgid "Accept %s"
-msgstr "Annehmen %s"
+msgstr "%s annehmen"
 
 #: includes/payments/sliced-shared-payments.php:211
 #: includes/payments/sliced-shared-payments.php:286
