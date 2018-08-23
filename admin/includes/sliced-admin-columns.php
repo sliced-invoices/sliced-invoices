@@ -212,6 +212,12 @@ class Sliced_Columns {
 				$valid = sliced_get_quote_valid() ? date_i18n( get_option( 'date_format' ), (int) sliced_get_quote_valid() ) : '';
 				$due   = sliced_get_invoice_due() ? date_i18n( get_option( 'date_format' ), (int) sliced_get_invoice_due() ) : '';
 
+				$status = '';
+				$terms = wp_get_post_terms( $id, $type . '_status', array( "fields" => "all" ) );
+				if ( ! empty( $terms ) ) {
+					$status = $terms[0]->slug;
+				}
+				
 				echo '
 					<div class="hidden" id="sliced_inline_' . $id . '">
 						<div class="number">' . sliced_get_number() . '</div>
@@ -221,7 +227,7 @@ class Sliced_Columns {
 						<div class="valid">' . $valid . '</div>
 						<div class="order_number">' . sliced_get_invoice_order_number() . '</div>
 						<div class="terms">' . sliced_get_terms_conditions() . '</div>
-						<div class="status">' . sliced_get_status() . '</div>
+						<div class="status">' . $status . '</div>
 					</div>
 				';
 
