@@ -918,6 +918,13 @@ class Sliced_Metaboxes {
 	 */
 	public function pre_get_terms( $terms, $taxonomies, $args, $term_query ) {
 		
+		if ( ! is_array( $taxonomies ) ) {
+			// $taxonomies should ALWAYS be an array, but apparently some
+			// shitty plugins out there fuck with $taxonomies so now we have
+			// to check it first
+			return $terms;
+		}
+		
 		if ( in_array( 'invoice_status', $taxonomies ) || in_array( 'quote_status', $taxonomies ) ) {
 		
 			$translate = get_option( 'sliced_translate' );
