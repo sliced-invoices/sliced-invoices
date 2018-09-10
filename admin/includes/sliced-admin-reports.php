@@ -255,7 +255,7 @@ class Sliced_Reports {
 		);
 
 		$the_query = new WP_Query( apply_filters( 'sliced_reports_query', $args ) );
-		$total = null;
+		$total = array();
 		if( $the_query->posts ) :
 			foreach ( $the_query->posts as $id ) {
 				if( sliced_get_the_type( $id ) == 'invoice' && ( ! has_term( 'draft', 'invoice_status', $id ) && ! has_term( 'cancelled', 'invoice_status', $id ) ) ) {
@@ -590,7 +590,7 @@ class Sliced_Reports {
 	 *
 	 * @since   2.0.0
 	 */
-	private function do_the_math( $array = array( null ) ) {
+	private function do_the_math( $array = array() ) {
 
 		$shared = new Sliced_Shared();
 
