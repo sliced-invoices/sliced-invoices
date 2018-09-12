@@ -233,31 +233,37 @@ class Sliced_Tools {
 		$return .= "\n";
 		$return .= 'General Settings:         ' . "\n";
 		foreach ($general_opt as $key => $value) {
+			if ( is_array( $value ) ) $value = implode( ', ', $value );
 			$return .= $key . ':					' . $value . "\n";
 		}
 		$return .= "\n";
 		$return .= 'Business Settings:         ' . "\n";
 		foreach ($business_opt as $key => $value) {
+			if ( is_array( $value ) ) $value = implode( ', ', $value );
 			$return .= $key . ':					' . $value . "\n";
 		}
 		$return .= "\n";
 		$return .= 'Payment Settings:         ' . "\n";
 		foreach ($payment_opt as $key => $value) {
+			if ( is_array( $value ) ) $value = implode( ', ', $value );
 			$return .= $key . ':					' . $value . "\n";
 		}
 		$return .= "\n";
 		$return .= 'Invoices Settings:         ' . "\n";
 		foreach ($invoices_opt as $key => $value) {
+			if ( is_array( $value ) ) $value = implode( ', ', $value );
 			$return .= $key . ':					' . $value . "\n";
 		}
 		$return .= "\n";
 		$return .= 'Quotes Settings:         ' . "\n";
 		foreach ($quotes_opt as $key => $value) {
+			if ( is_array( $value ) ) $value = implode( ', ', $value );
 			$return .= $key . ':					' . $value . "\n";
 		}
 		$return .= "\n";
 		$return .= 'Email Settings:         ' . "\n";
 		foreach ($email_opt as $key => $value) {
+			if ( is_array( $value ) ) $value = implode( ', ', $value );
 			$return .= $key . ':					' . $value . "\n";
 		}
 
