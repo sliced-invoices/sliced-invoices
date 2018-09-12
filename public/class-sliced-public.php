@@ -106,7 +106,7 @@ class Sliced_Public {
 		<link rel='stylesheet' id='thickbox-css'  href='<?php echo includes_url( 'js/thickbox/thickbox.css' ); ?>?ver=<?php echo $this->version; ?>' type='text/css' media='all' />
 		<link rel='stylesheet' id='template-css'  href='<?php echo apply_filters( 'sliced_invoice_template_css', plugins_url( $this->plugin_name ) . '/public/css/' . esc_html( sliced_get_invoice_template() ) . '.css' ); ?>?ver=<?php echo $this->version; ?>' type='text/css' media='all' />
 		<style id='template-inline-css' type='text/css'>
-			<?php echo apply_filters( 'sliced_invoice_template_custom_css', esc_html( sliced_get_invoice_css() ) ); ?>
+			<?php echo apply_filters( 'sliced_invoice_template_custom_css', html_entity_decode( sliced_get_invoice_css() ) ); ?>
 		</style>
 		<?php
 
@@ -136,7 +136,7 @@ class Sliced_Public {
 		<link rel='stylesheet' id='thickbox-css'  href='<?php echo includes_url( 'js/thickbox/thickbox.css' ); ?>?ver=<?php echo $this->version; ?>' type='text/css' media='all' />
 		<link rel='stylesheet' id='template-css'  href='<?php echo apply_filters( 'sliced_quote_template_css', plugins_url( $this->plugin_name ) . '/public/css/' . esc_html( sliced_get_quote_template() ) . '.css' ); ?>?ver=<?php echo $this->version; ?>' type='text/css' media='all' />
 		<style id='template-inline-css' type='text/css'>
-			<?php echo apply_filters( 'sliced_quote_template_custom_css', esc_html( sliced_get_quote_css() ) ); ?>
+			<?php echo apply_filters( 'sliced_quote_template_custom_css', html_entity_decode( sliced_get_quote_css() ) ); ?>
 		</style>
 		<?php
 
