@@ -493,6 +493,11 @@ class Sliced_Metaboxes {
 			'date_format' => 'Y-m-d',
 			'default'     => Sliced_Shared::get_todays_date_iso8601(),
 			'attributes'  => array(
+				'data-datepicker' => json_encode( array(
+					'closeText'       => __( 'Close', 'sliced-invoices' ),
+					'currentText'     => __( 'Today', 'sliced-invoices' ),
+					'showButtonPanel' => true,
+				) ),
 				'required'  => 'required',
 				'readonly'  => 'readonly',
 			),
@@ -505,6 +510,11 @@ class Sliced_Metaboxes {
 			'date_format' => 'Y-m-d',
 			'default'     => Sliced_Quote::get_auto_valid_until_date(),
 			'attributes'  => array(
+				'data-datepicker' => json_encode( array(
+					'closeText'       => __( 'Close', 'sliced-invoices' ),
+					'currentText'     => __( 'Today', 'sliced-invoices' ),
+					'showButtonPanel' => true,
+				) ),
 				'readonly'  => 'readonly',
 			),
 		) );
@@ -655,6 +665,11 @@ class Sliced_Metaboxes {
 			'date_format' => 'Y-m-d',
 			'default'     => Sliced_Shared::get_todays_date_iso8601(),
 			'attributes'  => array(
+				'data-datepicker' => json_encode( array(
+					'closeText'       => __( 'Close', 'sliced-invoices' ),
+					'currentText'     => __( 'Today', 'sliced-invoices' ),
+					'showButtonPanel' => true,
+				) ),
 				'required'  => 'required',
 				'readonly'  => 'readonly',
 			),
@@ -667,6 +682,11 @@ class Sliced_Metaboxes {
 			'date_format' => 'Y-m-d',
 			'default'     => Sliced_Invoice::get_auto_due_date(),
 			'attributes'  => array(
+				'data-datepicker' => json_encode( array(
+					'closeText'       => __( 'Close', 'sliced-invoices' ),
+					'currentText'     => __( 'Today', 'sliced-invoices' ),
+					'showButtonPanel' => true,
+				) ),
 				'readonly'  => 'readonly',
 			),
 		) );

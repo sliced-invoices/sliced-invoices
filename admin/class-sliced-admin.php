@@ -97,12 +97,11 @@ class Sliced_Admin {
 			'decimal_sep' => sliced_get_decimal_seperator(),
 			'decimals' => sliced_get_decimals(),
 			)
-		)
-		);
-		wp_localize_script( $this->plugin_name, 'sliced_confirm', array(
+		) );
+		wp_localize_script( $this->plugin_name, 'sliced_invoices_i18n', array(
 			'convert_quote' => sprintf( __( 'Are you sure you want to convert from %1s to %2s', 'sliced-invoices' ), sliced_get_quote_label(), sliced_get_invoice_label() ),
-			)
-		);
+			'datepicker_clear' => __( 'Clear', 'sliced-invoices' ),
+		) );
 
 		/*
 		 * Conditionally enqueue the new client script

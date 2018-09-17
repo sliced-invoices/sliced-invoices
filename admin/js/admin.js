@@ -329,6 +329,67 @@
 	
 	
 	/**
+	 * CMB2 datepicker modifications
+	 */
+	$(function(){
+		
+		if ( ! $('body').hasClass('sliced') ) {
+			return;
+		}
+		
+		if ( ! ( $('body').hasClass('post-php') || $('body').hasClass('post-new-php') ) ) {
+			return;
+		}
+		
+		if ( typeof $.datepicker === "undefined" ) {
+			// shouldn't happen here, but just in case
+			return;
+		}
+		
+		var attachHandlers = $.datepicker._attachHandlers;
+		var generateHTML = $.datepicker._generateHTML;
+		var clearText = window.sliced_invoices_i18n.datepicker_clear;
+
+		$.datepicker._attachHandlers = function (inst) {
+
+			// call the cached function in scope of $.datepicker object
+			attachHandlers.call($.datepicker, inst);
+
+			// add custom stuff 
+			inst.dpDiv.find("[data-handler]").map(function () { 
+				var handler = { 
+					clear: function () {
+						var id = "#" + inst.id.replace(/\\\\/g, "\\");
+						$.datepicker._clearDate(id);
+						$.datepicker._hideDatepicker();
+					} 
+				};
+				if (handler[this.getAttribute("data-handler")]) {
+					$(this).bind(this.getAttribute("data-event"), handler[this.getAttribute("data-handler")]);
+				} 
+			});
+		};
+		
+		$.datepicker._generateHTML = function (inst) {
+
+			//call the cached function in scope of $.datepicker object
+			var html = generateHTML.call($.datepicker, inst);
+			var $html = $(html);
+			var $buttonPane = $html.filter("div.ui-datepicker-buttonpane.ui-widget-content");
+
+			$buttonPane.append($("<button />")
+				.text(clearText)
+				.attr("type", "button")
+				.attr("data-handler", "clear")
+				.attr("data-event", "click")
+				.addClass("ui-datepicker-clear ui-state-default ui-priority-secondary ui-corner-all"));
+
+			return $html;
+		};
+	});
+	
+	
+	/**
 	 * collapsible toggler
 	 */
 	$(function(){
@@ -418,7 +479,7 @@
     $(function(){
 
         $( "#convert_quote" ).click(function() {
-            if( ! confirm( sliced_confirm.convert_quote ) ) {
+            if( ! confirm( sliced_invoices_i18n.convert_quote ) ) {
                 return false;
             }
         });
