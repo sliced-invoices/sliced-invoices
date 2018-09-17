@@ -22,6 +22,36 @@
   line-height: 32px;
   padding: 5px;
 }
+.sliced input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+	color: #ccc;
+}
+.sliced input::-moz-placeholder { /* Firefox 19+ */
+	color: #ccc;
+}
+.sliced input::-ms-input-placeholder { /* Edge */
+	color: #ccc;
+}
+.sliced input:-moz-placeholder { /* Firefox 18- */
+	color: #ccc;
+}
+.sliced input:-ms-input-placeholder { /* IE 10+ */
+	color: #ccc;
+}
+.sliced textarea::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+	color: #ccc;
+}
+.sliced textarea::-moz-placeholder { /* Firefox 19+ */
+	color: #ccc;
+}
+.sliced textarea::-ms-input-placeholder { /* Edge */
+	color: #ccc;
+}
+.sliced textarea:-moz-placeholder { /* Firefox 18- */
+	color: #ccc;
+}
+.sliced textarea:-ms-input-placeholder { /* IE 10+ */
+	color: #ccc;
+}
 .sliced_woo.button {
   height: 26px !important;
   padding: 0 3px !important;
