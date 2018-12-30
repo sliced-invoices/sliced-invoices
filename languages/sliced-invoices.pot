@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Sliced Invoices\n"
-"POT-Creation-Date: 2018-09-16 18:49-0700\n"
+"POT-Creation-Date: 2018-12-29 16:15-0800\n"
 "PO-Revision-Date: 2017-01-15 20:46-0800\n"
 "Last-Translator: \n"
 "Language-Team: Sliced Invoices <info@slicedinvoices.com>\n"
@@ -384,7 +384,7 @@ msgstr ""
 
 #: admin/class-sliced-admin.php:2151
 #: admin/includes/sliced-admin-metaboxes.php:1023
-#: admin/includes/sliced-admin-options.php:1049
+#: admin/includes/sliced-admin-options.php:1063
 #: includes/template-tags/sliced-tags-display-modules.php:170
 #: includes/template-tags/sliced-tags-display-modules.php:245
 #: includes/template-tags/sliced-tags-display-modules.php:344
@@ -399,7 +399,7 @@ msgstr ""
 
 #: admin/class-sliced-admin.php:2153
 #: admin/includes/sliced-admin-columns.php:117
-#: admin/includes/sliced-admin-options.php:1067
+#: admin/includes/sliced-admin-options.php:1081
 #: includes/template-tags/sliced-tags-display-modules.php:141
 #: includes/template-tags/sliced-tags-display-modules.php:366
 msgid "Total"
@@ -1017,7 +1017,7 @@ msgid "%s Totals"
 msgstr ""
 
 #: admin/includes/sliced-admin-metaboxes.php:1037
-#: admin/includes/sliced-admin-options.php:1058
+#: admin/includes/sliced-admin-options.php:1072
 #: includes/template-tags/sliced-tags-display-modules.php:271
 #: includes/template-tags/sliced-tags-display-modules.php:359
 msgid "Discount"
@@ -1039,7 +1039,7 @@ msgid "Paid"
 msgstr ""
 
 #: admin/includes/sliced-admin-metaboxes.php:1057
-#: admin/includes/sliced-admin-options.php:1076
+#: admin/includes/sliced-admin-options.php:1090
 #: includes/payments/sliced-shared-payments.php:179
 #: includes/template-tags/sliced-tags-display-modules.php:96
 #: includes/template-tags/sliced-tags-display-modules.php:291
@@ -1145,10 +1145,10 @@ msgid "Use comma to separate multiple recipients"
 msgstr ""
 
 #: admin/includes/sliced-admin-notifications.php:592
-#: admin/includes/sliced-admin-options.php:786
-#: admin/includes/sliced-admin-options.php:822
-#: admin/includes/sliced-admin-options.php:858
-#: admin/includes/sliced-admin-options.php:904
+#: admin/includes/sliced-admin-options.php:778
+#: admin/includes/sliced-admin-options.php:814
+#: admin/includes/sliced-admin-options.php:850
+#: admin/includes/sliced-admin-options.php:896
 msgid "Subject"
 msgstr ""
 
@@ -1711,14 +1711,135 @@ msgid "The name of the tax for your country/region. GST, VAT, Tax etc"
 msgstr ""
 
 #: admin/includes/sliced-admin-options.php:752
-msgid "Emails"
+msgid "Email Address"
 msgstr ""
 
 #: admin/includes/sliced-admin-options.php:753
+msgid ""
+"The email address to send and receive notifications (probably your business "
+"email)."
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:759
+msgid "Email Name"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:760
+msgid ""
+"The name on emails to send and receive notifications (probably your business "
+"name)."
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:766
+msgid "Bcc on Client Emails"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:767
+msgid ""
+"Yes, send myself a copy of all client emails (Bcc). Recommended.<br><span "
+"class=\"description\"><small>This ensures you have a copy of the email on "
+"record</small></span>"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:772
+msgid "Quote Available"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:779
+#: admin/includes/sliced-admin-options.php:815
+#: admin/includes/sliced-admin-options.php:851
+#: admin/includes/sliced-admin-options.php:897
+msgid "The subject of the email (wildcards are allowed)."
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:785
+#: admin/includes/sliced-admin-options.php:821
+#: admin/includes/sliced-admin-options.php:857
+#: admin/includes/sliced-admin-options.php:903
+msgid "Content"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:786
+#: admin/includes/sliced-admin-options.php:822
+#: admin/includes/sliced-admin-options.php:858
+#: admin/includes/sliced-admin-options.php:904
+msgid "The content of the email (wildcards and HTML are allowed)."
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:800
+#: admin/includes/sliced-admin-options.php:836
+msgid "Button text"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:801
+msgid "The \"view this quote online\" button."
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:808
+msgid "Invoice Available"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:837
+msgid "The \"view this invoice online\" button."
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:844
+msgid "Payment Received"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:873
+msgid "Payment Reminder"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:879
+msgid "When to Send"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:880
+msgid "Check when you would like payment reminders sent out."
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:918
+msgid "Wildcards For Emails"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:919
+msgid ""
+"The following wildcards can be used in email subjects and email content:"
+"<br>\n"
+"\t\t\t\t\t%client_first_name% : Clients first name<br>\n"
+"\t\t\t\t\t%client_last_name% : Clients last name<br>\n"
+"\t\t\t\t\t%client_business% : Clients business<br>\n"
+"\t\t\t\t\t%client_email% : Clients email address<br>\n"
+"\t\t\t\t\t%link% : URL to the quote<br>\n"
+"\t\t\t\t\t%number% : The quote or invoice number<br>\n"
+"\t\t\t\t\t%total% : The quote or invoice total<br>\n"
+"\t\t\t\t\t%last_payment% : The amount of the last payment. (returns \"N/A\" "
+"if no payments)<br>\n"
+"\t\t\t\t\t%balance% : The balance outstanding on the quote or invoice<br>\n"
+"\t\t\t\t\t%created% : The quote or invoice created date<br>\n"
+"\t\t\t\t\t%valid_until% : The date the quote is valid until<br>\n"
+"\t\t\t\t\t%due_date% : The date the invoice is due<br>\n"
+"\t\t\t\t\t%date% : Todays date. Useful on Payment emails<br>\n"
+"\t\t\t\t\t%order_number% : The order number of the invoice<br>\n"
+"\t\t\t\t\t%is_was% : If due date of invoice is past, displays \"was\" "
+"otherwise displays \"is\"<br>\n"
+"\t\t\t\t\t"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:942
+msgid "Footer Text"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:959
+msgid "Emails"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:960
 msgid "Email Settings"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:754
+#: admin/includes/sliced-admin-options.php:961
 msgid ""
 "Here you will find all of the Email related settings. The <a target=\"_blank"
 "\" href=\"https://slicedinvoices.com/extensions/pdf-email?"
@@ -1727,132 +1848,15 @@ msgid ""
 "to customize the emails."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:760
-msgid "Email Address"
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:761
-msgid ""
-"The email address to send and receive notifications (probably your business "
-"email)."
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:767
-msgid "Email Name"
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:768
-msgid ""
-"The name on emails to send and receive notifications (probably your business "
-"name)."
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:774
-msgid "Bcc on Client Emails"
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:775
-msgid ""
-"Yes, send myself a copy of all client emails (Bcc). Recommended.<br><span "
-"class=\"description\"><small>This ensures you have a copy of the email on "
-"record</small></span>"
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:780
-msgid "Quote Available"
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:787
-#: admin/includes/sliced-admin-options.php:823
-#: admin/includes/sliced-admin-options.php:859
-#: admin/includes/sliced-admin-options.php:905
-msgid "The subject of the email (wildcards are allowed)."
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:793
-#: admin/includes/sliced-admin-options.php:829
-#: admin/includes/sliced-admin-options.php:865
-#: admin/includes/sliced-admin-options.php:911
-msgid "Content"
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:794
-#: admin/includes/sliced-admin-options.php:830
-#: admin/includes/sliced-admin-options.php:866
-#: admin/includes/sliced-admin-options.php:912
-msgid "The content of the email (wildcards and HTML are allowed)."
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:808
-#: admin/includes/sliced-admin-options.php:844
-msgid "Button text"
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:809
-msgid "The \"view this quote online\" button."
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:816
-msgid "Invoice Available"
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:845
-msgid "The \"view this invoice online\" button."
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:852
-msgid "Payment Received"
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:881
-msgid "Payment Reminder"
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:887
-msgid "When to Send"
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:888
-msgid "Check when you would like payment reminders sent out."
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:926
-msgid "Wildcards For Emails"
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:927
-msgid ""
-"The following wildcards can be used in email subjects and email content:"
-"<br>\n"
-"\t\t\t\t\t\t%client_first_name% : Clients first name<br>\n"
-"\t\t\t\t\t\t%client_last_name% : Clients last name<br>\n"
-"\t\t\t\t\t\t%client_business% : Clients business<br>\n"
-"\t\t\t\t\t\t%client_email% : Clients email address<br>\n"
-"\t\t\t\t\t\t%link% : URL to the quote<br>\n"
-"\t\t\t\t\t\t%number% : The quote or invoice number<br>\n"
-"\t\t\t\t\t\t%total% : The quote or invoice total<br>\n"
-"\t\t\t\t\t\t%last_payment% : The amount of the last payment. (returns \"N/A"
-"\" if no payments)<br>\n"
-"\t\t\t\t\t\t%balance% : The balance outstanding on the quote or invoice<br>\n"
-"\t\t\t\t\t\t%created% : The quote or invoice created date<br>\n"
-"\t\t\t\t\t\t%valid_until% : The date the quote is valid until<br>\n"
-"\t\t\t\t\t\t%due_date% : The date the invoice is due<br>\n"
-"\t\t\t\t\t\t%date% : Todays date. Useful on Payment emails<br>\n"
-"\t\t\t\t\t\t%order_number% : The order number of the invoice<br>\n"
-"\t\t\t\t\t\t%is_was% : If due date of invoice is past, displays \"was\" "
-"otherwise displays \"is\"<br>\n"
-"\t\t\t\t\t\t"
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:954
+#: admin/includes/sliced-admin-options.php:968
 msgid "PDF"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:955
+#: admin/includes/sliced-admin-options.php:969
 msgid "PDF Settings"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:956
+#: admin/includes/sliced-admin-options.php:970
 msgid ""
 "Here you will find all of the PDF related settings. The <a target=\"_blank\" "
 "href=\"https://slicedinvoices.com/extensions/pdf-email?"
@@ -1861,15 +1865,15 @@ msgid ""
 "to customize the PDFs."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:966
+#: admin/includes/sliced-admin-options.php:980
 msgid "Translate"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:967
+#: admin/includes/sliced-admin-options.php:981
 msgid "Translate Settings"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:968
+#: admin/includes/sliced-admin-options.php:982
 msgid ""
 "Here you can translate strings into your own language, or simply change the "
 "text to suit your needs. The <a target=\"_blank\" href=\"https://"
@@ -1880,100 +1884,100 @@ msgid ""
 "and quotes."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:973
+#: admin/includes/sliced-admin-options.php:987
 msgid "Quote Label"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:974
+#: admin/includes/sliced-admin-options.php:988
 msgid ""
 "You can change this from Quote to Estimate or Proposal (or any other word "
 "you like)."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:983
+#: admin/includes/sliced-admin-options.php:997
 msgid "Quote Label Plural"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:984
-#: admin/includes/sliced-admin-options.php:1004
+#: admin/includes/sliced-admin-options.php:998
+#: admin/includes/sliced-admin-options.php:1018
 msgid "The plural of the above"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:993
+#: admin/includes/sliced-admin-options.php:1007
 msgid "Invoice Label"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:994
+#: admin/includes/sliced-admin-options.php:1008
 msgid ""
 "You can change this from Invoice to Tax Invoice (or any other word you like)."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1003
+#: admin/includes/sliced-admin-options.php:1017
 msgid "Invoice Label Plural"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1013
+#: admin/includes/sliced-admin-options.php:1027
 #: includes/template-tags/sliced-tags-display-modules.php:164
 msgid "Hrs/Qty"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1022
+#: admin/includes/sliced-admin-options.php:1036
 #: includes/template-tags/sliced-tags-display-modules.php:165
 msgid "Service"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1031
+#: admin/includes/sliced-admin-options.php:1045
 #: includes/template-tags/sliced-tags-display-modules.php:166
 msgid "Rate/Price"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1040
+#: admin/includes/sliced-admin-options.php:1054
 #: includes/template-tags/sliced-tags-display-modules.php:168
 msgid "Adjust"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1089
-#: admin/includes/sliced-admin-options.php:1090
+#: admin/includes/sliced-admin-options.php:1103
+#: admin/includes/sliced-admin-options.php:1104
 msgid "Extras"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1091
+#: admin/includes/sliced-admin-options.php:1105
 msgid "Just a page with some advertising and a cry for help ;-)"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1096
+#: admin/includes/sliced-admin-options.php:1110
 msgid "We'd Love Your Support"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1106
+#: admin/includes/sliced-admin-options.php:1120
 msgid "Sign up for our newsletter"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1135
+#: admin/includes/sliced-admin-options.php:1149
 msgid "Extend Sliced Invoices"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1193
-#: admin/includes/sliced-admin-options.php:1194
+#: admin/includes/sliced-admin-options.php:1207
+#: admin/includes/sliced-admin-options.php:1208
 msgid "Licenses"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1195
+#: admin/includes/sliced-admin-options.php:1209
 msgid ""
 "This page is where you enter any license keys for extensions you have "
 "purchased from <a target=\"_blank\" href=\"https://slicedinvoices.com"
 "\">Sliced Invoices</a>."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1200
+#: admin/includes/sliced-admin-options.php:1214
 msgid "Instructions"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1211
+#: admin/includes/sliced-admin-options.php:1225
 msgid "Where can I find my license keys?"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1214
+#: admin/includes/sliced-admin-options.php:1228
 msgid ""
 "You should have received a Purchase Receipt email that contains the license "
 "key for each extension you have purchased from Sliced Invoices.<br>If you "
