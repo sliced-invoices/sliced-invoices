@@ -747,6 +747,213 @@ class Sliced_Options {
 			)
 		) );
 
+		$email_option_fields = array(
+			array(
+				'name'      => __( 'Email Address', 'sliced-invoices' ),
+				'desc'      => __( 'The email address to send and receive notifications (probably your business email).', 'sliced-invoices' ),
+				'default'   => '',
+				'type'      => 'text',
+				'id'        => 'from'
+			),
+			array(
+				'name'      => __( 'Email Name', 'sliced-invoices' ),
+				'desc'      => __( 'The name on emails to send and receive notifications (probably your business name).', 'sliced-invoices' ),
+				'default'   => '',
+				'type'      => 'text',
+				'id'        => 'name',
+			),
+			array(
+				'name'      => __( 'Bcc on Client Emails', 'sliced-invoices' ),
+				'desc'      => __( 'Yes, send myself a copy of all client emails (Bcc). Recommended.<br><span class="description"><small>This ensures you have a copy of the email on record</small></span>', 'sliced-invoices' ),
+				'id'        => 'bcc',
+				'type'      => 'checkbox',
+			),
+			array(
+				'name'      => __( 'Quote Available', 'sliced-invoices' ),
+				'desc'      => 'Sent to the client manually, when you click the email button.',
+				'id'        => 'quote_available_title',
+				'type'      => 'title',
+			),
+			array(
+				'name'      => __( 'Subject', 'sliced-invoices' ),
+				'desc'      => __( 'The subject of the email (wildcards are allowed).', 'sliced-invoices' ),
+				'default'   => '',
+				'type'      => 'text',
+				'id'        => 'quote_available_subject',
+			),
+			array(
+				'name'      => __( 'Content', 'sliced-invoices' ),
+				'desc'      => __( 'The content of the email (wildcards and HTML are allowed).', 'sliced-invoices' ),
+				'type'      => 'wysiwyg',
+				'default'   => '',
+				'id'        => 'quote_available_content',
+				'sanitization_cb' => false,
+				'options' => array(
+					'media_buttons' => false,
+					'textarea_rows' => get_option('default_post_edit_rows', 7),
+					'teeny' => true,
+					'tinymce' => true,
+					'quicktags' => true
+				),
+			),
+			array(
+				'name'      => __( 'Button text', 'sliced-invoices' ),
+				'desc'      => __( 'The "view this quote online" button.', 'sliced-invoices' ),
+				'default'   => '',
+				'type'      => 'text',
+				'id'        => 'quote_available_button',
+			),
+
+			array(
+				'name'      => __( 'Invoice Available', 'sliced-invoices' ),
+				'desc'      => 'Sent to the client manually, when you click the email button.',
+				'id'        => 'invoice_available_title',
+				'type'      => 'title',
+			),
+			array(
+				'name'      => __( 'Subject', 'sliced-invoices' ),
+				'desc'      => __( 'The subject of the email (wildcards are allowed).', 'sliced-invoices' ),
+				'default'   => '',
+				'type'      => 'text',
+				'id'        => 'invoice_available_subject',
+			),
+			array(
+				'name'      => __( 'Content', 'sliced-invoices' ),
+				'desc'      => __( 'The content of the email (wildcards and HTML are allowed).', 'sliced-invoices' ),
+				'type'      => 'wysiwyg',
+				'default'   => '',
+				'id'        => 'invoice_available_content',
+				'sanitization_cb' => false,
+				'options' => array(
+					'media_buttons' => false,
+					'textarea_rows' => get_option('default_post_edit_rows', 7),
+					'teeny' => true,
+					'tinymce' => true,
+					'quicktags' => true
+				),
+			),
+			array(
+				'name'      => __( 'Button text', 'sliced-invoices' ),
+				'desc'      => __( 'The "view this invoice online" button.', 'sliced-invoices' ),
+				'default'   => '',
+				'type'      => 'text',
+				'id'        => 'invoice_available_button',
+			),
+
+			array(
+				'name'      => __( 'Payment Received', 'sliced-invoices' ),
+				'desc'      => 'Sent to the client automatically, when they make a payment.',
+				'id'        => 'payment_received_client_title',
+				'type'      => 'title',
+			),
+			array(
+				'name'      => __( 'Subject', 'sliced-invoices' ),
+				'desc'      => __( 'The subject of the email (wildcards are allowed).', 'sliced-invoices' ),
+				'default'   => '',
+				'type'      => 'text',
+				'id'        => 'payment_received_client_subject',
+			),
+			array(
+				'name'      => __( 'Content', 'sliced-invoices' ),
+				'desc'      => __( 'The content of the email (wildcards and HTML are allowed).', 'sliced-invoices' ),
+				'type'      => 'wysiwyg',
+				'default'   => '',
+				'id'        => 'payment_received_client_content',
+				'sanitization_cb' => false,
+				'options' => array(
+					'media_buttons' => false,
+					'textarea_rows' => get_option('default_post_edit_rows', 7),
+					'teeny' => true,
+					'tinymce' => true,
+					'quicktags' => true
+				),
+			),
+
+			array(
+				'name'      => __( 'Payment Reminder', 'sliced-invoices' ),
+				'desc'      => 'Sent to the client automatically on the chosen days.',
+				'id'        => 'payment_reminder_title',
+				'type'      => 'title',
+			),
+			array(
+				'name'      => __( 'When to Send', 'sliced-invoices' ),
+				'desc'      => __( 'Check when you would like payment reminders sent out.', 'sliced-invoices' ),
+				'default'   => '',
+				'type'    => 'multicheck',
+				'options' => array(
+					'-7'     => '7 days before Due Date',
+					'-1'     => '1 day before Due Date',
+					'+0'      => 'On the Due Date',
+					'+1'      => '1 day after Due Date',
+					'+7'      => '7 days after Due Date',
+					'+14'     => '14 days after Due Date',
+					'+21'     => '21 days after Due Date',
+					'+30'     => '30 days after Due Date',
+				),
+				'id'        => 'payment_reminder_days',
+			),
+			array(
+				'name'      => __( 'Subject', 'sliced-invoices' ),
+				'desc'      => __( 'The subject of the email (wildcards are allowed).', 'sliced-invoices' ),
+				'default'   => '',
+				'type'      => 'text',
+				'id'        => 'payment_reminder_subject',
+			),
+			array(
+				'name'      => __( 'Content', 'sliced-invoices' ),
+				'desc'      => __( 'The content of the email (wildcards and HTML are allowed).', 'sliced-invoices' ),
+				'type'      => 'wysiwyg',
+				'default'   => '',
+				'id'        => 'payment_reminder_content',
+				'sanitization_cb' => false,
+				'options' => array(
+					'media_buttons' => false,
+					'textarea_rows' => get_option('default_post_edit_rows', 7),
+					'teeny' => true,
+					'tinymce' => true,
+					'quicktags' => true
+				),
+			),
+			array(
+				'name'      => __( 'Wildcards For Emails', 'sliced-invoices' ),
+				'desc'      => __( 'The following wildcards can be used in email subjects and email content:<br>
+					%client_first_name% : Clients first name<br>
+					%client_last_name% : Clients last name<br>
+					%client_business% : Clients business<br>
+					%client_email% : Clients email address<br>
+					%link% : URL to the quote<br>
+					%number% : The quote or invoice number<br>
+					%total% : The quote or invoice total<br>
+					%last_payment% : The amount of the last payment. (returns "N/A" if no payments)<br>
+					%balance% : The balance outstanding on the quote or invoice<br>
+					%created% : The quote or invoice created date<br>
+					%valid_until% : The date the quote is valid until<br>
+					%due_date% : The date the invoice is due<br>
+					%date% : Todays date. Useful on Payment emails<br>
+					%order_number% : The order number of the invoice<br>
+					%is_was% : If due date of invoice is past, displays "was" otherwise displays "is"<br>
+					', 'sliced-invoices-pdf-email' ),
+				'id'        => 'wildcard_title',
+				'type'      => 'title',
+			),
+		);
+		if ( ! class_exists( 'Sliced_Pdf_Email' ) ) {
+			$email_option_fields[] = array(
+				'name'      => __( 'Footer Text', 'sliced-invoices' ),
+				'desc'      => __( '', 'sliced-invoices' ),
+				'type'      => 'wysiwyg',
+				'default'   => '',
+				'id'        => 'footer',
+				'sanitization_cb' => false,
+				'options' => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => get_option('default_post_edit_rows', 5), // rows="..."
+					'teeny' => true, // output the minimal editor config used in Press This
+					'tinymce' => true, // load TinyMCE, can be used to pass settings directly to TinyMCE using an array()
+					'quicktags' => true // load Quicktags, can be used to pass settings directly to Quicktags using an array()
+				),
+			);
+		}
 		$this->option_metabox[] = apply_filters( 'sliced_email_option_fields', array(
 			'id'         => $prefix . 'emails',
 			'title'      => __( 'Emails', 'sliced-invoices' ),
@@ -754,201 +961,8 @@ class Sliced_Options {
 			'desc'          => __( 'Here you will find all of the Email related settings. The <a target="_blank" href="https://slicedinvoices.com/extensions/pdf-email?utm_source=Plugin&utm_medium=Email-Settings-Page&utm_content=PDF-Email&utm_campaign=Free">PDF & Email extension</a> will add extra options to customize the emails.', 'sliced-invoices' ),
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'emails' ), ),
 			'show_names' => true,
-			'fields'     => array(
-
-				array(
-					'name'      => __( 'Email Address', 'sliced-invoices' ),
-					'desc'      => __( 'The email address to send and receive notifications (probably your business email).', 'sliced-invoices' ),
-					'default'   => '',
-					'type'      => 'text',
-					'id'        => 'from'
-				),
-				array(
-					'name'      => __( 'Email Name', 'sliced-invoices' ),
-					'desc'      => __( 'The name on emails to send and receive notifications (probably your business name).', 'sliced-invoices' ),
-					'default'   => '',
-					'type'      => 'text',
-					'id'        => 'name',
-				),
-				array(
-					'name'      => __( 'Bcc on Client Emails', 'sliced-invoices' ),
-					'desc'      => __( 'Yes, send myself a copy of all client emails (Bcc). Recommended.<br><span class="description"><small>This ensures you have a copy of the email on record</small></span>', 'sliced-invoices' ),
-					'id'        => 'bcc',
-					'type'      => 'checkbox',
-				),
-				array(
-					'name'      => __( 'Quote Available', 'sliced-invoices' ),
-					'desc'      => 'Sent to the client manually, when you click the email button.',
-					'id'        => 'quote_available_title',
-					'type'      => 'title',
-				),
-				array(
-					'name'      => __( 'Subject', 'sliced-invoices' ),
-					'desc'      => __( 'The subject of the email (wildcards are allowed).', 'sliced-invoices' ),
-					'default'   => '',
-					'type'      => 'text',
-					'id'        => 'quote_available_subject',
-				),
-				array(
-					'name'      => __( 'Content', 'sliced-invoices' ),
-					'desc'      => __( 'The content of the email (wildcards and HTML are allowed).', 'sliced-invoices' ),
-					'type'      => 'wysiwyg',
-					'default'   => '',
-					'id'        => 'quote_available_content',
-					'sanitization_cb' => false,
-					'options' => array(
-						'media_buttons' => false,
-						'textarea_rows' => get_option('default_post_edit_rows', 7),
-						'teeny' => true,
-						'tinymce' => true,
-						'quicktags' => true
-					),
-				),
-				array(
-					'name'      => __( 'Button text', 'sliced-invoices' ),
-					'desc'      => __( 'The "view this quote online" button.', 'sliced-invoices' ),
-					'default'   => '',
-					'type'      => 'text',
-					'id'        => 'quote_available_button',
-				),
-
-				array(
-					'name'      => __( 'Invoice Available', 'sliced-invoices' ),
-					'desc'      => 'Sent to the client manually, when you click the email button.',
-					'id'        => 'invoice_available_title',
-					'type'      => 'title',
-				),
-				array(
-					'name'      => __( 'Subject', 'sliced-invoices' ),
-					'desc'      => __( 'The subject of the email (wildcards are allowed).', 'sliced-invoices' ),
-					'default'   => '',
-					'type'      => 'text',
-					'id'        => 'invoice_available_subject',
-				),
-				array(
-					'name'      => __( 'Content', 'sliced-invoices' ),
-					'desc'      => __( 'The content of the email (wildcards and HTML are allowed).', 'sliced-invoices' ),
-					'type'      => 'wysiwyg',
-					'default'   => '',
-					'id'        => 'invoice_available_content',
-					'sanitization_cb' => false,
-					'options' => array(
-						'media_buttons' => false,
-						'textarea_rows' => get_option('default_post_edit_rows', 7),
-						'teeny' => true,
-						'tinymce' => true,
-						'quicktags' => true
-					),
-				),
-				array(
-					'name'      => __( 'Button text', 'sliced-invoices' ),
-					'desc'      => __( 'The "view this invoice online" button.', 'sliced-invoices' ),
-					'default'   => '',
-					'type'      => 'text',
-					'id'        => 'invoice_available_button',
-				),
-
-				array(
-					'name'      => __( 'Payment Received', 'sliced-invoices' ),
-					'desc'      => 'Sent to the client automatically, when they make a payment.',
-					'id'        => 'payment_received_client_title',
-					'type'      => 'title',
-				),
-				array(
-					'name'      => __( 'Subject', 'sliced-invoices' ),
-					'desc'      => __( 'The subject of the email (wildcards are allowed).', 'sliced-invoices' ),
-					'default'   => '',
-					'type'      => 'text',
-					'id'        => 'payment_received_client_subject',
-				),
-				array(
-					'name'      => __( 'Content', 'sliced-invoices' ),
-					'desc'      => __( 'The content of the email (wildcards and HTML are allowed).', 'sliced-invoices' ),
-					'type'      => 'wysiwyg',
-					'default'   => '',
-					'id'        => 'payment_received_client_content',
-					'sanitization_cb' => false,
-					'options' => array(
-						'media_buttons' => false,
-						'textarea_rows' => get_option('default_post_edit_rows', 7),
-						'teeny' => true,
-						'tinymce' => true,
-						'quicktags' => true
-					),
-				),
-
-				array(
-					'name'      => __( 'Payment Reminder', 'sliced-invoices' ),
-					'desc'      => 'Sent to the client automatically on the chosen days.',
-					'id'        => 'payment_reminder_title',
-					'type'      => 'title',
-				),
-				array(
-					'name'      => __( 'When to Send', 'sliced-invoices' ),
-					'desc'      => __( 'Check when you would like payment reminders sent out.', 'sliced-invoices' ),
-					'default'   => '',
-					'type'    => 'multicheck',
-					'options' => array(
-						'-7'     => '7 days before Due Date',
-						'-1'     => '1 day before Due Date',
-						'+0'      => 'On the Due Date',
-						'+1'      => '1 day after Due Date',
-						'+7'      => '7 days after Due Date',
-						'+14'     => '14 days after Due Date',
-						'+21'     => '21 days after Due Date',
-						'+30'     => '30 days after Due Date',
-					),
-					'id'        => 'payment_reminder_days',
-				),
-				array(
-					'name'      => __( 'Subject', 'sliced-invoices' ),
-					'desc'      => __( 'The subject of the email (wildcards are allowed).', 'sliced-invoices' ),
-					'default'   => '',
-					'type'      => 'text',
-					'id'        => 'payment_reminder_subject',
-				),
-				array(
-					'name'      => __( 'Content', 'sliced-invoices' ),
-					'desc'      => __( 'The content of the email (wildcards and HTML are allowed).', 'sliced-invoices' ),
-					'type'      => 'wysiwyg',
-					'default'   => '',
-					'id'        => 'payment_reminder_content',
-					'sanitization_cb' => false,
-					'options' => array(
-						'media_buttons' => false,
-						'textarea_rows' => get_option('default_post_edit_rows', 7),
-						'teeny' => true,
-						'tinymce' => true,
-						'quicktags' => true
-					),
-				),
-				array(
-					'name'      => __( 'Wildcards For Emails', 'sliced-invoices' ),
-					'desc'      => __( 'The following wildcards can be used in email subjects and email content:<br>
-						%client_first_name% : Clients first name<br>
-						%client_last_name% : Clients last name<br>
-						%client_business% : Clients business<br>
-						%client_email% : Clients email address<br>
-						%link% : URL to the quote<br>
-						%number% : The quote or invoice number<br>
-						%total% : The quote or invoice total<br>
-						%last_payment% : The amount of the last payment. (returns "N/A" if no payments)<br>
-						%balance% : The balance outstanding on the quote or invoice<br>
-						%created% : The quote or invoice created date<br>
-						%valid_until% : The date the quote is valid until<br>
-						%due_date% : The date the invoice is due<br>
-						%date% : Todays date. Useful on Payment emails<br>
-						%order_number% : The order number of the invoice<br>
-						%is_was% : If due date of invoice is past, displays "was" otherwise displays "is"<br>
-						', 'sliced-invoices-pdf-email' ),
-					'id'        => 'wildcard_title',
-					'type'      => 'title',
-				),
-
-
-			)
+			'fields'     => $email_option_fields,
 		) );
-		
 		$this->option_metabox[] = apply_filters( 'sliced_pdf_option_fields', array(
 			'id'         => $prefix . 'pdf',
 			'title'      => __( 'PDF', 'sliced-invoices' ),
