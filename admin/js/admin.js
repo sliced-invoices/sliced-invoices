@@ -329,6 +329,175 @@
 	
 	
 	/**
+	 * Client Select Box
+	 */
+	$(document).ready(function() {
+		
+		$('#_sliced_client').filter( ':not(.enhanced)' ).each( function() {
+			var select2_args = {
+				allowClear:  $( this ).data( 'allow_clear' ) ? true : false,
+				placeholder: sliced_invoices_i18n.select_placeholder,
+				minimumInputLength: $( this ).data( 'minimum_input_length' ) ? $( this ).data( 'minimum_input_length' ) : '1',
+				escapeMarkup: function( m ) {
+					return m;
+				},
+				ajax: {
+					url:         ajaxurl,
+					dataType:    'json',
+					delay:       1000,
+					data:        function( params ) {
+						return {
+							term:     params.term,
+							action:   'sliced-search-clients',
+							exclude:  $( this ).data( 'exclude' )
+						};
+					},
+					processResults: function( data ) {
+						var terms = [];
+						if ( data ) {
+							$.each( data, function( id, text ) {
+								terms.push({
+									id: id,
+									text: text
+								});
+							});
+						}
+						return {
+							results: terms
+						};
+					},
+					cache: true
+				},
+				language: {
+					errorLoading: function() {
+						return sliced_invoices_i18n.select_searching;
+					},
+					inputTooLong: function( args ) {
+						var overChars = args.input.length - args.maximum;
+
+						if ( 1 === overChars ) {
+							return sliced_invoices_i18n.select_max_single;
+						}
+
+						return sliced_invoices_i18n.select_max.replace( '%qty%', overChars );
+					},
+					inputTooShort: function( args ) {
+						var remainingChars = args.minimum - args.input.length;
+
+						if ( 1 === remainingChars ) {
+							return sliced_invoices_i18n.select_input_too_short_single;
+						}
+
+						return sliced_invoices_i18n.select_input_too_short.replace( '%qty%', remainingChars );
+					},
+					loadingMore: function() {
+						return sliced_invoices_i18n.select_loading_more;
+					},
+					maximumSelected: function( args ) {
+						if ( args.maximum === 1 ) {
+							return sliced_invoices_i18n.select_max_single;
+						}
+
+						return sliced_invoices_i18n.select_max.replace( '%qty%', overChars );
+					},
+					noResults: function() {
+						return sliced_invoices_i18n.select_no_matches + ' <span style="float:right;"><a href="#" onclick="jQuery(\'#cmb2-metabox-_sliced_invoice_info\').find(\'a.thickbox\').first().click();">' + sliced_invoices_i18n.select_create_new_client + '</a></span>';
+					},
+					searching: function() {
+						return sliced_invoices_i18n.select_searching;
+					}
+				}
+			};
+
+			$( this ).selectWoo( select2_args ).addClass( 'enhanced' );
+
+		});
+		
+		
+		$('#sliced_update_user_user').filter( ':not(.enhanced)' ).each( function() {
+			var select2_args = {
+				allowClear:  $( this ).data( 'allow_clear' ) ? true : false,
+				placeholder: sliced_invoices_i18n.select_placeholder,
+				minimumInputLength: $( this ).data( 'minimum_input_length' ) ? $( this ).data( 'minimum_input_length' ) : '1',
+				escapeMarkup: function( m ) {
+					return m;
+				},
+				ajax: {
+					url:         ajaxurl,
+					dataType:    'json',
+					delay:       1000,
+					data:        function( params ) {
+						return {
+							term:     params.term,
+							action:   'sliced-search-non-clients',
+							exclude:  $( this ).data( 'exclude' )
+						};
+					},
+					processResults: function( data ) {
+						var terms = [];
+						if ( data ) {
+							$.each( data, function( id, text ) {
+								terms.push({
+									id: id,
+									text: text
+								});
+							});
+						}
+						return {
+							results: terms
+						};
+					},
+					cache: true
+				},
+				language: {
+					errorLoading: function() {
+						return sliced_invoices_i18n.select_searching;
+					},
+					inputTooLong: function( args ) {
+						var overChars = args.input.length - args.maximum;
+
+						if ( 1 === overChars ) {
+							return sliced_invoices_i18n.select_max_single;
+						}
+
+						return sliced_invoices_i18n.select_max.replace( '%qty%', overChars );
+					},
+					inputTooShort: function( args ) {
+						var remainingChars = args.minimum - args.input.length;
+
+						if ( 1 === remainingChars ) {
+							return sliced_invoices_i18n.select_input_too_short_single;
+						}
+
+						return sliced_invoices_i18n.select_input_too_short.replace( '%qty%', remainingChars );
+					},
+					loadingMore: function() {
+						return sliced_invoices_i18n.select_loading_more;
+					},
+					maximumSelected: function( args ) {
+						if ( args.maximum === 1 ) {
+							return sliced_invoices_i18n.select_max_single;
+						}
+
+						return sliced_invoices_i18n.select_max.replace( '%qty%', overChars );
+					},
+					noResults: function() {
+						return sliced_invoices_i18n.select_no_matches;
+					},
+					searching: function() {
+						return sliced_invoices_i18n.select_searching;
+					}
+				}
+			};
+
+			$( this ).selectWoo( select2_args ).addClass( 'enhanced' );
+
+		});
+		
+	});
+	
+	
+	/**
 	 * CMB2 datepicker modifications
 	 */
 	$(function(){

@@ -196,10 +196,13 @@ class Sliced_Invoices {
 
 		$this->loader->add_filter( 'plugin_action_links_' . trailingslashit( $this->get_plugin_name() ) . $this->get_plugin_name() . '.php', $plugin_admin, 'plugin_action_links' );
 
-		$this->loader->add_filter( 'wp_ajax_sliced-create-user', $plugin_admin, 'create_user' );
-		$this->loader->add_filter( 'wp_ajax_sliced-update-user', $plugin_admin, 'update_user' );
-		$this->loader->add_filter( 'wp_ajax_sliced-get-client', $plugin_admin, 'get_client' );
-		$this->loader->add_filter( 'wp_ajax_sliced-update-client', $plugin_admin, 'update_client' );
+		
+		$this->loader->add_action( 'wp_ajax_sliced-search-clients', $plugin_admin, 'ajax_search_clients' );
+		$this->loader->add_action( 'wp_ajax_sliced-search-non-clients', $plugin_admin, 'ajax_search_non_clients' );
+		$this->loader->add_action( 'wp_ajax_sliced-create-user', $plugin_admin, 'create_user' );
+		$this->loader->add_action( 'wp_ajax_sliced-update-user', $plugin_admin, 'update_user' );
+		$this->loader->add_action( 'wp_ajax_sliced-get-client', $plugin_admin, 'get_client' );
+		$this->loader->add_action( 'wp_ajax_sliced-update-client', $plugin_admin, 'update_client' );
 		$this->loader->add_action( 'admin_footer-post-new.php', $plugin_admin, 'client_registration_form' );
 		$this->loader->add_action( 'admin_footer-post.php', $plugin_admin, 'client_registration_form' );
 		$this->loader->add_action( 'admin_footer_text', $plugin_admin, 'admin_footer_text' );

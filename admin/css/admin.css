@@ -100,6 +100,32 @@
 	margin-right: 80px;
 }
 /*
+  client dropdown box
+*/
+#_sliced_invoice_info .select2-container {
+	margin: 0;
+	width: 100% !important;
+}
+#sliced-update-user .select2-container {
+	margin: 0;
+	width: 95% !important;
+}
+.select2-container .select2-selection--single {
+    height: 34px;
+}
+.select2-container--default .select2-selection--single {
+    border: 1px solid #ddd;
+    border-radius: 0;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 34px;
+}
+
+body.post-type-sliced_invoice > .select2-container--open,
+body.post-type-sliced_quote > .select2-container--open {
+	z-index: 99999999;
+}
+/*
   client popup form
 */
 .sliced #TB_window {

@@ -1,6 +1,7 @@
 <?php
 // Exit if accessed directly
 if ( ! defined('ABSPATH') ) { exit; }
+
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -48,6 +49,130 @@ class Sliced_Admin {
 
 
 	/**
+	 * Ajax handler to search existing clients
+	 *
+	 * @since   3.8.0
+	 */
+	public function ajax_search_clients() {
+
+		if ( $_GET['action'] !== 'sliced-search-clients' ) {
+			return;
+		}
+		
+		$search_term = sanitize_text_field( $_GET['term'] );
+		
+		// search 2 ways, then combine
+		$users1 = get_users( array(
+			'search' => $search_term,
+		) );
+
+		$users2 = get_users( array(
+			'meta_query' => array(
+				array( 'relation' => 'OR' ),
+				array(
+					'key' => '_sliced_client_business',
+					'value' => $search_term,
+					'compare' => 'LIKE',
+				),
+			),
+		) );
+
+		$user_ids = array();
+		foreach ( $users1 as $user ) {
+			$user_ids[] = $user->ID;
+		}
+		foreach ( $users2 as $user ) {
+			$user_ids[] = $user->ID;
+		}
+		$user_ids = array_unique( $user_ids );
+		
+		
+		$current_user = wp_get_current_user();
+		if ( ( $key = array_search( $current_user->ID, $user_ids ) ) !== false ) {
+			unset( $user_ids[$key] );
+		}
+		
+		if ( empty( $user_ids ) ) {
+			echo json_encode( array() );
+			exit;
+		}
+		
+		$args = array(
+			'orderby'   => 'meta_value',
+			'order'     => 'ASC',
+			'include'   => $user_ids,
+			'meta_key'  => '_sliced_client_business',
+			'compare'   => 'EXISTS',
+		);
+
+		$user_query = new WP_User_Query( $args );
+
+		$output = array();
+		if ( ! empty( $user_query->results ) ) {
+			foreach ( $user_query->results as $user ) {
+				$name = get_user_meta( $user->ID, '_sliced_client_business', true );
+				$name .= $user->user_email ? ' (' . $user->user_email . ')' : '';
+				if ( ! $name ) {
+					$name = __( 'User ID:', 'sliced-invoices' ) . ' ' . $user->ID;
+				}
+				$output[$user->ID] = apply_filters( 'sliced_client_query_display_name', $name, $user );
+			}
+		}
+		
+		echo json_encode( $output );
+		exit;
+	}
+
+	
+	/**
+	 * Ajax handler to search existing users who are not clients
+	 *
+	 * @since   3.8.0
+	 */
+	public function ajax_search_non_clients() {
+
+		if ( $_GET['action'] !== 'sliced-search-non-clients' ) {
+			return;
+		}
+		
+		$search_term = sanitize_text_field( $_GET['term'] );
+		
+		$current_user = wp_get_current_user();
+
+		$args = array(
+			'search'     => '*'.$search_term.'*',
+			'exclude'    => $current_user->ID,
+			'meta_query' => array(
+				array(
+					'key'  => '_sliced_client_business',
+					'compare'   => 'NOT EXISTS',
+				),
+			),
+		);
+
+		$user_query = new WP_User_Query( $args );
+		
+		if ( empty( $user_query->results ) ) {
+			echo json_encode(array());
+			exit;
+		}
+
+		$output = array();
+		foreach ( $user_query->results as $user ) {
+			$name = $user->user_login;
+			$name .= $user->user_email ? ' (' . $user->user_email . ')' : '';
+			if ( ! $name ) {
+				$name = __( 'User ID:', 'sliced-invoices' ) . ' ' . $user->ID;
+			}
+			$output[$user->ID] = apply_filters( 'sliced_client_query_display_name', $name, $user );
+		}
+		
+		echo json_encode( $output );
+		exit;
+	}
+
+
+	/**
 	 * Register the stylesheets for the admin area.
 	 *
 	 * @since   2.0.0
@@ -55,19 +180,20 @@ class Sliced_Admin {
 	public function enqueue_styles() {
 
 		global $pagenow;
+		
+		// SelectWoo
+		if ( ( $pagenow === 'post.php' || $pagenow === 'post-new.php' ) && sliced_get_the_type() ) {
+			wp_enqueue_style( 'sliced-select-woo', plugin_dir_url( __FILE__ ) . 'css/selectWoo.min.css', array(), $this->version, 'all' );
+		}
 
-		/*
-		 * Enqueue the main style
-		 */
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/admin.css', array(), $this->version, 'all' );
-
-		/*
-		 * Enqueue thickbox
-		 */
+		// Thickbox
 		if ( ( $pagenow === 'post.php' || $pagenow === 'post-new.php' || $pagenow === 'edit.php' ) && sliced_get_the_type() ) {
 			wp_enqueue_style( 'thickbox' );
 		}
-
+		
+		// the main style
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/admin.css', array(), $this->version, 'all' );
+		
 	}
 
 
@@ -80,58 +206,66 @@ class Sliced_Admin {
 
 		global $pagenow;
 
-		/*
-		 * Enqueue the main script and localize the script
-		 */
-		if ( isset( $_GET['post_type'] ) && $_GET['post_type'] == 'page' )
+		if ( isset( $_GET['post_type'] ) && $_GET['post_type'] === 'page' ) {
 			return;
-
+		}
+		
+		// main scripts & localisation
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/admin.js', array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( $this->plugin_name . '-decimal', plugin_dir_url( __FILE__ ) . 'js/decimal.min.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script( $this->plugin_name , 'sliced_payments', apply_filters( 'sliced_payments_localized_script', array(
-			'tax' => sliced_get_tax_amount(),
+			'tax'             => sliced_get_tax_amount(),
 			'tax_calc_method' => Sliced_Shared::get_tax_calc_method(),
 			'currency_symbol' => sliced_get_currency_symbol(),
-			'currency_pos' => sliced_get_currency_position(),
-			'thousand_sep' => sliced_get_thousand_seperator(),
-			'decimal_sep' => sliced_get_decimal_seperator(),
-			'decimals' => sliced_get_decimals(),
+			'currency_pos'    => sliced_get_currency_position(),
+			'thousand_sep'    => sliced_get_thousand_seperator(),
+			'decimal_sep'     => sliced_get_decimal_seperator(),
+			'decimals'        => sliced_get_decimals(),
 			)
 		) );
 		wp_localize_script( $this->plugin_name, 'sliced_invoices_i18n', array(
-			'convert_quote' => sprintf( __( 'Are you sure you want to convert from %1s to %2s', 'sliced-invoices' ), sliced_get_quote_label(), sliced_get_invoice_label() ),
-			'datepicker_clear' => __( 'Clear', 'sliced-invoices' ),
+			/* translators: %1s is a placeholder for the localized version of "quote". %2s is a placeholder for the localized version of "invoice". */
+			'convert_quote'                 => sprintf( __( 'Are you sure you want to convert from %1s to %2s', 'sliced-invoices' ), sliced_get_quote_label(), sliced_get_invoice_label() ),
+			'datepicker_clear'              => __( 'Clear', 'sliced-invoices' ),
+			'select_create_new_client'      => __( 'Create new client', 'sliced-invoices' ),
+			/* translators: %qty% is a placeholder for any number greater than 1 */
+			'select_input_too_short'        => __( 'Please enter %qty% or more characters', 'sliced-invoices' ),
+			'select_input_too_short_single' => __( 'Please enter 1 or more characters', 'sliced-invoices' ),
+			'select_loading_more'           => __( 'Loading more results&hellip;', 'sliced-invoices' ),
+			/* translators: %qty% is a placeholder for any number greater than 1 */
+			'select_max'                    => __( 'You can only select %qty% items', 'sliced-invoices' ),
+			'select_max_single'             => __( 'You can only select 1 item', 'sliced-invoices' ),
+			'select_no_matches'             => __( 'No matches found', 'sliced-invoices' ),
+			'select_placeholder'            => __( 'Choose client', 'sliced-invoices' ),
+			'select_searching'              => __( 'Searching&hellip;', 'sliced-invoices' ),
 		) );
 
-		/*
-		 * Conditionally enqueue the new client script
-		 */
-		if ( ( $pagenow == 'post.php' || $pagenow == 'post-new.php' ) && ( sliced_get_the_type() ) ) {
+		// New client scripts
+		if ( ( $pagenow === 'post.php' || $pagenow === 'post-new.php' ) && sliced_get_the_type() ) {
 			//wp_enqueue_script( $this->plugin_name . '-new-client', plugin_dir_url( __FILE__ ) . 'js/new-client.js', array( 'jquery' ), $this->version, false );
 			//wp_localize_script( $this->plugin_name . '-new-client' , 'sliced_new_client', array( 'sliced_ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 			wp_enqueue_script( 'password-strength-meter' );
 			wp_enqueue_script( 'user-profile' );
 		}
+		
+		// SelectWoo
+		if ( ( $pagenow === 'post.php' || $pagenow === 'post-new.php' ) && sliced_get_the_type() ) {
+			wp_enqueue_script( 'sliced-select-woo', plugin_dir_url( __FILE__ ) . 'js/selectWoo.min.js', array( 'jquery' ), $this->version, false );
+		}
 
-		/*
-		 * Conditionally enqueue thickbox
-		 */
-		if ( ( $pagenow == 'post.php' || $pagenow == 'post-new.php' || $pagenow == 'edit.php' ) && ( sliced_get_the_type() ) ) {
+		// Thickbox
+		if ( ( $pagenow === 'post.php' || $pagenow === 'post-new.php' || $pagenow === 'edit.php' ) && sliced_get_the_type() ) {
 			wp_enqueue_script( 'thickbox' );
 		}
 
-		/*
-		 * Conditionally enqueue the quick edit js
-		 */
-		if ( ( $pagenow == 'edit.php' ) && ( sliced_get_the_type() ) ) {
+		// Quick edit
+		if ( $pagenow === 'edit.php' && sliced_get_the_type() ) {
 			//wp_enqueue_script( 'jquery-ui-datepicker', array( 'jquery' ), '', false );
 			wp_enqueue_script( $this->plugin_name . 'quick-edit', plugin_dir_url( __FILE__ ) . 'js/quick-edit.js', array( 'jquery' ), $this->version, false );
 		}
 
-		/*
-		 * Conditionally enqueue the charts script
-		 */
-		if ( ( $pagenow == 'admin.php' ) && ( $_GET['page'] == 'sliced_reports' ) ) {
+		// Charts
+		if ( $pagenow === 'admin.php' && $_GET['page'] === 'sliced_reports' ) {
 			wp_enqueue_script( $this->plugin_name . '-chart', plugin_dir_url( __FILE__ ) . 'js/Chart.min.js', array( 'jquery' ), $this->version, false );
 		}
 
