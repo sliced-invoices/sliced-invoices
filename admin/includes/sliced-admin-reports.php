@@ -124,21 +124,21 @@ class Sliced_Reports {
 		$current_month  = date( 'm' );
 		$current_year   = date( 'Y' );
 		$start_month    = strtotime( date( 'Y-m-01 00:00:00' ) );
-		$end_month      = strtotime( date( 'Y-m-t 11:59:59' ) );
+		$end_month      = strtotime( date( 'Y-m-t 23:59:59' ) );
 
 		// working out the fiscal year
 		$year_month_start   = $general['year_start'];
 		$year_month_end     = $general['year_end'];
 
 		$start_year         = strtotime( date( 'Y-'. $year_month_start .'-01 00:00:00' ) ); // 2015-07-01
-		$end_year           = strtotime( date( 'Y-'. $year_month_end .'-t 11:59:59' ) ); // 2015-06-31
+		$end_year           = strtotime( date( 'Y-'. $year_month_end .'-t 23:59:59' ) ); // 2015-06-31
 
 		if( $current_month <= $year_month_start ) {
 			$start_year = strtotime( date( 'Y-'. $year_month_start .'-01 00:00:00', strtotime( '-1 year' ) ) ); // 2015-07-01
 		}
 
 		if( $current_month >= $year_month_end ) {
-			$end_year   = strtotime( date( 'Y-'. $year_month_end .'-t 11:59:59', strtotime('+1 year'))); // 2015-06-31
+			$end_year   = strtotime( date( 'Y-'. $year_month_end .'-t 23:59:59', strtotime('+1 year'))); // 2015-06-31
 		}
 
 		// for the charts
@@ -176,14 +176,14 @@ class Sliced_Reports {
 		$year_month_end     = $general['year_end'];
 
 		$start_year         = strtotime( date( 'Y-'. $year_month_start .'-01 00:00:00' ) ); // 2015-07-01
-		$end_year           = strtotime( date( 'Y-'. $year_month_end .'-t 11:59:59' ) ); // 2015-06-31
+		$end_year           = strtotime( date( 'Y-'. $year_month_end .'-t 23:59:59' ) ); // 2015-06-31
 
 		if( $current_month <= $year_month_start ) {
 			$start_year = strtotime( date( 'Y-'. $year_month_start .'-01 00:00:00', strtotime( '-1 year' ) ) ); // 2015-07-01
 		}
 
 		if( $current_month >= $year_month_end ) {
-			$end_year   = strtotime( date( 'Y-'. $year_month_end .'-t 11:59:59', strtotime('+1 year'))); // 2015-06-31
+			$end_year   = strtotime( date( 'Y-'. $year_month_end .'-t 23:59:59', strtotime('+1 year'))); // 2015-06-31
 		}
 
 		return array(
@@ -232,7 +232,7 @@ class Sliced_Reports {
 
 		// adding the times to start and end to ensure we get the full days
 		$start = strtotime( date('Y-m-d 00:00:00', $start ) );
-		$end   = strtotime( date('Y-m-d 11:59:59', $end ) );
+		$end   = strtotime( date('Y-m-d 23:59:59', $end ) );
 
 		$args = array(
 			'post_type' => 'sliced_' . $type,
