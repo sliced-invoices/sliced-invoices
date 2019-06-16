@@ -932,6 +932,9 @@ td.taxonomy-invoice_status a[href*="cancelled"], td.taxonomy-quote_status a[href
 .sliced .inline-edit-row fieldset label span.title, .sliced .inline-edit-row fieldset.inline-edit-date legend {
   width: 10em;
 }
+.sliced .inline-edit-row fieldset select {
+	vertical-align: baseline;
+}
 .sliced #wpbody-content .quick-edit-row-post .inline-edit-col-left {
   width: 48%;
   margin: 0 1%;
@@ -939,7 +942,6 @@ td.taxonomy-invoice_status a[href*="cancelled"], td.taxonomy-quote_status a[href
 .tablenav a.sliced-export-csv {
 	margin-top: 1px;
 }
-
 
 /* recurring invoices */
 .sliced .recur_next {

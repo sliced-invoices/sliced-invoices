@@ -555,6 +555,36 @@
 
 			return $html;
 		};
+		
+		var options = {};
+		options.altFormat = 'yy-mm-dd';
+		options.beforeShow = function( input, inst ) {
+			$( '#ui-datepicker-div' ).addClass( 'cmb2-element' );
+		};
+		options.changeMonth = true;
+		options.changeYear = true;
+		options.closeText = sliced_invoices_i18n.datepicker_close;
+		options.currentText = sliced_invoices_i18n.datepicker_today;
+		options.dateFormat = sliced_invoices_i18n.datepicker_dateFormat;
+		options.dayNames = sliced_invoices_i18n.datepicker_dayNames;
+		options.dayNamesMin = sliced_invoices_i18n.datepicker_dayNamesMin;
+		options.dayNamesShort = sliced_invoices_i18n.datepicker_dayNamesShort;
+		options.monthNames = sliced_invoices_i18n.datepicker_monthNames;
+		options.monthNamesShort = sliced_invoices_i18n.datepicker_monthNamesShort;
+		options.showButtonPanel = true;
+		
+		options.altField = '#_sliced_invoice_created';
+		$( '#_sliced_invoice_created_i18n' ).datepicker( options );
+		
+		options.altField = '#_sliced_invoice_due';
+		$( '#_sliced_invoice_due_i18n' ).datepicker( options );
+		
+		options.altField = '#_sliced_quote_created';
+		$( '#_sliced_quote_created_i18n' ).datepicker( options );
+		
+		options.altField = '#_sliced_quote_valid_until';
+		$( '#_sliced_quote_valid_until_i18n' ).datepicker( options );
+		
 	});
 	
 	

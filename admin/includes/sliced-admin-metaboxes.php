@@ -485,38 +485,47 @@ class Sliced_Metaboxes {
 			'type'    => 'hidden',
 			'default' => $this->get_quote_suffix(),
 		) );
+		// visible created date field to show localized date.  Not saved.
+		$info->add_field( array(
+			'name'        => __( 'Created Date', 'sliced-invoices' ),
+			'desc'        => '',
+			'id'          => $prefix . 'quote_created_i18n',
+			'type'        => 'text',
+			'attributes'  => array(
+				'required'  => 'required',
+			),
+			'sanitization_cb' => array( $this, 'date_sanitization_empty' ),
+			'escape_cb'   => array( $this, 'get_sliced_quote_created', ),
+		) );
+		// hidden created date field to save real value.
 		$info->add_field( array(
 			'name'        => __( 'Created Date', 'sliced-invoices' ),
 			'desc'        => '',
 			'id'          => $prefix . 'quote_created',
-			'type'        => 'text_date_timestamp',
-			'date_format' => 'Y-m-d',
-			'default'     => Sliced_Shared::get_todays_date_iso8601(),
+			'type'        => 'hidden',
+			'default'     => time(), // current_time( 'timestamp', true ) no longer recommended. see https://codex.wordpress.org/Function_Reference/current_time
+			'sanitization_cb' => array( $this, 'date_sanitization' ),
 			'attributes'  => array(
-				'data-datepicker' => json_encode( array(
-					'closeText'       => __( 'Close', 'sliced-invoices' ),
-					'currentText'     => __( 'Today', 'sliced-invoices' ),
-					'showButtonPanel' => true,
-				) ),
 				'required'  => 'required',
-				'readonly'  => 'readonly',
 			),
 		) );
+		// visible valid until date field to show localized date.  Not saved.
+		$info->add_field( array(
+			'name'        => __( 'Valid Until Date', 'sliced-invoices' ),
+			'desc'        => '',
+			'id'          => $prefix . 'quote_valid_until_i18n',
+			'type'        => 'text',
+			'sanitization_cb' => array( $this, 'date_sanitization_empty' ),
+			'escape_cb'   => array( $this, 'get_sliced_quote_valid_until', ),
+		) );
+		// hidden valid until date field to save real value.
 		$info->add_field( array(
 			'name'        => __( 'Valid Until Date', 'sliced-invoices' ),
 			'desc'        => '',
 			'id'          => $prefix . 'quote_valid_until',
-			'type'        => 'text_date_timestamp',
-			'date_format' => 'Y-m-d',
+			'type'        => 'hidden',
 			'default'     => Sliced_Quote::get_auto_valid_until_date(),
-			'attributes'  => array(
-				'data-datepicker' => json_encode( array(
-					'closeText'       => __( 'Close', 'sliced-invoices' ),
-					'currentText'     => __( 'Today', 'sliced-invoices' ),
-					'showButtonPanel' => true,
-				) ),
-				'readonly'  => 'readonly',
-			),
+			'sanitization_cb' => array( $this, 'date_sanitization_end_of_day' ),
 		) );
 		$info->add_field( array(
 			'name'       => __( 'Currency', 'sliced-invoices' ),
@@ -657,38 +666,47 @@ class Sliced_Metaboxes {
 			'id'   => $prefix . 'order_number',
 			'type' => 'text',
 		) );
+		// visible created date field to show localized date.  Not saved.
+		$info->add_field( array(
+			'name'        => __( 'Created Date', 'sliced-invoices' ),
+			'desc'        => '',
+			'id'          => $prefix . 'invoice_created_i18n',
+			'type'        => 'text',
+			'attributes'  => array(
+				'required'  => 'required',
+			),
+			'sanitization_cb' => array( $this, 'date_sanitization_empty' ),
+			'escape_cb'   => array( $this, 'get_sliced_invoice_created', ),
+		) );
+		// hidden created date field to save real value.
 		$info->add_field( array(
 			'name'        => __( 'Created Date', 'sliced-invoices' ),
 			'desc'        => '',
 			'id'          => $prefix . 'invoice_created',
-			'type'        => 'text_date_timestamp',
-			'date_format' => 'Y-m-d',
-			'default'     => Sliced_Shared::get_todays_date_iso8601(),
+			'type'        => 'hidden',
+			'default'     => time(), // current_time( 'timestamp', true ) no longer recommended. see https://codex.wordpress.org/Function_Reference/current_time
+			'sanitization_cb' => array( $this, 'date_sanitization' ),
 			'attributes'  => array(
-				'data-datepicker' => json_encode( array(
-					'closeText'       => __( 'Close', 'sliced-invoices' ),
-					'currentText'     => __( 'Today', 'sliced-invoices' ),
-					'showButtonPanel' => true,
-				) ),
 				'required'  => 'required',
-				'readonly'  => 'readonly',
 			),
 		) );
+		// visible due date field to show localized date.  Not saved.
+		$info->add_field( array(
+			'name'        => __( 'Due Date', 'sliced-invoices' ),
+			'desc'        => '',
+			'id'          => $prefix . 'invoice_due_i18n',
+			'type'        => 'text',
+			'sanitization_cb' => array( $this, 'date_sanitization_empty' ),
+			'escape_cb'   => array( $this, 'get_sliced_invoice_due', ),
+		) );
+		// hidden due date field to save real value.
 		$info->add_field( array(
 			'name'        => __( 'Due Date', 'sliced-invoices' ),
 			'desc'        => '',
 			'id'          => $prefix . 'invoice_due',
-			'type'        => 'text_date_timestamp',
-			'date_format' => 'Y-m-d',
+			'type'        => 'hidden',
 			'default'     => Sliced_Invoice::get_auto_due_date(),
-			'attributes'  => array(
-				'data-datepicker' => json_encode( array(
-					'closeText'       => __( 'Close', 'sliced-invoices' ),
-					'currentText'     => __( 'Today', 'sliced-invoices' ),
-					'showButtonPanel' => true,
-				) ),
-				'readonly'  => 'readonly',
-			),
+			'sanitization_cb' => array( $this, 'date_sanitization_end_of_day' ),
 		) );
 		$info->add_field( array(
 			'name'       => __( 'Currency', 'sliced-invoices' ),
@@ -972,6 +990,84 @@ class Sliced_Metaboxes {
 	protected function initiate_logs() {
 		$this->logs = new Sliced_Logs;
 	}
+	
+	
+	/**
+	 * Date sanitization methods for use with our own datepickers.
+	 *
+	 * @since  3.8.0
+	 */
+	public function date_sanitization( $in ) {
+		if ( is_numeric( $in ) ) {
+			// already a timestamp. don't convert it again.
+			return $in;
+		}
+		// convert localized yyyy-mm-dd input to utc timestamp for saving in DB
+		$date = strtotime( $in );
+		$Y = date( 'Y', $date );
+		$m = date( 'm', $date );
+		$d = date( 'd', $date );
+		$H = date( 'H', $date );
+		$i = date( 'i', $date );
+		$s = date( 's', $date );
+		$out = Sliced_Shared::get_timestamp_from_local_time( $Y, $m, $d, $H, $i, $s );
+		return $out > 0 ? $out : 0;
+	}
+	public function date_sanitization_empty( $in ) {
+		return '';
+	}
+	public function date_sanitization_end_of_day( $in ) {
+		if ( is_numeric( $in ) ) {
+			// already a timestamp. don't convert it again.
+			return $in;
+		}
+		// convert localized yyyy-mm-dd input to utc timestamp for saving in DB
+		$date = strtotime( $in );
+		$Y = date( 'Y', $date );
+		$m = date( 'm', $date );
+		$d = date( 'd', $date );
+		$H = '23';
+		$i = '59';
+		$s = '59';
+		$out = Sliced_Shared::get_timestamp_from_local_time( $Y, $m, $d, $H, $i, $s );
+		return $out > 0 ? $out : 0;
+	}
+	
+	
+	/**
+	 * Callbacks to get correct values for CMB2
+	 *
+	 * @since  3.8.0
+	 */
+	public function get_sliced_invoice_created() {
+		$value = get_post_meta( sliced_get_the_id(), '_sliced_invoice_created', true );
+		if ( $value === '' ) {
+			$value = time(); // current_time( 'timestamp', true ) no longer recommended. see https://codex.wordpress.org/Function_Reference/current_time
+		}
+		return $value > 0 ? Sliced_Shared::get_local_date_i18n_from_timestamp( $value ) : '';
+	}
+	public function get_sliced_invoice_due() {
+		$value = get_post_meta( sliced_get_the_id(), '_sliced_invoice_due', true );
+		if ( $value === '' ) {
+			$value = Sliced_Invoice::get_auto_due_date();
+		}
+		return $value > 0 ? Sliced_Shared::get_local_date_i18n_from_timestamp( $value ) : '';
+	}
+	public function get_sliced_quote_created() {
+		$value = get_post_meta( sliced_get_the_id(), '_sliced_quote_created', true );
+		if ( $value === '' ) {
+			$value = time(); // current_time( 'timestamp', true ) no longer recommended. see https://codex.wordpress.org/Function_Reference/current_time
+		}
+		return $value > 0 ? Sliced_Shared::get_local_date_i18n_from_timestamp( $value ) : '';
+	}
+	public function get_sliced_quote_valid_until() {
+		$value = get_post_meta( sliced_get_the_id(), '_sliced_quote_valid_until', true );
+		if ( $value === '' ) {
+			$value = Sliced_Quote::get_auto_valid_until_date();
+		}
+		return $value > 0 ? Sliced_Shared::get_local_date_i18n_from_timestamp( $value ) : '';
+	}
+	
 
 	/**
 	 * Replace the text_money Sanitization method.

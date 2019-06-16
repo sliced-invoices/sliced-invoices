@@ -170,6 +170,92 @@ class Sliced_Admin {
 		echo json_encode( $output );
 		exit;
 	}
+	
+	
+	/*
+	 * Make sure the jQuery UI datepicker is enqueued for CMB2.
+	 *
+	 * If there are no cmb2 fields of the datepicker type on a page, cmb2 will
+	 * not enqueue the datepicker scripts.  Since we are now using cmb2 field
+	 * type 'text' for dates and initializing datepickers on our own, we need to
+	 * manually add them as cmb2 dependencies.
+	 *
+	 * @since   3.8.0
+	 */
+	public function cmb2_enqueue_datepicker( $dependencies ) {
+		$dependencies['jquery-ui-core'] = 'jquery-ui-core';
+		$dependencies['jquery-ui-datepicker'] = 'jquery-ui-datepicker';
+		$dependencies['jquery-ui-datetimepicker'] = 'jquery-ui-datetimepicker';
+		return $dependencies;
+	}
+	
+	
+	/*
+	 * Matches each symbol of PHP date format standard
+	 * with jQuery equivalent codeword
+	 * @author Tristan Jahier
+	 *
+	 * @since   3.8.0
+	 */
+	private function dateformat_PHP_to_jQueryUI( $php_format ) {
+		$SYMBOLS_MATCHING = array(
+			// Day
+			'd' => 'dd',
+			'D' => 'D',
+			'j' => 'd',
+			'l' => 'DD',
+			'N' => '',
+			'S' => '',
+			'w' => '',
+			'z' => 'o',
+			// Week
+			'W' => '',
+			// Month
+			'F' => 'MM',
+			'm' => 'mm',
+			'M' => 'M',
+			'n' => 'm',
+			't' => '',
+			// Year
+			'L' => '',
+			'o' => '',
+			'Y' => 'yy',
+			'y' => 'y',
+			// Time
+			'a' => '',
+			'A' => '',
+			'B' => '',
+			'g' => '',
+			'G' => '',
+			'h' => '',
+			'H' => '',
+			'i' => '',
+			's' => '',
+			'u' => ''
+		);
+		$jqueryui_format = "";
+		$escaping = false;
+		for($i = 0; $i < strlen($php_format); $i++)
+		{
+			$char = $php_format[$i];
+			if($char === '\\') // PHP date format escaping character
+			{
+				$i++;
+				if($escaping) $jqueryui_format .= $php_format[$i];
+				else $jqueryui_format .= '\'' . $php_format[$i];
+				$escaping = true;
+			}
+			else
+			{
+				if($escaping) { $jqueryui_format .= "'"; $escaping = false; }
+				if(isset($SYMBOLS_MATCHING[$char]))
+					$jqueryui_format .= $SYMBOLS_MATCHING[$char];
+				else
+					$jqueryui_format .= $char;
+			}
+		}
+		return $jqueryui_format;
+	}
 
 
 	/**
@@ -227,6 +313,14 @@ class Sliced_Admin {
 			/* translators: %1s is a placeholder for the localized version of "quote". %2s is a placeholder for the localized version of "invoice". */
 			'convert_quote'                 => sprintf( __( 'Are you sure you want to convert from %1s to %2s', 'sliced-invoices' ), sliced_get_quote_label(), sliced_get_invoice_label() ),
 			'datepicker_clear'              => __( 'Clear', 'sliced-invoices' ),
+			'datepicker_close'              => __( 'Close', 'sliced-invoices' ),
+			'datepicker_dateFormat'         => $this->dateformat_PHP_to_jQueryUI( get_option( 'date_format' ) ),
+			'datepicker_dayNames'           => explode( ',', esc_html__( 'Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday', 'sliced-invoices' ) ),
+			'datepicker_dayNamesMin'        => explode( ',', esc_html__( 'Su, Mo, Tu, We, Th, Fr, Sa', 'sliced-invoices' ) ),
+			'datepicker_dayNamesShort'      => explode( ',', esc_html__( 'Sun, Mon, Tue, Wed, Thu, Fri, Sat', 'sliced-invoices' ) ),
+			'datepicker_monthNames'         => explode( ',', esc_html__( 'January, February, March, April, May, June, July, August, September, October, November, December', 'sliced-invoices' ) ),
+			'datepicker_monthNamesShort'    => explode( ',', esc_html__( 'Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec', 'sliced-invoices' ) ),
+			'datepicker_today'              => __( 'Today', 'sliced-invoices' ),
 			'select_create_new_client'      => __( 'Create new client', 'sliced-invoices' ),
 			/* translators: %qty% is a placeholder for any number greater than 1 */
 			'select_input_too_short'        => __( 'Please enter %qty% or more characters', 'sliced-invoices' ),
@@ -963,7 +1057,7 @@ class Sliced_Admin {
 			$number = sliced_get_next_invoice_number();
 			$payment = sliced_get_accepted_payment_methods();
 			update_post_meta( $id, '_sliced_invoice_terms', $invoice['terms'] );
-			update_post_meta( $id, '_sliced_invoice_created', current_time( 'timestamp' ) );
+			update_post_meta( $id, '_sliced_invoice_created', time() );
 			update_post_meta( $id, '_sliced_invoice_number', $number );
 			update_post_meta( $id, '_sliced_invoice_prefix', sliced_get_invoice_prefix() );
 			update_post_meta( $id, '_sliced_invoice_suffix', sliced_get_invoice_suffix() );
@@ -1040,7 +1134,7 @@ class Sliced_Admin {
 			$number = sliced_get_next_invoice_number();
 			$payment = sliced_get_accepted_payment_methods();
 			update_post_meta( $new_post_id, '_sliced_invoice_terms', $invoice['terms'] );
-			update_post_meta( $new_post_id, '_sliced_invoice_created', current_time( 'timestamp' ) );
+			update_post_meta( $new_post_id, '_sliced_invoice_created', time() );
 			update_post_meta( $new_post_id, '_sliced_invoice_number', $number );
 			update_post_meta( $new_post_id, '_sliced_invoice_prefix', sliced_get_invoice_prefix() );
 			update_post_meta( $new_post_id, '_sliced_invoice_suffix', sliced_get_invoice_suffix() );
@@ -1085,73 +1179,6 @@ class Sliced_Admin {
 	 */
 	public function mark_invoice_overdue() {
 
-		/**
-		 * Some explanation of the timezone maths, because it gets confusing quickly:
-		 * 
-		 * 1) Due dates are stored in _sliced_invoice_due as the unix timestamp
-		 * representing the date, at precisely 12:00 AM UTC.  For example: a due date
-		 * of 25 January 2017 would be stored as the timestamp equivalent of
-		 * '2017-01-25 00:00:00' (which is 1485302400).
-		 * 
-		 * 
-		 * 2) current_time( 'timestamp' ) returns the unix timestamp of the current time,
-		 * localized to the timezone set in the WordPress settings.
-		 * 
-		 * For example:
-		 * - let's say the current time in UTC is 1485334800 (2017-01-25 09:00:00)
-		 * - and let's say the WordPress timezone is set to UTC+11 (Melbourne)
-		 * - in this case, current_time( 'timestamp' ) will return 1485374400
-		 * (2017-01-25 20:00:00), which is the current time in Melbourne.
-		 *    
-		 * 
-		 * 3) So, you ask, why are we comparing a UTC timestamp (due date) with a
-		 * localized timestamp (current_time('timestamp'))?  Shouldn't we be comparing
-		 * UTC with UTC?  I.e. shouldn't we be using current_time('timestamp', true)?
-		 * 
-		 * You'd think so, but here's why we don't.  If our due date is
-		 * 2017-01-25 00:00:00 UTC, and our site is in Melbourne, comparing UTC to UTC
-		 * would mean our invoices become "overdue" at 2017-01-25 11:00:00 Melbourne
-		 * time.  Kind of odd to become "overdue" in the middle of the day, don't you
-		 * think?
-		 * 
-		 * To solve this, we could localize the due date.  For sake of argument, let's
-		 * consider the scenario using UTC with current_time('timestamp',true).  If we
-		 * roll back the due date by the 11 hour offset, we get: 2017-01-24 13:00:00 UTC,
-		 * which is the same as 2017-01-25 00:00:00 Melbourne time.  The formula would
-		 * thus be:
-		 * 
-		 *         due_date - offset < current_time('timestamp',true)
-		 * 		
-		 *     ...which can also be written as:
-		 * 	
-		 * 	       due_date < current_time('timestamp',true) + offset
-		 * 		
-		 *     ...but, guess what, current_time('timestamp',true) + offset is the exact
-		 *     same thing as current_time('timestamp') (the localized time)!
-		 * 	
-		 *     So we just use:
-		 * 	
-		 * 	       due_date < current_time('timestamp')
-		 * 	
-		 * Confused yet?  Here's one final complication:
-		 *    
-		 * 
-		 * 4) Even though the due dates are stored with the time 00:00:00 (due to issues
-		 * we had between CMB2 and the Datepicker script), we don't really want to
-		 * consider an invoice "overdue" until the entire day has passed.  So we have to
-		 * advance the due date by 23:59:59, or 86399 seconds.  This makes our comparison
-		 * formula like this:
-		 * 
-		 *         due_date + 86399 < current_time('timestamp')
-		 * 		
-		 *     ...which can also be written as:
-		 * 	
-		 *         due_date < current_time('timestamp') - 86399
-		 * 		
-		 *     ...hence what you see below.
-		 *
-		 */
-		
 		$taxonomy = 'invoice_status';
 		$args = array(
 			'post_type'     =>  'sliced_invoice',
@@ -1164,7 +1191,7 @@ class Sliced_Admin {
 				),
 				array(
 					'key' 		=>  '_sliced_invoice_due',
-					'value' 	=>  current_time( 'timestamp' ) - 86399, // see explanation above
+					'value' 	=>  time(), // current_time( 'timestamp' ) no longer recommended. see https://codex.wordpress.org/Function_Reference/current_time
 					'compare' 	=>  '<',
 				),
 			),
@@ -1179,9 +1206,7 @@ class Sliced_Admin {
 		);
 		$overdues = get_posts( apply_filters( 'sliced_mark_overdue_query', $args ) );
 
-		/*
-		 * If a post exists, mark it as overdue.
-		 */
+		// If a post exists, mark it as overdue.
 		foreach ( $overdues as $overdue ) {
 			Sliced_Invoice::set_as_overdue( $overdue->ID );
 		}
@@ -1196,10 +1221,6 @@ class Sliced_Admin {
 	 */
 	public function mark_quote_expired() {
 
-		/**
-		 * for extended discussion of the timezone maths, see mark_invoice_overdue() above.
-		 */
-		
 		$taxonomy = 'quote_status';
 		$args = array(
 			'post_type'     =>  'sliced_quote',
@@ -1212,7 +1233,7 @@ class Sliced_Admin {
 				),
 				array(
 					'key' 		=>  '_sliced_quote_valid_until',
-					'value' 	=>  current_time( 'timestamp' ) - 86399, // see explanation above
+					'value' 	=>  time(), // current_time( 'timestamp' ) no longer recommended. see https://codex.wordpress.org/Function_Reference/current_time
 					'compare' 	=>  '<',
 				),
 			),
@@ -1227,9 +1248,7 @@ class Sliced_Admin {
 		);
 		$expireds = get_posts( apply_filters( 'sliced_mark_expired_query', $args ) );
 
-		/*
-		 * If a post exists, mark it as expired.
-		 */
+		// If a post exists, mark it as expired.
 		foreach ( $expireds as $expired ) {
 			Sliced_Quote::set_as_expired( $expired->ID );
 		}
@@ -2344,7 +2363,7 @@ class Sliced_Admin {
 			$row[4]  = sliced_get_client_address();
 			$row[5]  = sliced_get_client_extra_info();
 			$row[6]  = rtrim( implode( ',', $status_array ), ',' );
-			$row[7]  = date_i18n( get_option( 'date_format' ), (int) sliced_get_created() );
+			$row[7]  = sliced_get_created() > 0 ? Sliced_Shared::get_local_date_i18n_from_timestamp( sliced_get_created() ) : '';
 			$row[8]  = html_entity_decode( sliced_get_sub_total() );
 			$row[9]  = html_entity_decode( sliced_get_tax_total() );
 			$row[10] = html_entity_decode( sliced_get_total() );
@@ -2478,7 +2497,7 @@ class Sliced_Admin {
 				$row[5]  = sliced_get_client_address();
 				$row[6]  = sliced_get_client_extra_info();
 				$row[7]  = rtrim( implode( ',', $status_array ), ',' );
-				$row[8]  = date_i18n( get_option( 'date_format' ), (int) sliced_get_created() );
+				$row[8]  = sliced_get_created() > 0 ? Sliced_Shared::get_local_date_i18n_from_timestamp( sliced_get_created() ) : '';
 				
 				// grab the remaining fields for a complete record
 				$id = get_the_ID();

@@ -17,7 +17,7 @@ if ( ! defined('ABSPATH') ) {
 }
 
 define( 'SLICED_VERSION', '3.7.5' );
-define( 'SLICED_DB_VERSION', '7' );
+define( 'SLICED_DB_VERSION', '8' );
 define( 'SLICED_PATH', plugin_dir_path( __FILE__ ) );
 
 
@@ -61,10 +61,15 @@ require SLICED_PATH . 'core/class-sliced.php';
  * @since   2.0.0
  */
 function run_sliced_invoices() {
+	
+	// 2019-06-15 SLICED_TIMEZONE may be removed in the near future
+	// it is currently used by the following extensions: Subscription Invoices
+	// use Sliced_Shared::get_local_timezone() instead
 	define( 'SLICED_TIMEZONE', (get_option( 'timezone_string' ) ? get_option( 'timezone_string' ) : date_default_timezone_get() ) );
+	
 	$plugin = new Sliced_Invoices();
 	$plugin->run();
- }
+}
 add_action( 'plugins_loaded', 'run_sliced_invoices' ); // wait until 'plugins_loaded' hook fires, for WP Multisite compatibility
 
 
@@ -75,6 +80,7 @@ add_action( 'plugins_loaded', 'run_sliced_invoices' ); // wait until 'plugins_lo
  * ==============================================================================
  *
  * History:
+ * 2019-06-15 -- DB 8, for Sliced Invoices versions < 3.8.0
  * 2018-03-06 -- DB 7, for Sliced Invoices versions < 3.7.0
  * 2017-11-03 -- DB 6, for Sliced Invoices versions < 3.6.1
  * 2017-10-16 -- DB 5, for Sliced Invoices versions < 3.6.0
@@ -90,6 +96,138 @@ function sliced_invoices_db_update() {
 	if ( isset( $sliced_db_check['db_version'] ) && $sliced_db_check['db_version'] >= SLICED_DB_VERSION ) {
 		// all good
 		return;
+	}
+	
+	// upgrade from v7 to 8
+	if ( ! isset( $sliced_db_check['db_version'] ) || $sliced_db_check['db_version'] < 8 ) {
+		
+		// quote created:
+		$args = array(
+			'post_type' => 'sliced_quote',
+			'posts_per_page' => -1,
+			'meta_query' =>
+				array(
+					array(
+						'key'     => '_sliced_quote_created',
+						'compare' => 'EXISTS'
+					)
+				)
+			);
+		$query = new WP_Query( $args );
+		if ( $query->have_posts() ) { 
+			while ( $query->have_posts() ) {
+				$query->the_post();
+				$created = get_post_meta( $post->ID, '_sliced_quote_created', true );
+				$date = intval( $created );
+				if ( $date > 0 ) {
+					$Y = date( 'Y', $date );
+					$m = date( 'm', $date );
+					$d = date( 'd', $date );
+					$H = '00';
+					$i = '00';
+					$s = '00';
+					$out = Sliced_Shared::get_timestamp_from_local_time( $Y, $m, $d, $H, $i, $s );
+					update_post_meta( $post->ID, '_sliced_quote_created', $out );
+				}
+			}
+		}
+		wp_reset_postdata();
+		
+		// quote valid until:
+		$args = array(
+			'post_type' => 'sliced_quote',
+			'posts_per_page' => -1,
+			'meta_query' =>
+				array(
+					array(
+						'key'     => '_sliced_quote_valid_until',
+						'compare' => 'EXISTS'
+					)
+				)
+			);
+		$query = new WP_Query( $args );
+		if ( $query->have_posts() ) { 
+			while ( $query->have_posts() ) {
+				$query->the_post();
+				$valid = get_post_meta( $post->ID, '_sliced_quote_valid_until', true );
+				$date = intval( $valid );
+				if ( $date > 0 ) {
+					$Y = date( 'Y', $date );
+					$m = date( 'm', $date );
+					$d = date( 'd', $date );
+					$H = '23';
+					$i = '59';
+					$s = '59';
+					$out = Sliced_Shared::get_timestamp_from_local_time( $Y, $m, $d, $H, $i, $s );
+					update_post_meta( $post->ID, '_sliced_quote_valid_until', $out );
+				}
+			}
+		}
+		wp_reset_postdata();
+		
+		// invoice created:
+		$args = array(
+			'post_type' => 'sliced_invoice',
+			'posts_per_page' => -1,
+			'meta_query' =>
+				array(
+					array(
+						'key'     => '_sliced_invoice_created',
+						'compare' => 'EXISTS'
+					)
+				)
+			);
+		$query = new WP_Query( $args );
+		if ( $query->have_posts() ) { 
+			while ( $query->have_posts() ) {
+				$query->the_post();
+				$created = get_post_meta( $post->ID, '_sliced_invoice_created', true );
+				$date = intval( $created );
+				if ( $date > 0 ) {
+					$Y = date( 'Y', $date );
+					$m = date( 'm', $date );
+					$d = date( 'd', $date );
+					$H = '00';
+					$i = '00';
+					$s = '00';
+					$out = Sliced_Shared::get_timestamp_from_local_time( $Y, $m, $d, $H, $i, $s );
+					update_post_meta( $post->ID, '_sliced_invoice_created', $out );
+				}
+			}
+		}
+		wp_reset_postdata();
+		
+		// invoice due:
+		$args = array(
+			'post_type' => 'sliced_invoice',
+			'posts_per_page' => -1,
+			'meta_query' =>
+				array(
+					array(
+						'key'     => '_sliced_invoice_due',
+						'compare' => 'EXISTS'
+					)
+				)
+			);
+		$query = new WP_Query( $args );
+		if ( $query->have_posts() ) { 
+			while ( $query->have_posts() ) {
+				$query->the_post();
+				$due = get_post_meta( $post->ID, '_sliced_invoice_due', true );
+				$date = intval( $due );
+				if ( $date > 0 ) {
+					$Y = date( 'Y', $date );
+					$m = date( 'm', $date );
+					$d = date( 'd', $date );
+					$H = '23';
+					$i = '59';
+					$s = '59';
+					$out = Sliced_Shared::get_timestamp_from_local_time( $Y, $m, $d, $H, $i, $s );
+					update_post_meta( $post->ID, '_sliced_invoice_due', $out );
+				}
+			}
+		}
+		wp_reset_postdata();
 	}
 	
 	// upgrade from v6 to 7

@@ -81,14 +81,14 @@ if ( ! function_exists( 'sliced_display_invoice_details' ) ) :
 				<?php if( sliced_get_invoice_created() ) : ?>
 					<tr>
 						<td><?php printf( esc_html_x( '%s Date', 'invoice date', 'sliced-invoices' ), sliced_get_invoice_label() ); ?></td>
-						<td><?php echo date_i18n( get_option( 'date_format' ), (int) sliced_get_invoice_created() ) ?></td>
+						<td><?php echo Sliced_Shared::get_local_date_i18n_from_timestamp( sliced_get_invoice_created() ); ?></td>
 					</tr>
 				<?php endif; ?>
 
 				<?php if( sliced_get_invoice_due() ) : ?>
 					<tr>
 						<td><?php _e( 'Due Date', 'sliced-invoices' ) ?></td>
-						<td><?php echo date_i18n( get_option( 'date_format' ), (int) sliced_get_invoice_due() ) ?></td>
+						<td><?php echo Sliced_Shared::get_local_date_i18n_from_timestamp( sliced_get_invoice_due() ); ?></td>
 					</tr>
 				<?php endif; ?>
 
@@ -126,14 +126,14 @@ if ( ! function_exists( 'sliced_display_quote_details' ) ) :
 				<?php if( sliced_get_quote_created() ) : ?>
 					<tr>
 						<td><?php printf( esc_html_x( '%s Date', 'quote date', 'sliced-invoices' ), sliced_get_quote_label() ); ?></td>
-						<td><?php echo date_i18n( get_option( 'date_format' ), (int) sliced_get_quote_created() ) ?></td>
+						<td><?php echo Sliced_Shared::get_local_date_i18n_from_timestamp( sliced_get_quote_created() ); ?></td>
 					</tr>
 				<?php endif; ?>
 
 				<?php if( sliced_get_quote_valid() ) : ?>
 					<tr>
 						<td><?php _e( 'Valid Until', 'sliced-invoices' ) ?></td>
-						<td><?php echo date_i18n( get_option( 'date_format' ), (int) sliced_get_quote_valid() ) ?></td>
+						<td><?php echo Sliced_Shared::get_local_date_i18n_from_timestamp( sliced_get_quote_valid() ); ?></td>
 					</tr>
 				<?php endif; ?>
 

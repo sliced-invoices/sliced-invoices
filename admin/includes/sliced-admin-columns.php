@@ -175,26 +175,41 @@ class Sliced_Columns {
 			
 			
 			case 'sliced_created':
-
-				if ( $type == 'quote' ) {
-
-		        	echo sliced_get_quote_created() ? '<span class="created"><span class="dashicons dashicons-calendar-alt"></span> ' . date_i18n( get_option( 'date_format' ), (int) sliced_get_quote_created() ) . '</span><br />' : '';
-
-		        	echo sliced_get_quote_valid() ? '<span class="description">' . sprintf( __( 'Valid: %s', 'sliced-invoices' ), date_i18n( get_option( 'date_format' ), (int) sliced_get_quote_valid() ) ) . '</span>': '';
-
-				} else {
-
-					echo sliced_get_invoice_created() ? '<span class="created"><span class="dashicons dashicons-calendar-alt"></span> ' . date_i18n( get_option( 'date_format' ), (int) sliced_get_invoice_created() ) . '</span><br />' : '';
-					echo sliced_get_invoice_due() ? '<span class="description">' . sprintf( __( 'Due: %s', 'sliced-invoices' ), date_i18n( get_option( 'date_format' ), (int) sliced_get_invoice_due() ) ) . '</span>': '';
-
+			
+				$created = sliced_get_created();
+				$due     = sliced_get_invoice_due();
+				$valid   = sliced_get_quote_valid();
+				
+				if ( $created ) {
+					echo '<span class="created"><span class="dashicons dashicons-calendar-alt"></span> ' .
+						Sliced_Shared::get_local_date_i18n_from_timestamp( $created )
+						. '</span><br />';
 				}
-
+				
+				if ( $type === 'quote' && $valid > 0 ) {
+		        	echo '<span class="description">' . 
+						sprintf(
+							__( 'Valid: %s', 'sliced-invoices' ),
+							Sliced_Shared::get_local_date_i18n_from_timestamp( $valid )
+						)
+						. '</span>';
+				}
+				
+				if ( $type === 'invoice' && $due > 0 ) {
+					echo '<span class="description">' .
+						sprintf(
+							__( 'Due: %s', 'sliced-invoices' ),
+							Sliced_Shared::get_local_date_i18n_from_timestamp( $due )
+						)
+						. '</span>';
+				}
+				
 				break;
 
 
 			case 'sliced_total':
 
-				if ( $type == 'quote' ) {
+				if ( $type === 'quote' ) {
 
 					$total = sliced_get_quote_total() ? '<strong>' . sprintf( __( 'Total: %s', 'sliced-invoices' ), sliced_get_quote_total() ) . '</strong><br />' : '&mdash;<br />';
 
@@ -209,10 +224,13 @@ class Sliced_Columns {
 				/*
 				 * Add custom inline data for quickedit use
 				 */
-				$valid = sliced_get_quote_valid() ? date_i18n( get_option( 'date_format' ), (int) sliced_get_quote_valid() ) : '';
-				$due   = sliced_get_invoice_due() ? date_i18n( get_option( 'date_format' ), (int) sliced_get_invoice_due() ) : '';
-
+				$created = sliced_get_created();
+				$created = $created > 0 ? $created : time(); // if not set, use current time
+				$due     = sliced_get_invoice_due();
+				$valid   = sliced_get_quote_valid();
+				
 				$status = '';
+				
 				$terms = wp_get_post_terms( $id, $type . '_status', array( "fields" => "all" ) );
 				if ( ! empty( $terms ) ) {
 					$status = $terms[0]->slug;
@@ -221,10 +239,28 @@ class Sliced_Columns {
 				echo '
 					<div class="hidden" id="sliced_inline_' . $id . '">
 						<div class="number">' . sliced_get_number() . '</div>
-						<div class="created">' . date_i18n( get_option( 'date_format' ), (int) sliced_get_created() ) . '</div>
+						<div class="created">' . $created . '</div>
+						<div class="created_d">' . Sliced_Shared::get_local_date_from_timestamp( $created, 'd' ) . '</div>
+						<div class="created_m">' . Sliced_Shared::get_local_date_from_timestamp( $created, 'm' ) . '</div>
+						<div class="created_Y">' . Sliced_Shared::get_local_date_from_timestamp( $created, 'Y' ) . '</div>
+						<div class="created_H">' . Sliced_Shared::get_local_date_from_timestamp( $created, 'H' ) . '</div>
+						<div class="created_i">' . Sliced_Shared::get_local_date_from_timestamp( $created, 'i' ) . '</div>
+						<div class="created_s">' . Sliced_Shared::get_local_date_from_timestamp( $created, 's' ) . '</div>
 						<div class="client">' . sliced_get_client_id() . '</div>
 						<div class="due">' . $due . '</div>
+						<div class="due_d">' . ( $due > 0 ? Sliced_Shared::get_local_date_from_timestamp( $due, 'd' ) : '' ) . '</div>
+						<div class="due_m">' . ( $due > 0 ? Sliced_Shared::get_local_date_from_timestamp( $due, 'm' ) : '0' ) . '</div>
+						<div class="due_Y">' . ( $due > 0 ? Sliced_Shared::get_local_date_from_timestamp( $due, 'Y' ) : '' ) . '</div>
+						<div class="due_H">' . ( $due > 0 ? Sliced_Shared::get_local_date_from_timestamp( $due, 'H' ) : '' ) . '</div>
+						<div class="due_i">' . ( $due > 0 ? Sliced_Shared::get_local_date_from_timestamp( $due, 'i' ) : '' ) . '</div>
+						<div class="due_s">' . ( $due > 0 ? Sliced_Shared::get_local_date_from_timestamp( $due, 's' ) : '' ) . '</div>
 						<div class="valid">' . $valid . '</div>
+						<div class="valid_d">' . ( $valid > 0 ? Sliced_Shared::get_local_date_from_timestamp( $valid, 'd' ) : '' ) . '</div>
+						<div class="valid_m">' . ( $valid > 0 ? Sliced_Shared::get_local_date_from_timestamp( $valid, 'm' ) : '0' ) . '</div>
+						<div class="valid_Y">' . ( $valid > 0 ? Sliced_Shared::get_local_date_from_timestamp( $valid, 'Y' ) : '' ) . '</div>
+						<div class="valid_H">' . ( $valid > 0 ? Sliced_Shared::get_local_date_from_timestamp( $valid, 'H' ) : '' ) . '</div>
+						<div class="valid_i">' . ( $valid > 0 ? Sliced_Shared::get_local_date_from_timestamp( $valid, 'i' ) : '' ) . '</div>
+						<div class="valid_s">' . ( $valid > 0 ? Sliced_Shared::get_local_date_from_timestamp( $valid, 's' ) : '' ) . '</div>
 						<div class="order_number">' . sliced_get_invoice_order_number() . '</div>
 						<div class="terms">' . sliced_get_terms_conditions() . '</div>
 						<div class="status">' . $status . '</div>

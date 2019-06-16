@@ -182,6 +182,8 @@ class Sliced_Invoices {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		
+		$this->loader->add_filter( 'cmb2_script_dependencies', $plugin_admin, 'cmb2_enqueue_datepicker' );
 
 		$this->loader->add_action( 'init', $plugin_admin, 'new_cpt_quote', 1 );
 		$this->loader->add_action( 'init', $plugin_admin, 'new_cpt_invoice', 1 );
@@ -195,7 +197,6 @@ class Sliced_Invoices {
 		$this->loader->add_filter( 'add_meta_boxes', $plugin_admin, 'remove_some_junk', 11 );
 
 		$this->loader->add_filter( 'plugin_action_links_' . trailingslashit( $this->get_plugin_name() ) . $this->get_plugin_name() . '.php', $plugin_admin, 'plugin_action_links' );
-
 		
 		$this->loader->add_action( 'wp_ajax_sliced-search-clients', $plugin_admin, 'ajax_search_clients' );
 		$this->loader->add_action( 'wp_ajax_sliced-search-non-clients', $plugin_admin, 'ajax_search_non_clients' );

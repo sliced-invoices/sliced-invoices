@@ -699,6 +699,86 @@ class Sliced_Shared {
 
 
 	/**
+	 * Get localised date from utc timestamp
+	 *
+	 * @since   3.8.0
+	 */
+	public static function get_local_date_from_timestamp( $timestamp = 0, $format = '' ) {
+		$date_iso = date( 'Y-m-d H:i:s', $timestamp );
+		$date = get_date_from_gmt( $date_iso, $format );
+		return $date;
+	}
+	
+	
+	/**
+	 * Get full localised date from utc timestamp
+	 *
+	 * @since   3.8.0
+	 */
+	public static function get_local_date_i18n_from_timestamp( $timestamp = 0 ) {
+		$date_iso = date( 'Y-m-d H:i:s', $timestamp );
+		$date_i18n = date_i18n(
+			get_option( 'date_format' ),
+			strtotime( get_date_from_gmt( $date_iso ) )
+		);
+		return $date_i18n;
+	}
+	
+	
+	/**
+	 * Get the site's timezone
+	 *
+	 * @since   3.8.0
+	 */
+	public static function get_local_timezone() {
+		// get the local timezone
+		$timezone_setting = get_option( 'timezone_string' );
+		if ( ! $timezone_setting > '' ) {
+			$timezone_setting = get_option( 'gmt_offset' );
+			if ( floatval( $timezone_setting > 0 ) ) {
+				$timezone_setting = '+' . $timezone_setting;
+			}
+		}
+		if( ! $timezone_setting ) { // if set to "UTC+0" in WordPress it returns "0", but DateTimeZone doesn't recognize this
+			$timezone_setting = 'UTC';
+		}
+		try {
+			$timezone = new DateTimeZone( $timezone_setting );
+		} catch (Exception $e) {
+			// worst case scenario
+			$timezone = new DateTimeZone( 'UTC' );			
+		}
+		return $timezone;
+	}
+	
+	
+	/**
+	 * Convert localized time fields to utc timestamp for saving
+	 *
+	 * @since   3.8.0
+	 */
+	public static function get_timestamp_from_local_time( $Y, $m, $d, $H, $i, $s ) {
+	
+		// validate args
+		$Y = intval( $Y );
+		$m = intval( $m );
+		$d = intval( $d );
+		$H = intval( $H );
+		$i = intval( $i );
+		$s = intval( $s );
+	
+		$timezone = Sliced_Shared::get_local_timezone();
+		
+        $date = new DateTime();
+		$date->setTimezone( $timezone );
+		$date->setDate( $Y, $m, $d );
+		$date->setTime( $H, $i, $s );
+		
+		return $date->getTimestamp();
+	}
+	
+	
+	/**
 	 * Get todays date (localized format).
 	 *
 	 * @since   2.0.0
