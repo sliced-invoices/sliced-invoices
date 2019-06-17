@@ -436,20 +436,29 @@ class Sliced_Admin {
 		$opts['capabilities']['read_post']				= "read_{$cap_type}";
 		$opts['capabilities']['read_private_posts']		= "read_private_{$cap_type}s";
 
-		$opts['labels']['add_new']						= __( "Add New {$single}", 'sliced-invoices' );
-		$opts['labels']['add_new_item']					= __( "Add New {$single}", 'sliced-invoices' );
-		$opts['labels']['all_items']					= __( $plural, 'sliced-invoices' );
-		$opts['labels']['edit_item']					= __( "Edit {$single}" , 'sliced-invoices' );
-		$opts['labels']['menu_name']					= __( $plural, 'sliced-invoices' );
-		$opts['labels']['name']							= __( $plural, 'sliced-invoices' );
-		$opts['labels']['name_admin_bar']				= __( $single, 'sliced-invoices' );
-		$opts['labels']['new_item']						= __( "New {$single}", 'sliced-invoices' );
-		$opts['labels']['not_found']					= __( "No {$plural} Found", 'sliced-invoices' );
-		$opts['labels']['not_found_in_trash']			= __( "No {$plural} Found in Trash", 'sliced-invoices' );
-		$opts['labels']['parent_item_colon']			= __( "Parent {$single}:", 'sliced-invoices' );
-		$opts['labels']['search_items']					= __( "Search {$plural}", 'sliced-invoices' );
-		$opts['labels']['singular_name']				= __( $single, 'sliced-invoices' );
-		$opts['labels']['view_item']					= __( "View {$single}", 'sliced-invoices' );
+														/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+		$opts['labels']['add_new']						= sprintf( __( 'Add New %s', 'sliced-invoices' ), $single );
+														/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+		$opts['labels']['add_new_item']					= sprintf( __( 'Add New %s', 'sliced-invoices' ), $single );
+		$opts['labels']['all_items']					= $plural;
+														/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+		$opts['labels']['edit_item']					= sprintf( __( 'Edit %s' , 'sliced-invoices' ), $single );
+		$opts['labels']['menu_name']					= $plural;
+		$opts['labels']['name']							= $plural;
+		$opts['labels']['name_admin_bar']				= $single;
+														/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+		$opts['labels']['new_item']						= sprintf( __( 'New %s', 'sliced-invoices' ), $single );
+														/* translators: %s is a placeholder for the localized word "Quotes" (plural) */
+		$opts['labels']['not_found']					= sprintf( __( 'No %s Found', 'sliced-invoices' ), $plural );
+														/* translators: %s is a placeholder for the localized word "Quotes" (plural) */
+		$opts['labels']['not_found_in_trash']			= sprintf( __( 'No %s Found in Trash', 'sliced-invoices' ), $plural );
+														/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+		$opts['labels']['parent_item_colon']			= sprintf( __( 'Parent %s:', 'sliced-invoices' ), $single );
+														/* translators: %s is a placeholder for the localized word "Quotes" (plural) */
+		$opts['labels']['search_items']					= sprintf( __( 'Search %s', 'sliced-invoices' ), $plural );
+		$opts['labels']['singular_name']				= $single;
+														/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+		$opts['labels']['view_item']					= sprintf( __( 'View %s', 'sliced-invoices' ), $single );
 
 		$opts['rewrite']['slug']						= FALSE;
 		$opts['rewrite']['with_front']					= FALSE;
@@ -513,20 +522,29 @@ class Sliced_Admin {
 		$opts['capabilities']['read_post']				= "read_{$cap_type}";
 		$opts['capabilities']['read_private_posts']		= "read_private_{$cap_type}s";
 
-		$opts['labels']['add_new']						= __( "Add New {$single}", 'sliced-invoices' );
-		$opts['labels']['add_new_item']					= __( "Add New {$single}", 'sliced-invoices' );
-		$opts['labels']['all_items']					= __( $plural, 'sliced-invoices' );
-		$opts['labels']['edit_item']					= __( "Edit {$single}" , 'sliced-invoices' );
-		$opts['labels']['menu_name']					= __( $plural, 'sliced-invoices' );
-		$opts['labels']['name']							= __( $plural, 'sliced-invoices' );
-		$opts['labels']['name_admin_bar']				= __( $single, 'sliced-invoices' );
-		$opts['labels']['new_item']						= __( "New {$single}", 'sliced-invoices' );
-		$opts['labels']['not_found']					= __( "No {$plural} Found", 'sliced-invoices' );
-		$opts['labels']['not_found_in_trash']			= __( "No {$plural} Found in Trash", 'sliced-invoices' );
-		$opts['labels']['parent_item_colon']			= __( "Parent {$single}:", 'sliced-invoices' );
-		$opts['labels']['search_items']					= __( "Search {$plural}", 'sliced-invoices' );
-		$opts['labels']['singular_name']				= __( $single, 'sliced-invoices' );
-		$opts['labels']['view_item']					= __( "View {$single}", 'sliced-invoices' );
+														/* translators: %s is a placeholder for the localized word "Invoice" (singular) */
+		$opts['labels']['add_new']						= sprintf( __( 'Add New %s', 'sliced-invoices' ), $single );
+														/* translators: %s is a placeholder for the localized word "Invoice" (singular) */
+		$opts['labels']['add_new_item']					= sprintf( __( 'Add New %s', 'sliced-invoices' ), $single );
+		$opts['labels']['all_items']					= $plural;
+														/* translators: %s is a placeholder for the localized word "Invoice" (singular) */
+		$opts['labels']['edit_item']					= sprintf( __( 'Edit %s' , 'sliced-invoices' ), $single );
+		$opts['labels']['menu_name']					= $plural;
+		$opts['labels']['name']							= $plural;
+		$opts['labels']['name_admin_bar']				= $single;
+														/* translators: %s is a placeholder for the localized word "Invoice" (singular) */
+		$opts['labels']['new_item']						= sprintf( __( 'New %s', 'sliced-invoices' ), $single );
+														/* translators: %s is a placeholder for the localized word "Invoices" (plural) */
+		$opts['labels']['not_found']					= sprintf( __( 'No %s Found', 'sliced-invoices' ), $plural );
+														/* translators: %s is a placeholder for the localized word "Invoices" (plural) */
+		$opts['labels']['not_found_in_trash']			= sprintf( __( 'No %s Found in Trash', 'sliced-invoices' ), $plural );
+														/* translators: %s is a placeholder for the localized word "Invoice" (singular) */
+		$opts['labels']['parent_item_colon']			= sprintf( __( 'Parent %s:', 'sliced-invoices' ), $single );
+														/* translators: %s is a placeholder for the localized word "Invoices" (plural) */
+		$opts['labels']['search_items']					= sprintf( __( 'Search %s', 'sliced-invoices' ), $plural );
+		$opts['labels']['singular_name']				= $single;
+														/* translators: %s is a placeholder for the localized word "Invoice" (singular) */
+		$opts['labels']['view_item']					= sprintf( __( 'View %s', 'sliced-invoices' ), $single );
 
 		$opts['rewrite']['slug']						= FALSE;
 		$opts['rewrite']['with_front']					= FALSE;
@@ -547,8 +565,8 @@ class Sliced_Admin {
 	 */
 	public function new_taxonomy_quote_status() {
 
-		$plural 	= 'Statuses';
-		$single 	= 'Status';
+		$plural 	= __( 'Statuses', 'sliced-invoices' );
+		$single 	= __( 'Status', 'sliced-invoices' );
 		$tax_name 	= 'quote_status';
 
 		$opts['hierarchical']							= TRUE;
@@ -565,23 +583,36 @@ class Sliced_Admin {
 		$opts['capabilities']['edit_terms'] 			= 'manage_categories';
 		$opts['capabilities']['manage_terms'] 			= 'manage_categories';
 
-		$opts['labels']['add_new_item'] 				= __( "Add New {$single}", 'sliced-invoices' );
-		$opts['labels']['add_or_remove_items'] 			= __( "Add or remove {$plural}", 'sliced-invoices' );
-		$opts['labels']['all_items'] 					= __( $plural, 'sliced-invoices' );
-		$opts['labels']['choose_from_most_used'] 		= __( "Choose from most used {$plural}", 'sliced-invoices' );
-		$opts['labels']['edit_item'] 					= __( "Edit {$single}" , 'sliced-invoices');
-		$opts['labels']['menu_name'] 					= __( $plural, 'sliced-invoices' );
-		$opts['labels']['name'] 						= __( $plural, 'sliced-invoices' );
-		$opts['labels']['new_item_name'] 				= __( "New {$single} Name", 'sliced-invoices' );
-		$opts['labels']['not_found'] 					= __( "No {$plural} Found", 'sliced-invoices' );
-		$opts['labels']['parent_item'] 					= __( "Parent {$single}", 'sliced-invoices' );
-		$opts['labels']['parent_item_colon'] 			= __( "Parent {$single}:", 'sliced-invoices' );
-		$opts['labels']['popular_items'] 				= __( "Popular {$plural}", 'sliced-invoices' );
-		$opts['labels']['search_items'] 				= __( "Search {$plural}", 'sliced-invoices' );
-		$opts['labels']['separate_items_with_commas'] 	= __( "Separate {$plural} with commas", 'sliced-invoices' );
-		$opts['labels']['singular_name'] 				= __( $single, 'sliced-invoices' );
-		$opts['labels']['update_item'] 					= __( "Update {$single}", 'sliced-invoices' );
-		$opts['labels']['view_item'] 					= __( "View {$single}", 'sliced-invoices' );
+														/* translators: %s is a placeholder for the localized word "Status" (singular) */
+		$opts['labels']['add_new_item']					= sprintf( __( 'Add New %s', 'sliced-invoices' ), $single );
+														/* translators: %s is a placeholder for the localized word "Statuses" (plural) */
+		$opts['labels']['add_or_remove_items'] 			= sprintf( __( 'Add or remove %s', 'sliced-invoices' ), $plural );
+		$opts['labels']['all_items']					= $plural;
+														/* translators: %s is a placeholder for the localized word "Statuses" (plural) */
+		$opts['labels']['choose_from_most_used'] 		= sprintf( __( 'Choose from most used %s', 'sliced-invoices' ), $plural );
+														/* translators: %s is a placeholder for the localized word "Status" (singular) */
+		$opts['labels']['edit_item']					= sprintf( __( 'Edit %s' , 'sliced-invoices' ), $single );
+		$opts['labels']['menu_name']					= $plural;
+		$opts['labels']['name']							= $plural;
+														/* translators: %s is a placeholder for the localized word "Status" (singular) */
+		$opts['labels']['new_item_name'] 				= sprintf( __( 'New %s Name', 'sliced-invoices' ), $single );
+														/* translators: %s is a placeholder for the localized word "Statuses" (plural) */
+		$opts['labels']['not_found']					= sprintf( __( 'No %s Found', 'sliced-invoices' ), $plural );
+														/* translators: %s is a placeholder for the localized word "Status" (singular) */
+		$opts['labels']['parent_item'] 					= sprintf( __( 'Parent %s', 'sliced-invoices' ), $single );
+														/* translators: %s is a placeholder for the localized word "Status" (singular) */
+		$opts['labels']['parent_item_colon']			= sprintf( __( 'Parent %s:', 'sliced-invoices' ), $single );
+														/* translators: %s is a placeholder for the localized word "Statuses" (plural) */
+		$opts['labels']['popular_items'] 				= sprintf( __( 'Popular %s', 'sliced-invoices' ), $plural );
+														/* translators: %s is a placeholder for the localized word "Statuses" (plural) */
+		$opts['labels']['search_items']					= sprintf( __( 'Search %s', 'sliced-invoices' ), $plural );
+														/* translators: %s is a placeholder for the localized word "Statuses" (plural) */
+		$opts['labels']['separate_items_with_commas'] 	= sprintf( __( 'Separate %s with commas', 'sliced-invoices' ), $plural );
+		$opts['labels']['singular_name']				= $single;
+														/* translators: %s is a placeholder for the localized word "Status" (singular) */
+		$opts['labels']['update_item'] 					= sprintf( __( 'Update %s', 'sliced-invoices' ), $single );
+														/* translators: %s is a placeholder for the localized word "Status" (singular) */
+		$opts['labels']['view_item']					= sprintf( __( 'View %s', 'sliced-invoices' ), $single );
 
 		$opts['rewrite']['slug']						= __( strtolower( $tax_name ), 'sliced-invoices' );
 
@@ -598,8 +629,8 @@ class Sliced_Admin {
 	 */
 	public function new_taxonomy_invoice_status() {
 
-	    $plural 	= 'Statuses';
-		$single 	= 'Status';
+	    $plural 	= __( 'Statuses', 'sliced-invoices' );
+		$single 	= __( 'Status', 'sliced-invoices' );
 		$tax_name 	= 'invoice_status';
 
 		$opts['hierarchical']							= TRUE;
@@ -616,23 +647,36 @@ class Sliced_Admin {
 		$opts['capabilities']['edit_terms'] 			= 'manage_categories';
 		$opts['capabilities']['manage_terms'] 			= 'manage_categories';
 
-		$opts['labels']['add_new_item'] 				= __( "Add New {$single}", 'sliced-invoices' );
-		$opts['labels']['add_or_remove_items'] 			= __( "Add or remove {$plural}", 'sliced-invoices' );
-		$opts['labels']['all_items'] 					= __( $plural, 'sliced-invoices' );
-		$opts['labels']['choose_from_most_used'] 		= __( "Choose from most used {$plural}", 'sliced-invoices' );
-		$opts['labels']['edit_item'] 					= __( "Edit {$single}" , 'sliced-invoices');
-		$opts['labels']['menu_name'] 					= __( $plural, 'sliced-invoices' );
-		$opts['labels']['name'] 						= __( $plural, 'sliced-invoices' );
-		$opts['labels']['new_item_name'] 				= __( "New {$single} Name", 'sliced-invoices' );
-		$opts['labels']['not_found'] 					= __( "No {$plural} Found", 'sliced-invoices' );
-		$opts['labels']['parent_item'] 					= __( "Parent {$single}", 'sliced-invoices' );
-		$opts['labels']['parent_item_colon'] 			= __( "Parent {$single}:", 'sliced-invoices' );
-		$opts['labels']['popular_items'] 				= __( "Popular {$plural}", 'sliced-invoices' );
-		$opts['labels']['search_items'] 				= __( "Search {$plural}", 'sliced-invoices' );
-		$opts['labels']['separate_items_with_commas'] 	= __( "Separate {$plural} with commas", 'sliced-invoices' );
-		$opts['labels']['singular_name'] 				= __( $single, 'sliced-invoices' );
-		$opts['labels']['update_item'] 					= __( "Update {$single}", 'sliced-invoices' );
-		$opts['labels']['view_item'] 					= __( "View {$single}", 'sliced-invoices' );
+														/* translators: %s is a placeholder for the localized word "Status" (singular) */
+		$opts['labels']['add_new_item']					= sprintf( __( 'Add New %s', 'sliced-invoices' ), $single );
+														/* translators: %s is a placeholder for the localized word "Statuses" (plural) */
+		$opts['labels']['add_or_remove_items'] 			= sprintf( __( 'Add or remove %s', 'sliced-invoices' ), $plural );
+		$opts['labels']['all_items']					= $plural;
+														/* translators: %s is a placeholder for the localized word "Statuses" (plural) */
+		$opts['labels']['choose_from_most_used'] 		= sprintf( __( 'Choose from most used %s', 'sliced-invoices' ), $plural );
+														/* translators: %s is a placeholder for the localized word "Status" (singular) */
+		$opts['labels']['edit_item']					= sprintf( __( 'Edit %s' , 'sliced-invoices' ), $single );
+		$opts['labels']['menu_name']					= $plural;
+		$opts['labels']['name']							= $plural;
+														/* translators: %s is a placeholder for the localized word "Status" (singular) */
+		$opts['labels']['new_item_name'] 				= sprintf( __( 'New %s Name', 'sliced-invoices' ), $single );
+														/* translators: %s is a placeholder for the localized word "Statuses" (plural) */
+		$opts['labels']['not_found']					= sprintf( __( 'No %s Found', 'sliced-invoices' ), $plural );
+														/* translators: %s is a placeholder for the localized word "Status" (singular) */
+		$opts['labels']['parent_item'] 					= sprintf( __( 'Parent %s', 'sliced-invoices' ), $single );
+														/* translators: %s is a placeholder for the localized word "Status" (singular) */
+		$opts['labels']['parent_item_colon']			= sprintf( __( 'Parent %s:', 'sliced-invoices' ), $single );
+														/* translators: %s is a placeholder for the localized word "Statuses" (plural) */
+		$opts['labels']['popular_items'] 				= sprintf( __( 'Popular %s', 'sliced-invoices' ), $plural );
+														/* translators: %s is a placeholder for the localized word "Statuses" (plural) */
+		$opts['labels']['search_items']					= sprintf( __( 'Search %s', 'sliced-invoices' ), $plural );
+														/* translators: %s is a placeholder for the localized word "Statuses" (plural) */
+		$opts['labels']['separate_items_with_commas'] 	= sprintf( __( 'Separate %s with commas', 'sliced-invoices' ), $plural );
+		$opts['labels']['singular_name']				= $single;
+														/* translators: %s is a placeholder for the localized word "Status" (singular) */
+		$opts['labels']['update_item'] 					= sprintf( __( 'Update %s', 'sliced-invoices' ), $single );
+														/* translators: %s is a placeholder for the localized word "Status" (singular) */
+		$opts['labels']['view_item']					= sprintf( __( 'View %s', 'sliced-invoices' ), $single );
 
 		$opts['rewrite']['slug']						= __( strtolower( $tax_name ), 'sliced-invoices' );
 
@@ -1446,7 +1490,7 @@ class Sliced_Admin {
 					</tbody>
 					</table>
 
-					<?php submit_button( __( 'Add New Client ', 'sliced-invoices' ), 'primary', 'sliced-update-user', true, array( 'id' => 'sliced-update-user-submit', 'class' => 'submit button button-primary button-large' ) ); ?>
+					<?php submit_button( __( 'Add New Client', 'sliced-invoices' ), 'primary', 'sliced-update-user', true, array( 'id' => 'sliced-update-user-submit', 'class' => 'submit button button-primary button-large' ) ); ?>
 
 					<div class="indicator" style="display:none"><?php _e( 'Please wait...', 'sliced-invoices' ); ?></div>
 
@@ -1553,7 +1597,7 @@ class Sliced_Admin {
 					</tbody>
 					</table>
 
-					<?php submit_button( __( 'Add New Client ', 'sliced-invoices' ), 'primary', 'sliced-create-user', true, array( 'id' => 'sliced-create-user-submit', 'class' => 'submit button button-primary button-large' ) ); ?>
+					<?php submit_button( __( 'Add New Client', 'sliced-invoices' ), 'primary', 'sliced-create-user', true, array( 'id' => 'sliced-create-user-submit', 'class' => 'submit button button-primary button-large' ) ); ?>
 
 					<div class="indicator" style="display:none"><?php _e( 'Please wait...', 'sliced-invoices' ); ?></div>
 

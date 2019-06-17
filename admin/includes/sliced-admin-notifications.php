@@ -782,9 +782,15 @@ class Sliced_Notifications {
 		if( ! empty( $sent ) ) {
 			$time_sent = date_i18n( get_option( 'time_format' ), (int) $sent );
 			$date_sent = date_i18n( get_option( 'date_format' ), (int) $sent );
-			$time_ago  = sprintf( _x( '%s ago', 'sliced-invoices' ), human_time_diff( $sent, current_time( 'timestamp' ) ) );
-
-			$sent_text = '<br /><span class="ui-tip description sliced-sent" title="Sent at ' . esc_html( $time_sent ) . ' on ' . esc_html( $date_sent ) . '">' . __( 'Sent ', 'sliced-invoices' ) . esc_html( ( $time_ago ) ) . '</span>';
+			$time_ago  = human_time_diff( $sent, current_time( 'timestamp' ) );
+			$sent_text = '<br /><span class="ui-tip description sliced-sent" title="'
+				/* translators: %1$s is a placeholder for the time the email was sent;
+				  %2$s is the date the email was sent */
+				. sprintf( __( 'Sent at %1$s on %2$s', 'sliced-invoices' ), $time_sent, $date_sent )
+				. '">'
+				/* translators: %s is a time duration, like "1 month" or "3 days" */
+				. sprintf( __( 'Sent %s ago', 'sliced-invoices' ), $time_ago )
+				. '</span>';
 		}
 
 		return $sent_text;

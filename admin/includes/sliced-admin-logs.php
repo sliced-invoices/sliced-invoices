@@ -671,19 +671,39 @@ class Sliced_Logs {
 				( $type === 'sliced_invoice' && in_array( 'invoice_viewed', $settings ) ) ||
 				( $type === 'sliced_quote' && in_array( 'quote_viewed', $settings ) )
 			) {
+				if ( $meta_value['by'] === 0 && $meta_value['secured'] === 'yes' ) {
+					$message = sprintf(
+						/* translators: %1$s here is a placeholder for the word "Invoice" or "Quote";
+							%2$s is a placeholder for the Invoice or Quote number;
+							for example: "Invoice SI-123 was viewed using the secure link" */
+						__( '%1$s %2$s was viewed using the secure link', 'sliced-invoices' ),
+						( $type === 'sliced_invoice' ? sliced_get_invoice_label() : sliced_get_quote_label() ),
+						'<a class="sliced-number" href="' . esc_url( admin_url( 'post.php?post=' . $id ) ) . '&action=edit' . '">' . ( $type === 'sliced_invoice' ? sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id ) . sliced_get_invoice_suffix( $id ) : sliced_get_quote_prefix( $id ) . sliced_get_quote_number( $id ) . sliced_get_quote_suffix( $id ) ) . '</a>'
+					);
+				} elseif ( $meta_value['by'] > 0 ) {
+					$message = sprintf(
+						/* translators: %1$s here is a placeholder for the word "Invoice" or "Quote";
+							%2$s is a placeholder for the Invoice or Quote number;
+							%3$s is a placeholder for the Client's name;
+							for example: "Invoice SI-123 was viewed by John Doe" */
+						__( '%1$s %2$s was viewed by %3$s', 'sliced-invoices' ),
+						( $type === 'sliced_invoice' ? sliced_get_invoice_label() : sliced_get_quote_label() ),
+						'<a class="sliced-number" href="' . esc_url( admin_url( 'post.php?post=' . $id ) ) . '&action=edit' . '">' . ( $type === 'sliced_invoice' ? sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id ) . sliced_get_invoice_suffix( $id ) : sliced_get_quote_prefix( $id ) . sliced_get_quote_number( $id ) . sliced_get_quote_suffix( $id ) ) . '</a>',
+						get_user_meta( (int)$meta_value['by'], '_sliced_client_business', true )
+					);
+				} else {
+					$message = sprintf(
+						/* translators: %1$s here is a placeholder for the word "Invoice" or "Quote";
+							%2$s is a placeholder for the Invoice or Quote number;
+							for example: "Invoice SI-123 was viewed" */
+						__( '%1$s %2$s was viewed', 'sliced-invoices' ),
+						( $type === 'sliced_invoice' ? sliced_get_invoice_label() : sliced_get_quote_label() ),
+						'<a class="sliced-number" href="' . esc_url( admin_url( 'post.php?post=' . $id ) ) . '&action=edit' . '">' . ( $type === 'sliced_invoice' ? sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id ) . sliced_get_invoice_suffix( $id ) : sliced_get_quote_prefix( $id ) . sliced_get_quote_number( $id ) . sliced_get_quote_suffix( $id ) ) . '</a>'
+					);
+				}
 				$notice_args = array(
 					'class' => 'notice-success',
-					'content' => '<p>' . sprintf(
-							/* translators: %1$s here is a placeholder for the word "Invoice" or "Quote";
-								%2$s is a placeholder for the Invoice or Quote number;
-								for example: "Invoice SI-123 was viewed" */
-							__( '%1$s %2$s was viewed', 'sliced-invoices' ),
-							( $type === 'sliced_invoice' ? sliced_get_invoice_label() : sliced_get_quote_label() ),
-							'<a class="sliced-number" href="' . esc_url( admin_url( 'post.php?post=' . $id ) ) . '&action=edit' . '">' . ( $type === 'sliced_invoice' ? sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id ) . sliced_get_invoice_suffix( $id ) : sliced_get_quote_prefix( $id ) . sliced_get_quote_number( $id ) . sliced_get_quote_suffix( $id ) ) . '</a>'
-						)
-						. ( $meta_value['by'] > 0 ? ' '.__( 'by', 'sliced-invoices' ).' '.get_user_meta( (int)$meta_value['by'], '_sliced_client_business', true ) : '')
-						. ( $meta_value['by'] === 0 && $meta_value['secured'] === 'yes' ? ' '.__( 'using the secure link', 'sliced-invoices' ) : '')
-						. '</p>',
+					'content' => '<p>' . $message . '</p>',
 					'dismissable' => true
 				);
 				Sliced_Admin_Notices::add_custom_notice( ( $type === 'sliced_invoice' ? 'invoice' : 'quote' ).'_viewed_'.$id, $notice_args );
