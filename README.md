@@ -4,8 +4,8 @@ Contributors: SlicedInvoices
 Donate link: http://slicedinvoices.com/  
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
-Tested up to: 5.0
-Stable tag: 3.7.5
+Tested up to: 5.2
+Stable tag: 3.8.0
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -143,6 +143,7 @@ This plugin currently includes translations for the following languages:
 *   French
 *   German
 *   Hungarian
+*   Italian
 *   Romanian
 *   Russian
 *   Spanish
@@ -164,6 +165,18 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 ## Changelog
+##  3.8.0
+* NEW: enhanced client dropdown box on quote/invoice editing pages
+* NEW: changes to the way dates & timestamps are handled and stored **** If you are using custom templates or custom coding with Sliced Invoices, you may need to update your code. [See our blog post for more info](https://slicedinvoices.com/blog/new-features-sliced-invoices-v3-8-0-update/) ****
+* NEW: Italian translation (thanks to Alessio Simone)
+* FIX: cloning creates duplicate invoice numbers
+* FIX: issue with quick edit date fields not working correctly with non-English month names
+* FIX: issue where quick edit fields would not save if empty
+* FIX: update date fields on quote/invoice edit pages to reflect site's locale (formerly was in Y-m-d format only)
+* UPDATE: various CSS/styling tweaks, textual changes, minor code refactoring
+* UPDATE: various i18n enhancements
+* UPDATE: update .pot file for translations
+
 ##  3.7.5
 * NEW: Add email footer text field to free plugin settings page (previously required paid PDF & Email extension)
 * NEW: Hungarian translation (thanks to Csaba Kardos)
