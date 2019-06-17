@@ -2214,12 +2214,16 @@ class Sliced_Admin {
 			/*
 			 * increment the number
 			 */
-			if ( $post->post_type == 'sliced_invoice' ) {
+			if ( $post->post_type === 'sliced_invoice' ) {
 				$number = sliced_get_next_invoice_number();
-			} else {
-				$number = sliced_get_next_quote_number();
+				update_post_meta( $new_post_id, '_sliced_invoice_number', (string)$number );
+				Sliced_Invoice::update_invoice_number( $new_post_id );
 			}
-			update_post_meta( $new_post_id, '_' . $post->post_type . '_number', (string)$number);
+			if ( $post->post_type === 'sliced_quote' ) {
+				$number = sliced_get_next_quote_number();
+				update_post_meta( $new_post_id, '_sliced_quote_number', (string)$number );
+				Sliced_Quote::update_quote_number( $new_post_id );
+			}
 
 			/*
 			 * finally, redirect to the current(ish) url
