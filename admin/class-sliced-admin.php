@@ -344,7 +344,7 @@ class Sliced_Admin {
 		
 		// SelectWoo
 		if ( ( $pagenow === 'post.php' || $pagenow === 'post-new.php' ) && sliced_get_the_type() ) {
-			wp_enqueue_script( 'sliced-select-woo', plugin_dir_url( __FILE__ ) . 'js/selectWoo.min.js', array( 'jquery' ), $this->version, false );
+			wp_enqueue_script( 'sliced-selectWoo', plugin_dir_url( __FILE__ ) . 'js/selectWoo.full.min.js', array( 'jquery' ), $this->version, false );
 		}
 
 		// Thickbox
