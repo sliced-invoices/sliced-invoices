@@ -4,7 +4,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce
 Requires at least: 4.0
 Tested up to: 5.2
-Stable tag: 3.8.0
+Stable tag: 3.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -164,6 +164,9 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 == Changelog ==
+= 3.8.1 =
+* FIX: backwards compatibility for selectWoo scripts (avoids conflict with plugins/themes that are still loading old versions of selectWoo, including Avada theme)
+
 = 3.8.0 =
 * NEW: enhanced client dropdown box on quote/invoice editing pages
 * NEW: changes to the way dates & timestamps are handled and stored **** If you are using custom templates or custom coding with Sliced Invoices, you may need to update your code. [See our blog post for more info](https://slicedinvoices.com/blog/new-features-sliced-invoices-v3-8-0-update/) ****
