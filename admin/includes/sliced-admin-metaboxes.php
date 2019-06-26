@@ -998,6 +998,10 @@ class Sliced_Metaboxes {
 	 * @since  3.8.0
 	 */
 	public function date_sanitization( $in ) {
+		if ( empty( $in ) ) {
+			// nothing to convert
+			return $in;
+		}
 		if ( is_numeric( $in ) ) {
 			// already a timestamp. don't convert it again.
 			return $in;
@@ -1017,6 +1021,10 @@ class Sliced_Metaboxes {
 		return '';
 	}
 	public function date_sanitization_end_of_day( $in ) {
+		if ( empty( $in ) ) {
+			// nothing to convert
+			return $in;
+		}
 		if ( is_numeric( $in ) ) {
 			// already a timestamp. don't convert it again.
 			return $in;
