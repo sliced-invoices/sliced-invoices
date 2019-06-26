@@ -27,6 +27,8 @@ class Sliced_Metaboxes {
 	 * @var Sliced_Logs
 	 */
 	protected $logs;
+	
+	protected $is_new = false;
 
 	/**
 	 * Hook into the appropriate actions when the class is constructed.
@@ -48,6 +50,10 @@ class Sliced_Metaboxes {
 		
 		// allow translating of status taxonomies
 		add_filter( 'get_terms', array( $this, 'pre_get_terms' ), 10, 4 );
+		
+		if ( $pagenow === 'post-new.php' ) {
+			$this->is_new = true;
+		}
 
 	}
 	
@@ -1056,7 +1062,7 @@ class Sliced_Metaboxes {
 	}
 	public function get_sliced_invoice_due() {
 		$value = get_post_meta( sliced_get_the_id(), '_sliced_invoice_due', true );
-		if ( $value === '' ) {
+		if ( $value === '' && $this->is_new ) {
 			$value = Sliced_Invoice::get_auto_due_date();
 		}
 		return $value > 0 ? Sliced_Shared::get_local_date_i18n_from_timestamp( $value ) : '';
@@ -1070,7 +1076,7 @@ class Sliced_Metaboxes {
 	}
 	public function get_sliced_quote_valid_until() {
 		$value = get_post_meta( sliced_get_the_id(), '_sliced_quote_valid_until', true );
-		if ( $value === '' ) {
+		if ( $value === '' && $this->is_new ) {
 			$value = Sliced_Quote::get_auto_valid_until_date();
 		}
 		return $value > 0 ? Sliced_Shared::get_local_date_i18n_from_timestamp( $value ) : '';
