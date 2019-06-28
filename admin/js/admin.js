@@ -401,7 +401,7 @@
 						return sliced_invoices_i18n.select_max.replace( '%qty%', overChars );
 					},
 					noResults: function() {
-						return sliced_invoices_i18n.select_no_matches + ' <span style="float:right;"><a href="#" onclick="jQuery(\'#cmb2-metabox-_sliced_invoice_info\').find(\'a.thickbox\').first().click();">' + sliced_invoices_i18n.select_create_new_client + '</a></span>';
+						return sliced_invoices_i18n.select_no_matches + ' <span style="float:right;"><a href="#" onclick="jQuery(\'.cmb2-id--sliced-client\').find(\'a.sliced-add-client-button\').click();">' + sliced_invoices_i18n.select_create_new_client + '</a></span>';
 					},
 					searching: function() {
 						return sliced_invoices_i18n.select_searching;

@@ -453,7 +453,7 @@ class Sliced_Metaboxes {
 			'priority'     => 'default'
 		) );
 		$info->add_field( array(
-			'name'       => __( 'Client', 'sliced-invoices' ) . '</label><label><a href="#TB_inline?width=960&height=650&inlineId=sliced-ajax-update-client" title="Edit Client" class="thickbox button button-small">' . __( 'Edit Client', 'sliced-invoices' ) . '</a> <a href="#TB_inline?width=960&height=700&inlineId=add-ajax-user" title="Add New Client" class="thickbox button button-small">' . __( 'Add New Client', 'sliced-invoices' ) . '</a>',
+			'name'       => __( 'Client', 'sliced-invoices' ) . '</label><label><a href="#TB_inline?width=960&height=650&inlineId=sliced-ajax-update-client" title="Edit Client" class="thickbox button button-small">' . __( 'Edit Client', 'sliced-invoices' ) . '</a> <a href="#TB_inline?width=960&height=700&inlineId=add-ajax-user" title="Add New Client" class="thickbox button button-small sliced-add-client-button">' . __( 'Add New Client', 'sliced-invoices' ) . '</a>',
 			'desc'       => '',
 			'id'         => $prefix . 'client',
 			'type'       => 'select',
@@ -628,7 +628,7 @@ class Sliced_Metaboxes {
 		) );
 
 		$info->add_field( array(
-			'name'       => __( 'Client', 'sliced-invoices' ) . '</label><label><a href="#TB_inline?width=960&height=650&inlineId=sliced-ajax-update-client" title="Edit Client" class="thickbox button button-small">' . __( 'Edit Client', 'sliced-invoices' ) . '</a> <a href="#TB_inline?width=960&height=700&inlineId=add-ajax-user" title="Add New Client" class="thickbox button button-small">' . __( 'Add New Client', 'sliced-invoices' ) . '</a>',
+			'name'       => __( 'Client', 'sliced-invoices' ) . '</label><label><a href="#TB_inline?width=960&height=650&inlineId=sliced-ajax-update-client" title="Edit Client" class="thickbox button button-small">' . __( 'Edit Client', 'sliced-invoices' ) . '</a> <a href="#TB_inline?width=960&height=700&inlineId=add-ajax-user" title="Add New Client" class="thickbox button button-small sliced-add-client-button">' . __( 'Add New Client', 'sliced-invoices' ) . '</a>',
 			'desc'       => '',
 			'id'         => $prefix . 'client',
 			'type'       => 'select',
