@@ -766,7 +766,7 @@ class Sliced_Notifications {
 
 	public function sliced_add_email_button( $button ) {
 		$button .= $this->get_email_button();
-		echo $button;
+		return $button;
 	}
 
 	/**
