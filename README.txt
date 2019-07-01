@@ -4,7 +4,7 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce
 Requires at least: 4.0
 Tested up to: 5.2
-Stable tag: 3.8.1
+Stable tag: 3.8.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -164,6 +164,10 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 == Changelog ==
+= 3.8.2 =
+* FIX: allow saving empty due date / quote valid until date fields
+* FIX: corrected "create new client" link
+
 = 3.8.1 =
 * FIX: backwards compatibility for selectWoo scripts (avoids conflict with plugins/themes that are still loading old versions of selectWoo, including Avada theme)
 
