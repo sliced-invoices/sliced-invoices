@@ -212,6 +212,7 @@ a img {outline:none; border:none;}
   border: 2px solid transparent;
   border-radius: 4px;
   font-size: 18px;
+	word-break: break-word;
 }
 .sliced-message .dashicons {
   background: #fff none repeat scroll 0 0;
