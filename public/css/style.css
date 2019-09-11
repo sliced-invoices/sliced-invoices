@@ -263,6 +263,9 @@ a img {outline:none; border:none;}
     display: inline-block;
 	margin-bottom: 5px;
 }
+.sliced_payment_form #payment-message {
+	max-width: 478px;
+}
 .sliced_payment_form #payment-form {
   padding: 10px 130px 0;
 }
