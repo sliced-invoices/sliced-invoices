@@ -89,9 +89,11 @@ do_action( 'sliced_before_invoice_display' ); ?><!doctype html>
 				<div class="table-responsive">
 					<?php sliced_display_line_items(); ?>
 				</div>
-				<div class="col-xs-12 col-sm-5 sliced-totals">
-					<?php sliced_display_invoice_totals(); ?>
-				</div>
+			</div>
+		</div>
+		<div class="row sliced-items">
+			<div class="col-xs-12 col-sm-5 sliced-totals">
+				<?php sliced_display_invoice_totals(); ?>
 			</div>
 		</div><!-- END row -->
 
