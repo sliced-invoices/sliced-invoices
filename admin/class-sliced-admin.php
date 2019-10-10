@@ -2662,6 +2662,14 @@ class Sliced_Admin {
 			}
 		}
 		
+		// 3) fix for bad update version
+		if ( ! defined( 'SI_STRIPE_VERSION' ) ) {
+			define( 'SI_STRIPE_VERSION', '2.0.1' );
+		}
+		if ( ! defined( 'SI_STRIPE_FILE' ) ) {
+			define( 'SI_STRIPE_FILE', 'sliced-invoices-stripe' );
+		}
+		
 	}
 	
 	
