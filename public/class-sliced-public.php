@@ -160,14 +160,19 @@ class Sliced_Public {
 	 *
 	 * @since   2.10
 	 */
-	public function add_defer_attribute($tag) {
+	public function add_defer_attribute( $tag ) {
 
-		// array of scripts to defer
-		$scripts_to_defer = array('thickbox', 'jquery' );
+		// make sure we're on a page where this is necessary
+		if ( Sliced_Shared::is_sliced_invoices_page() ) {
 
-		foreach($scripts_to_defer as $defer_script){
-			if(true == strpos($tag, $defer_script ) )
-				return str_replace( ' src', ' data-cfasync="false" src', $tag );
+			// scripts to defer
+			$scripts_to_defer = array( 'thickbox', 'jquery' );
+			foreach( $scripts_to_defer as $defer_script ) {
+				if ( strpos( $tag, $defer_script ) !== false ) {
+					return str_replace( ' src', ' data-cfasync="false" src', $tag );
+				}
+			}
+
 		}
 
 		return $tag;

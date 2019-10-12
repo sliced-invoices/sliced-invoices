@@ -833,6 +833,33 @@ class Sliced_Shared {
 	    return $ipaddress;
 
 	}
+	
+	
+	/**
+	 * Determine if the current request is for any Sliced Invoices-related page.
+	 *
+	 * @since   3.8.3
+	 */
+	public static function is_sliced_invoices_page() {
+	
+		global $pagenow;
+		
+		$is_sliced_invoices_page = false;
+		
+		$payments = get_option( 'sliced_payments' );
+		
+		if (
+			in_array( sliced_get_the_type(), array( 'invoice', 'quote' ) ) // quote or invoice listing page, editing page, or frontend page
+			|| is_page( (int)$payments['payment_page'] )                   // payment page
+			|| ( $pagenow === 'admin.php' &&                               // sliced settings pages
+				in_array( $_GET['page'], array( 'sliced_invoices_settings', 'sliced_reports', 'sliced_tools', 'sliced_extras', 'sliced_licenses' ) )
+				)
+		) {
+			$is_sliced_invoices_page = true;
+		}
+		
+		return $is_sliced_invoices_page;
+	}
 
 
 	/**

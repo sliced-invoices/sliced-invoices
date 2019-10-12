@@ -292,7 +292,7 @@ class Sliced_Admin {
 
 		global $pagenow;
 
-		if ( isset( $_GET['post_type'] ) && $_GET['post_type'] === 'page' ) {
+		if ( ! Sliced_Shared::is_sliced_invoices_page() ) {
 			return;
 		}
 		
