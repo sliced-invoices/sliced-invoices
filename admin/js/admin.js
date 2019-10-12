@@ -349,7 +349,8 @@
 						return {
 							term:     params.term,
 							action:   'sliced-search-clients',
-							exclude:  $( this ).data( 'exclude' )
+							exclude:  $( this ).data( 'exclude' ),
+							nonce:    sliced_invoices.ajax_nonce
 						};
 					},
 					processResults: function( data ) {
@@ -430,7 +431,8 @@
 						return {
 							term:     params.term,
 							action:   'sliced-search-non-clients',
-							exclude:  $( this ).data( 'exclude' )
+							exclude:  $( this ).data( 'exclude' ),
+							nonce:    sliced_invoices.ajax_nonce
 						};
 					},
 					processResults: function( data ) {

@@ -35,6 +35,7 @@ class Sliced_Csv_Exporter {
 				</select>
 				</p>
 				<p class="submit"><input type="submit" class="button-primary" name="submit" value="Export" /></p>
+				<?php wp_nonce_field( 'sliced_invoices_export_csv', 'sliced-invoices-export-csv-nonce' ); ?>
 			</form>
 		</div><!-- end wrap -->
 

@@ -55,8 +55,19 @@ class Sliced_Admin {
 	 */
 	public function ajax_search_clients() {
 
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		
 		if ( $_GET['action'] !== 'sliced-search-clients' ) {
 			return;
+		}
+		
+		// verify the nonce
+		$nonce = isset( $_REQUEST['nonce'] ) ? $_REQUEST['nonce'] : false;
+		if ( ! wp_verify_nonce( $nonce, 'sliced_ajax_nonce' ) ) {
+			echo json_encode( array() );
+			exit;
 		}
 		
 		$search_term = sanitize_text_field( $_GET['term'] );
@@ -131,8 +142,19 @@ class Sliced_Admin {
 	 */
 	public function ajax_search_non_clients() {
 
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
 		if ( $_GET['action'] !== 'sliced-search-non-clients' ) {
 			return;
+		}
+		
+		// verify the nonce
+		$nonce = isset( $_REQUEST['nonce'] ) ? $_REQUEST['nonce'] : false;
+		if ( ! wp_verify_nonce( $nonce, 'sliced_ajax_nonce' ) ) {
+			echo json_encode( array() );
+			exit;
 		}
 		
 		$search_term = sanitize_text_field( $_GET['term'] );
@@ -299,7 +321,11 @@ class Sliced_Admin {
 		// main scripts & localisation
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/admin.js', array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( $this->plugin_name . '-decimal', plugin_dir_url( __FILE__ ) . 'js/decimal.min.js', array( 'jquery' ), $this->version, false );
-		wp_localize_script( $this->plugin_name , 'sliced_payments', apply_filters( 'sliced_payments_localized_script', array(
+		wp_localize_script( $this->plugin_name, 'sliced_invoices', apply_filters( 'sliced_invoices_localized_script', array(
+			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
+			'ajax_nonce' => wp_create_nonce( 'sliced_ajax_nonce' ),
+		) ) );
+		wp_localize_script( $this->plugin_name, 'sliced_payments', apply_filters( 'sliced_payments_localized_script', array(
 			'tax'             => sliced_get_tax_amount(),
 			'tax_calc_method' => Sliced_Shared::get_tax_calc_method(),
 			'currency_symbol' => sliced_get_currency_symbol(),
@@ -943,14 +969,18 @@ class Sliced_Admin {
 	 */
 	public static function get_convert_invoice_button() {
 
-		/*
-		 * Only show in quotes
-		 */
+		// Only show in quotes
 		$type = sliced_get_the_type();
-		if ( $type != 'quote' )
+		if ( $type !== 'quote' ) {
 			return;
+		}
+		
+		$id = sliced_get_the_id();
+		if ( ! $id ) {
+			return;
+		}
 
-		$output = admin_url( 'admin.php?action=convert_quote_to_invoice&amp;post=' . (int) $_GET['post'] );
+		$output = admin_url( 'admin.php?action=convert_quote_to_invoice&amp;post=' . $id );
 
 		$button = '<a id="convert_quote" title="' . sprintf( __( 'Convert %1s to %2s', 'sliced-invoices' ), sliced_get_quote_label(), sliced_get_invoice_label() ) . '" class="button ui-tip" href="' . esc_url( wp_nonce_url( $output, 'convert', 'sliced_convert_quote' ) ) . '"><span class="dashicons dashicons-controls-repeat"></span> ' . sprintf( __( 'Convert to %s', 'sliced-invoices' ), sliced_get_invoice_label() ) . '</a>';
 
@@ -1058,17 +1088,25 @@ class Sliced_Admin {
 	 */
 	public function convert_quote_to_invoice() {
 
-		/*
-		 * Do the checks
-		 */
-		if ( ! ( isset( $_GET['post'] ) || isset( $_POST['post'] )  || ( isset( $_REQUEST['action'] ) && 'convert_quote_to_invoice' == $_REQUEST['action'] ) ) ) {
-			wp_die('No quote to convert!');
+		global $wpdb;
+		
+		// get original post ID
+		$id = isset( $_REQUEST['post'] ) ? intval( sanitize_text_field( $_REQUEST['post'] ) ) : false;
+		if ( ! $id ) {
+			wp_die( 'No quote or invoice to convert!' );
 		}
-
-		if ( ! isset( $_GET['sliced_convert_quote'] ) || ! wp_verify_nonce( $_GET['sliced_convert_quote'], 'convert') )
-			wp_die( 'Ooops, something went wrong, please try again later.' );
-
-		$id = (int) $_GET['post'];
+		
+		// verify the nonce
+		$nonce = isset( $_REQUEST['sliced_convert_quote'] ) ? $_REQUEST['sliced_convert_quote'] : false;
+		if ( ! wp_verify_nonce( $nonce, 'convert' ) ) {
+			wp_die( 'The link you followed has expired.' );
+		}
+		
+		// get the original post, verify it is a quote
+		$post = get_post( $id );
+		if ( ! $post || ! $post->post_type === 'sliced_quote' ) {
+			wp_die( 'Creation failed, could not find original quote: ' . $id );
+		}
 		
 		
 		/*
@@ -1126,7 +1164,6 @@ class Sliced_Admin {
 			/*
 			 * Duplicate
 			 */
-			global $wpdb;
 		 
 			$post = get_post( $id );
 				
@@ -2126,7 +2163,8 @@ class Sliced_Admin {
 
 		if ( current_user_can('edit_posts') && ( $post->post_type == 'sliced_quote' || $post->post_type == 'sliced_invoice' ) ) {
 
-			$output = admin_url( 'admin.php?action=duplicate_quote_invoice&amp;post=' . $post->ID );
+			$nonce  = wp_create_nonce( 'sliced_invoices_duplicate_quote_invoice-' . $post->ID );
+			$output = admin_url( 'admin.php?action=duplicate_quote_invoice&amp;post=' . $post->ID . '&amp;_wpnonce=' . $nonce );
 			$actions['duplicate'] = '<a href="' . esc_url( $output ) . '" title="'. __( 'Clone this item', 'sliced-invoices' ) .'" rel="permalink">' . __( 'Clone', 'sliced-invoices' ) . '</a>';
 
 		}
@@ -2143,98 +2181,90 @@ class Sliced_Admin {
 	public function duplicate_quote_invoice() {
 
 		global $wpdb;
-
-		if ( ! ( isset( $_GET['post'] ) || isset( $_POST['post'] )  || ( isset( $_REQUEST['action'] ) && 'duplicate_quote_invoice' == $_REQUEST['action'] ) ) ) {
-			wp_die('No quote or invoice to duplicate!');
+		
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			return;
 		}
-
-		/*
-		 * get the original post id
-		 */
-		$post_id = (isset($_GET['post']) ? $_GET['post'] : $_POST['post']);
-
-		/*
-		 * and all the original post data then
-		 */
+		
+		// get original post ID
+		$post_id = isset( $_REQUEST['post'] ) ? intval( sanitize_text_field( $_REQUEST['post'] ) ) : false;
+		if ( ! $post_id ) {
+			wp_die( 'No quote or invoice to duplicate!' );
+		}
+		
+		// verify the nonce
+		$nonce = isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : false;
+		if ( ! wp_verify_nonce( $nonce, 'sliced_invoices_duplicate_quote_invoice-' . $post_id ) ) {
+			wp_die( 'The link you followed has expired.' );
+		}
+		
+		// get the original post, verify it is a quote or invoice
 		$post = get_post( $post_id );
-
-		/*
-		 * if post data exists, create the post duplicate
-		 */
-		if (isset( $post ) && $post != null) {
-
-			/*
-			 * new post data array
-			 */
-			$args = array(
-				'comment_status' => $post->comment_status,
-				'ping_status'    => $post->ping_status,
-				'post_author'    => $post->post_author,
-				'post_content'   => $post->post_content,
-				'post_excerpt'   => $post->post_excerpt,
-				'post_name'      => $post->post_name,
-				'post_parent'    => $post->post_parent,
-				'post_password'  => $post->post_password,
-				'post_status'    => 'publish',
-				'post_title'     => $post->post_title . ' - copy',
-				'post_type'      => $post->post_type,
-				'to_ping'        => $post->to_ping,
-				'menu_order'     => $post->menu_order
-			);
-
-			/*
-			 * insert the post by wp_insert_post() function
-			 */
-			$new_post_id = wp_insert_post( $args );
-
-			/*
-			 * get all current post terms ad set them to the new post draft
-			 */
-			$taxonomies = get_object_taxonomies($post->post_type); // returns array of taxonomy names for post type, ex array("category", "post_tag");
-			foreach ($taxonomies as $taxonomy) {
-				$post_terms = wp_get_object_terms($post_id, $taxonomy, array('fields' => 'slugs'));
-				wp_set_object_terms($new_post_id, $post_terms, $taxonomy, false);
-			}
-
-			/*
-			 * duplicate all post meta
-			 */
-			$post_meta_infos = $wpdb->get_results("SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id=$post_id");
-			if (count($post_meta_infos)!=0) {
-				$sql_query = "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) ";
-				foreach ($post_meta_infos as $meta_info) {
-					$meta_key        = $meta_info->meta_key;
-					$meta_value      = addslashes($meta_info->meta_value);
-					$sql_query_sel[] = "SELECT $new_post_id, '$meta_key', '$meta_value'";
-				}
-				$sql_query.= implode(" UNION ALL ", $sql_query_sel);
-				$wpdb->query($sql_query);
-			}
-
-			/*
-			 * increment the number
-			 */
-			if ( $post->post_type === 'sliced_invoice' ) {
-				$number = sliced_get_next_invoice_number();
-				update_post_meta( $new_post_id, '_sliced_invoice_number', (string)$number );
-				Sliced_Invoice::update_invoice_number( $new_post_id );
-			}
-			if ( $post->post_type === 'sliced_quote' ) {
-				$number = sliced_get_next_quote_number();
-				update_post_meta( $new_post_id, '_sliced_quote_number', (string)$number );
-				Sliced_Quote::update_quote_number( $new_post_id );
-			}
-
-			/*
-			 * finally, redirect to the current(ish) url
-			 */
-			$current_url = admin_url( 'edit.php?post_type=' . $post->post_type . '' );
-			wp_redirect( $current_url );
-			exit;
-
-		} else {
-			wp_die('Creation failed, could not find original invoice or quote: ' . $post_id);
+		if ( ! $post || ! in_array( $post->post_type, array( 'sliced_invoice', 'sliced_quote' ) ) ) {
+			wp_die( 'Creation failed, could not find original invoice or quote: ' . $post_id );
 		}
+		
+		/*
+		 * create the post duplicate
+		 */
+		
+		// new post data array
+		$args = array(
+			'comment_status' => $post->comment_status,
+			'ping_status'    => $post->ping_status,
+			'post_author'    => $post->post_author,
+			'post_content'   => $post->post_content,
+			'post_excerpt'   => $post->post_excerpt,
+			'post_name'      => $post->post_name,
+			'post_parent'    => $post->post_parent,
+			'post_password'  => $post->post_password,
+			'post_status'    => 'publish',
+			'post_title'     => $post->post_title . ' - copy',
+			'post_type'      => $post->post_type,
+			'to_ping'        => $post->to_ping,
+			'menu_order'     => $post->menu_order
+		);
+
+		// insert the post by wp_insert_post() function
+		$new_post_id = wp_insert_post( $args );
+
+		// get all current post terms ad set them to the new post draft
+		$taxonomies = get_object_taxonomies($post->post_type); // returns array of taxonomy names for post type, ex array("category", "post_tag");
+		foreach ($taxonomies as $taxonomy) {
+			$post_terms = wp_get_object_terms($post_id, $taxonomy, array('fields' => 'slugs'));
+			wp_set_object_terms($new_post_id, $post_terms, $taxonomy, false);
+		}
+
+		// duplicate all post meta
+		$post_meta_infos = $wpdb->get_results("SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id=$post_id");
+		if (count($post_meta_infos)!=0) {
+			$sql_query = "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) ";
+			foreach ($post_meta_infos as $meta_info) {
+				$meta_key        = $meta_info->meta_key;
+				$meta_value      = addslashes($meta_info->meta_value);
+				$sql_query_sel[] = "SELECT $new_post_id, '$meta_key', '$meta_value'";
+			}
+			$sql_query.= implode(" UNION ALL ", $sql_query_sel);
+			$wpdb->query($sql_query);
+		}
+
+		// increment the number
+		if ( $post->post_type === 'sliced_invoice' ) {
+			$number = sliced_get_next_invoice_number();
+			update_post_meta( $new_post_id, '_sliced_invoice_number', (string)$number );
+			Sliced_Invoice::update_invoice_number( $new_post_id );
+		}
+		if ( $post->post_type === 'sliced_quote' ) {
+			$number = sliced_get_next_quote_number();
+			update_post_meta( $new_post_id, '_sliced_quote_number', (string)$number );
+			Sliced_Quote::update_quote_number( $new_post_id );
+		}
+
+		// finally, redirect to the current(ish) url
+		$current_url = admin_url( 'edit.php?post_type=' . $post->post_type . '' );
+		wp_redirect( $current_url );
+		exit;
+
 	}
 
 
@@ -2452,6 +2482,15 @@ class Sliced_Admin {
 	public function export_csv_full() {
 
 		// Do the checks
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		
+		$nonce = isset( $_POST['sliced-invoices-export-csv-nonce'] ) ? $_POST['sliced-invoices-export-csv-nonce'] : false;
+		if ( ! wp_verify_nonce( $nonce, 'sliced_invoices_export_csv' ) ) {
+			return;
+		}
+		
 		if ( ! isset( $_POST['csv_exporter_type'] ) ) {
 			return;
 		}
