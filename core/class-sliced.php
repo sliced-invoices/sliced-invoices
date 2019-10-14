@@ -90,8 +90,6 @@ class Sliced_Invoices {
 		 */
 		require_once SLICED_PATH . 'core/class-sliced-loader.php';
 		require_once SLICED_PATH . 'core/class-sliced-i18n.php';
-		require_once SLICED_PATH . 'core/class-slice-base-plugin-updater.php'; // currently only used by DAPP, will be removed soon
-		require_once SLICED_PATH . 'core/class-sliced-plugin-updater.php';     // <-- this one is the future
 		require_once SLICED_PATH . 'core/class-sliced-semaphore.php';
 
 		/**
