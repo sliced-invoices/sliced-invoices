@@ -50,7 +50,7 @@ class Sliced_Reports {
 	 * @since   2.0.0
 	 */
 	public function display_reports_page() {
-
+		@ini_set( 'max_execution_time', '300' );
 	?>
 
 	<div class="wrap">
@@ -238,7 +238,7 @@ class Sliced_Reports {
 			'post_type' => 'sliced_' . $type,
 			'post_status' => 'publish',
 			'posts_per_page' => -1,
-			'fields' => 'ids',
+			// 'fields' => 'ids',
 			'meta_query' => array(
 				'relation' => 'AND',
 				array(
@@ -253,16 +253,40 @@ class Sliced_Reports {
 				),
 			),
 		);
+		
+		if ( $type === 'invoice' ) {
+			$args['tax_query'] = array(
+				'relation' => 'AND',
+				array(
+					'taxonomy' => 'invoice_status',
+					'field'    => 'slug',
+					'terms'    => array( 'draft', 'cancelled' ),
+					'operator' => 'NOT IN',
+				),
+			);
+		}
+		
+		if ( $type === 'quote' ) {
+			$args['tax_query'] = array(
+				'relation' => 'AND',
+				array(
+					'taxonomy' => 'quote_status',
+					'field'    => 'slug',
+					'terms'    => array( 'draft', 'cancelled', 'declined' ),
+					'operator' => 'NOT IN',
+				),
+			);
+		}
 
 		$the_query = new WP_Query( apply_filters( 'sliced_reports_query', $args ) );
 		$total = array();
 		if( $the_query->posts ) :
-			foreach ( $the_query->posts as $id ) {
-				if( sliced_get_the_type( $id ) == 'invoice' && ( ! has_term( 'draft', 'invoice_status', $id ) && ! has_term( 'cancelled', 'invoice_status', $id ) ) ) {
-					$total[$id] = sliced_get_invoice_total_raw( $id );
+			foreach ( $the_query->posts as $post ) {
+				if ( $type === 'invoice' ) {
+					$total[$post->ID] = sliced_get_invoice_total_raw( $post->ID );
 				}
-				if( sliced_get_the_type( $id ) == 'quote' && ( ! has_term('draft', 'quote_status', $id ) && ! has_term('cancelled', 'quote_status', $id ) && ! has_term('declined', 'quote_status', $id ) ) ) {
-					$total[$id] = sliced_get_quote_total_raw( $id );
+				if ( $type === 'quote' ) {
+					$total[$post->ID] = sliced_get_quote_total_raw( $post->ID );
 				}
 			};
 		endif;
@@ -423,11 +447,19 @@ class Sliced_Reports {
 	 */
 	public function display_doughnut_chart( $type, $statuses ) {
 
+		$data = array();
+		$background_colors = array();
+		$labels = array();
+		
 		$colors = $this->get_reporting_colors();
-		$hover = '0.9)';
+		
+		foreach( $statuses as $status ) {
+			$data[] = esc_html( $status->count );
+			$background_colors[] = '"'.$colors[$status->slug].'"';
+			$labels[] = '"'.esc_attr( $status->name ).'"';
+		}
 
 		?>
-
 		<div class="labeled-chart-container">
 
 			<div class="canvas-holder">
@@ -442,36 +474,39 @@ class Sliced_Reports {
 
 		</div>
 
-
-		<script>
-		var data_<?php echo $type ?> = [
-
-			<?php
-			$count = 0;
-			foreach( $statuses as $status ) : ?>
-				{
-					value: <?php echo esc_html( $status->count ) ?>,
-					color: "<?php echo $colors[$status->slug] ?>",
-					highlight: "<?php echo substr($colors[$status->slug], 0, -2) . $hover; ?>",
-					label: "<?php echo $status->name ?>",
+		<script type="text/javascript">
+		
+			var data_<?php echo $type ?> = {
+				type: 'pie',
+				data: {
+					datasets: [{
+						data: [
+							<?php echo implode( ',', $data ); ?>
+						],
+						backgroundColor: [
+							<?php echo implode( ',', $background_colors ); ?>
+						],
+					}],
+					labels: [
+						<?php echo implode( ',', $labels ); ?>
+					]
 				},
+				options: {
+					responsive: true,
+					legend: {
+						display: false
+					}
+				}
+			};
 
-			<?php $count++;
-			endforeach; ?>
-
-		]
-
-		jQuery(document).ready(function(){
-			var ctx_<?php echo $type ?> = document.getElementById("<?php echo esc_html( $type ) ?>_status").getContext("2d");
-			window.Pie_<?php echo $type ?> = new Chart(ctx_<?php echo esc_html( $type ) ?>).Doughnut(data_<?php echo esc_html( $type ) ?>, {
-				responsive : true,
+			jQuery(document).ready(function(){
+				var ctx_<?php echo $type ?> = document.getElementById("<?php echo esc_html( $type ) ?>_status").getContext("2d");
+				window.Pie_<?php echo $type ?> = new Chart( ctx_<?php echo esc_html( $type ) ?>, data_<?php echo esc_html( $type ) ?> );
 			});
-		});
 
 		</script>
 
 		<?php
-
 	}
 
 
@@ -522,66 +557,67 @@ class Sliced_Reports {
 		$invoices = array_reverse( array_slice($invoice_total, 0, 6) );
 
 		?>
-			<ul class="bar-legend">
-				<li><span style="background-color: rgba(23, 158, 200, 0.7)"></span><?php esc_html_e( sliced_get_invoice_label_plural() ) ?></li>
-				<li><span style="background-color: rgba(42, 61, 80, 0.7)"></span><?php esc_html_e( sliced_get_quote_label_plural() ) ?></li>
-			</ul>
+		<ul class="bar-legend">
+			<li><span style="background-color: rgba(23, 158, 200, 0.7)"></span><?php esc_html_e( sliced_get_invoice_label_plural() ) ?></li>
+			<li><span style="background-color: rgba(42, 61, 80, 0.7)"></span><?php esc_html_e( sliced_get_quote_label_plural() ) ?></li>
+		</ul>
 
 		<div style="width: 100%">
 			<canvas id="canvas" height="450" width="600"></canvas>
 		</div>
 
-		<script>
-		var barChartData = {
-			labels : [ <?php
+		<script type="text/javascript">
+		
+			var barChartData = {
+				labels: [ <?php
 							foreach( $quotes as $month => $amount ) {
 								echo '"' . $month . '",';
 							} ?>],
-			datasets : [
-				{
-					label: "Quotes",
-					fillColor : "rgba(42, 61, 80, 0.7)",
-					strokeColor : "rgba(42, 61, 80, 1)",
-					highlightFill: "rgba(42, 61, 80, 0.8)",
-					highlightStroke: "rgba(42, 61, 80, 0.9)",
-					data : [<?php
-								foreach( $quotes as $month => $amount ) {
-									echo (int)$amount . ',';
-								} ?>]
-				},
-				{
-					label: "Invoices",
-					fillColor : "rgba(23, 158, 200, 0.7)",
-					strokeColor : "rgba(23, 158, 200, 1)",
-					highlightFill : "rgba(23, 158, 200, 0.8)",
-					highlightStroke : "rgba(23, 158, 200, 0.9)",
-					data : [<?php
-								foreach( $invoices as $month => $amount ) {
-									echo (int)$amount . ',';
-								} ?>]
-				}
-			]
-
-		}
-		jQuery(document).ready(function(){
-			console.log(barChartData.datasets[0]['label']);
-			var ctx = document.getElementById("canvas").getContext("2d");
-			window.myBar = new Chart(ctx).Bar(barChartData, {
-				responsive : true,
-				showScale: true,
-				scaleBeginAtZero: true,
-				tooltipTitleFontSize: 13,
-				tooltipYPadding: 10,
-				tooltipXPadding: 15,
-				multiTooltipTemplate: " <%=datasetLabel%> : <?php echo $shared->get_currency_symbol(null) ?><%= value %> ",
+				datasets: [
+					{
+						label: "Quotes",
+						backgroundColor : "rgba(42, 61, 80, 0.7)",
+						borderColor : "rgba(42, 61, 80, 1)",
+						data : [<?php
+									foreach( $quotes as $month => $amount ) {
+										echo (int)$amount . ',';
+									} ?>]
+					},
+					{
+						label: "Invoices",
+						backgroundColor : "rgba(23, 158, 200, 0.7)",
+						borderColor : "rgba(23, 158, 200, 1)",
+						data : [<?php
+									foreach( $invoices as $month => $amount ) {
+										echo (int)$amount . ',';
+									} ?>]
+					}
+				]
+			};
+			
+			jQuery(document).ready(function(){
+				var ctx = document.getElementById("canvas").getContext("2d");
+				window.myBar = new Chart(ctx, {
+					type: 'bar',
+					data: barChartData,
+					options: {
+						responsive: true,
+						legend: {
+							display: false
+						},
+						showScale: true,
+						scaleBeginAtZero: true,
+						tooltipTitleFontSize: 13,
+						tooltipYPadding: 10,
+						tooltipXPadding: 15,
+						multiTooltipTemplate: " <%=datasetLabel%> : <?php echo $shared->get_currency_symbol(null) ?><%= value %> ",
+					}
+				});
 			});
-		});
 
 		</script>
 
-
-
-	<?php
+		<?php
 	}
 
 
