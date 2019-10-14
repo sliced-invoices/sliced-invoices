@@ -196,8 +196,8 @@ class Sliced_Notifications {
 		if ( ! isset( $_POST['id'] ) )
 			return;
 
-		$id       = $_POST['id'];
-		$template = isset( $_POST['template'] ) ? $_POST['template'] : 'default';
+		$id       = intval( sanitize_text_field( $_POST['id'] ) );
+		$template = isset( $_POST['template'] ) ? sanitize_text_field( $_POST['template'] ) : 'default';
 		$type     = sliced_get_the_type( $id );
 		
 		switch ( $template ) {
@@ -248,7 +248,7 @@ class Sliced_Notifications {
 	public function get_subject( $type ) {
 		// if we are sending a quote or an invoice manually
 		if( isset( $_POST['email_subject'] ) ) {
-			$output = $_POST['email_subject'];
+			$output = sanitize_text_field( $_POST['email_subject'] );
 		} elseif ( isset( $this->settings["${type}_subject"] ) ) {
 			$output = $this->settings["${type}_subject"];
 		} else {
@@ -403,7 +403,7 @@ class Sliced_Notifications {
 		}
 		// if we are sending a quote or an invoice manually
 		if( isset( $_POST['client_email'] ) && ! empty( $_POST['client_email'] ) ) {
-			$output = $_POST['client_email'];
+			$output = sanitize_email( $_POST['client_email'] );
 		}
 
 		return apply_filters( 'sliced_get_email_recipient', $output, $this->id, $type );
@@ -523,8 +523,8 @@ class Sliced_Notifications {
 	 */
 	public function sure_to_email() {
 
-		$id        = $_GET['id'];
-		$template  = isset( $_GET['template'] ) ? $_GET['template'] : 'default';
+		$id        = intval( sanitize_text_field( $_GET['id'] ) );
+		$template  = isset( $_GET['template'] ) ? sanitize_text_field( $_GET['template'] ) : 'default';
 		
 		switch ( $template ) {
 			case 'payment_reminder':

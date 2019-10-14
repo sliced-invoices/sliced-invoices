@@ -1036,9 +1036,9 @@ class Sliced_Admin {
 			$type = sliced_get_the_type($post_id);
 
 			if( isset( $_POST['sliced_created'] ) )	{
-				$created = $_POST['sliced_created'];
+				$created = sanitize_text_field( $_POST['sliced_created'] );
 			} elseif ( isset( $_POST['_sliced_' . $type . '_created'] ) ) {
-				$created = $_POST['_sliced_' . $type . '_created'];
+				$created = sanitize_text_field( $_POST['_sliced_' . $type . '_created'] );
 			} else {
 				$created = current_time( 'mysql' ); 
 			}
@@ -1070,9 +1070,9 @@ class Sliced_Admin {
 			return;
 		}
 
-		$prefix = isset( $_POST['_sliced_'.$type.'_prefix'] ) ? $_POST['_sliced_'.$type.'_prefix'] : '';
-		$number = isset( $_POST['_sliced_'.$type.'_number'] ) ? $_POST['_sliced_'.$type.'_number'] : '';
-		$suffix = isset( $_POST['_sliced_'.$type.'_suffix'] ) ? $_POST['_sliced_'.$type.'_suffix'] : '';
+		$prefix = isset( $_POST['_sliced_'.$type.'_prefix'] ) ? sanitize_text_field( $_POST['_sliced_'.$type.'_prefix'] ) : '';
+		$number = isset( $_POST['_sliced_'.$type.'_number'] ) ? sanitize_text_field( $_POST['_sliced_'.$type.'_number'] ) : '';
+		$suffix = isset( $_POST['_sliced_'.$type.'_suffix'] ) ? sanitize_text_field( $_POST['_sliced_'.$type.'_suffix'] ) : '';
 		
 		$number_for_search = $prefix . $number . $suffix;
 		
@@ -2399,13 +2399,13 @@ class Sliced_Admin {
 			$the_query->query_vars['meta_query'] = array(
 				array(
 					'key'      => '_sliced_client',
-					'value'    => (int)$_GET['sliced_client']
+					'value'    => intval( sanitize_text_field( $_GET['sliced_client'] ) ),
 				)
 			);
 		}
 
 		if ( isset( $_GET['m'] ) && $_GET['m'] ) {
-			$date  = isset( $_GET['m'] ) ? $_GET['m'] : null;
+			$date  = isset( $_GET['m'] ) ? sanitize_text_field( $_GET['m'] ) : null;
 			$year  = $date ? substr($date, 0, 4) : null;
 			$month = $date ? substr($date, -2) : null;
 			$the_query->query_vars['date_query'] = array(
@@ -2486,7 +2486,7 @@ class Sliced_Admin {
 			return;
 		}
 		
-		$nonce = isset( $_POST['sliced-invoices-export-csv-nonce'] ) ? $_POST['sliced-invoices-export-csv-nonce'] : false;
+		$nonce = isset( $_POST['sliced-invoices-export-csv-nonce'] ) ? sanitize_text_field( $_POST['sliced-invoices-export-csv-nonce'] ) : false;
 		if ( ! wp_verify_nonce( $nonce, 'sliced_invoices_export_csv' ) ) {
 			return;
 		}
@@ -2673,7 +2673,7 @@ class Sliced_Admin {
 			if ( isset( $_POST['object_id'] ) && $_POST['object_id'] === 'sliced_payments' && isset( $_POST['payment_page'] ) ) {
 				// true if we just hit save from the sliced_payments settings page
 				// CMB2 will not have saved the value in time for this message to fire, so we'll grab it from $_POST:
-				$payments = array( 'payment_page' => $_POST['payment_page'] );
+				$payments = array( 'payment_page' => intval( sanitize_text_field( $_POST['payment_page'] ) ) );
 			} else {
 				$payments = get_option( 'sliced_payments' );
 			}

@@ -381,7 +381,7 @@ class Sliced_Payments {
 		if ( ! isset( $_POST['sliced_decline_quote_id'] ) )
 			return;
 
-		$id = (int) $_POST['sliced_decline_quote_id'];
+		$id = intval( sanitize_text_field( $_POST['sliced_decline_quote_id'] ) );
 
 		if ( ! isset( $_POST['sliced_decline_quote_nonce'] ) || ! wp_verify_nonce( $_POST['sliced_decline_quote_nonce'], 'sliced_invoices_decline_quote') )
 			wp_die( "Ooops, something went wrong, please try again later." );
@@ -436,7 +436,7 @@ class Sliced_Payments {
 			return;
 		}
 
-		$id = (int) $_POST['sliced_accept_quote_id'];
+		$id = intval( sanitize_text_field( $_POST['sliced_accept_quote_id'] ) );
 
 		if ( ! isset( $_POST['sliced_client_accept_quote_nonce'] ) || ! wp_verify_nonce( $_POST['sliced_client_accept_quote_nonce'], 'sliced_invoices_accept_quote') ) {
 			wp_die( "Ooops, something went wrong, please try again later." );

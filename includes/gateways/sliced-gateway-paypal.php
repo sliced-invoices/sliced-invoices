@@ -208,8 +208,8 @@ class Sliced_Paypal {
 			return;
 		}
 		
-		$token      = $_GET['token'];
-		$payer_id   = isset( $_GET['PayerID'] ) ? $_GET['PayerID'] : false;
+		$token      = sanitize_text_field( $_GET['token'] );
+		$payer_id   = isset( $_GET['PayerID'] ) ? sanitize_text_field( $_GET['PayerID'] ) : false;
 
 		/*
 		 * get the invoice that matches the token we are receiving
@@ -637,7 +637,7 @@ class Sliced_Paypal {
 		/*
 		 * Get the invoice ID and gateway
 		 */
-		$id         = $_POST['sliced_payment_invoice_id'];
+		$id         = intval( sanitize_text_field( $_POST['sliced_payment_invoice_id'] ) );
 		$gateway    = $this->gateway();
 		$currency   = sliced_get_invoice_currency( $id );
 		$payment_data = '&METHOD=SetExpressCheckout'.

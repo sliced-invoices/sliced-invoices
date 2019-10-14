@@ -1108,7 +1108,7 @@ class Sliced_Metaboxes {
 	 * @return string  Sliced logs
 	 */
 	public function display_logs() {
-		return $this->logs->display_the_logs( (int) $_GET['post'] );
+		return $this->logs->display_the_logs( intval( sanitize_text_field( $_GET['post'] ) ) );
 	}
 
 	public function accepted_payment_method_keys() {
@@ -1222,13 +1222,13 @@ class Sliced_Metaboxes {
 	}
 	
 	public function is_duplicate_quote_number() {
-		if ( isset( $_GET['post'] ) && Sliced_Quote::is_duplicate_quote_number( (int) $_GET['post'] ) ) {
+		if ( isset( $_GET['post'] ) && Sliced_Quote::is_duplicate_quote_number( intval( sanitize_text_field( $_GET['post'] ) ) ) ) {
 			return '<span class="warning">' . __( 'Warning: duplicate quote number', 'sliced-invoices' ) . '</span>';
 		}
 	}
 	
 	public function is_duplicate_invoice_number() {
-		if ( isset( $_GET['post'] ) && Sliced_Invoice::is_duplicate_invoice_number( (int) $_GET['post'] ) ) {
+		if ( isset( $_GET['post'] ) && Sliced_Invoice::is_duplicate_invoice_number( intval( sanitize_text_field ( $_GET['post'] ) ) ) ) {
 			return '<span class="warning">' . __( 'Warning: duplicate invoice number', 'sliced-invoices' ) . '</span>';
 		}
 	}

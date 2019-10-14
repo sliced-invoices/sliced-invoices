@@ -329,7 +329,7 @@ class Sliced_Invoice {
 		$invoices = get_option( 'sliced_invoices' );
 		
 		if ( isset( $_POST['_sliced_invoice_number'] ) ) {
-			$this_number = $_POST['_sliced_invoice_number'];
+			$this_number = sanitize_text_field( $_POST['_sliced_invoice_number'] );
 		} elseif ( $post_id > 0 && $post = get_post( $post_id ) ) {
 			$this_number = $post->_sliced_invoice_number;
 		} else {

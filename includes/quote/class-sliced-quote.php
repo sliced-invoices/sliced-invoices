@@ -284,7 +284,7 @@ class Sliced_Quote {
 		$quotes = get_option( 'sliced_quotes' );
 		
 		if ( isset( $_POST['_sliced_quote_number'] ) ) {
-			$this_number = $_POST['_sliced_quote_number'];
+			$this_number = intval( sanitize_text_field( $_POST['_sliced_quote_number'] ) );
 		} elseif ( $post_id > 0 && $post = get_post( $post_id ) ) {
 			$this_number = $post->_sliced_quote_number;
 		} else {

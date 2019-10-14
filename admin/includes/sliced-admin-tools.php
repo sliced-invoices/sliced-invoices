@@ -30,7 +30,7 @@ class Sliced_Tools {
      */
     public function display_tools_page() {
 
-		$active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'system_info';
+		$active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'system_info';
 		?>
 		<div class="wrap">
 			<h2><?php _e( 'Sliced Invoices Tools', 'sliced-invoices' ); ?></h2>

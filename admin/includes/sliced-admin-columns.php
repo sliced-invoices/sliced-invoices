@@ -80,9 +80,9 @@ class Sliced_Columns {
 
 		$post_type = false;
 		if ( isset( $_GET['post_type'] ) ) {
-			$post_type = $_GET['post_type'];
+			$post_type = sanitize_text_field( $_GET['post_type'] );
 		} elseif ( isset( $_POST['post_type'] ) ) {
-			$post_type = $_POST['post_type'];
+			$post_type = sanitize_text_field( $_POST['post_type'] );
 		}
 		if ( $post_type !== 'sliced_invoice' && $post_type !== 'sliced_quote' ) {
 			return $post_columns;
@@ -353,7 +353,7 @@ class Sliced_Columns {
 		if ( isset( $_GET['sliced_client'] ) && $_GET['sliced_client'] ) {
 			$query->query_vars['meta_query'][] = array(
 				 'key'      => '_sliced_client',
-				 'value'    => (int)$_GET['sliced_client']
+				 'value'    => intval( sanitize_text_field( $_GET['sliced_client'] ) ),
 			);
 		}
 
@@ -426,7 +426,7 @@ class Sliced_Columns {
 
 			foreach ( $clients as $id => $name ) {
 				if( $name ) {
-					$selected = isset( $_GET['sliced_client'] ) ? $_GET['sliced_client'] : null;
+					$selected = isset( $_GET['sliced_client'] ) ? sanitize_text_field( $_GET['sliced_client'] ) : null;
 					 printf('<option value="%s"%s>%s</option>', esc_attr( $id ), selected( $id, $selected, false), esc_html( $name ) );
 				}
 			}

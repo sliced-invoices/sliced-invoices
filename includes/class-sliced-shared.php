@@ -85,13 +85,13 @@ class Sliced_Shared {
 		} else if ( isset( $post->ID ) && ! empty( $post->ID ) && $post->ID != $payment_page ) {
 			return (int) $post->ID;
 		} else if ( isset( $_GET['post'] ) && ! empty( $_GET['post'] ) && $_GET['post'] != $payment_page ) {
-			return (int) $_GET['post'];
+			return intval( $_GET['post'] );
 		} else if ( isset( $_GET['id'] ) && ! empty( $_GET['id'] ) && $_GET['id'] != $payment_page ) {
-			return (int) $_GET['id'];
+			return intval( $_GET['id'] );
 		} else if ( isset( $_POST['id'] ) && ! empty( $_POST['id'] ) && $_POST['id'] != $payment_page ) {
-			return (int) $_POST['id'];
+			return intval( $_POST['id'] );
 		} else if ( isset( $_POST['sliced_payment_invoice_id'] ) && ! empty( $_POST['sliced_payment_invoice_id'] ) && $_POST['sliced_payment_invoice_id'] != $payment_page ) {
-			return (int) $_POST['sliced_payment_invoice_id'];
+			return intval( $_POST['sliced_payment_invoice_id'] );
 		}
 		return null;
 
