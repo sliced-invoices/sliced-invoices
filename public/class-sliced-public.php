@@ -74,7 +74,7 @@ class Sliced_Public {
 	}
 
 	/**
-	 * Register the stylesheets for the public-facing side of the site.
+	 * Register the stylesheets for invoices and quotes
 	 *
 	 * @since   2.0.0
 	 */
@@ -86,13 +86,16 @@ class Sliced_Public {
 			wp_print_styles( 'dashicons' );
 		}
 		
-		?>
-		<link rel='stylesheet' id='open-sans-css' href='https://fonts.googleapis.com/css?family=Open+Sans%3A300italic%2C400italic%2C600italic%2C300%2C400%2C600&subset=latin%2Clatin-ext&ver=<?php echo $this->version; ?>' type='text/css' media='all' />
-		<link rel='stylesheet' id='fontawesome-css' href='<?php echo plugins_url( $this->plugin_name ); ?>/public/css/font-awesome.min.css?ver=<?php echo $this->version; ?>' type='text/css' media='all' />
-		<link rel='stylesheet' id='bootstrap-css' href='<?php echo plugins_url( $this->plugin_name ); ?>/public/css/bootstrap.min.css?ver=<?php echo $this->version; ?>' type='text/css' media='all' />
-		<link rel='stylesheet' id='style-css' href='<?php echo plugins_url( $this->plugin_name ); ?>/public/css/style.css?ver=<?php echo $this->version; ?>' type='text/css' media='all' />
-		<?php
-
+		wp_register_style( 'sliced-invoices_open-sans', 'https://fonts.googleapis.com/css?family=Open+Sans%3A300italic%2C400italic%2C600italic%2C300%2C400%2C600&subset=latin%2Clatin-ext', array(), $this->version, 'all' );
+		wp_register_style( 'sliced-invoices_fontawesome', plugins_url( $this->plugin_name ).'/public/css/font-awesome.min.css', array(), $this->version, 'all' );
+		wp_register_style( 'sliced-invoices_bootstrap', plugins_url( $this->plugin_name ).'/public/css/bootstrap.min.css', array(), $this->version, 'all' );
+		wp_register_style( 'sliced-invoices_style', plugins_url( $this->plugin_name ).'/public/css/style.css', array(), $this->version, 'all' );
+		
+		// We can't use wp_enqueue_styles here.  These styles are ONLY for our
+		// custom quote/invoice templates which do NOT use wp_head. So these styles
+		// will never be printed unless we do it this way:
+		wp_print_styles( array( 'sliced-invoices_open-sans', 'sliced-invoices_fontawesome', 'sliced-invoices_bootstrap', 'sliced-invoices_style' ) );
+		
 	}
 
 	/**
@@ -102,9 +105,15 @@ class Sliced_Public {
 	 */
 	public function output_invoice_styles() {
 
+		wp_register_style( 'sliced-invoices_thickbox', includes_url( 'js/thickbox/thickbox.css' ), array(), $this->version, 'all' );
+		wp_register_style( 'sliced-invoices_template', apply_filters( 'sliced_invoice_template_css', plugins_url( $this->plugin_name ) . '/public/css/' . esc_html( sliced_get_invoice_template() ) . '.css' ), array(), $this->version, 'all' );
+		
+		// We can't use wp_enqueue_styles here.  These styles are ONLY for our
+		// custom invoice templates which do NOT use wp_head. So these styles
+		// will never be printed unless we do it this way:
+		wp_print_styles( array( 'sliced-invoices_thickbox', 'sliced-invoices_template' ) );
+		
 		?>
-		<link rel='stylesheet' id='thickbox-css'  href='<?php echo includes_url( 'js/thickbox/thickbox.css' ); ?>?ver=<?php echo $this->version; ?>' type='text/css' media='all' />
-		<link rel='stylesheet' id='template-css'  href='<?php echo apply_filters( 'sliced_invoice_template_css', plugins_url( $this->plugin_name ) . '/public/css/' . esc_html( sliced_get_invoice_template() ) . '.css' ); ?>?ver=<?php echo $this->version; ?>' type='text/css' media='all' />
 		<style id='template-inline-css' type='text/css'>
 			<?php echo apply_filters( 'sliced_invoice_template_custom_css', html_entity_decode( sliced_get_invoice_css() ) ); ?>
 		</style>
@@ -131,10 +140,16 @@ class Sliced_Public {
 	 * @since   2.0.0
 	 */
 	public function output_quote_styles() {
-
+		
+		wp_register_style( 'sliced-invoices_thickbox', includes_url( 'js/thickbox/thickbox.css' ), array(), $this->version, 'all' );
+		wp_register_style( 'sliced-invoices_template', apply_filters( 'sliced_quote_template_css', plugins_url( $this->plugin_name ) . '/public/css/' . esc_html( sliced_get_quote_template() ) . '.css' ), array(), $this->version, 'all' );
+		
+		// We can't use wp_enqueue_styles here.  These styles are ONLY for our
+		// custom invoice templates which do NOT use wp_head. So these styles
+		// will never be printed unless we do it this way:
+		wp_print_styles( array( 'sliced-invoices_thickbox', 'sliced-invoices_template' ) );
+		
 		?>
-		<link rel='stylesheet' id='thickbox-css'  href='<?php echo includes_url( 'js/thickbox/thickbox.css' ); ?>?ver=<?php echo $this->version; ?>' type='text/css' media='all' />
-		<link rel='stylesheet' id='template-css'  href='<?php echo apply_filters( 'sliced_quote_template_css', plugins_url( $this->plugin_name ) . '/public/css/' . esc_html( sliced_get_quote_template() ) . '.css' ); ?>?ver=<?php echo $this->version; ?>' type='text/css' media='all' />
 		<style id='template-inline-css' type='text/css'>
 			<?php echo apply_filters( 'sliced_quote_template_custom_css', html_entity_decode( sliced_get_quote_css() ) ); ?>
 		</style>
