@@ -869,31 +869,8 @@ class Sliced_Shared {
 	 */
 	private static function curl( $url ) {
 
-		if ( ! function_exists( 'curl_init' ) ) {
-			return false;
-		}
-		
-		$curl = curl_init( $url );
-
-		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $curl, CURLOPT_HEADER, 0 );
-		curl_setopt( $curl, CURLOPT_USERAGENT, 'Sliced Invoices/'.SLICED_VERSION.' (via cURL)' );
-		curl_setopt( $curl, CURLOPT_CONNECTTIMEOUT, 10 );
-		curl_setopt( $curl, CURLOPT_TIMEOUT, 20 );
-		curl_setopt( $curl, CURLOPT_TIMEOUT_MS, 20000 );
-		curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false);
-		
-		do_action( 'sliced_pre_curl_exec', $curl );
-
-		$response = curl_exec( $curl );
-
-		if( 0 !== curl_errno( $curl ) || 200 !== curl_getinfo( $curl, CURLINFO_HTTP_CODE ) ) {
-			$response = null;
-		} // end if
-		curl_close( $curl );
-
-		return $response;
-
+		// removed 2019-10-14
+		return null;
 	}
 
 
@@ -903,53 +880,20 @@ class Sliced_Shared {
 	 * @since   2.0.0
 	 */
 	public static function request_data( $url ) {
-
-		$response = null;
 		
-		// First, we try to use wp_remote_get
-		$response = wp_remote_get( $url, array( 'timeout' => 10 ) );
-
-		if( ! $response || is_wp_error( $response ) ) {
-
-			// If that doesn't work, then we'll try file_get_contents
-			$response = @file_get_contents( $url );
-			
-			if( false == $response ) {
-
-				// And if that doesn't work, then we'll try curl
-				$response = self::curl( $url );
-				
-			}
-
+		$general = get_option( 'sliced_general' );
+		$sslverify = $general['pdf_ssl'] == 'true' ? true : false;
+		
+		$response = wp_remote_get( $url, array( 'sslverify' => $sslverify, 'timeout' => 10 ) );
+		$response = apply_filters( 'sliced_invoices_request_data', $response );
+		
+		if( is_wp_error( $response ) ) {
+			$error_string = $response->get_error_message();
+			$response = '<div id="message" class="error"><p>' . $error_string . '</p></div>';
 		}
 
-		// If the response is an array, it's coming from wp_remote_get,
-		// so we just want to capture to the body index for json_decode.
-		if( is_array( $response ) ) {
+		if( is_array( $response ) && isset( $response['body'] ) ) {
 			$response = $response['body'];
-		}
-
-		// try sslverify
-		if( ! $response > '' ) {
-
-			$general = get_option( 'sliced_general' );
-			$sslverify = $general['pdf_ssl'] == 'true' ? true : false;
-
-			$response = wp_remote_get( $url, array(
-			    'sslverify' => $sslverify,
-				'timeout'   => 10,
-			));
-
-			if( is_array( $response ) ) {
-				$response = $response['body'];
-			} 
-			
-			// if still nothing, show an error at least
-			if( is_wp_error( $response ) ) {
-				$error_string = $response->get_error_message();
-				$response = '<div id="message" class="error"><p>' . $error_string . '</p></div>';
-			}
-
 		}
 
 		return $response;

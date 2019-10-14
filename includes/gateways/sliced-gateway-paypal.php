@@ -38,6 +38,7 @@ class Sliced_Paypal {
 		add_filter( 'sliced_register_payment_method', array( $this, 'add_payment_method') );
 		add_action( 'sliced_do_payment', array( $this, 'process_payment') );
 		add_action( 'sliced_do_payment', array( $this, 'payment_return'), 10 );
+		add_action( 'http_api_curl', array( $this, 'http_api_curl' ), 10, 3 );
 
 	}
 
@@ -456,36 +457,26 @@ class Sliced_Paypal {
 
 		$API_Endpoint = "https://api-3t" . $paypalmode . ".paypal.com/nvp";
 		$version = urlencode('109.0');
-
-		// Set the curl parameters.
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $API_Endpoint);
-		curl_setopt($ch, CURLOPT_VERBOSE, 1);
-
-		// Turn off the server and peer verification (TrustManager Concept).
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_POST, 1);
-
-		// Set the API operation, version, and API signature in the request.
-		$nvpreq = "METHOD=$methodName_&VERSION=$version&PWD=$API_Password&USER=$API_UserName&SIGNATURE=$API_Signature$nvpStr_";
-
-		// Set the request as a POST FIELD for curl.
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $nvpreq);
 		
-		do_action( 'sliced_pre_curl_exec', $ch );
+		$nvpreq = "METHOD=$methodName_&VERSION=$version&PWD=$API_Password&USER=$API_UserName&SIGNATURE=$API_Signature$nvpStr_";
+		
+		$httpResponse = wp_remote_post( 
+			$API_Endpoint,
+			array(
+				'method'      => 'POST',
+				'body'        => $nvpreq,
+				'timeout'     => 70,
+				'user-agent'  => 'Sliced Invoices/' . SLICED_VERSION,
+				'httpversion' => '1.1',
+			)
+		);
 
-		// Get response from the server.
-		$httpResponse = curl_exec($ch);
-
-		if( ! $httpResponse ) {
-			sliced_print_message( $id, "$methodName_ failed: ".curl_error($ch).'('.curl_errno($ch).')', 'failed' );
+		if( is_wp_error( $httpResponse ) ) {
+			sliced_print_message( $id, "$methodName_ failed: ".$httpResponse->get_error_message(), 'failed' );
 		}
 
 		// Extract the response details.
-		$httpResponseAr = explode("&", $httpResponse);
+		$httpResponseAr = explode( "&", $httpResponse['body'] );
 
 		$response = array();
 		foreach ($httpResponseAr as $i => $value) {
@@ -498,6 +489,8 @@ class Sliced_Paypal {
 		if((0 == sizeof($response)) || ! array_key_exists('ACK', $response)) {
 			sliced_print_message( $id, "Invalid HTTP Response for POST request($nvpreq) to $API_Endpoint.", 'failed' );
 		}
+		
+		$response = apply_filters( 'sliced_invoices_paypal_request', $response );
 
 		return $response;
 	}
@@ -537,31 +530,34 @@ class Sliced_Paypal {
 		  $req .= "&$key=$value";
 		}
 
-		// Step 2: POST IPN data back to PayPal to validate
-		$ch = curl_init('https://www'.( $gateway['mode'] == 'sandbox' ? '.sandbox' : '').'.paypal.com/cgi-bin/webscr');
-		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $req);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-		curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Connection: Close'));
-		// In wamp-like environments that do not come bundled with root authority certificates,
-		// please download 'cacert.pem' from "http://curl.haxx.se/docs/caextract.html" and set
-		// the directory path of the certificate as shown below:
-		// curl_setopt($ch, CURLOPT_CAINFO, dirname(__FILE__) . '/cacert.pem');
-		do_action( 'sliced_gateway_paypal_ipn_verify', $ch );
-		do_action( 'sliced_pre_curl_exec', $ch );
-		if ( !($res = curl_exec($ch)) ) {
-		  // error_log("Got " . curl_error($ch) . " when processing IPN data");
-		  curl_close($ch);
-		  exit;
+		
+		$httpResponse = wp_remote_post( 
+			'https://www'.( $gateway['mode'] == 'sandbox' ? '.sandbox' : '').'.paypal.com/cgi-bin/webscr',
+			array(
+				'method'      => 'POST',
+				'body'        => $req,
+				'timeout'     => 70,
+				'user-agent'  => 'Sliced Invoices/' . SLICED_VERSION,
+				'httpversion' => '1.1',
+			)
+		);
+
+		if( is_wp_error( $httpResponse ) ) {
+			sliced_print_message( $id, "$methodName_ failed: ".$httpResponse->get_error_message(), 'failed' );
 		}
-		curl_close($ch);
+
+		// Extract the response details.
+		$response = $httpResponse['body'];
+
+		if( 0 == sizeof($response) ) {
+			sliced_print_message( $id, "Invalid HTTP Response for POST request($nvpreq) to $API_Endpoint.", 'failed' );
+		}
+		
+		$response = apply_filters( 'sliced_invoices_paypal_process_ipn', $response );
+		
 		
 		// inspect IPN validation result and act accordingly
-		if (strcmp ($res, "VERIFIED") == 0) {
+		if (strcmp ($response, "VERIFIED") == 0) {
 		
 			// The IPN is verified, process it
 			switch ( $_POST['txn_type'] ) {
@@ -608,6 +604,12 @@ class Sliced_Paypal {
 	
 	}
 
+	public static function http_api_curl( $handle, $r, $url ) {
+		if ( strstr( $url, 'https://' ) && ( strstr( $url, '.paypal.com/nvp' ) || strstr( $url, '.paypal.com/cgi-bin/webscr' ) ) ) {
+			curl_setopt( $handle, CURLOPT_SSLVERSION, 6 );
+		}
+	}
+	
 
 	/**
 	 * Start processing the payment.
