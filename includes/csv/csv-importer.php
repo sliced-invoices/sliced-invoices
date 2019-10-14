@@ -224,7 +224,7 @@ class Sliced_Csv_Importer {
 
 		$time_start = microtime(true);
 		$csv = new File_CSV_DataSource;
-		$file = $_FILES['csv_import']['tmp_name'];
+		$file = sanitize_file_name( $_FILES['csv_import']['tmp_name'] );
 		$this->stripBOM($file);
 
 		if (!$csv->load($file)) {
@@ -493,6 +493,31 @@ class Sliced_Csv_Importer {
 						)
 					);
 				}
+			}
+			
+			if( !empty( $data['sliced_items'] ) ) {
+				// the line items
+				$items  = explode( "\n", convert_chars( $data['sliced_items'] ) );
+				$items  = array_filter( $items ); // remove any empty items
+
+				if( $items ) :
+					foreach ( $items as $item ) {
+						list( $qty, $title, $desc, $amount ) = explode( '|', $item );
+						$qty    = ! empty($qty) ? trim( $qty ) : '1';
+						$title  = trim( $title );
+						$desc   = trim( $desc );
+						$amount = ! empty($amount) ? trim( $amount ) : '0';
+
+						$items_array[] = array(
+							'qty'           => esc_html( $qty ),
+							'title'         => esc_html( $title ),
+							'description'   => esc_html( $desc ),
+							'amount'        => esc_html( $amount ),
+						);
+					}
+				endif;
+
+				add_post_meta( $id, '_sliced_items', $items_array );
 			}
 		
 		} else {
