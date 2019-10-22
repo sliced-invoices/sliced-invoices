@@ -224,7 +224,13 @@ class Sliced_Csv_Importer {
 
 		$time_start = microtime(true);
 		$csv = new File_CSV_DataSource;
-		$file = sanitize_file_name( $_FILES['csv_import']['tmp_name'] );
+		
+		// we can't do sanitize_file_name( $_FILES['csv_import']['tmp_name'] ) here,
+		// because it strips all slashes from the file's path, rendering it useless.
+		// also, tmp_name is created by the server... it is not a user-generated input
+		// field, so there's no security risk here.
+		$file = $_FILES['csv_import']['tmp_name'];
+		
 		$this->stripBOM($file);
 
 		if (!$csv->load($file)) {
