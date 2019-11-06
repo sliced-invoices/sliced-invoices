@@ -403,7 +403,10 @@ class Sliced_Notifications {
 		}
 		// if we are sending a quote or an invoice manually
 		if( isset( $_POST['client_email'] ) && ! empty( $_POST['client_email'] ) ) {
-			$output = sanitize_email( $_POST['client_email'] );
+			// can't use sanitize_email() here, because $_POST['client_email'] may contain
+			// multiple email addresses separated by commas.  sanitize_email() removes
+			// the commas, breaking the functionality.
+			$output = sanitize_text_field( $_POST['client_email'] );
 		}
 
 		return apply_filters( 'sliced_get_email_recipient', $output, $this->id, $type );
