@@ -625,6 +625,13 @@ class Sliced_Logs {
 			return;
 		}
 		
+		// don't log if it's an internal request
+		$server_host = gethostname();
+		$server_ip   = gethostbyname( $server_host );
+		if ( Sliced_Shared::get_ip() === $server_ip ) {
+			return;
+		}
+		
 		$meta_value = array(
 			'type'    => ( $type === 'sliced_invoice' ? 'invoice' : 'quote' ) . '_viewed',
 			'by'      => get_current_user_id(), // returns 0 if no user,
