@@ -1012,44 +1012,54 @@ class Sliced_Admin {
 		return $date;
 
 	}
-
+	
+	
 	/**
 	 * Set published date as created date
 	 *
 	 * @since 	2.33
 	 */
 	public function set_published_date_as_created( $post_id ) {
-		// If this is a revision, get real post ID
-		if ( $parent_id = wp_is_post_revision( $post_id ) )
-			$post_id = $parent_id;
-
-		if ( ! $_POST )
+		
+		if ( ! $_POST ) {
 			return;
-
-		// Check if this post is in default category
-		if ( sliced_get_the_type( $post_id ) ) {
-
-			// unhook this function so it doesn't loop infinitely
-			remove_action( 'save_post', array( $this, 'set_published_date_as_created' ) );
-
-			// update the post, which calls save_post again
-			$type = sliced_get_the_type($post_id);
-
-			if( isset( $_POST['sliced_created'] ) )	{
-				$created = sanitize_text_field( $_POST['sliced_created'] );
-			} elseif ( isset( $_POST['_sliced_' . $type . '_created'] ) ) {
-				$created = sanitize_text_field( $_POST['_sliced_' . $type . '_created'] );
-			} else {
-				$created = current_time( 'mysql' ); 
-			}
-			// change the format if we have slashes
-			$created = $this->work_out_date_format( $created );
-			
-			wp_update_post( array( 'ID' => $post_id, 'post_date' => $created ) );
-
-			// re-hook this function
-			add_action( 'save_post', array( $this, 'set_published_date_as_created' ) );
 		}
+		
+		// If this is a revision, get real post ID
+		if ( $parent_id = wp_is_post_revision( $post_id ) ) {
+			$post_id = $parent_id;
+		}
+		
+		$type = sliced_get_the_type( $post_id );
+		
+		if ( ! in_array( $type, array( 'invoice', 'quote' ) ) ) {
+			return;
+		}
+		
+		$created = false;
+		
+		if ( isset( $_POST['sliced_created'] ) ) {
+			$created = sanitize_text_field( $_POST['sliced_created'] );
+		} elseif ( isset( $_POST['_sliced_' . $type . '_created'] ) ) {
+			$created = sanitize_text_field( $_POST['_sliced_' . $type . '_created'] );
+		}
+		
+		if ( ! $created ) {
+			return;
+		}
+		
+		// change the format if we have slashes
+		$created = $this->work_out_date_format( $created );
+		
+		// unhook this function so it doesn't loop infinitely
+		remove_action( 'save_post', array( $this, 'set_published_date_as_created' ) );
+		
+		// update the post, which calls save_post again
+		wp_update_post( array( 'ID' => $post_id, 'post_date' => $created ) );
+		
+		// re-hook this function
+		add_action( 'save_post', array( $this, 'set_published_date_as_created' ) );
+		
 	}
 	
 	
