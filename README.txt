@@ -4,7 +4,8 @@ Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce
 Requires at least: 4.0
 Tested up to: 5.3
-Stable tag: 3.8.6
+Requires PHP: 5.5
+Stable tag: 3.8.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -164,6 +165,12 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 == Changelog ==
+= 3.8.7 =
+* FIX: add a check to prevent internal requests from triggering a "invoice viewed" or "quote viewed" notice
+* FIX: issue where post_date is overwritten with current time after save_post (impacts recurring invoices, triggering a false "missed schedule" warning)
+* UPDATE: German translation update (thanks to Thorsten Wollenhöfer)
+* UPDATE: Russian translation update (thanks to Andrew Reva)
+
 = 3.8.6 =
 * FIX: unable to send email to multiple addresses separated by commas (caused by v3.8.3)
 
