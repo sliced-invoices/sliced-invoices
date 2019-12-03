@@ -1136,3 +1136,28 @@ td.taxonomy-invoice_status a[href*="cancelled"], td.taxonomy-quote_status a[href
 #sliced-stripe-settings > td {
 	padding-left: 40px;
 }
+
+
+
+/* fix WP 5.3 wonkiness */
+.sliced .cmb2-postbox input[type="text"],
+.sliced .cmb2-postbox input[type="number"],
+.sliced .cmb2-postbox textarea,
+.sliced .cmb2-postbox select {
+	border: 1px solid #ddd;
+	box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+	background-color: #fff;
+	color: #32373c;
+	outline: 0;
+	transition: 50ms border-color ease-in-out;
+	line-height: normal;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	min-height: 29px;
+	border-radius: 0px;
+}
+.sliced .cmb2-postbox select {
+	-webkit-appearance: menulist-button;
+	background: none;
+	background-size: initial;
+}
