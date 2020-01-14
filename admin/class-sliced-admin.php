@@ -158,29 +158,65 @@ class Sliced_Admin {
 		}
 		
 		$search_term = sanitize_text_field( $_GET['term'] );
-		
-		$current_user = wp_get_current_user();
 
-		$args = array(
-			'search'     => '*'.$search_term.'*',
-			'exclude'    => $current_user->ID,
+		// find users that are not registered as clients
+		$users1 = new WP_User_Query( array(
 			'meta_query' => array(
+				'relation' => 'OR',
 				array(
 					'key'  => '_sliced_client_business',
 					'compare'   => 'NOT EXISTS',
 				),
+				array(
+					'key'  => '_sliced_client_business',
+					'value' => '',
+					'compare'   => '<=',
+				),
 			),
-		);
-
-		$user_query = new WP_User_Query( $args );
+		) );
 		
-		if ( empty( $user_query->results ) ) {
-			echo json_encode(array());
+		$user_ids = array();
+		foreach ( $users1->results as $user ) {
+			$user_ids[] = $user->ID;
+		}
+		$user_ids = array_unique( $user_ids );
+		
+		if ( empty( $user_ids ) ) {
+			echo json_encode( array() );
+			exit;
+		}
+		
+		// now search for our search term, including only the non-client user_ids from above
+		$users2 = new WP_User_Query( array(
+			'search'         => "*{$search_term}*",
+			'search_columns' => array(
+				'user_login',
+				'user_nicename',
+				'user_email',
+				'user_url',
+				'display_name',
+			),
+			'include' => $user_ids,
+		) );
+		
+		$users = array();
+		foreach ( $users2->results as $user ) {
+			$users[ $user->ID ] = $user;
+		}
+		
+		$current_user = wp_get_current_user();
+		if ( isset( $users[ $current_user->ID ] ) ) {
+			unset( $users[ $current_user->ID ] );
+		}
+		
+		if ( empty( $users ) ) {
+			echo json_encode( array() );
 			exit;
 		}
 
+		// put it all together
 		$output = array();
-		foreach ( $user_query->results as $user ) {
+		foreach ( $users as $user ) {
 			$name = $user->user_login;
 			$name .= $user->user_email ? ' (' . $user->user_email . ')' : '';
 			if ( ! $name ) {
