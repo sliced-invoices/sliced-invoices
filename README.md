@@ -4,9 +4,9 @@ Contributors: SlicedInvoices
 Donate link: http://slicedinvoices.com/  
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
-Tested up to: 5.3
+Tested up to: 5.4
 Requires PHP: 5.5
-Stable tag: 3.8.7
+Stable tag: 3.8.8
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -68,7 +68,8 @@ https://www.youtube.com/watch?v=9V6VRidkZFk
 ### Sliced Invoices - Free & Paid Extensions
 
 *   [PDF quotes & PDF invoices](https://slicedinvoices.com/extensions/pdf-email/?utm_source=WordPress&utm_medium=Readme&utm_content=PDF-Email&utm_campaign=Free) extension
-*	[Client Area](https://slicedinvoices.com/extensions/client-area/?utm_source=WordPress&utm_medium=Readme&utm_content=Client-Area&utm_campaign=Free) extension
+*   [Client Area](https://slicedinvoices.com/extensions/client-area/?utm_source=WordPress&utm_medium=Readme&utm_content=Client-Area&utm_campaign=Free) extension
+*   [Formidable Forms extension](https://wordpress.org/plugins/sliced-invoices-formidable-forms/) (free)
 *   [Gravity Forms extension](https://wordpress.org/plugins/sliced-invoices-gravity-forms/) (free)
 *   [Contact Form 7 extension](https://wordpress.org/plugins/sliced-invoices-contact-form-7/) (free)
 *   [2Checkout Payment Gateway](https://slicedinvoices.com/extensions/2checkout-payment-gateway/?utm_source=WordPress&utm_medium=Readme&utm_content=2Checkout&utm_campaign=Free)
@@ -166,6 +167,10 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 ## Changelog
+##  3.8.8
+* UPDATE: show email address in add new client search (makes it easier to find the right user)
+* UPDATE: minor CSS/styling updates
+
 ##  3.8.7
 * FIX: add a check to prevent internal requests from triggering a "invoice viewed" or "quote viewed" notice
 * FIX: issue where post_date is overwritten with current time after save_post (impacts recurring invoices, triggering a false "missed schedule" warning)
