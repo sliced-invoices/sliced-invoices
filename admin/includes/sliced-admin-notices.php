@@ -95,6 +95,7 @@ class Sliced_Admin_Notices {
 	public static function remove_notice( $name ) {
 		self::$notices = array_diff( self::get_notices(), array( $name ) );
 		delete_option( 'sliced_admin_notice_' . $name );
+		delete_transient( 'sliced_hide_' . $name . '_notice' );
 	}
 	
 
