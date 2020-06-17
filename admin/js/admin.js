@@ -157,7 +157,7 @@
 		
 		var tax_percentage = new Decimal( 0 );
         if ( sliced_payments.tax != 0 ) {
-			tax_percentage = new Decimal( sliced_payments.tax );
+			tax_percentage = new Decimal( sliced_invoices.utils.rawNumber( sliced_payments.tax ) );
 			tax_percentage = tax_percentage.div( 100 );
 		}
 
