@@ -407,6 +407,7 @@ class Sliced_Metaboxes {
 
 		// Start with an underscore to hide fields from custom fields list
 		$prefix = '_sliced_';
+		$tax = get_option( 'sliced_tax' );
 
 		if ( isset( $_GET['post'] ) ) :
 
@@ -572,7 +573,7 @@ class Sliced_Metaboxes {
 			'desc'       => '',
 			'id'         => $prefix . 'tax',
 			'type'       => 'text',
-			'default'    => sliced_get_tax_amount_formatted(),
+			'default'    => isset( $tax['tax'] ) ? $tax['tax'] : '',
 			'attributes' => array(
 				'placeholder' => '10',
 				'maxlength'   => '6',
@@ -596,6 +597,7 @@ class Sliced_Metaboxes {
 		// Start with an underscore to hide fields from custom fields list
 		$prefix = '_sliced_';
 		$payment_methods = sliced_get_accepted_payment_methods() ? '' : __( '<a target="_blank" class="button" href="' . esc_url( admin_url( 'admin.php?page=sliced_invoices_settings&tab=payments' ) ) . '">Enable Payment Method</a>', 'sliced-invoices' );
+		$tax = get_option( 'sliced_tax' );
 
 		if ( isset( $_GET['post'] ) ) :
 
@@ -762,7 +764,7 @@ class Sliced_Metaboxes {
 			'desc'       => '',
 			'id'         => $prefix . 'tax',
 			'type'       => 'text',
-			'default'    => sliced_get_tax_amount_formatted(),
+			'default'    => isset( $tax['tax'] ) ? $tax['tax'] : '',
 			'attributes' => array(
 				'placeholder'   => '10',
 				'maxlength'     => '6',
