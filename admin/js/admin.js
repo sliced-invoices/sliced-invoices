@@ -31,7 +31,9 @@
 			return 0;
 		}
 		// remove currency symbol, if any
-		x = x.replace(sliced_invoices.utils.symbol, '');
+		if ( typeof x.replace !== "undefined" ) {
+			x = x.replace( sliced_invoices.utils.symbol, '' );
+		}
 		// removes the thousand seperator
 		if ( sliced_invoices.utils.thousand_sep > '' ) {
 			var parts = x.toString().split(sliced_invoices.utils.thousand_sep);
