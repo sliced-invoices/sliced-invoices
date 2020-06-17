@@ -730,8 +730,8 @@ class Sliced_Options {
 					'attributes'    => array(
 						'placeholder'   => '10',
 						'maxlength'     => '6',
-						'type'          => 'number',
-						'step'          => 'any',
+						// 'type'          => 'number',
+						// 'step'          => 'any',
 					),
 				),
 				array(
