@@ -369,8 +369,9 @@ class Sliced_Shared {
 	    $thou_sep 	= sliced_get_thousand_seperator();
 	    $dec_sep 	= sliced_get_decimal_seperator();
 	    $decimals 	= sliced_get_decimals();
-
-	    $formatted 	= number_format( round( (float)$amount, $decimals ), (int)$decimals, $dec_sep, $thou_sep );
+		
+		$raw_amount = self::get_raw_number( $amount );
+	    $formatted 	= number_format( round( (float)$raw_amount, $decimals ), (int)$decimals, $dec_sep, $thou_sep );
 
 	    return apply_filters( 'sliced_get_formatted_number', $formatted );
 	}
