@@ -1026,27 +1026,39 @@ class Sliced_Admin {
 
 
 	/**
-    * Work out the date format
-    *
-    * @since   2.0.0
-    */
+	 * Work out the date format
+	 *
+	 * @since   2.0.0
+	 */
 	private function work_out_date_format( $date ) {
-
+		
 		$format = get_option( 'date_format' );
-
-		if (strpos( $format, 'd/m') !== false) {
-			$date = str_replace("/", ".", $date);
+		
+		$timestamp = false;
+		
+		if (
+			is_int( $date ) ||
+			( ctype_digit( $date ) && intval( $date ) <= PHP_INT_MAX && intval( $date ) >= ~PHP_INT_MAX )
+		) {
+			// $date is already a unix timestamp
+			$timestamp = intval( $date );
+		} else {
+			// $date is a formatted string of some kind
+			if ( strpos( $format, 'd/m') !== false ) {
+				$date = str_replace( "/", ".", $date );
+			}
+			$timestamp = strtotime( $date );
 		}
-
-		$date = date("Y-m-d H:i:s", strtotime( $date ) );
-
-		// final check if we get a weird data
-		if( $date == '1970-01-01 00:00:00' ) {
+		
+		$date = date( "Y-m-d H:i:s", $timestamp );
+		
+		// final check in case we got weird data
+		if( $date === '1970-01-01 00:00:00' ) {
 			$date = current_time( 'mysql' ); 
 		}
-
+		
 		return $date;
-
+		
 	}
 	
 	
