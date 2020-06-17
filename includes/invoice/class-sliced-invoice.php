@@ -276,34 +276,20 @@ class Sliced_Invoice {
 		$invoice_number = get_post_meta( $id, '_sliced_invoice_number', true );
 		$invoice_suffix = get_post_meta( $id, '_sliced_invoice_suffix', true );
 		
+		$search_value = $invoice_prefix . $invoice_number . $invoice_suffix;
+		
 		$args = array(
 			'post_type'      => 'sliced_invoice',
 			'post_status'    => array( 'publish', 'future' ),
 			'posts_per_page' => -1,
 			'meta_query' => array(
 				array(
-					'key'     => '_sliced_invoice_number',
-					'value'   => $invoice_number,
+					'key'     => '_sliced_number', // since adding _sliced_number in v3.7.0, we can now search by this and it will be much faster.
+					'value'   => $search_value,
 					'compare' => '=',
 				),
 			),
 		);
-		
-		if ( $invoice_prefix ) {
-			$args['meta_query'][] = array(
-				'key'     => '_sliced_invoice_prefix',
-				'value'   => $invoice_prefix,
-				'compare' => '=',
-			);
-		}
-		
-		if ( $invoice_suffix ) {
-			$args['meta_query'][] = array(
-				'key'     => '_sliced_invoice_suffix',
-				'value'   => $invoice_suffix,
-				'compare' => '=',
-			);
-		}
 
 		$query = new WP_Query( $args );
 		if( $query->found_posts > 1 ) {
