@@ -882,23 +882,32 @@ class Sliced_Shared {
 	 */
 	public static function request_data( $url ) {
 		
-		$general = get_option( 'sliced_general' );
+		$general   = get_option( 'sliced_general' );
 		$sslverify = $general['pdf_ssl'] == 'true' ? true : false;
 		
-		$response = wp_remote_get( $url, array( 'sslverify' => $sslverify, 'timeout' => 10 ) );
-		$response = apply_filters( 'sliced_invoices_request_data', $response );
+		$response = apply_filters( 'sliced_invoices_request_data', false, $url );
+		if ( ! $response ) {
+			$response = wp_remote_get(
+				$url, 
+				array(
+					'sslverify' => $sslverify,
+					'timeout'   => 10,
+				)
+			);
+			if ( ! is_wp_error( $response ) ) {
+				$response = $response['body'];
+			} else {
+				$response = false;
+			}
+		}
 		
-		if( is_wp_error( $response ) ) {
+		if ( is_wp_error( $response ) ) {
 			$error_string = $response->get_error_message();
 			$response = '<div id="message" class="error"><p>' . $error_string . '</p></div>';
 		}
-
-		if( is_array( $response ) && isset( $response['body'] ) ) {
-			$response = $response['body'];
-		}
-
+		
 		return $response;
-
+	
 	}
 	
 	
