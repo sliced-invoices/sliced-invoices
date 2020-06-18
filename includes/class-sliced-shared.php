@@ -363,16 +363,17 @@ class Sliced_Shared {
 	 * Get the formatted number only.
 	 *
 	 * @since   2.0.0
+	 *
+	 * @var $amount  must be raw amount, either integer or float.
 	 */
 	public static function get_formatted_number( $amount ) {
-
+		
 	    $thou_sep 	= sliced_get_thousand_seperator();
 	    $dec_sep 	= sliced_get_decimal_seperator();
 	    $decimals 	= sliced_get_decimals();
 		
-		$raw_amount = self::get_raw_number( $amount );
-	    $formatted 	= number_format( round( (float)$raw_amount, $decimals ), (int)$decimals, $dec_sep, $thou_sep );
-
+	    $formatted 	= number_format( round( (float)$amount, $decimals ), (int)$decimals, $dec_sep, $thou_sep );
+		
 	    return apply_filters( 'sliced_get_formatted_number', $formatted );
 	}
 
