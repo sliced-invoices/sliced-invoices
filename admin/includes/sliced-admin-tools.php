@@ -201,6 +201,7 @@ class Sliced_Tools {
 		$general_opt  = get_option('sliced_general');
 		$business_opt = get_option('sliced_business');
 		$payment_opt  = get_option('sliced_payments');
+		$tax_opt      = get_option('sliced_tax');
 		$invoices_opt = get_option('sliced_invoices');
 		$quotes_opt   = get_option('sliced_quotes');
 		$email_opt    = get_option('sliced_emails');
@@ -245,6 +246,12 @@ class Sliced_Tools {
 		$return .= "\n";
 		$return .= 'Payment Settings:         ' . "\n";
 		foreach ($payment_opt as $key => $value) {
+			if ( is_array( $value ) ) $value = implode( ', ', $value );
+			$return .= $key . ':					' . $value . "\n";
+		}
+		$return .= "\n";
+		$return .= 'Tax Settings:         ' . "\n";
+		foreach ($tax_opt as $key => $value) {
 			if ( is_array( $value ) ) $value = implode( ', ', $value );
 			$return .= $key . ':					' . $value . "\n";
 		}
