@@ -167,7 +167,10 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 == Changelog ==
 = 3.8.11 =
-* No change -- incrementing version number trying to get WordPress SVN to recognize the update.
+* FIX: issue with duplicate "quote accepted" emails being sent.
+* FIX: missing invoice number in "quote accepted" email template.
+* FIX: PHP notice.
+* UPDATE: client dropdown search now includes searching by email address.
 
 = 3.8.10 =
 * FIX: issue with non-standard decimal separators and tax calculation since last update (v3.8.9).
