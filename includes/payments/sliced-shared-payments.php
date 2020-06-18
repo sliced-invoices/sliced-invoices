@@ -606,7 +606,7 @@ class Sliced_Payments {
 		 * Create and display the success message
 		 */
 		$quotes = get_option( 'sliced_quotes' );
-		if ( $quotes['accepted_quote_message'] > '' ) {
+		if ( isset( $quotes['accepted_quote_message'] ) && $quotes['accepted_quote_message'] > '' ) {
 			$message = wp_kses_post( $quotes['accepted_quote_message'] );
 		} else {
 			$message = '<h2>' . __( 'Success', 'sliced-invoices' ) .'</h2>';
