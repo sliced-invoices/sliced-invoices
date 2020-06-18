@@ -9,7 +9,7 @@ if ( ! defined('ABSPATH') ) { exit; }
  * Calls the class.
  */
 function sliced_call_notifications_class() {
-	new Sliced_Notifications();
+	Sliced_Notifications::get_instance();
 }
 add_action( 'init', 'sliced_call_notifications_class' );
 
@@ -18,6 +18,11 @@ add_action( 'init', 'sliced_call_notifications_class' );
  * The Class.
  */
 class Sliced_Notifications {
+
+	/**
+	 * @var  object  Instance of this class
+	 */
+	protected static $instance;
 
 	public $id; // the invoice or quote id
 
@@ -54,6 +59,13 @@ class Sliced_Notifications {
 
 		$this->init_hooks();
 
+	}
+
+    public static function get_instance() {
+		if ( ! ( self::$instance instanceof self ) ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
 	}
 
 

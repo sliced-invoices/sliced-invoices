@@ -494,7 +494,7 @@ class Sliced_Payments {
 			
 			// maybe send it
 			if ( $quotes['accepted_quote_action'] === 'convert_send' ) {
-				$sliced_notifications = new Sliced_Notifications();
+				$sliced_notifications = Sliced_Notifications::get_instance();
 				$sliced_notifications->send_the_invoice( $id );
 			}
 		
@@ -579,7 +579,7 @@ class Sliced_Payments {
 			
 			// maybe send it
 			if ( $quotes['accepted_quote_action'] === 'duplicate_send' ) {
-				$sliced_notifications = new Sliced_Notifications();
+				$sliced_notifications = Sliced_Notifications::get_instance();
 				$sliced_notifications->send_the_invoice( $new_post_id );
 			}
 		
