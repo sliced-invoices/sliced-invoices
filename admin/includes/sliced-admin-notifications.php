@@ -302,22 +302,32 @@ class Sliced_Notifications {
 
 			case 'quote_accepted':
 
+				if ( sliced_get_the_type( $id ) === 'invoice' ) {
+					$related_invoice_id = $id;
+				} else {
+					$related_invoice_id = get_post_meta( $id, '_sliced_related_invoice_id', true );
+				}
+				
 				$content = sprintf(
 					__( '%1s has accepted your %2s of %3s.', 'sliced-invoices' ),
 					sliced_get_client_business( $id ),
 					sliced_get_quote_label(),
 					sliced_get_total( $id ) );
 				$content .= '<br>';
-				$content .= sprintf(
-					__( 'An %1s has automatically been created (%2s).', 'sliced-invoices' ),
-					sliced_get_invoice_label(),
-					sliced_get_invoice_prefix( $id ) . sliced_get_invoice_number( $id ) . sliced_get_invoice_suffix( $id )
-				);
-				 $content .= '<br>';
+				
+				if ( $related_invoice_id ) {
+					$this->type = 'invoice'; // effects footer
+					$content .= sprintf(
+						__( 'An %1s has automatically been created (%2s).', 'sliced-invoices' ),
+						sliced_get_invoice_label(),
+						sliced_get_invoice_prefix( $related_invoice_id ) . sliced_get_invoice_number( $related_invoice_id ) . sliced_get_invoice_suffix( $related_invoice_id )
+					);
+					$content .= '<br>';
+				}
 
-				 $output .= wp_kses_post( wpautop( stripslashes( $this->replace_wildcards( apply_filters( 'sliced_admin_notification_quote_accepted', $content, $this->id ) ) ) ) );
+				$output .= wp_kses_post( wpautop( stripslashes( $this->replace_wildcards( apply_filters( 'sliced_admin_notification_quote_accepted', $content, $this->id ) ) ) ) );
 
-				 break;
+				break;
 
 			case 'quote_declined':
 

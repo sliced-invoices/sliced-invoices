@@ -574,6 +574,7 @@ class Sliced_Payments {
 			
 			// make the quote as accepted
 			wp_set_object_terms( $id, 'Accepted', 'quote_status' );
+			update_post_meta( $id, '_sliced_related_invoice_id', $new_post_id );
 			do_action( 'sliced_quote_status_update', $id, 'Accepted' );
 			
 			// maybe send it
