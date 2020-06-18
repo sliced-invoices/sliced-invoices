@@ -73,8 +73,15 @@ class Sliced_Admin {
 		$search_term = sanitize_text_field( $_GET['term'] );
 		
 		// search 2 ways, then combine
-		$users1 = get_users( array(
-			'search' => $search_term,
+		$users1 = new WP_User_Query( array(
+			'search'         => "*{$search_term}*",
+			'search_columns' => array(
+				'user_login',
+				'user_nicename',
+				'user_email',
+				'user_url',
+				'display_name',
+			),
 		) );
 
 		$users2 = get_users( array(
@@ -89,7 +96,7 @@ class Sliced_Admin {
 		) );
 
 		$user_ids = array();
-		foreach ( $users1 as $user ) {
+		foreach ( $users1->results as $user ) {
 			$user_ids[] = $user->ID;
 		}
 		foreach ( $users2 as $user ) {
