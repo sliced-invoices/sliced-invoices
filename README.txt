@@ -5,7 +5,7 @@ Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf 
 Requires at least: 4.0
 Tested up to: 5.4
 Requires PHP: 5.5
-Stable tag: 3.8.9
+Stable tag: 3.8.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -166,6 +166,9 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 == Changelog ==
+= 3.8.10 =
+* FIX: issue with non-standard decimal separators and tax calculation since last update (v3.8.9).
+
 = 3.8.9 =
 * FIX: change tax rate field from type=number to type=text, because some browsers don't allow non-standard decimal separators to be entered (like commas).
 * FIX: "Missed Schedule" notice when editing future (not yet sent) Recurring Invoices.
