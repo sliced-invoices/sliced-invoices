@@ -1104,13 +1104,18 @@ class Sliced_Admin {
 		}
 		
 		// change the format if we have slashes
-		$created = $this->work_out_date_format( $created );
+		$created_utc   = $this->work_out_date_format( $created ); // parses whatever $created is into UTC time formatted "Y-m-d H:i:s"
+		$created_local = get_date_from_gmt( $created_utc, "Y-m-d H:i:s" ); // takes the above and converts it to local WordPress time
 		
 		// unhook this function so it doesn't loop infinitely
 		remove_action( 'save_post', array( $this, 'set_published_date_as_created' ) );
 		
 		// update the post, which calls save_post again
-		wp_update_post( array( 'ID' => $post_id, 'post_date' => $created ) );
+		wp_update_post( array(
+			'ID'            => $post_id,
+			'post_date'     => $created_local,
+			'post_date_gmt' => $created_utc,
+		) );
 		
 		// re-hook this function
 		add_action( 'save_post', array( $this, 'set_published_date_as_created' ) );
