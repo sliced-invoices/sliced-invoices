@@ -180,7 +180,7 @@ class Sliced_Options {
 	 * @return array
 	 */
 	public function option_fields() {
-
+		
 		// Only need to initiate the array once per page-load
 		if ( ! empty( $this->option_metabox ) ) {
 			return $this->option_metabox;
@@ -1237,8 +1237,10 @@ class Sliced_Options {
 			)
 		) );
 
+		$this->option_metabox = apply_filters( 'sliced_invoices_admin_options', $this->option_metabox );
+		
 		return $this->option_metabox;
-
+		
 	}
 
 
