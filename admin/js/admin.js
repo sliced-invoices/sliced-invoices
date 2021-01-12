@@ -615,7 +615,7 @@
      */
     $(function(){
 		// move the hidden inputs and make them visible
-		$('#_sliced_line_items').find( '.discount-adder' ).prepend( $('#sliced_invoice_discount').attr( 'type', 'number' ) );
+		$('#_sliced_line_items').find( '.discount-adder' ).prepend( $('#sliced_invoice_discount').attr( 'type', 'text' ) );
 		
 		// update totals
 		workOutTotals();
