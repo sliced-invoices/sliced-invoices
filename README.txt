@@ -3,9 +3,9 @@ Contributors: SlicedInvoices
 Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce
 Requires at least: 4.0
-Tested up to: 5.6
+Tested up to: 5.7
 Requires PHP: 5.5
-Stable tag: 3.8.13
+Stable tag: 3.8.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -166,6 +166,9 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 == Changelog ==
+= 3.8.14 =
+* UPDATE: update Chart.js library.
+
 = 3.8.13 =
 * FIX: change discount input field from type=number to type=text, because some browsers don't allow non-standard decimal separators to be entered (like commas).
 
