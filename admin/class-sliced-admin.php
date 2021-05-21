@@ -821,7 +821,8 @@ class Sliced_Admin {
 	/**
 	 * Admin notices
 	 *
-	 * @since 	2.0.0
+	 * @version 3.8.15
+	 * @since   2.0.0
 	 */
 	public function custom_admin_notices() {
 

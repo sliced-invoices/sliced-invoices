@@ -172,6 +172,7 @@ class Sliced_Invoices {
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
+	 * @version 3.8.15
 	 * @since   2.0.0
 	 */
 	private function define_admin_hooks() {

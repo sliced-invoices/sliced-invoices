@@ -5,8 +5,8 @@ Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf 
 Requires at least: 4.0
 Tested up to: 5.7
 Requires PHP: 5.5
-Stable tag: 3.8.14
-License: GPLv2 or later
+Stable tag: 3.8.15
+License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 A WordPress invoicing plugin for creating invoices and quotes. Online payments, manage clients, reports, exports, taxes & more.
@@ -166,6 +166,10 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 == Changelog ==
+= 3.8.15 =
+* FIX: conflict with Gravity Forms plugin >= v2.5.
+* FIX: PHP warning.
+
 = 3.8.14 =
 * UPDATE: update Chart.js library.
 
