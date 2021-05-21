@@ -211,7 +211,7 @@ class Sliced_Invoices {
 		$this->loader->add_filter( 'page_row_actions', $plugin_admin, 'duplicate_quote_invoice_link', 10, 2 );
 
 		$this->loader->add_filter( 'post_updated_messages', $plugin_admin, 'invoice_quote_updated_messages' );
-		$this->loader->add_filter( 'admin_notices', $plugin_admin, 'custom_admin_notices' );
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'custom_admin_notices' );
 		$this->loader->add_filter( 'enter_title_here', $plugin_admin, 'custom_enter_title' );
 
 		$this->loader->add_action( 'load-edit.php', $plugin_admin, 'export_csv' );

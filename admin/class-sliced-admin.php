@@ -823,7 +823,7 @@ class Sliced_Admin {
 	 *
 	 * @since 	2.0.0
 	 */
-	public function custom_admin_notices( $post_states ) {
+	public function custom_admin_notices() {
 
 	    global $pagenow;
 
