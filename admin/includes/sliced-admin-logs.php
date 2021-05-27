@@ -583,7 +583,8 @@ class Sliced_Logs {
 	/**
 	 * Log unique views of quote/invoice, add notifications if applicable
 	 *
-	 * @since 3.5.0
+	 * @version 3.?.?
+	 * @since   3.5.0
 	 */
 	public function views_logger() {
 
@@ -604,6 +605,11 @@ class Sliced_Logs {
 		
 		// don't log if access was denied
 		if ( defined( 'SLICED_SECURE_ACCESS_DENIED' ) && SLICED_SECURE_ACCESS_DENIED ) {
+			return;
+		}
+		
+		// don't log known internal requests (for example, generating a PDF in response to a webhook)
+		if ( defined( 'SLICED_SECURE_INTERNAL_REQUEST' ) && SLICED_SECURE_INTERNAL_REQUEST ) {
 			return;
 		}
 		
