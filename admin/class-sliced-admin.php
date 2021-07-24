@@ -1616,14 +1616,6 @@ class Sliced_Admin {
 					<table class="form-table popup-form">
 
 					<tbody>
-						<tr class="form-field form-required">
-							<th scope="row"><label for="user_login"><?php _e('Username'); ?>*</label></th>
-							<td><input name="user_login" type="text" id="user_login" value="<?php echo esc_attr( $new_user_login ); ?>" aria-required="true" autocapitalize="none" autocorrect="off" /></td>
-						</tr>
-						<tr class="form-field form-required">
-							<th scope="row"><label for="email"><?php _e('E-mail'); ?>*</label></th>
-							<td><input name="email" type="email" id="email" value="<?php echo esc_attr( $new_user_email ); ?>" /></td>
-						</tr>
 
 						<tr class="form-field form-required">
 							<th scope="row">
@@ -1631,38 +1623,21 @@ class Sliced_Admin {
 							</th>
 							<td><input name="_sliced_client_business" value="" type="text" /></td>
 						</tr>
-
-						<tr class="form-field">
-							<th scope="row">
-								<label for="_sliced_client_address"><?php _e( 'Address', 'sliced-invoices' ); ?></label>
-							</th><td>
-								<textarea class="regular-text" name="_sliced_client_address"></textarea></td>
+						
+						<tr class="form-field form-required">
+							<th scope="row"><label for="email"><?php _e( 'E-mail' ); ?>*</label></th>
+							<td><input name="email" type="email" id="email" value="<?php echo esc_attr( $new_user_email ); ?>" /></td>
 						</tr>
 
-						<tr class="form-field">
-							<th scope="row">
-								<label for="_sliced_client_extra_info"><?php _e( 'Extra Info', 'sliced-invoices' ); ?></label>
-							</th><td>
-								<textarea class="regular-text" name="_sliced_client_extra_info"></textarea></td>
+						<tr class="form-field form-required">
+							<th scope="row"><label for="user_login"><?php _e( 'Username' ); ?>*</label></th>
+							<td><input name="user_login" type="text" id="user_login" value="<?php echo esc_attr( $new_user_login ); ?>" aria-required="true" autocapitalize="none" autocorrect="off" /></td>
 						</tr>
-
-						<tr class="form-field">
-							<th scope="row"><label for="first_name"><?php _e('First Name') ?> </label></th>
-							<td><input name="first_name" type="text" id="first_name" value="<?php echo esc_attr( $new_user_firstname ); ?>" /></td>
-						</tr>
-						<tr class="form-field">
-							<th scope="row"><label for="last_name"><?php _e('Last Name') ?> </label></th>
-							<td><input name="last_name" type="text" id="last_name" value="<?php echo esc_attr( $new_user_lastname ); ?>" /></td>
-						</tr>
-						<tr class="form-field">
-							<th scope="row"><label for="url"><?php _e('Website') ?></label></th>
-							<td><input name="url" type="url" id="url" class="code" value="<?php echo esc_attr( $new_user_uri ); ?>" /></td>
-						</tr>
-
+						
 						<tr class="form-field form-required user-pass1-wrap">
 							<th scope="row">
 								<label for="pass1">
-									<?php _e( 'Password' ); ?>
+									<?php _e( 'Password' ); ?>*
 									<span class="description hide-if-js"><?php _e( '(required)' ); ?></span>
 								</label>
 							</th>
@@ -1702,6 +1677,33 @@ class Sliced_Admin {
 							</td>
 						</tr>
 
+						<tr class="form-field">
+							<th scope="row">
+								<label for="_sliced_client_address"><?php _e( 'Address', 'sliced-invoices' ); ?></label>
+							</th><td>
+								<textarea class="regular-text" name="_sliced_client_address"></textarea></td>
+						</tr>
+
+						<tr class="form-field">
+							<th scope="row">
+								<label for="_sliced_client_extra_info"><?php _e( 'Extra Info', 'sliced-invoices' ); ?></label>
+							</th><td>
+								<textarea class="regular-text" name="_sliced_client_extra_info"></textarea></td>
+						</tr>
+
+						<tr class="form-field">
+							<th scope="row"><label for="first_name"><?php _e('First Name') ?> </label></th>
+							<td><input name="first_name" type="text" id="first_name" value="<?php echo esc_attr( $new_user_firstname ); ?>" /></td>
+						</tr>
+						<tr class="form-field">
+							<th scope="row"><label for="last_name"><?php _e('Last Name') ?> </label></th>
+							<td><input name="last_name" type="text" id="last_name" value="<?php echo esc_attr( $new_user_lastname ); ?>" /></td>
+						</tr>
+						<tr class="form-field">
+							<th scope="row"><label for="url"><?php _e('Website') ?></label></th>
+							<td><input name="url" type="url" id="url" class="code" value="<?php echo esc_attr( $new_user_uri ); ?>" /></td>
+						</tr>
+
 					</tbody>
 					</table>
 
@@ -1725,30 +1727,31 @@ class Sliced_Admin {
 					<div class="alert result-message">&nbsp;</div>
 
 					<p><?php _e( 'Edit a client here.', 'sliced-invoices' ); ?><br>
-					<span class="description"><?php _e( 'NOTE: Username cannot be changed here.', 'sliced-invoices' ); ?></span></p>
+					<span class="description"><?php printf(
+						__( 'NOTE: Usernames/password cannot be changed here. For that, go to your <a href="%s">Users admin page</a>.', 'sliced-invoices' ),
+						admin_url( 'users.php' )
+					); ?></span></p>
 
 					<form action="" method="post" name="sliced-update-client" id="sliced-update-client" class="validate sliced-update-client" novalidate="novalidate">
-
+						
+						<input name="user_login" type="hidden" value="" />
 						<input name="action" type="hidden" value="sliced-update-client" />
 						<?php wp_nonce_field( 'sliced-update-client', '_wpnonce_sliced-update-client' ); ?>
 
 						<table class="form-table popup-form">
 
 						<tbody>
-							<tr class="form-field form-required">
-								<th scope="row"><label for="user_login"><?php _e('Username'); ?>*</label></th>
-								<td><input name="user_login" type="text" value="" aria-required="true" autocapitalize="none" autocorrect="off" readonly="readonly" /></td>
-							</tr>
-							<tr class="form-field form-required">
-								<th scope="row"><label for="email"><?php _e('E-mail'); ?>*</label></th>
-								<td><input name="user_email" type="email" value="" /></td>
-							</tr>
 
 							<tr class="form-field form-required">
 								<th scope="row">
 									<label for="_sliced_client_business"><?php _e( 'Business/Client Name', 'sliced-invoices' ); ?>*</label>
 								</th>
 								<td><input name="_sliced_client_business" value="" type="text" /></td>
+							</tr>
+							
+							<tr class="form-field form-required">
+								<th scope="row"><label for="email"><?php _e('E-mail'); ?>*</label></th>
+								<td><input name="user_email" type="email" value="" /></td>
 							</tr>
 
 							<tr class="form-field">
@@ -1807,6 +1810,19 @@ class Sliced_Admin {
 							$('#sliced-create-user').slideDown();
 							$('#sliced-update-user').hide();
 						}
+					});
+					
+					// Autofill username when creating new user
+					$( '#sliced-create-user' ).on( 'keyup change', 'input[name="_sliced_client_business"]', function(){
+						var $usernameInput = $( '#sliced-create-user input[name="user_login"]' );
+						if ( $usernameInput.data( 'sliced-has-user-input' ) !== 'true' ) {
+							var autoUsername = $( this ).val();
+							autoUsername = autoUsername.replace( /[^\w-]+/g, '' );
+							$usernameInput.val( autoUsername );
+						}
+					});
+					$( '#sliced-create-user' ).on( 'keyup change', 'input[name="user_login"]', function(){
+						$( this ).data( 'sliced-has-user-input', 'true' );
 					});
 					
 					// Update existing user
