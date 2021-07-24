@@ -1834,6 +1834,7 @@ class Sliced_Admin {
 						$.post( ajaxurl, data, function(response) {
 							$('.indicator').hide();
 							if( response != 'Error adding the new client.' ) {
+								$("#_sliced_client").html(''); // prevents browser freezing when we insert the new content
 								$("#_sliced_client").html(response);
 								tb_remove();
 								$('<span class="updated"><?php _e( 'New Client Successfully Added', 'sliced-invoices' ); ?></span>').insertAfter('select#_sliced_client');
@@ -1877,6 +1878,7 @@ class Sliced_Admin {
 						$.post( ajaxurl, data, function(response) {
 							$('.indicator').hide();
 							if( response != 'Error adding the new user.' ) {
+								$("#_sliced_client").html(''); // prevents browser freezing when we insert the new content
 								$("#_sliced_client").html(response);
 								tb_remove();
 								$('<span class="updated"><?php _e( 'New Client Successfully Added', 'sliced-invoices' ); ?></span>').insertAfter('select#_sliced_client');
@@ -1957,6 +1959,7 @@ class Sliced_Admin {
 						$.post( ajaxurl, data, function(response) {
 							$('.indicator').hide();
 							if( response != 'Error updating the user.' ) {
+								$("#_sliced_client").html(''); // prevents browser freezing when we insert the new content
 								$("#_sliced_client").html(response);
 								tb_remove();
 								$('<span class="updated"><?php _e( 'Client successfully updated', 'sliced-invoices' ); ?></span>').insertAfter('select#_sliced_client');
