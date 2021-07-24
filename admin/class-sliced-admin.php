@@ -1995,7 +1995,7 @@ class Sliced_Admin {
 		if( !isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'sliced-create-user' ) )
 			wp_die( 'Ooops, something went wrong, please try again later.' );
 
-		if( empty( $_POST['business'] ) ) {
+		if ( empty( $_POST['business'] ) || empty( $_POST['email'] ) || empty ( $_POST['user_login'] ) ) {
 			die( 'Error adding the new user.' );
 		}
 
