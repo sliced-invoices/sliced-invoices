@@ -2389,10 +2389,81 @@ class Sliced_Admin {
 		return $set_items;
 
 	}
-
-
-
-
+	
+	
+	/**
+	 * Output data in correct CSV format.
+	 *
+	 * @version 3.8.16
+	 * @since   3.8.16
+	 *
+	 * @param array $rows    Array of arrays, with each array representing 1 row of data
+	 */
+	public function output_csv( $rows ) {
+		
+		ini_set( 'display_errors', '0' ); // try not to output any errors into the CSV file
+		
+		$out = fopen( 'php://output', 'w' );
+		fprintf( $out, chr(0xEF) . chr(0xBB) . chr(0xBF) ); // BOM
+		
+		foreach ( $rows as $row ) {
+			
+			$csv_string = '';
+			$i = 0;
+			
+			foreach ( $row as $value ) {
+				
+				// begin sanitizing value
+				$needsEnclosing = false;
+				
+				// sanitization #1 -- enclose if $value contains special characters
+				if ( preg_match( '/["\,\s]/', $value ) ) {
+					$needsEnclosing = true;
+				}
+				
+				// sanitization #2 -- prefix $value with single quote if it begins with a dangerous character
+				// (prevents CSV formula injection in Excel)
+				if ( preg_match( '/^[=\+\-@\s]/', $value ) ) {
+					$value = "'" . $value;
+				}
+				
+				// sanitization #3 -- special case for European locales where Excel will interpret a semicolon
+				// as a field seperator, wherever it happens to be, even though as per RFC 4180 the only valid
+				// seperator is a comma.
+				// (to prevent CSV formula injection, we'll add a single quote after the semicolon)
+				$value = preg_replace( '/;(\s*[=\+\-@])/', ';\'$1', $value );
+				
+				// escape double quotes, if any
+				$value = str_replace( '"', '""', $value );
+				
+				// add value
+				if ( $needsEnclosing ) {
+					$csv_string .= '"';
+				}
+				$csv_string .= $value;
+				if ( $needsEnclosing ) {
+					$csv_string .= '"';
+				}
+				
+				// add seperator / line ending
+				$i++;
+				if ( $i < count( $row ) ) {
+					$csv_string .= ',';
+				} else {
+					$csv_string .= "\n";
+				}
+				
+			}
+			
+			fwrite( $out, $csv_string );
+			
+		}
+		
+		fclose( $out );
+		
+	}
+	
+	
 	/**
 	 * Set the headers for the CSV file
 	 *
@@ -2424,9 +2495,10 @@ class Sliced_Admin {
 
 
 	/**
-	 * export to csv
+	 * Export to CSV (quick).
 	 *
-	 * @since 	2.0.0
+	 * @version 3.8.16
+	 * @since   2.0.0
 	 */
 	public function export_csv() {
 
@@ -2528,30 +2600,24 @@ class Sliced_Admin {
 		
 		$header_row = apply_filters( 'sliced_export_csv_headers', $header_row );
 		$data_rows = apply_filters( 'sliced_export_csv_data', $data_rows );
-
-		// Create the filename
+		
 		$filename = sanitize_file_name( $type . '-export-' . date( 'Y-m-d' ) . '.csv' );
-
+		
 		$this->set_csv_headers( $filename );
-
-		$fh = @fopen( 'php://output', 'w' );
-		fprintf( $fh, chr(0xEF) . chr(0xBB) . chr(0xBF) );
-		fputcsv( $fh, $header_row );
-
-		foreach ( $data_rows as $data_row ) {
-			fputcsv( $fh, $data_row );
-		}
-
-		fclose( $fh );
+		$this->output_csv( array_merge( array( $header_row ), $data_rows ) );
+		
 		die();
-
+		
 	}
 
 
 	/**
-	 * export full data to csv (for Tools -> Export CSV)
+	 * Export to CSV (full).
 	 *
-	 * @since 	3.6.0
+	 * From wp_admin -> Sliced Invoices -> Tools -> Export CSV.
+	 *
+	 * @version 3.8.16
+	 * @since   3.6.0
 	 */
 	public function export_csv_full() {
 
@@ -2679,23 +2745,14 @@ class Sliced_Admin {
 		
 		$header_row = apply_filters( 'sliced_export_csv_headers', $header_row );
 		$data_rows = apply_filters( 'sliced_export_csv_data', $data_rows );
-
-		// Create the filename
+		
 		$filename = sanitize_file_name( $type . '-export-' . date( 'Y-m-d' ) . '.csv' );
-
+		
 		$this->set_csv_headers( $filename );
-
-		$fh = @fopen( 'php://output', 'w' );
-		fprintf( $fh, chr(0xEF) . chr(0xBB) . chr(0xBF) );
-		fputcsv( $fh, $header_row );
-
-		foreach ( $data_rows as $data_row ) {
-			fputcsv( $fh, $data_row );
-		}
-
-		fclose( $fh );
+		$this->output_csv( array_merge( array( $header_row ), $data_rows ) );
+		
 		die();
-
+		
 	}
 	
 	
