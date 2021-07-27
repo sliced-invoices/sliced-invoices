@@ -1508,7 +1508,8 @@ class Sliced_Admin {
 	/**
 	 * New client registration form. Hidden in the footer until required
 	 *
-	 * @since 	2.0.0
+	 * @version 3.8.16
+	 * @since   2.0.0
 	 */
 	public function client_registration_form() {
 
@@ -1982,7 +1983,8 @@ class Sliced_Admin {
 	/**
 	 * Action to register the new client
 	 *
-	 * @since 	2.0.0
+	 * @version 3.8.16
+	 * @since   2.0.0
 	 */
 	public function create_user() {
 

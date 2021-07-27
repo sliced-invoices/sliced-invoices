@@ -3,9 +3,9 @@ Contributors: SlicedInvoices
 Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce
 Requires at least: 4.0
-Tested up to: 5.7
+Tested up to: 5.8
 Requires PHP: 5.5
-Stable tag: 3.8.15
+Stable tag: 3.8.16
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -166,6 +166,13 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 == Changelog ==
+= 3.8.16 =
+* FIX: browser freezing issue when adding new clients (if many clients exist).
+* FIX: CSV formula injection issue in "Export CSV" function (thanks to @Jörgson).
+* FIX: make sure all required fields are present when adding new user from "Add New Client" modal.
+* FIX: webhook-initiated requests triggering a false "Invoice Viewed" notice.
+* FIX: clear all admin notices upon plugin deactivation (some like invoice_viewed and quote_viewed were not being cleared).
+
 = 3.8.15 =
 * FIX: conflict with Gravity Forms plugin >= v2.5.
 * FIX: PHP warning.

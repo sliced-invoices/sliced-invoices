@@ -583,7 +583,7 @@ class Sliced_Logs {
 	/**
 	 * Log unique views of quote/invoice, add notifications if applicable
 	 *
-	 * @version 3.?.?
+	 * @version 3.8.16
 	 * @since   3.5.0
 	 */
 	public function views_logger() {
