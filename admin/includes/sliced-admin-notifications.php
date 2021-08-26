@@ -608,7 +608,7 @@ class Sliced_Notifications {
 							<tr class="form-field form-required">
 								<td>
 									<label for="client_email"><?php _e('Send To', 'sliced-invoices' ); ?> <span class="description"><?php _e('(required)'); ?></span></label>
-									<input name="client_email" type="text" id="client_email" value="<?php echo sanitize_email( $recipient ); ?>" aria-required="true" autocapitalize="none" autocorrect="off" />
+									<input name="client_email" type="text" id="client_email" value="<?php echo esc_attr( $recipient ); ?>" aria-required="true" autocapitalize="none" autocorrect="off" />
 									<p class="description"><?php _e('Use comma to separate multiple recipients', 'sliced-invoices' ); ?></p>
 								</td>
 							</tr>
