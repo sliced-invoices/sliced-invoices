@@ -53,7 +53,10 @@ class Sliced_Paypal {
 		// add fields to end of options array
 		$options['fields'][] = array(
 			'name'    => __( 'PayPal Currency', 'sliced-invoices' ),
-			'desc'    => __( '3 letter code - <a href="https://developer.paypal.com/docs/classic/api/currency_codes/" target="_blank">Full list of accepted currencies here</a>', 'sliced-invoices' ),
+			'desc'    => sprintf( 
+				__( '3 letter code - <a href="%s" target="_blank">Full list of accepted currencies here</a>', 'sliced-invoices' ),
+				'https://developer.paypal.com/docs/api/reference/currency-codes/'
+			),
 			'default' => 'USD',
 			'type'    => 'text',
 			'id'      => 'paypal_currency',
