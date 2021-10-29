@@ -31,6 +31,9 @@ class Sliced_Deactivator {
 		flush_rewrite_rules();
 		
 		// clear admin notices
+		if ( is_callable( array( 'Sliced_Admin_Notices', 'remove_all_notices' ) ) ) {
+			Sliced_Admin_Notices::remove_all_notices();
+		}
 		delete_option( 'sliced_admin_notices' );
 		$wpdb->get_results( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'sliced_admin_notice_%'" );
 		
