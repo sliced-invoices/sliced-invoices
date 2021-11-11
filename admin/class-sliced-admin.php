@@ -1038,7 +1038,7 @@ class Sliced_Admin {
 	 *
 	 * @since   2.0.0
 	 */
-	private function work_out_date_format( $date ) {
+	public static function work_out_date_format( $date ) {
 		
 		$format = get_option( 'date_format' );
 		

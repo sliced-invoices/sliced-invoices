@@ -146,6 +146,9 @@ class Sliced_Invoices {
 		require_once SLICED_PATH . 'includes/template-tags/sliced-tags-quote.php';
 		require_once SLICED_PATH . 'includes/template-tags/sliced-tags-general.php';
 		require_once SLICED_PATH . 'includes/template-tags/sliced-tags-display-modules.php';
+		
+		// Global functions
+		require_once( SLICED_PATH . 'includes/functions.php' );
 
 		$this->loader = new Sliced_Loader();
 
