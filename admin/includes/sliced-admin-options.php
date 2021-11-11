@@ -724,7 +724,7 @@ class Sliced_Options {
 				array(
 					'name'      => __( 'Tax Percentage', 'sliced-invoices' ),
 					'desc'      => __( 'Default tax percentage. Set to 0 or leave blank for no tax.', 'sliced-invoices' ),
-					'default'   => '10',
+					'default'   => '',
 					'id'        => 'tax',
 					'type'      => 'text',
 					'attributes'    => array(
