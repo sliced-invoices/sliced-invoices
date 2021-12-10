@@ -104,11 +104,12 @@ class Sliced_Admin {
 		}
 		$user_ids = array_unique( $user_ids );
 		
-		
+		/*
 		$current_user = wp_get_current_user();
 		if ( ( $key = array_search( $current_user->ID, $user_ids ) ) !== false ) {
 			unset( $user_ids[$key] );
 		}
+		*/
 		
 		if ( empty( $user_ids ) ) {
 			echo json_encode( array() );
@@ -211,10 +212,12 @@ class Sliced_Admin {
 			$users[ $user->ID ] = $user;
 		}
 		
+		/*
 		$current_user = wp_get_current_user();
 		if ( isset( $users[ $current_user->ID ] ) ) {
 			unset( $users[ $current_user->ID ] );
 		}
+		*/
 		
 		if ( empty( $users ) ) {
 			echo json_encode( array() );
@@ -1433,12 +1436,12 @@ class Sliced_Admin {
 			include(ABSPATH . "wp-includes/pluggable.php");
 		}
 
-		$current_user = wp_get_current_user();
+		// $current_user = wp_get_current_user();
 
 		$args = array(
 			'orderby'   => 'meta_value',
 			'order'     => 'ASC',
-			'exclude'   => $current_user->ID,
+			// 'exclude'   => $current_user->ID,
 			'meta_key'  => '_sliced_client_business',
 			'compare'   => 'EXISTS',
 		);
@@ -1476,12 +1479,12 @@ class Sliced_Admin {
 			include(ABSPATH . "wp-includes/pluggable.php");
 		}
 
-		$current_user = wp_get_current_user();
+		// $current_user = wp_get_current_user();
 
 		$args = array(
 			'orderby'    => 'meta_value',
 			'order'      => 'ASC',
-			'exclude'    => $current_user->ID,
+			// 'exclude'    => $current_user->ID,
 			'meta_query' => array(
 				array(
 					'key'  => '_sliced_client_business',
