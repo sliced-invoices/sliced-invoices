@@ -1065,7 +1065,8 @@ class Sliced_Metaboxes {
 	}
 	
 	/**
-	 * Callbacks to get correct values for CMB2
+	 * Get Invoice Created Date.
+	 * Callback to get correct value for CMB2.
 	 *
 	 * @since  3.8.0
 	 */
@@ -1076,6 +1077,13 @@ class Sliced_Metaboxes {
 		}
 		return $value > 0 ? Sliced_Shared::get_local_date_i18n_from_timestamp( $value ) : '';
 	}
+	
+	/**
+	 * Get Invoice Due Date.
+	 * Callback to get correct value for CMB2.
+	 *
+	 * @since  3.8.0
+	 */
 	public function get_sliced_invoice_due() {
 		$value = get_post_meta( sliced_get_the_id(), '_sliced_invoice_due', true );
 		if ( $value === '' && $this->is_new ) {
@@ -1083,6 +1091,13 @@ class Sliced_Metaboxes {
 		}
 		return $value > 0 ? Sliced_Shared::get_local_date_i18n_from_timestamp( $value ) : '';
 	}
+	
+	/**
+	 * Get Quote Created Date.
+	 * Callback to get correct value for CMB2.
+	 *
+	 * @since  3.8.0
+	 */
 	public function get_sliced_quote_created() {
 		$value = get_post_meta( sliced_get_the_id(), '_sliced_quote_created', true );
 		if ( $value === '' ) {
@@ -1090,6 +1105,13 @@ class Sliced_Metaboxes {
 		}
 		return $value > 0 ? Sliced_Shared::get_local_date_i18n_from_timestamp( $value ) : '';
 	}
+	
+	/**
+	 * Get Quote Valid Until Date.
+	 * Callback to get correct value for CMB2.
+	 *
+	 * @since  3.8.0
+	 */
 	public function get_sliced_quote_valid_until() {
 		$value = get_post_meta( sliced_get_the_id(), '_sliced_quote_valid_until', true );
 		if ( $value === '' && $this->is_new ) {
@@ -1131,55 +1153,61 @@ class Sliced_Metaboxes {
 		return array_keys( sliced_get_accepted_payment_methods() );
 	}
 
+	/**
+	 * Generates the HTML for the totals box after the line items, in the admin invoice view.
+	 *
+	 * @version 3.x.x
+	 * @since   <= 2.83
+	 */
 	public function display_the_line_totals() {
-	
+		
 		$type = Sliced_Shared::get_type();
 		if ( ! $type ) {
 			return;
 		}
-
+		
 		$output = '<div class="alignright sliced_totals">';
 		
-		$part = apply_filters( 'sliced_admin_display_totals_header', ''
-					. '<h3>' . sprintf( __( '%s Totals', 'sliced-invoices' ), esc_html( sliced_get_label() ) ) .'</h3>' );
+		$output .= apply_filters(
+			'sliced_admin_display_totals_header',
+			'<h3>' . sprintf( __( '%s Totals', 'sliced-invoices' ), esc_html( sliced_get_label() ) ) .'</h3>'
+		);
 		
-		$output .= $part;
+		$output .= apply_filters(
+			'sliced_admin_display_totals_subtotal',
+			'<div class="sub">' . __( 'Sub Total', 'sliced-invoices' ) . ' <span class="alignright"><span id="sliced_sub_total">0.00</span></span></div>'
+		);
 		
-		$part = apply_filters( 'sliced_admin_display_totals_subtotal', ''
-					. '<div class="sub">' . __( 'Sub Total', 'sliced-invoices' ) . ' <span class="alignright"><span id="sliced_sub_total">0.00</span></span></div>' );
+		$output .= apply_filters(
+			'sliced_admin_display_totals_tax',
+			'<div class="tax">' . sliced_get_tax_name() . ' <span class="alignright"><span id="sliced_tax">0.00</span></span></div>'
+		);
 		
-		$output .= $part;
-		
-		$part = apply_filters( 'sliced_admin_display_totals_tax', ''
-					. '<div class="tax">' . sliced_get_tax_name() . ' <span class="alignright"><span id="sliced_tax">0.00</span></span></div>' );
-		
-		$output .= $part;
-		
-		
-		$part = apply_filters( 'sliced_admin_display_totals_discounts', '
-					<div class="discounts">' . __( 'Discount', 'sliced-invoices' ) .'
-						<a id="sliced-totals-discounts-edit" href="#"><small>' . __( 'edit', 'sliced-invoices' ) . '</small></a>
-						<span class="discount-adder hidden">
-							<button type="button" class="button">' . __( 'Apply', 'sliced-invoices' ) . '</button>
-						</span>
-						<span class="alignright"><span id="sliced_discounts">0.00</span></span>
-					</div>' );
-		
-		$output .= $part;
+		$output .= apply_filters(
+			'sliced_admin_display_totals_discounts',
+			'<div class="discounts">' . __( 'Discount', 'sliced-invoices' ) . '
+				<a id="sliced-totals-discounts-edit" href="#"><small>' . __( 'edit', 'sliced-invoices' ) . '</small></a>
+				<span class="discount-adder hidden">
+					<button type="button" class="button">' . __( 'Apply', 'sliced-invoices' ) . '</button>
+				</span>
+				<span class="alignright"><span id="sliced_discounts">0.00</span></span>
+			</div>'
+		);
 		
 		if ( $type === 'invoice' ) {
-			$part = apply_filters( 'sliced_admin_display_totals_payments', ''
-						. '<div class="payments">' . __( 'Paid', 'sliced-invoices' )
-						. ' <a id="sliced-totals-payments-edit" href="#"><small>' . __( 'edit', 'sliced-invoices' ) . '</small></a>'
-						. ' <span class="alignright"><span id="sliced_payments">0.00</span></span></div>' );
-			
-			$output .= $part;
+			$output .= apply_filters(
+				'sliced_admin_display_totals_payments',
+				'<div class="payments">' . __( 'Paid', 'sliced-invoices' ) . '
+					<a id="sliced-totals-payments-edit" href="#"><small>' . __( 'edit', 'sliced-invoices' ) . '</small></a>
+					<span class="alignright"><span id="sliced_payments">0.00</span></span>
+				</div>'
+			);
 		}
 		
-		$part = apply_filters( 'sliced_admin_display_totals_total', ''
-					. '<div class="total">' . __( 'Total Due', 'sliced-invoices' ) . ' <span class="alignright"><span id="sliced_total">0.00</span></span></div>' );
-		
-		$output .= $part;
+		$output .= apply_filters(
+			'sliced_admin_display_totals_total',
+			'<div class="total">' . __( 'Total Due', 'sliced-invoices' ) . ' <span class="alignright"><span id="sliced_total">0.00</span></span></div>'
+		);
 		
 		$output .= '</div>';
 		
@@ -1187,9 +1215,8 @@ class Sliced_Metaboxes {
 		// it is currently used by the following extensions: Woo Invoices, Deposit Invoices
 		// proposed new name: 'sliced_admin_display_totals'
 		return apply_filters( 'sliced_display_the_line_totals', $output );
-		
 	}
-
+	
 	public function get_quote_terms() {
 		return sliced_get_quote_terms();
 	}
