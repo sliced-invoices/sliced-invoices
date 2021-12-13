@@ -501,14 +501,20 @@ class Sliced_Shared {
 			}
 	    }
 		
-		$discounts = apply_filters( 'sliced_totals_discounts', self::get_raw_number( get_post_meta( $id, 'sliced_invoice_discount', true ), $id ) );
+		$discounts = get_post_meta( $id, '_sliced_discount', true );            // for Sliced Invoices >= 3.9.0
+		if ( ! $discounts ) {
+			$discounts = get_post_meta( $id, 'sliced_invoice_discount', true ); // for Sliced Invoices < 3.9.0
+		}
+		$discounts = self::get_raw_number( $discounts, $id );
 		
-		if( $discounts == '' || $discounts == '0' || $discounts == null || $discounts == '0.00' ) {
-			$totals['discounts'] = 0;
-			$discounts = 0;
-		} else {
+		apply_filters( 'sliced_totals_discounts', $discounts );
+		
+		if( $discounts ) {
 			$totals['discounts'] = $discounts;
 			$totals['total'] = $totals['total'] - $totals['discounts'];
+		} else {
+			$totals['discounts'] = 0;
+			$discounts = 0;
 		}
 		
 		$payments = self::get_payments( $id );

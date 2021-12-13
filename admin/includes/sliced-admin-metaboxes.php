@@ -236,8 +236,9 @@ class Sliced_Metaboxes {
 			'type' => 'hidden',
 		) );
 		$line_items->add_field( array(
-			'id'         => 'sliced_invoice_discount',
+			'id'         => '_sliced_discount',
 			'type'       => 'hidden',
+			'escape_cb'  => array( $this, 'backwards_compatible_discount_value' ),
 			'attributes' => array(
 				'class' => 'sliced_discount_value',
 				'step'  => 'any',
@@ -1049,6 +1050,19 @@ class Sliced_Metaboxes {
 		return $out > 0 ? $out : 0;
 	}
 	
+	/**
+	 * Get Discount Value, using backwards compatibility for Sliced Invoices < 3.9.0.
+	 * Callback to get correct value for CMB2.
+	 *
+	 * @since  3.9.0
+	 */
+	public function backwards_compatible_discount_value() {
+		$value = get_post_meta( sliced_get_the_id(), '_sliced_discount', true );            // for Sliced Invoices >= 3.9.0
+		if ( $value === '' ) {
+			$value = get_post_meta( sliced_get_the_id(), 'sliced_invoice_discount', true ); // for Sliced Invoices < 3.9.0
+		}
+		return $value;
+	}
 	
 	/**
 	 * Callbacks to get correct values for CMB2

@@ -150,7 +150,7 @@ function sliced_invoices_create_invoice( $args ) {
 	
 	// discount:
 	if ( isset( $args['discount'] ) ) {
-		update_post_meta( $invoice_id, 'sliced_invoice_discount', $args['discount'] );
+		update_post_meta( $invoice_id, '_sliced_discount', $args['discount'] );
 	}
 	
 	// automatically enable your chosen payment methods:
@@ -342,7 +342,7 @@ function sliced_invoices_create_quote( $args ) {
 	
 	// discount:
 	if ( isset( $args['discount'] ) ) {
-		update_post_meta( $quote_id, 'sliced_invoice_discount', $args['discount'] );
+		update_post_meta( $quote_id, '_sliced_discount', $args['discount'] );
 	}
 	
 	// tax settings: (if not set, quote will default to global settings)

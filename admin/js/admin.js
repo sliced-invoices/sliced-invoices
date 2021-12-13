@@ -179,7 +179,7 @@
         }
 		
 		// add discounts, if any
-		sliced_invoices.totals.discounts = new Decimal( sliced_invoices.utils.rawNumber( $('#sliced_invoice_discount').val() ) );
+		sliced_invoices.totals.discounts = new Decimal( sliced_invoices.utils.rawNumber( $('#_sliced_discount').val() ) );
 		if ( ! sliced_invoices.totals.discounts.equals( 0 ) ) {
 			sliced_invoices.totals.total = sliced_invoices.totals.total.minus( sliced_invoices.totals.discounts );
 		}
@@ -615,7 +615,7 @@
      */
     $(function(){
 		// move the hidden inputs and make them visible
-		$('#_sliced_line_items').find( '.discount-adder' ).prepend( $('#sliced_invoice_discount').attr( 'type', 'text' ) );
+		$('#_sliced_line_items').find( '.discount-adder' ).prepend( $('#_sliced_discount').attr( 'type', 'text' ) );
 		
 		// update totals
 		workOutTotals();
