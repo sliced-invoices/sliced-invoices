@@ -1141,9 +1141,6 @@ class Sliced_Metaboxes {
 		
 		$output .= $part;
 		
-		// 2017-10-20 filter 'sliced_admin_display_totals_after_tax' will be removed in the near future
-		// it is currently used by the following extension: Additional Tax v1.1.0,
-		$output = apply_filters( 'sliced_admin_display_totals_after_tax', $output );
 		
 		$part = apply_filters( 'sliced_admin_display_totals_discounts', '
 					<div class="discounts">' . __( 'Discount', 'sliced-invoices' ) .'
@@ -1171,10 +1168,6 @@ class Sliced_Metaboxes {
 		$output .= $part;
 		
 		$output .= '</div>';
-
-		// 2017-10-15 filter 'sliced_get_line_item_totals' may be removed in the near future
-		// it is currently used by the following extensions: Additional Tax (<=1.0.0), Discounts and Partial Payments
-		$output = apply_filters( 'sliced_get_line_item_totals', $output );
 		
 		// 2017-10-15 filter 'sliced_display_the_line_totals' may be renamed in the near future
 		// it is currently used by the following extensions: Woo Invoices, Deposit Invoices
