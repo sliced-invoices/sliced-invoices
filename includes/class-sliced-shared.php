@@ -463,6 +463,7 @@ class Sliced_Shared {
 	        return $totals;
 	    }
 	    
+        // work out the line item totals
 	    foreach ( $items[0] as $value ) {
 
 	    	$qty = isset( $value['qty'] ) ? self::get_raw_number( $value['qty'], $id ) : 0;
@@ -481,6 +482,36 @@ class Sliced_Shared {
 
 	    }
 		
+		// add discounts, if any (part 1 of 2 -- before tax)
+		$discounts = 0;
+		$discount_value         = get_post_meta( $id, '_sliced_discount', true );            // for Sliced Invoices >= 3.9.0
+		$discount_type          = get_post_meta( $id, '_sliced_discount_type', true );
+		$discount_tax_treatment = get_post_meta( $id, '_sliced_discount_tax_treatment', true );
+		if ( ! $discount_value ) {
+			$discount_value         = get_post_meta( $id, 'sliced_invoice_discount', true ); // for Sliced Invoices < 3.9.0
+			$discount_type          = 'amount';
+			$discount_tax_treatment = 'after';
+		}
+		$discount_value = self::get_raw_number( $discount_value, $id );
+		if ( $discount_type === 'percentage' ) {
+			$discount_percentage = $discount_value / 100;
+		}
+		
+		if ( $discount_tax_treatment === 'before' ) {
+			if ( $discount_type === 'percentage' ) {
+				$discounts = round( $totals['sub_total'] * $discount_percentage, $decimals );
+			} else {
+				$discounts = $discount_value;
+			}
+			$totals['sub_total_taxable'] = $totals['sub_total_taxable'] - $discounts;
+			if ( $totals['sub_total_taxable'] < 0 ) {
+				$totals['sub_total_taxable'] = 0;
+			}
+		}
+		
+		apply_filters( 'sliced_totals_discounts_before_tax', $discounts );
+		
+        // add tax, if any
 	   	$tax_amount = apply_filters( 'sliced_totals_global_tax', self::get_tax_amount( $id ), $id );
 		
 	    if( $tax_amount == '' || $tax_amount == '0' || $tax_amount == null || $tax_amount == '0.00' ) {
@@ -501,15 +532,18 @@ class Sliced_Shared {
 			}
 	    }
 		
-		$discounts = get_post_meta( $id, '_sliced_discount', true );            // for Sliced Invoices >= 3.9.0
-		if ( ! $discounts ) {
-			$discounts = get_post_meta( $id, 'sliced_invoice_discount', true ); // for Sliced Invoices < 3.9.0
+		// add discounts, if any (part 2 of 2 -- after tax)
+		if ( $discount_tax_treatment !== 'before' ) {
+			if ( $discount_type === 'percentage' ) {
+				$discounts = round( $totals['total'] * $discount_percentage, $decimals );
+			} else {
+				$discounts = $discount_value;
+			}
 		}
-		$discounts = self::get_raw_number( $discounts, $id );
 		
-		apply_filters( 'sliced_totals_discounts', $discounts );
+		apply_filters( 'sliced_totals_discounts_after_tax', $discounts );
 		
-		if( $discounts ) {
+		if ( $discounts ) {
 			$totals['discounts'] = $discounts;
 			$totals['total'] = $totals['total'] - $totals['discounts'];
 		} else {
@@ -517,6 +551,7 @@ class Sliced_Shared {
 			$discounts = 0;
 		}
 		
+		// work out the payments totals
 		$payments = self::get_payments( $id );
 		$payments_total = 0;
 		

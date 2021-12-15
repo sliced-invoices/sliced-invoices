@@ -155,13 +155,33 @@
 
 	    });
 		
+		// add discounts, if any (part 1 of 2 -- before tax)
+		var discountValue = sliced_invoices.utils.rawNumber( $( '#_sliced_discount' ).val() );
+		if ( $( 'input[name="_sliced_discount_type"]:checked' ).val() === 'percentage' ) {
+			var discountPercentage = new Decimal( discountValue );
+			discountPercentage = discountPercentage.div( 100 );
+		}
+		
+		if ( $( 'input[name="_sliced_discount_tax_treatment"]:checked' ).val() === 'before' ) {
+			if ( $( 'input[name="_sliced_discount_type"]:checked' ).val() === 'percentage' ) {
+				sliced_invoices.totals.discounts = sliced_invoices.totals.sub_total.times( discountPercentage ).toDecimalPlaces( sliced_invoices.utils.decimals );
+			} else {
+				sliced_invoices.totals.discounts = new Decimal( discountValue );
+			}
+			// sliced_invoices.totals.sub_total = sliced_invoices.totals.sub_total.minus( sliced_invoices.totals.discounts );
+			sliced_invoices.totals.sub_total_taxable = sliced_invoices.totals.sub_total_taxable.minus( sliced_invoices.totals.discounts );
+			if ( sliced_invoices.totals.sub_total_taxable.lessThan( 0 ) ) {
+				sliced_invoices.totals.sub_total_taxable = new Decimal( 0 );
+			}
+		}
+		
+        // add tax, if any
 		var tax_percentage = new Decimal( 0 );
         if ( sliced_payments.tax != 0 ) {
 			tax_percentage = new Decimal( sliced_payments.tax ); // don't filter it here. tax_percentage is saved as a real number internally.  The on.change handler already converts any formatted number to a real one.
 			tax_percentage = tax_percentage.div( 100 );
 		}
-
-        // add tax, if any
+		
         if ( ! tax_percentage.equals( 0 ) ) {
 			if ( sliced_payments.tax_calc_method === 'inclusive' ) {
 				// europe:
@@ -178,8 +198,14 @@
             sliced_invoices.totals.total = sliced_invoices.totals.sub_total;
         }
 		
-		// add discounts, if any
-		sliced_invoices.totals.discounts = new Decimal( sliced_invoices.utils.rawNumber( $('#_sliced_discount').val() ) );
+		// add discounts, if any (part 2 of 2 -- after tax)
+		if ( $( 'input[name="_sliced_discount_tax_treatment"]:checked' ).val() !== 'before' ) {
+			if ( $( 'input[name="_sliced_discount_type"]:checked' ).val() === 'percentage' ) {
+				sliced_invoices.totals.discounts = sliced_invoices.totals.total.times( discountPercentage ).toDecimalPlaces( sliced_invoices.utils.decimals );
+			} else {
+				sliced_invoices.totals.discounts = new Decimal( discountValue );
+			}
+		}
 		if ( ! sliced_invoices.totals.discounts.equals( 0 ) ) {
 			sliced_invoices.totals.total = sliced_invoices.totals.total.minus( sliced_invoices.totals.discounts );
 		}
@@ -251,7 +277,7 @@
     };
 
 	// bind events
-	$(document).on('keyup change', '.sliced_discount_value, .sliced input.item_amount, .sliced input.item_qty, .sliced input.item_tax, .sliced input.item_taxable, .sliced select.pre_defined_products, .sliced input.payment_amount, .sliced select.payment_status', function () {
+	$(document).on('keyup change', '.sliced_discount, .sliced input.item_amount, .sliced input.item_qty, .sliced input.item_tax, .sliced input.item_taxable, .sliced select.pre_defined_products, .sliced input.payment_amount, .sliced select.payment_status', function () {
 		workOutTotals();
 	});
 	
@@ -290,15 +316,13 @@
 	 */
 	
 	function hideDiscountBox() {
-		var el = $('#sliced-totals-discounts-edit');
-		$(el).show();
-		$(el).siblings('.discount-adder').addClass('hidden');
+		$( '#sliced-totals-discounts-edit' ).show();
+		$( '#sliced-totals-discount-adder' ).hide();
 	}
 	
 	function showDiscountBox() {
-		var el = $('#sliced-totals-discounts-edit');
-		$(el).hide();
-		$(el).siblings('.discount-adder').removeClass('hidden');
+		$( '#sliced-totals-discounts-edit' ).hide();
+		$( '#sliced-totals-discount-adder' ).css( 'display', 'inline-block' );
 	}
 	
 	$(document).on('click', '#sliced-totals-payments-edit', function(e){
@@ -318,11 +342,11 @@
 		showDiscountBox();
 	});
 	
-	$(document).on( 'click', '.discount-adder button', function(e) {
+	$(document).on( 'click', '#sliced-totals-discount-adder button', function(e) {
 		hideDiscountBox();
 	});
 	
-	$(document).on('keydown', '.sliced_discount_value', function(e) {
+	$(document).on('keydown', '.sliced_discount', function(e) {
 		if ( e.keyCode === 13 ) {
 			e.preventDefault();
 			hideDiscountBox();
@@ -614,11 +638,16 @@
      * on page load
      */
     $(function(){
-		// move the hidden inputs and make them visible
-		$('#_sliced_line_items').find( '.discount-adder' ).prepend( $('#_sliced_discount').attr( 'type', 'text' ) );
+		
+		// move hidden inputs where they need to be (CMB2 workaround)
+		var $discountAdder = $( '#sliced-totals-discount-adder' );
+		$discountAdder.prepend( $( '#_sliced_discount' ).attr( 'type', 'text' ) );
+		$discountAdder.append( $( '#sliced_discount_type_wrapper' ).show() );
+		$discountAdder.append( $( '#sliced_discount_tax_treatment_wrapper' ).show() );
 		
 		// update totals
 		workOutTotals();
+		
     });
 
 

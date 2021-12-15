@@ -240,9 +240,38 @@ class Sliced_Metaboxes {
 			'type'       => 'hidden',
 			'escape_cb'  => array( $this, 'backwards_compatible_discount_value' ),
 			'attributes' => array(
-				'class' => 'sliced_discount_value',
+				'class' => 'sliced_discount',
 				'step'  => 'any',
 			),
+		) );
+		$line_items->add_field( array(
+			'id'         => '_sliced_discount_type',
+			'type'       => 'radio_inline',
+			'options'    => array(
+				'amount'     => __( 'Fixed Amount', 'sliced-invoices' ),
+				'percentage' => __( 'Percentage', 'sliced-invoices' ),
+			),
+			'default'    => 'amount',
+			'attributes' => array(
+				'class' => 'sliced_discount',
+			),
+			'before_row' => '<div id="sliced_discount_type_wrapper" style="display: none;">',
+			'after_row'  => '</div>',
+		) );
+		$line_items->add_field( array(
+			'id'         => '_sliced_discount_tax_treatment',
+			'name'       => __( 'Calculation Method:', 'sliced-invoices' ),
+			'type'       => 'radio_inline',
+			'options'    => array(
+				'before'     => __( 'Before Tax', 'sliced-invoices' ),
+				'after'      => __( 'After Tax', 'sliced-invoices' ),
+			),
+			'default'    => 'after',
+			'attributes' => array(
+				'class' => 'sliced_discount',
+			),
+			'before_row' => '<div id="sliced_discount_tax_treatment_wrapper" style="display: none;">',
+			'after_row'  => '</div>',
 		) );
 		
 		do_action( 'sliced_after_line_items_totals', $line_items_group_id, $line_items );
@@ -1057,9 +1086,10 @@ class Sliced_Metaboxes {
 	 * @since  3.9.0
 	 */
 	public function backwards_compatible_discount_value() {
-		$value = get_post_meta( sliced_get_the_id(), '_sliced_discount', true );            // for Sliced Invoices >= 3.9.0
+		$post_id = sliced_get_the_id();
+		$value = get_post_meta( $post_id, '_sliced_discount', true );            // for Sliced Invoices >= 3.9.0
 		if ( $value === '' ) {
-			$value = get_post_meta( sliced_get_the_id(), 'sliced_invoice_discount', true ); // for Sliced Invoices < 3.9.0
+			$value = get_post_meta( $post_id, 'sliced_invoice_discount', true ); // for Sliced Invoices < 3.9.0
 		}
 		return $value;
 	}
@@ -1185,11 +1215,11 @@ class Sliced_Metaboxes {
 		
 		$output .= apply_filters(
 			'sliced_admin_display_totals_discounts',
-			'<div class="discounts">' . __( 'Discount', 'sliced-invoices' ) . '
+			'<div class="discounts"><span class="aligntop">' . __( 'Discount', 'sliced-invoices' ) . '</span>
 				<a id="sliced-totals-discounts-edit" href="#"><small>' . __( 'edit', 'sliced-invoices' ) . '</small></a>
-				<span class="discount-adder hidden">
+				<div id="sliced-totals-discount-adder" style="display: none;">
 					<button type="button" class="button">' . __( 'Apply', 'sliced-invoices' ) . '</button>
-				</span>
+				</div>
 				<span class="alignright"><span id="sliced_discounts">0.00</span></span>
 			</div>'
 		);

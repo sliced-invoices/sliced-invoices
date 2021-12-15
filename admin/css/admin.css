@@ -524,7 +524,20 @@ body.post-type-sliced_quote > .select2-container--open {
 .sliced .sliced_totals .payments #sliced_payments {
 	color: red;
 }
-.cmb2-wrap .discount-adder input:not([type=hidden])+.button {
+#sliced-totals-discount-adder {
+    vertical-align: top;
+    padding: 0 5px;
+}
+#sliced-totals-discount-adder .aligntop {
+	vertical-align: top;
+}
+#sliced-totals-discount-adder div {
+	padding: 0;
+}
+#sliced-totals-discount-adder #sliced_discount_type_wrapper {
+	padding-top: 5px;
+}
+#sliced-totals-discount-adder input:not([type=hidden])+.button {
 	margin-left: 5px;
 	margin-top: 1px;
 }
