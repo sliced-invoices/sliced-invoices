@@ -163,7 +163,7 @@ class Sliced_Shared {
 	 *
 	 * @since   2.0.0
 	 */
-	private static function get_sliced_meta( $id = 0, $key, $single = true ) {
+	private static function get_sliced_meta( $id = 0, $key = '', $single = true ) {
 		if ( ! $id ) {
 			$id = self::get_item_id();
 		}

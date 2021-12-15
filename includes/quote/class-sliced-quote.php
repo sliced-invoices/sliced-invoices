@@ -58,7 +58,7 @@ class Sliced_Quote {
 	 *
 	 * @since   2.0.0
 	 */
-	public static function set_status( $id = 0, $status ) {
+	public static function set_status( $id = 0, $status = '' ) {
 
 		if ( ! $id ) {
 			$id = Sliced_Shared::get_item_id();
@@ -113,7 +113,7 @@ class Sliced_Quote {
 	  *
 	  * @since   2.0.0
 	  */
-	private static function get_sliced_meta( $id = 0, $key, $single = true ) {
+	private static function get_sliced_meta( $id = 0, $key = '', $single = true ) {
 		if ( ! $id ) {
 			$id = Sliced_Shared::get_item_id();
 		}

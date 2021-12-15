@@ -202,7 +202,7 @@ endif;
 if ( ! function_exists( 'sliced_print_message' ) ) :
 
 	// 2017-01-22: argument $die will be removed in the near future
-	function sliced_print_message( $id = null, $message, $type = 'success', $die = false ) {
+	function sliced_print_message( $id = null, $message = '', $type = 'success', $die = false ) {
 
 		if ( $message ) {
 			$icon = $type == 'success' ? '<span class="dashicons dashicons-yes"></span>' : '<span class="dashicons dashicons-no-alt"></span>';
