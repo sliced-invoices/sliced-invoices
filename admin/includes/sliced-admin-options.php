@@ -104,7 +104,7 @@ class Sliced_Options {
 		
 		// Include CMB CSS in the head to avoid FOUC
 		foreach ( $this->options_pages as $page ) {
-			add_action( "admin_print_styles-{$page}", array( 'CMB2_hookup', 'enqueue_cmb_css' ) );
+			add_action( "admin_print_styles-{$page}", array( 'CMB2_Hookup', 'enqueue_cmb_css' ) );
 		}
 		
 	}
