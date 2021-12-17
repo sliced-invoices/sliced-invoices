@@ -533,20 +533,24 @@ class Sliced_Payments {
 				$post_terms = wp_get_object_terms($id, $taxonomy, array('fields' => 'slugs'));
 				wp_set_object_terms($new_post_id, $post_terms, $taxonomy, false);
 			}
-	 
-			/*
-			 * duplicate all post meta just in two SQL queries
-			 */
-			$post_meta_infos = $wpdb->get_results("SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id=$id");
-			if (count($post_meta_infos)!=0) {
-				$sql_query = "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) ";
-				foreach ($post_meta_infos as $meta_info) {
-					$meta_key = $meta_info->meta_key;
-					$meta_value = addslashes($meta_info->meta_value);
-					$sql_query_sel[]= "SELECT $new_post_id, '$meta_key', '$meta_value'";
+			
+			// duplicate all post meta just in two SQL queries
+			$post_metas = $wpdb->get_results(
+				$wpdb->prepare(
+					"SELECT meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id=%d",
+					$id
+				)
+			);
+			if ( $post_metas && count( $post_metas ) ) {
+				$sql_query = "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES ";
+				$sql_values = array();
+				foreach ( $post_metas as $post_meta ) {
+					$meta_key = esc_sql( $post_meta->meta_key );
+					$meta_value = esc_sql( $post_meta->meta_value );
+					$sql_values[]= "($new_post_id, '$meta_key', '$meta_value')";
 				}
-				$sql_query.= implode(" UNION ALL ", $sql_query_sel);
-				$wpdb->query($sql_query);
+				$sql_query .= implode( ',', $sql_values );
+				$wpdb->query( $sql_query );
 			}
 			
 			/*
