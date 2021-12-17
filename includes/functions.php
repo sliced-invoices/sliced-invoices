@@ -393,8 +393,8 @@ function sliced_invoices_create_quote( $args ) {
 	
 	// set status as draft:
 	Sliced_Quote::set_status(
-		isset( $args['status'] ) ? $args['status'] : 'draft',
-		$quote_id 
+		$quote_id,
+		isset( $args['status'] ) ? $args['status'] : 'draft'
 	);
 	
 	// miscellaneous bits:
