@@ -1155,6 +1155,7 @@ class Sliced_Admin {
 	/**
 	 * Convert from quote to invoice action.
 	 *
+	 * @version 3.8.17
 	 * @since 	2.0.0
 	 */
 	public function convert_quote_to_invoice() {
@@ -2256,6 +2257,7 @@ class Sliced_Admin {
 	/**
 	 * Function creates post duplicate and redirects then to the edit post screen
 	 *
+	 * @version 3.8.17
 	 * @since 	2.0.0
 	 */
 	public function duplicate_quote_invoice() {

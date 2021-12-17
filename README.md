@@ -6,7 +6,7 @@ Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf 
 Requires at least: 4.0  
 Tested up to: 5.8
 Requires PHP: 5.5
-Stable tag: 3.8.16
+Stable tag: 3.8.17
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -167,6 +167,10 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 ## Changelog
+##  3.8.17
+* FIX: commas incorrectly removed from "To" field in email preview window, whenever multiple email addresses filtered in.
+* FIX: second-order SQL injection vulnerability if an existing meta_key contains unsafe code (thanks to Wordfence).  NOTE: to exploit this, an attacker would need to first be logged in as an administator, and be able to insert a specially-crafted post meta containing malicious code.  There is no direct danger; this could only happen if someone already had access to your database, or if your site was already compromised by some other means.
+
 ##  3.8.16
 * FIX: browser freezing issue when adding new clients (if many clients exist).
 * FIX: CSV formula injection issue in "Export CSV" function (thanks to @Jörgson).

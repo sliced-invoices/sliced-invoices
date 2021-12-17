@@ -421,6 +421,7 @@ class Sliced_Payments {
 	/**
 	 * Convert from quote to invoice action, on the front end.
 	 *
+	 * @version 3.8.17
 	 * @since   2.0.0
 	 */
 	public function client_accept_quote() {

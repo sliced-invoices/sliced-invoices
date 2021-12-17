@@ -544,7 +544,8 @@ class Sliced_Notifications {
 	/**
 	 * Load the fields via AJAX for the post.
 	 *
-	 * @since 1.0.0
+	 * @version 3.8.17
+	 * @since   1.0.0
 	 */
 	public function sure_to_email() {
 
