@@ -29,6 +29,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  *                           // Optional. A discount amount to apply to the invoice. Default is 0.
  *         'discount'        => 5,
  *
+ *                           // Optional. Whether the number specified in 'discount' is a fixed amount, or a percentage.
+ *                           // Possible values are 'amount' and 'percentage'.  Default is 'amount'.
+ *         'discount_type'   => 'amount',
+ *
+ *                           // Optional. Whether to apply the discount before or after tax.
+ *                           // Possible values are 'before' and 'after'.  Default is 'after'.
+ *         'discount_tax_treatment' => 'after',
+ *
  *                           // Optional. UNIX timestamp to be used for due date. Defaults according to your settings.
  *         'due_date'        => date( "U", strtotime( '2021-11-29 22:29:00' ) ),
  *
@@ -152,6 +160,12 @@ function sliced_invoices_create_invoice( $args ) {
 	if ( isset( $args['discount'] ) ) {
 		update_post_meta( $invoice_id, '_sliced_discount', $args['discount'] );
 	}
+	if ( isset( $args['discount_type'] ) ) {
+		update_post_meta( $invoice_id, '_sliced_discount_type', $args['discount_type'] );
+	}
+	if ( isset( $args['discount_tax_treatment'] ) ) {
+		update_post_meta( $invoice_id, '_sliced_discount_tax_treatment', $args['discount_tax_treatment'] );
+	}
 	
 	// automatically enable your chosen payment methods:
 	update_post_meta(
@@ -222,6 +236,14 @@ function sliced_invoices_create_invoice( $args ) {
  *
  *                           // Optional. A discount amount to apply to the quote. Default is 0.
  *         'discount'        => 5,
+ *
+ *                           // Optional. Whether the number specified in 'discount' is a fixed amount, or a percentage.
+ *                           // Possible values are 'amount' and 'percentage'.  Default is 'amount'.
+ *         'discount_type'   => 'amount',
+ *
+ *                           // Optional. Whether to apply the discount before or after tax.
+ *                           // Possible values are 'before' and 'after'.  Default is 'after'.
+ *         'discount_tax_treatment' => 'after',
  *
  *                           // Optional. The quote number. Defaults to next available number according to your settings.
  *         'number'          => 123456,
@@ -343,6 +365,12 @@ function sliced_invoices_create_quote( $args ) {
 	// discount:
 	if ( isset( $args['discount'] ) ) {
 		update_post_meta( $quote_id, '_sliced_discount', $args['discount'] );
+	}
+	if ( isset( $args['discount_type'] ) ) {
+		update_post_meta( $quote_id, '_sliced_discount_type', $args['discount_type'] );
+	}
+	if ( isset( $args['discount_tax_treatment'] ) ) {
+		update_post_meta( $quote_id, '_sliced_discount_tax_treatment', $args['discount_tax_treatment'] );
 	}
 	
 	// tax settings: (if not set, quote will default to global settings)
