@@ -419,7 +419,7 @@ class Sliced_Options {
 					'id'        => 'declined_quote_message',
 					'type'      => 'textarea_small',
 					'attributes' => array(
-						'placeholder' => 'Bummer, you have declined the quote. We will be in touch shortly.',
+						'placeholder' => 'Thanks for giving us the opportunity to quote for you. We will be in touch with you.',
 					)
 				),
 				array(
