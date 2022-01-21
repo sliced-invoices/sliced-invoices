@@ -223,6 +223,7 @@ class Sliced_Invoices {
 		$this->loader->add_filter( 'admin_action_convert_quote_to_invoice', $plugin_admin, 'convert_quote_to_invoice' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'set_published_date_as_created' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'set_number_for_search' );
+		$this->loader->add_action( 'save_post', $plugin_admin, 'auto_mark_as_paid' );
 
 		//$this->loader->add_filter( 'load-edit.php', $plugin_admin, 'mark_quote_expired' );
 		//$this->loader->add_filter( 'load-edit.php', $plugin_admin, 'mark_invoice_overdue' );
