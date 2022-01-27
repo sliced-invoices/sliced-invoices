@@ -357,7 +357,7 @@ class Sliced_Options {
 				),
 				array(
 					'name'      => __( 'Terms & Conditions', 'sliced-invoices' ),
-					'desc'      => __( 'Terms and conditions displayed on the quote..<br>Can be overriden on individual quotes.', 'sliced-invoices' ),
+					'desc'      => __( 'Terms and conditions displayed on the %1s. Can be overriden on individual %2s.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>', '<span class="i18n-multilingual-display">'.$quote_label_plural.'</span>' ),
 					'default'   => '',
 					'id'        => 'terms',
 					'type'      => 'textarea_small'
@@ -370,56 +370,56 @@ class Sliced_Options {
 					'type'      => 'textarea_small',
 				),
 				array(
-					'name'      => __( 'Accept Quotes', 'sliced-invoices' ),
+					'name'      => __( 'Accept %s', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label_plural.'</span>' ),
 					'desc'      => '',
 					'id'        => 'accept_quote_title',
 					'type'      => 'title',
 				),
 				array(
-					'name'      => __( 'Accept Quote Button', 'sliced-invoices' ),
-					'desc'      => __( 'Yes, show the \'Accept Quote\' button on quotes.', 'sliced-invoices' ),
+					'name'      => __( 'Accept %s Button', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>',
+					'desc'      => __( 'Yes, show the \'Accept %1s\' button on %2s.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>', '<span class="i18n-multilingual-display">'.$quote_label_plural.'</span>' ),
 					'id'        => 'accept_quote',
 					'type'      => 'checkbox',
 				),
 				array(
-					'name'      => __( 'Accepted Quote Action', 'sliced-invoices' ),
-					'desc'      => __( 'Actions to perform automatically when client accepts quote.', 'sliced-invoices' ),
+					'name'      => __( 'Accepted %s Action', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>',
+					'desc'      => __( 'Actions to perform automatically when client accepts %s.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>',
 					'id'        => 'accepted_quote_action',
 					'type'      => 'select',
 					'default'   => 'convert',
 					'options'   => array(
-						'convert'         => __( 'Convert quote to invoice', 'sliced-invoices' ),
-						'convert_send'    => __( 'Convert quote to invoice and send to client', 'sliced-invoices' ),
-						'duplicate'       => __( 'Create invoice, but keep quote', 'sliced-invoices' ),
-						'duplicate_send'  => __( 'Create invoice and send to client, but keep quote', 'sliced-invoices' ),
+						'convert'         => __( 'Convert %s to invoice', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>',
+						'convert_send'    => __( 'Convert %s to invoice and send to client', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>',
+						'duplicate'       => __( 'Create invoice, but keep %s', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>',
+						'duplicate_send'  => __( 'Create invoice and send to client, but keep %s', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>',
 						'do_nothing'      => __( 'Do nothing', 'sliced-invoices' ),
 					),
 				),
 				array(
-					'name'      => __( 'Accept Quote Text', 'sliced-invoices' ),
-					'desc'      => __( 'Text to add on the \'Accept Quote\' popup.<br />Should provide some indication to your client of what happens after accepting the quote.', 'sliced-invoices' ),
+					'name'      => __( 'Accept %s Text', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>',
+					'desc'      => __( 'Text to add on the \'Accept %1s\' popup.<br />Should provide some indication to your client of what happens after accepting the %2s.', 'sliced-invoices' ),, '<span class="i18n-multilingual-display">'.$quote_label.'</span>', '<span class="i18n-multilingual-display">'.$quote_label_plural.'</span>' ),
 					'default'   => '',
 					'id'        => 'accept_quote_text',
 					'type'      => 'textarea_small'
 				),
 				array(
-					'name'      => __( 'Accepted Quote Message', 'sliced-invoices' ),
-					'desc'      => __( 'Message to display if client accepts the quote.<br />Leave blank for the default message.', 'sliced-invoices' ),
+					'name'      => __( 'Accepted %s Message', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>',
+					'desc'      => __( 'Message to display if client accepts the %s.<br />Leave blank for the default message.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>',
 					'default'   => '',
 					'id'        => 'accepted_quote_message',
 					'type'      => 'textarea_small',
 					'attributes' => array(
-						'placeholder' => 'Success, You have accepted the Quote. We will be in touch shortly.',
+						'placeholder' => 'Success, You have accepted the %s. We will be in touch shortly.', '<span class="i18n-multilingual-display">'.$quote_label.'</span>',
 					)
 				),
 				array(
-					'name'      => __( 'Declined Quote Message', 'sliced-invoices' ),
-					'desc'      => __( 'Message to display if client declines the quote.<br />Leave blank for the default message.', 'sliced-invoices' ),
+					'name'      => __( 'Declined %s Message', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>',
+					'desc'      => __( 'Message to display if client declines the %s.<br />Leave blank for the default message.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>',
 					'default'   => '',
 					'id'        => 'declined_quote_message',
 					'type'      => 'textarea_small',
 					'attributes' => array(
-						'placeholder' => 'Bummer, you have declined the quote. We will be in touch shortly.',
+						'placeholder' => 'Thanks for giving us the opportunity to quote for you. We will be in touch with you.',
 					)
 				),
 				array(
@@ -437,8 +437,8 @@ class Sliced_Options {
 					'id'        => 'quote_admin_notices',
 					'type'    => 'multicheck',
 					'options' => array(
-						'quote_viewed' => 'Quote Viewed',
-						'quote_accepted' => 'Quote Accepted',
+						'quote_viewed' => '%s Viewed', '<span class="i18n-multilingual-display">'.$quote_label.'</span>',
+						'quote_accepted' => '%s Accepted', '<span class="i18n-multilingual-display">'.$quote_label.'</span>',
 					),
 				),
 				array(
@@ -769,7 +769,7 @@ class Sliced_Options {
 				'type'      => 'checkbox',
 			),
 			array(
-				'name'      => __( 'Quote Available', 'sliced-invoices' ),
+				'name'      => __( '%s Available', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>',
 				'desc'      => 'Sent to the client manually, when you click the email button.',
 				'id'        => 'quote_available_title',
 				'type'      => 'title',
