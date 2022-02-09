@@ -93,14 +93,14 @@ class Sliced_Options {
 		$this->options_pages[] = add_submenu_page( 'sliced_invoices_settings', $this->menu_title, 'Licenses', 'manage_options', 'sliced_licenses', array( $this, 'admin_page_display' ) );
 		
 		// for backwards compatibility (will be removed at some point in the future...)
-		$this->options_pages[] = add_submenu_page( null, $this->menu_title, 'General Settings', 'manage_options', 'sliced_general', array( $this, 'admin_page_display' ) );
-		$this->options_pages[] = add_submenu_page( null, $this->menu_title, 'Business Settings', 'manage_options', 'sliced_business', array( $this, 'admin_page_display' ) );
-		$this->options_pages[] = add_submenu_page( null, $this->menu_title, 'Quotes Settings', 'manage_options', 'sliced_quotes', array( $this, 'admin_page_display' ) );
-		$this->options_pages[] = add_submenu_page( null, $this->menu_title, 'Invoices Settings', 'manage_options', 'sliced_invoices', array( $this, 'admin_page_display' ) );
-		$this->options_pages[] = add_submenu_page( null, $this->menu_title, 'Payments Settings', 'manage_options', 'sliced_payments', array( $this, 'admin_page_display' ) );
-		$this->options_pages[] = add_submenu_page( null, $this->menu_title, 'Email Settings', 'manage_options', 'sliced_emails', array( $this, 'admin_page_display' ) );
-		$this->options_pages[] = add_submenu_page( null, $this->menu_title, 'PDF Settings', 'manage_options', 'sliced_pdf', array( $this, 'admin_page_display' ) );
-		$this->options_pages[] = add_submenu_page( null, $this->menu_title, 'Translate Settings', 'manage_options', 'sliced_translate', array( $this, 'admin_page_display' ) );
+		// $this->options_pages[] = add_submenu_page( null, $this->menu_title, 'General Settings', 'manage_options', 'sliced_general', array( $this, 'admin_page_display' ) );
+		// $this->options_pages[] = add_submenu_page( null, $this->menu_title, 'Business Settings', 'manage_options', 'sliced_business', array( $this, 'admin_page_display' ) );
+		// $this->options_pages[] = add_submenu_page( null, $this->menu_title, 'Quotes Settings', 'manage_options', 'sliced_quotes', array( $this, 'admin_page_display' ) );
+		// $this->options_pages[] = add_submenu_page( null, $this->menu_title, 'Invoices Settings', 'manage_options', 'sliced_invoices', array( $this, 'admin_page_display' ) );
+		// $this->options_pages[] = add_submenu_page( null, $this->menu_title, 'Payments Settings', 'manage_options', 'sliced_payments', array( $this, 'admin_page_display' ) );
+		// $this->options_pages[] = add_submenu_page( null, $this->menu_title, 'Email Settings', 'manage_options', 'sliced_emails', array( $this, 'admin_page_display' ) );
+		// $this->options_pages[] = add_submenu_page( null, $this->menu_title, 'PDF Settings', 'manage_options', 'sliced_pdf', array( $this, 'admin_page_display' ) );
+		// $this->options_pages[] = add_submenu_page( null, $this->menu_title, 'Translate Settings', 'manage_options', 'sliced_translate', array( $this, 'admin_page_display' ) );
 		
 		// Include CMB CSS in the head to avoid FOUC
 		foreach ( $this->options_pages as $page ) {
@@ -1237,8 +1237,10 @@ class Sliced_Options {
 			)
 		) );
 
+		$this->option_metabox = apply_filters( 'sliced_invoices_admin_options', $this->option_metabox );
+		
 		return $this->option_metabox;
-
+		
 	}
 
 
