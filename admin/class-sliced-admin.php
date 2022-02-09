@@ -1154,6 +1154,72 @@ class Sliced_Admin {
 		
 	}
 
+	/**
+	 * Auto mark invoice as paid (part 1 of 2).
+	 *
+	 * Fires on save_post before CMB2 has saved anything, to see if the payments field is dirty.
+	 * If so, it will fire auto_mark_as_paid_step_2() after CMB2 has completed saving.
+	 *
+	 * @since 	3.?.?
+	 */
+	public function auto_mark_as_paid( $post_id ) {
+
+		if ( ! $_POST ) {
+			return;
+		}
+
+		$type = sliced_get_the_type( $post_id );
+
+		if ( $type !== 'invoice' ) {
+			return;
+		}
+
+		// compare the saved payments data with the just posted ones to determine if they were changed
+		$payments      = get_post_meta( $post_id, '_sliced_payment', true );
+		$payments_post = isset( $_POST['_sliced_payment'] ) ? $_POST['_sliced_payment'] : array();
+		if ( is_array( $payments ) ) {
+			foreach ( $payments as $key => $payment ) {
+				foreach ( $payment as $k => $v ) {
+					if ( $v === '' ) {
+						unset( $payments[ $key ][ $k ] );
+					}
+				}
+			}
+		}
+		foreach ( $payments_post as $key => $payment ) {
+			foreach ( $payment as $k => $v ) {
+				if ( $v === '' ) {
+					unset( $payments_post[ $key ][ $k ] );
+				}
+			}
+		}
+		foreach ( $payments_post as $key => $payment ) {
+			if ( ! is_int( $payment['date'] ) ) {
+				$payments_post[ $key ]['date'] = strtotime( $payments_post[ $key ]['date'] );
+			}
+		}
+		$payments_dirty = serialize( $payments ) !== serialize( $payments_post );
+
+		if ( $payments_dirty ) {
+			add_action( 'save_post', array( $this, 'auto_mark_as_paid_step_2' ), PHP_INT_MAX );
+		}
+
+	}
+
+
+	/**
+	 * Auto mark invoice as paid (part 2 of 2).
+	 *
+	 * @since 	3.?.?
+	 */
+	public function auto_mark_as_paid_step_2( $post_id ) {
+
+		$totals = Sliced_Shared::get_totals( $post_id );
+		if ( $totals['sub_total'] > 0 && $totals['total_due'] < 0.0001 ) {
+			Sliced_Invoice::set_as_paid( $post_id );
+		}
+
+	}	
 
 	/**
 	 * Convert from quote to invoice action.
