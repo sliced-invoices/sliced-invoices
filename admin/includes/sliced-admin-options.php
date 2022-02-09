@@ -137,7 +137,7 @@ class Sliced_Options {
 		?>
 		<div class="wrap cmb2_sliced_options_page <?php echo esc_attr($this->key); ?>">
 
-			<h2><?php esc_html_e( $this->title, 'sliced-invoices' ) ?></h2>
+			<h2><?php _e( 'Sliced Invoices Settings', 'sliced-invoices' ) ?></h2>
 
 			<!-- Options Page Nav Tabs -->
 			<h2 class="nav-tab-wrapper">
@@ -175,8 +175,11 @@ class Sliced_Options {
 	}
 
 	/**
-	 * Defines the theme option metabox and field configuration
-	 * @since  0.1.0
+	 * Defines the contents of the plugin settings pages.
+	 
+	 * @version 3.9.0
+	 * @since   0.1.0
+	 *
 	 * @return array
 	 */
 	public function option_fields() {
@@ -185,24 +188,22 @@ class Sliced_Options {
 		if ( ! empty( $this->option_metabox ) ) {
 			return $this->option_metabox;
 		}
-
-		$prefix = 'sliced_';
-		$payments = get_option('sliced_payments');
-		$quote_label = sliced_get_quote_label();
-		$quote_label_plural = sliced_get_quote_label_plural();
-		$invoice_label = sliced_get_invoice_label();
+		
+		$payments             = get_option( 'sliced_payments' );
+		$quote_label          = sliced_get_quote_label();
+		$quote_label_plural   = sliced_get_quote_label_plural();
+		$invoice_label        = sliced_get_invoice_label();
 		$invoice_label_plural = sliced_get_invoice_label_plural();
-		$current_user = wp_get_current_user();
-
+		$current_user         = wp_get_current_user();
+		
 		$this->option_metabox[] = apply_filters( 'sliced_general_option_fields', array(
-			'id'         => $prefix . 'general',
+			'id'         => 'sliced_general',
 			'title'      => __( 'General Settings', 'sliced-invoices' ),
 			'menu_title' => __( 'General', 'sliced-invoices' ),
 			'desc'       => __( 'Just some general options.', 'sliced-invoices' ),
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'general' ), ),
 			'show_names' => true,
 			'fields'     => array(
-
 				array(
 					'name'      => __( 'Year Start', 'sliced-invoices' ),
 					'id'        => 'year_start',
@@ -253,19 +254,17 @@ class Sliced_Options {
 						'placeholder' => '1 | Title goes here | 85 | Description goes here and basic HTML is allowed.',
 					)
 				),
-
-			) )
-		);
-
+			)
+		) );
+		
 		$this->option_metabox[] = apply_filters( 'sliced_business_option_fields', array(
-			'id'         => $prefix . 'business',
+			'id'         => 'sliced_business',
 			'title'      => __( 'Business Settings', 'sliced-invoices' ),
 			'menu_title' => __( 'Business', 'sliced-invoices' ),
 			'desc'       => sprintf( __( 'All of the Business Details below will be displayed on the %1s & %2s.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label_plural.'</span>', '<span class="i18n-multilingual-display">'.$invoice_label_plural.'</span>' ),
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'business' ), ),
 			'show_names' => true,
 			'fields'     => array(
-
 				array(
 					'name'      => __( 'Logo', 'sliced-invoices' ),
 					'desc'      => __( 'Logo of your business. If no logo is added, the name of your business will be used instead.', 'sliced-invoices' ),
@@ -300,11 +299,11 @@ class Sliced_Options {
 					'id'        => 'website',
 					'type'      => 'text'
 				),
-			) )
-		);
-
+			)
+		) );
+		
 		$this->option_metabox[] = apply_filters( 'sliced_quote_option_fields', array(
-			'id'         => $prefix . 'quotes',
+			'id'         => 'sliced_quotes',
 			'title'      => sprintf( __( '%s Settings', 'sliced-invoices' ), $quote_label ),
 			'menu_title' => $quote_label_plural,
 			'desc'       => __( 'Here you will find all of the settings for ' . sprintf( __( '%s', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label_plural.'</span>' ), 'sliced-invoices' ),
@@ -424,10 +423,10 @@ class Sliced_Options {
 				),
 				array(
 					'name'      => __( 'Admin Notices', 'sliced-invoices' ),
-					'desc'      => sprintf ( 
-										__( 'These settings allow you to choose which notices may be displayed in your WordPress Admin area. (Note: this is different from admin emails, which you can configure on the <a href="%s">Email Settings</a> tab.', 'sliced-invoices' ),
-										admin_url( 'admin.php?page=sliced_invoices_settings&tab=emails' )
-									),
+					'desc'      => sprintf(
+						__( 'These settings allow you to choose which notices may be displayed in your WordPress Admin area. (Note: this is different from admin emails, which you can configure on the <a href="%s">Email Settings</a> tab.', 'sliced-invoices' ),
+						admin_url( 'admin.php?page=sliced_invoices_settings&tab=emails' )
+					),
 					'id'        => 'quote_admin_notices_title',
 					'type'      => 'title',
 				),
@@ -443,10 +442,10 @@ class Sliced_Options {
 				),
 				array(
 					'name'      => __( 'Template Design', 'sliced-invoices' ),
-					'desc'      => sprintf( 
-										__( 'For information on customizing your templates, please see our guide <a target="_blank" href="%s">here</a>.', 'sliced-invoices' ),
-										'https://slicedinvoices.com/support/quote-invoice-templates/?utm_source=Plugin&utm_medium=Quote-Design&utm_content=Support&utm_campaign=Free'
-									),
+					'desc'      => sprintf(
+						__( 'For information on customizing your templates, please see our guide <a target="_blank" href="%s">here</a>.', 'sliced-invoices' ),
+						'https://slicedinvoices.com/support/quote-invoice-templates/?utm_source=Plugin&utm_medium=Quote-Design&utm_content=Support&utm_campaign=Free'
+					),
 					'id'        => 'quote_design_title',
 					'type'      => 'title',
 				),
@@ -469,12 +468,11 @@ class Sliced_Options {
 					'id'        => 'css',
 					'type'      => 'textarea_small',
 				),
-
-			) )
-		);
-
+			)
+		) );
+		
 		$this->option_metabox[] = apply_filters( 'sliced_invoice_option_fields', array(
-			'id'         => $prefix . 'invoices',
+			'id'         => 'sliced_invoices',
 			'title'      => sprintf( __( '%s Settings', 'sliced-invoices' ), $invoice_label ),
 			'menu_title' => $invoice_label_plural,
 			'desc'       => __( 'Here you will find all of the settings for <span class="i18n-multilingual-display">' . sprintf( __( '%s', 'sliced-invoices' ), $invoice_label_plural ), 'sliced-invoices' ) . '</span>',
@@ -541,10 +539,10 @@ class Sliced_Options {
 				),
 				array(
 					'name'      => __( 'Admin Notices', 'sliced-invoices' ),
-					'desc'      => sprintf ( 
-										__( 'These settings allow you to choose which notices may be displayed in your WordPress Admin area. (Note: this is different from admin emails, which you can configure on the <a href="%s">Email Settings</a> tab.', 'sliced-invoices' ),
-										admin_url( 'admin.php?page=sliced_invoices_settings&tab=emails' )
-									),
+					'desc'      => sprintf(
+						__( 'These settings allow you to choose which notices may be displayed in your WordPress Admin area. (Note: this is different from admin emails, which you can configure on the <a href="%s">Email Settings</a> tab.', 'sliced-invoices' ),
+						admin_url( 'admin.php?page=sliced_invoices_settings&tab=emails' )
+					),
 					'id'        => 'invoice_admin_notices_title',
 					'type'      => 'title',
 				),
@@ -560,10 +558,10 @@ class Sliced_Options {
 				),
 				array(
 					'name'      => __( 'Template Design', 'sliced-invoices' ),
-					'desc'      => sprintf( 
-										__( 'For information on customizing your templates, please see our guide <a target="_blank" href="%s">here</a>.', 'sliced-invoices' ),
-										'https://slicedinvoices.com/support/quote-invoice-templates/?utm_source=Plugin&utm_medium=Invoice-Design&utm_content=Support&utm_campaign=Free'
-									),
+					'desc'      => sprintf(
+						__( 'For information on customizing your templates, please see our guide <a target="_blank" href="%s">here</a>.', 'sliced-invoices' ),
+						'https://slicedinvoices.com/support/quote-invoice-templates/?utm_source=Plugin&utm_medium=Invoice-Design&utm_content=Support&utm_campaign=Free'
+					),
 					'id'        => 'invoice_design_title',
 					'type'      => 'title',
 				),
@@ -586,20 +584,17 @@ class Sliced_Options {
 					'id'        => 'css',
 					'type'      => 'textarea_small',
 				),
-
-
-			) )
-		);
-
+			)
+		) );
+		
 		$this->option_metabox[] = apply_filters( 'sliced_payment_option_fields', array(
-			'id'         => $prefix . 'payments',
+			'id'         => 'sliced_payments',
 			'title'      => __( 'Payment Settings', 'sliced-invoices' ),
 			'menu_title' => __( 'Payments', 'sliced-invoices' ),
 			'desc'       => __( 'Here you will find all of the Payment related settings.', 'sliced-invoices' ),
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'payments' ), ),
 			'show_names' => true,
 			'fields'     => array(
-
 				array(
 					'name'      => __( 'Currency Symbol', 'sliced-invoices' ),
 					'desc'      => __( '', 'sliced-invoices' ),
@@ -697,13 +692,11 @@ class Sliced_Options {
 					'id'        => 'generic_pay',
 					'type'      => 'textarea_small',
 				),
-
-
 			)
 		) );
 		
 		$this->option_metabox[] = apply_filters( 'sliced_tax_option_fields', array(
-			'id'         => $prefix . 'tax',
+			'id'         => 'sliced_tax',
 			'title'      => __( 'Tax Settings', 'sliced-invoices' ),
 			'menu_title' => __( 'Tax', 'sliced-invoices' ),
 			'desc'       => __( 'Here you will find all Tax-related settings.', 'sliced-invoices' ),
@@ -746,7 +739,7 @@ class Sliced_Options {
 				),
 			)
 		) );
-
+		
 		$email_option_fields = array(
 			array(
 				'name'      => __( 'Email Address', 'sliced-invoices' ),
@@ -803,7 +796,6 @@ class Sliced_Options {
 				'type'      => 'text',
 				'id'        => 'quote_available_button',
 			),
-
 			array(
 				'name'      => __( 'Invoice Available', 'sliced-invoices' ),
 				'desc'      => 'Sent to the client manually, when you click the email button.',
@@ -839,7 +831,6 @@ class Sliced_Options {
 				'type'      => 'text',
 				'id'        => 'invoice_available_button',
 			),
-
 			array(
 				'name'      => __( 'Payment Received', 'sliced-invoices' ),
 				'desc'      => 'Sent to the client automatically, when they make a payment.',
@@ -868,7 +859,6 @@ class Sliced_Options {
 					'quicktags' => true
 				),
 			),
-
 			array(
 				'name'      => __( 'Payment Reminder', 'sliced-invoices' ),
 				'desc'      => 'Sent to the client automatically on the chosen days.',
@@ -955,31 +945,45 @@ class Sliced_Options {
 			);
 		}
 		$this->option_metabox[] = apply_filters( 'sliced_email_option_fields', array(
-			'id'         => $prefix . 'emails',
+			'id'         => 'sliced_emails',
 			'title'      => __( 'Email Settings', 'sliced-invoices' ),
 			'menu_title' => __( 'Emails', 'sliced-invoices' ),
-			'desc'          => __( 'Here you will find all of the Email related settings. The <a target="_blank" href="https://slicedinvoices.com/extensions/pdf-email?utm_source=Plugin&utm_medium=Email-Settings-Page&utm_content=PDF-Email&utm_campaign=Free">PDF & Email extension</a> will add extra options to customize the emails.', 'sliced-invoices' ),
+			'desc'       => __( 'Here you will find all of the Email-related settings.', 'sliced-invoices' )
+				. '<br /><br />' . sprintf(
+					/* translators: %s: URL */
+					__( '(PRO) The <a target="_blank" href="%s">PDF & Email Extension</a> adds a few extra options here for customizing emails.', 'sliced-invoices' ),
+					'https://slicedinvoices.com/extensions/pdf-email?utm_source=Plugin&utm_medium=Email-Settings-Page&utm_content=PDF-Email&utm_campaign=Free'
+				),
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'emails' ), ),
 			'show_names' => true,
 			'fields'     => $email_option_fields,
 		) );
+		
 		$this->option_metabox[] = apply_filters( 'sliced_pdf_option_fields', array(
-			'id'         => $prefix . 'pdf',
+			'id'         => 'sliced_pdf',
 			'title'      => __( 'PDF Settings', 'sliced-invoices' ),
 			'menu_title' => __( 'PDF', 'sliced-invoices' ),
-			'desc'          => __( 'Here you will find all of the PDF related settings. The <a target="_blank" href="https://slicedinvoices.com/extensions/pdf-email?utm_source=Plugin&utm_medium=PDF-Settings-Page&utm_content=PDF-Email&utm_campaign=Free">PDF & Email extension</a> will add extra options to customize the PDFs.', 'sliced-invoices' ),
+			'desc'       => __( 'Here you will find all of the PDF-related settings.', 'sliced-invoices' )
+				. '<br /><br />' . sprintf(
+					/* translators: %s: URL */
+					__( '(PRO) The <a target="_blank" href="%s">PDF & Email Extension</a> is required for this feature.', 'sliced-invoices' ),
+					'https://slicedinvoices.com/extensions/pdf-email?utm_source=Plugin&utm_medium=PDF-Settings-Page&utm_content=PDF-Email&utm_campaign=Free'
+				),
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'emails' ), ),
 			'show_names' => true,
-			'fields'     => array(
-
-			)
+			'fields'     => array(),
 		) );
-
+		
 		$this->option_metabox[] = apply_filters( 'sliced_translate_option_fields', array(
-			'id'         => $prefix . 'translate',
+			'id'         => 'sliced_translate',
 			'title'      => __( 'Translate Settings', 'sliced-invoices' ),
 			'menu_title' => __( 'Translate', 'sliced-invoices' ),
-			'desc'       => __( 'Here you can translate strings into your own language, or simply change the text to suit your needs. The <a target="_blank" href="https://slicedinvoices.com/extensions/easy-translate/?utm_source=Plugin&utm_medium=Translate-Settings-Page&utm_content=Easy-Translate&utm_campaign=Free">Easy Translate extension</a> adds many more fields here, allowing you to translate every piece of text shown on invoices and quotes.', 'sliced-invoices' ),
+			'desc'       => __( 'Here you can translate strings into your own language, or simply change the text to suit your needs.', 'sliced-invoices' )
+				. '<br /><br />' . sprintf(
+					/* translators: %s: URL */
+					__( '(PRO) The <a target="_blank" href="%s">Easy Translate Extension</a> adds many more fields here, allowing you to translate every piece of text your client sees on your quotes and invoices.', 'sliced-invoices' ),
+					'https://slicedinvoices.com/extensions/easy-translate/?utm_source=Plugin&utm_medium=Translate-Settings-Page&utm_content=Easy-Translate&utm_campaign=Free'
+				),
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'translate' ), ),
 			'show_names' => true,
 			'fields'     => array(
@@ -1097,9 +1101,9 @@ class Sliced_Options {
 				),
 			)
 		) );
-
+		
 		$this->option_metabox[] = apply_filters( 'sliced_extras_option_fields', array(
-			'id'         => $prefix . 'extras',
+			'id'         => 'sliced_extras',
 			'title'      => __( 'Extras', 'sliced-invoices' ),
 			'menu_title' => __( 'Extras', 'sliced-invoices' ),
 			'desc'       => __( 'Just a page with some advertising and a cry for help ;-)', 'sliced-invoices' ),
@@ -1197,13 +1201,11 @@ class Sliced_Options {
 					<br />
 					',
 				),
-
 			)
 		) );
-
-
+		
 		$this->option_metabox[] = apply_filters( 'sliced_licenses_option_fields', array(
-			'id'         => $prefix . 'licenses',
+			'id'         => 'sliced_licenses',
 			'title'      => __( 'Licenses', 'sliced-invoices' ),
 			'menu_title' => __( 'Licenses', 'sliced-invoices' ),
 			'desc'       => __( 'This page is where you enter any license keys for extensions you have purchased from <a target="_blank" href="https://slicedinvoices.com">Sliced Invoices</a>.', 'sliced-invoices' ),
@@ -1236,13 +1238,12 @@ class Sliced_Options {
 				),
 			)
 		) );
-
+		
 		$this->option_metabox = apply_filters( 'sliced_invoices_admin_options', $this->option_metabox );
 		
 		return $this->option_metabox;
 		
 	}
-
 
 
 	/**
