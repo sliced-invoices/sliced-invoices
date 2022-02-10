@@ -274,7 +274,6 @@ class Sliced_Options {
 				),
 				array(
 					'name'      => __( 'Business Name', 'sliced-invoices' ),
-					'desc'      => __( '', 'sliced-invoices' ),
 					'default'   => '',
 					'id'        => 'name',
 					'type'      => 'text',
@@ -370,7 +369,6 @@ class Sliced_Options {
 				),
 				array(
 					'name'      => __( 'Accept Quotes', 'sliced-invoices' ),
-					'desc'      => '',
 					'id'        => 'accept_quote_title',
 					'type'      => 'title',
 				),
@@ -432,7 +430,6 @@ class Sliced_Options {
 				),
 				array(
 					'name'      => __( 'Show me notices when', 'sliced-invoices' ),
-					'desc'      => '',
 					'id'        => 'quote_admin_notices',
 					'type'    => 'multicheck',
 					'options' => array(
@@ -451,7 +448,6 @@ class Sliced_Options {
 				),
 				array(
 					'name'      => __( 'Template', 'sliced-invoices' ),
-					'desc'      => __( '', 'sliced-invoices' ),
 					'id'        => 'template',
 					'type'      => 'radio',
 					'default'   => 'template1',
@@ -548,7 +544,6 @@ class Sliced_Options {
 				),
 				array(
 					'name'      => __( 'Show me notices when', 'sliced-invoices' ),
-					'desc'      => '',
 					'id'        => 'invoice_admin_notices',
 					'type'      => 'multicheck',
 					'options'   => array(
@@ -567,7 +562,6 @@ class Sliced_Options {
 				),
 				array(
 					'name'      => __( 'Template', 'sliced-invoices' ),
-					'desc'      => __( '', 'sliced-invoices' ),
 					'id'        => 'template',
 					'type'      => 'radio',
 					'default'   => 'template1',
@@ -597,7 +591,6 @@ class Sliced_Options {
 			'fields'     => array(
 				array(
 					'name'      => __( 'Currency Symbol', 'sliced-invoices' ),
-					'desc'      => __( '', 'sliced-invoices' ),
 					'default'   => '',
 					'type'      => 'text',
 					'id'        => 'currency_symbol',
@@ -607,7 +600,6 @@ class Sliced_Options {
 				),
 				array(
 					'name'      => __( 'Currency Position', 'sliced-invoices' ),
-					'desc'      => __( '', 'sliced-invoices' ),
 					'type'      => 'select',
 					'id'        => 'currency_pos',
 					'options'   => array(
@@ -619,7 +611,6 @@ class Sliced_Options {
 				),
 				array(
 					'name'      => __( 'Thousand Separator', 'sliced-invoices' ),
-					'desc'      => __( '', 'sliced-invoices' ),
 					//'default'   => ',',
 					'type'      => 'text',
 					'id'        => 'thousand_sep',
@@ -631,7 +622,6 @@ class Sliced_Options {
 				),
 				array(
 					'name'      => __( 'Decimal Separator', 'sliced-invoices' ),
-					'desc'      => __( '', 'sliced-invoices' ),
 					'default'   => '.',
 					'type'      => 'text',
 					'id'        => 'decimal_sep',
@@ -642,7 +632,6 @@ class Sliced_Options {
 				),
 				array(
 					'name'      => __( 'Number of Decimals', 'sliced-invoices' ),
-					'desc'      => __( '', 'sliced-invoices' ),
 					'default'   => '2',
 					'type'      => 'text',
 					'id'        => 'decimals',
@@ -673,7 +662,6 @@ class Sliced_Options {
 				),
 				array(
 					'name'      => __( 'Payment Methods', 'sliced-invoices' ),
-					'desc'      => __( '', 'sliced-invoices' ),
 					'default'   => '',
 					'id'        => 'title_payment_methods',
 					'type'      => 'title',
@@ -705,7 +693,6 @@ class Sliced_Options {
 			'fields'     => array(
 				array(
 					'name'      => __( 'Prices entered with tax', 'sliced-invoices' ),
-					'desc'      => __( '', 'sliced-invoices' ),
 					'default'   => 'exclusive',
 					'type'      => 'radio',
 					'id'        => 'tax_calc_method',
@@ -930,7 +917,6 @@ class Sliced_Options {
 		if ( ! class_exists( 'Sliced_Pdf_Email' ) ) {
 			$email_option_fields[] = array(
 				'name'      => __( 'Footer Text', 'sliced-invoices' ),
-				'desc'      => __( '', 'sliced-invoices' ),
 				'type'      => 'wysiwyg',
 				'default'   => '',
 				'id'        => 'footer',
@@ -1112,7 +1098,6 @@ class Sliced_Options {
 			'fields'     => array(
 				array(
 					'name'      => __( 'We\'d Love Your Support', 'sliced-invoices' ),
-					'desc'      => __( '', 'sliced-invoices' ),
 					'id'        => 'help_us',
 					'type'      => 'title',
 					'after_field'  => '
@@ -1122,7 +1107,6 @@ class Sliced_Options {
 				),
 				array(
 					'name'      => __( 'Sign up for our newsletter', 'sliced-invoices' ),
-					'desc'      => __( '', 'sliced-invoices' ),
 					'id'        => 'newsletter',
 					'type'      => 'title',
 					'after_field'  => '
@@ -1151,7 +1135,6 @@ class Sliced_Options {
 				),
 				array(
 					'name'      => __( 'Extend Sliced Invoices', 'sliced-invoices' ),
-					'desc'      => __( '', 'sliced-invoices' ),
 					'id'        => 'extend',
 					'type'      => 'title',
 					'after_field'  => '
@@ -1234,7 +1217,6 @@ class Sliced_Options {
 					'name' => '',
 					'id'   => 'licenses_divider',
 					'type' => 'title',
-					'desc' => '',
 				),
 			)
 		) );

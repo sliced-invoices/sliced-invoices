@@ -188,7 +188,7 @@ if ( ! function_exists( 'sliced_display_line_items' ) ) :
 						$output .= '<tr class="row_' . $class . ' sliced-item">
 
 							<td class="qty">' . esc_html__( $qty ) . '</td>
-							<td class="service">' . esc_html__( isset( $item["title"] ) ? $item["title"] : "" );
+							<td class="service">' . ( isset( $item['title'] ) ? esc_html__( $item['title'] ) : '' );
 								if ( isset( $item["description"] ) ) :
 									$output .= '<br/><span class="description">' . wpautop( wp_kses_post( $item["description"] ) ) . '</span>';
 								endif;
