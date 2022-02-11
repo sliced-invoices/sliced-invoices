@@ -177,32 +177,31 @@ if ( ! function_exists( 'sliced_display_line_items' ) ) :
 			if( !empty( $items ) && !empty( $items[0] ) ) :
 
 				foreach ( $items[0] as $item ) {
-
-					$class = ($count % 2 == 0) ? "even" : "odd";
-
-					$qty = isset( $item["qty"] ) ? $item["qty"] : 0;
-					$amt = isset( $item["amount"] ) ? $shared->get_raw_number( $item["amount"] ) : 0;
-					$tax = isset( $item["tax"] ) ? $shared->get_raw_number( $item["tax"] ) : "0.00";
+					
+					$class = ( $count % 2 == 0 ) ? 'even' : 'odd';
+					
+					$qty = isset( $item['qty'] ) ? $item['qty'] : 0;
+					$amt = isset( $item['amount'] ) ? $shared->get_raw_number( $item['amount'] ) : 0;
+					$tax = isset( $item['tax'] ) ? $shared->get_raw_number( $item['tax'] ) : '0.00';
 					$line_total = $shared->get_line_item_sub_total( $shared->get_raw_number( $qty ), $amt, $tax );
 					
-						$output .= '<tr class="row_' . $class . ' sliced-item">
-
-							<td class="qty">' . esc_html__( $qty ) . '</td>
-							<td class="service">' . ( isset( $item['title'] ) ? esc_html__( $item['title'] ) : '' );
-								if ( isset( $item["description"] ) ) :
-									$output .= '<br/><span class="description">' . wpautop( wp_kses_post( $item["description"] ) ) . '</span>';
-								endif;
-							$output .= '</td>
-							<td class="rate">' . esc_html__( $shared->get_formatted_currency( $amt ) ) . '</td>';
-							if ( sliced_hide_adjust_field() === false) {
-								$output .= '<td class="adjust">' . esc_html__( $tax . "%" ) . '</td>';
-							}
-							$output .= '<td class="total">' . esc_html__( $shared->get_formatted_currency( $line_total ) ) . '</td>
-
+					$output .= '<tr class="row_' . $class . ' sliced-item">
+						<td class="qty">' . $qty . '</td>
+						<td class="service">' . ( isset( $item['title'] ) ? esc_html__( $item['title'] ) : '' );
+					if ( isset( $item['description'] ) ) {
+						$output .= '<br /><span class="description">' . wpautop( wp_kses_post( $item['description'] ) ) . '</span>';
+					}
+					$output .= '</td>
+						<td class="rate">' . $shared->get_formatted_currency( $amt ) . '</td>';
+					if ( sliced_hide_adjust_field() === false) {
+						$output .= '<td class="adjust">' . sprintf( __( '%s%%' ), $tax ) . '</td>';
+					}
+					$output .= '<td class="total">' . $shared->get_formatted_currency( $line_total ) . '</td>
 						</tr>';
-
-				$count++;
+					
+					$count++;
 				}
+			
 			endif;
 
 			$output .= '</tbody></table>';

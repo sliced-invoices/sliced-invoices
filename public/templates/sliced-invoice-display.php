@@ -122,7 +122,7 @@ do_action( 'sliced_before_invoice_display' ); ?><!doctype html>
 			<div class="row sliced-footer">
 				<div class="col-sm-12">
 					<div class="footer-text"><?php echo sliced_get_invoice_footer(); ?></div>
-					<div class="print-only"><?php _e( 'Page ', 'sliced-invoices') ?> {PAGENO}/{nbpg}</div>
+					<div class="print-only"><?php _e( 'Page', 'sliced-invoices') ?> {PAGENO}/{nbpg}</div>
 				</div>
 			</div><!-- END row -->
 

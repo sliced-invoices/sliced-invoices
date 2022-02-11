@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Sliced Invoices\n"
-"POT-Creation-Date: 2022-02-10 04:56-0800\n"
+"POT-Creation-Date: 2022-02-10 18:35-0800\n"
 "PO-Revision-Date: 2017-01-15 20:46-0800\n"
 "Last-Translator: \n"
 "Language-Team: Sliced Invoices <info@slicedinvoices.com>\n"
@@ -589,8 +589,8 @@ msgstr ""
 #: admin/includes/sliced-admin-metaboxes.php:1208
 #: admin/includes/sliced-admin-options.php:1053
 #: includes/template-tags/sliced-tags-display-modules.php:170
-#: includes/template-tags/sliced-tags-display-modules.php:245
-#: includes/template-tags/sliced-tags-display-modules.php:344
+#: includes/template-tags/sliced-tags-display-modules.php:244
+#: includes/template-tags/sliced-tags-display-modules.php:343
 msgid "Sub Total"
 msgstr ""
 
@@ -604,7 +604,7 @@ msgstr ""
 #: admin/includes/sliced-admin-columns.php:117
 #: admin/includes/sliced-admin-options.php:1071
 #: includes/template-tags/sliced-tags-display-modules.php:141
-#: includes/template-tags/sliced-tags-display-modules.php:366
+#: includes/template-tags/sliced-tags-display-modules.php:365
 msgid "Total"
 msgstr ""
 
@@ -1230,8 +1230,8 @@ msgstr ""
 
 #: admin/includes/sliced-admin-metaboxes.php:1218
 #: admin/includes/sliced-admin-options.php:1062
-#: includes/template-tags/sliced-tags-display-modules.php:271
-#: includes/template-tags/sliced-tags-display-modules.php:359
+#: includes/template-tags/sliced-tags-display-modules.php:270
+#: includes/template-tags/sliced-tags-display-modules.php:358
 msgid "Discount"
 msgstr ""
 
@@ -1246,7 +1246,7 @@ msgstr ""
 
 #: admin/includes/sliced-admin-metaboxes.php:1230
 #: includes/invoice/class-sliced-invoice.php:259
-#: includes/template-tags/sliced-tags-display-modules.php:281
+#: includes/template-tags/sliced-tags-display-modules.php:280
 msgid "Paid"
 msgstr ""
 
@@ -1254,8 +1254,8 @@ msgstr ""
 #: admin/includes/sliced-admin-options.php:1080
 #: includes/payments/sliced-shared-payments.php:179
 #: includes/template-tags/sliced-tags-display-modules.php:96
-#: includes/template-tags/sliced-tags-display-modules.php:291
-#: includes/template-tags/sliced-tags-display-modules.php:298
+#: includes/template-tags/sliced-tags-display-modules.php:290
+#: includes/template-tags/sliced-tags-display-modules.php:297
 msgid "Total Due"
 msgstr ""
 
@@ -2411,102 +2411,109 @@ msgstr ""
 msgid "PayPal Currency"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:58
+#: includes/gateways/sliced-gateway-paypal.php:59
 #, php-format
 msgid ""
 "3 letter code - <a href=\"%s\" target=\"_blank\">Full list of accepted "
 "currencies here</a>"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:67
+#: includes/gateways/sliced-gateway-paypal.php:68
 msgid "PayPal API Username"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:68
+#: includes/gateways/sliced-gateway-paypal.php:69
 msgid ""
 "You will find your API Username under \"Profile\" and then \"Request API "
 "credentials\"."
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:73
+#: includes/gateways/sliced-gateway-paypal.php:74
 msgid "PayPal API Password"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:74
+#: includes/gateways/sliced-gateway-paypal.php:75
 msgid ""
 "You will find your API Password under \"Profile\" and then \"Request API "
 "credentials\"."
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:79
+#: includes/gateways/sliced-gateway-paypal.php:80
 msgid "PayPal Signature"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:80
+#: includes/gateways/sliced-gateway-paypal.php:81
 msgid ""
 "You will find your Signature under \"Profile\" and then \"Request API "
 "credentials\"."
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:85
+#: includes/gateways/sliced-gateway-paypal.php:86
 msgid "PayPal Mode"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:86
+#: includes/gateways/sliced-gateway-paypal.php:89
+#, php-format
 msgid ""
-"Set to Sandbox for testing purposes (you must have a <a href=\"https://"
-"developer.paypal.com/docs/classic/lifecycle/ug_sandbox/\">Sandbox account</"
-"a> for this and be using the Sandbox API credentials).<br />Set to Live to "
-"accept payments from clients."
+"Set to Sandbox for testing purposes (you must have a <a href=\"%s\">Sandbox "
+"account</a> for this and be using the Sandbox API credentials).<br />Set to "
+"Live to accept payments from clients."
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:234
-msgid "Error processing the payment.<br> <a href=\""
+#: includes/gateways/sliced-gateway-paypal.php:239
+msgid "Error processing payment: Invalid token."
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:269
-msgid "Payment has been cancelled.<br> <a href=\""
+#: includes/gateways/sliced-gateway-paypal.php:276
+msgid "Payment has been cancelled."
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:275
+#: includes/gateways/sliced-gateway-paypal.php:278
+#, php-format
+msgid "<a href=\"%s\">Go back</a> and try again?"
+msgstr ""
+
+#: includes/gateways/sliced-gateway-paypal.php:286
 msgid "This invoice has already been paid."
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:359
+#: includes/gateways/sliced-gateway-paypal.php:370
 #: includes/payments/sliced-shared-payments.php:617
 msgid "Success"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:370
+#: includes/gateways/sliced-gateway-paypal.php:381
 msgid "Subscription has been activated!"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:372
-#: includes/gateways/sliced-gateway-paypal.php:380
+#: includes/gateways/sliced-gateway-paypal.php:383
 #: includes/gateways/sliced-gateway-paypal.php:390
-msgid "Your PayPal Transaction ID is: "
-msgstr ""
-
-#: includes/gateways/sliced-gateway-paypal.php:378
-msgid "Payment has been received!"
-msgstr ""
-
-#: includes/gateways/sliced-gateway-paypal.php:386
-msgid "Transaction complete, however payment is still pending."
+#: includes/gateways/sliced-gateway-paypal.php:402
+#, php-format
+msgid "Your PayPal Transaction ID is: %s"
 msgstr ""
 
 #: includes/gateways/sliced-gateway-paypal.php:388
-msgid ""
-"You need to manually authorize this payment in your <a target=\"_new\" href="
-"\"http://www.paypal.com\">PayPal Account</a>"
+msgid "Payment has been received!"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:396
+#: includes/gateways/sliced-gateway-paypal.php:395
+msgid "Transaction complete, however payment is still pending."
+msgstr ""
+
+#: includes/gateways/sliced-gateway-paypal.php:398
+#, php-format
+msgid ""
+"You need to manually authorize this payment in your <a target=\"_blank\" "
+"href=\"%s\">PayPal Account</a>"
+msgstr ""
+
+#: includes/gateways/sliced-gateway-paypal.php:408
 #, php-format
 msgid "Click here to return to %s"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:637
+#: includes/gateways/sliced-gateway-paypal.php:649
 msgid "There was an error with the form submission, please try again."
 msgstr ""
 
@@ -2604,8 +2611,9 @@ msgctxt "quote date"
 msgid "%s Date"
 msgstr ""
 
-#: includes/template-tags/sliced-tags-display-modules.php:198
-msgid "%"
+#: includes/template-tags/sliced-tags-display-modules.php:197
+#, php-format
+msgid "%s%%"
 msgstr ""
 
 #: includes/template-tags/sliced-tags-invoice.php:9
@@ -3015,7 +3023,7 @@ msgstr ""
 
 #: public/templates/sliced-invoice-display.php:125
 #: public/templates/sliced-quote-display.php:107
-msgid "Page "
+msgid "Page"
 msgstr ""
 
 #. Plugin URI of the plugin/theme

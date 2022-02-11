@@ -55,6 +55,7 @@ class Sliced_Paypal {
 		$options['fields'][] = array(
 			'name'    => __( 'PayPal Currency', 'sliced-invoices' ),
 			'desc'    => sprintf( 
+				/* translators: %s: URL */
 				__( '3 letter code - <a href="%s" target="_blank">Full list of accepted currencies here</a>', 'sliced-invoices' ),
 				'https://developer.paypal.com/docs/api/reference/currency-codes/'
 			),
@@ -83,13 +84,17 @@ class Sliced_Paypal {
 		);
 		$options['fields'][] = array(
 			'name'    => __( 'PayPal Mode', 'sliced-invoices' ),
-			'desc'    => __( 'Set to Sandbox for testing purposes (you must have a <a href="https://developer.paypal.com/docs/classic/lifecycle/ug_sandbox/">Sandbox account</a> for this and be using the Sandbox API credentials).<br />Set to Live to accept payments from clients.', 'sliced-invoices' ),
+			'desc'    => sprintf(
+				/* translators: %s: URL */
+				__( 'Set to Sandbox for testing purposes (you must have a <a href="%s">Sandbox account</a> for this and be using the Sandbox API credentials).<br />Set to Live to accept payments from clients.', 'sliced-invoices' ),
+				'https://developer.paypal.com/docs/classic/lifecycle/ug_sandbox/'
+			),
 			'default' => 'Live',
 			'type'    => 'select',
 			'id'      => 'paypal_mode',
 			'options' => array(
 				'sandbox' => 'Sandbox',
-				'live' => 'Live',
+				'live'    => 'Live',
 			)
 		);
 
@@ -231,7 +236,7 @@ class Sliced_Paypal {
 		
 		// if we can't get the id, stop
 		if ( ! $id ) {
-			sliced_print_message( $id, __( 'Error processing the payment.<br> <a href="' . esc_url( sliced_get_the_link( $id ) ) . '">Go back</a> and try again?', 'sliced-invoices' ), 'failed' );
+			sliced_print_message( $id, __( 'Error processing payment: Invalid token.', 'sliced-invoices' ), 'failed' );
 			return;
 		}
 		
@@ -266,12 +271,18 @@ class Sliced_Paypal {
 		 
 		// if cancelled at paypal, print message and die.
 		if ( ! $payer_id ) {
-			sliced_print_message( $id, __( 'Payment has been cancelled.<br> <a href="' . esc_url( sliced_get_the_link( $id ) ) . '">Go back</a> and try again?', 'sliced-invoices' ), 'failed' );
+			sliced_print_message(
+				$id,
+				__( 'Payment has been cancelled.', 'sliced-invoices' )
+					. '<br />'
+					. sprintf( __( '<a href="%s">Go back</a> and try again?', 'sliced-invoices' ), esc_url( sliced_get_the_link( $id ) ) ),
+				'failed'
+			);
 			return;
 		}
-
+		
 		// if already been paid, print message and die.
-		if( has_term( 'paid', 'invoice_status', $id ) ) {
+		if ( has_term( 'paid', 'invoice_status', $id ) ) {
 			sliced_print_message( $id, __( 'This invoice has already been paid.', 'sliced-invoices' ), 'alert' );
 			return;
 		}
@@ -352,51 +363,52 @@ class Sliced_Paypal {
 		/*
 		 * Display result message and save data
 		 */
-			
+		
 		//Respond according to message we receive from Paypal
-		if( 'SUCCESS' == strtoupper( $response["ACK"] ) || 'SUCCESSWITHWARNING' == strtoupper( $response["ACK"] ) ) {
-
-			$message = '<h2>' . __( 'Success', 'sliced-invoices' ) .'</h2>';
+		if ( strtoupper( $response['ACK'] ) === 'SUCCESS' || strtoupper( $response['ACK'] ) === 'SUCCESSWITHWARNING' ) {
+			
+			$message = '<h2>' . __( 'Success', 'sliced-invoices' ) . '</h2>';
 			$message .= '<p>';
-
+			
 			/*
 			 * Sometimes payments are kept pending even when transaction is complete.
 			 * hence we need to notify user about it and ask them to manually approve the transaction
-			*/
+			 */
 			if ( isset( $response['PROFILESTATUS'] ) ) {
-				$amount     = urldecode( $response["PAYMENTINFO_0_AMT"] );
+				$amount     = urldecode( $response['PAYMENTINFO_0_AMT'] );
 				$payment_id = urldecode( $response['PROFILEID'] );
 				$status     = 'success';
 				$message .= __( 'Subscription has been activated!', 'sliced-invoices' );
 				$message .= '<br />';
-				$message .= __( 'Your PayPal Transaction ID is: ', 'sliced-invoices' ) . $payment_id .'</p>';
-				$message .= '</p>';
-			} elseif ( 'Completed' == $response["PAYMENTINFO_0_PAYMENTSTATUS"] ) {
-				$amount     = urldecode( $response["PAYMENTINFO_0_AMT"] );
+				$message .= sprintf( __( 'Your PayPal Transaction ID is: %s', 'sliced-invoices' ), $payment_id );
+			} elseif ( strtoupper( $response['PAYMENTINFO_0_PAYMENTSTATUS'] ) === 'COMPLETED' ) {
+				$amount     = urldecode( $response['PAYMENTINFO_0_AMT'] );
 				$payment_id = urldecode( $response['PAYMENTINFO_0_TRANSACTIONID'] );
 				$status     = 'success';
 				$message .= __( 'Payment has been received!', 'sliced-invoices' );
 				$message .= '<br />';
-				$message .= __( 'Your PayPal Transaction ID is: ', 'sliced-invoices' ) . $payment_id .'</p>';
-				$message .= '</p>';
-			} elseif ( 'Pending' == $response["PAYMENTINFO_0_PAYMENTSTATUS"] ) {
-				$amount     = urldecode( $response["PAYMENTINFO_0_AMT"] );
+				$message .= sprintf( __( 'Your PayPal Transaction ID is: %s', 'sliced-invoices' ), $payment_id );
+			} elseif ( strtoupper( $response['PAYMENTINFO_0_PAYMENTSTATUS'] ) === 'PENDING' ) {
+				$amount     = urldecode( $response['PAYMENTINFO_0_AMT'] );
 				$payment_id = urldecode( $response['PAYMENTINFO_0_TRANSACTIONID'] );
 				$status     = 'pending';
 				$message .= __( 'Transaction complete, however payment is still pending.', 'sliced-invoices' );
 				$message .= '<br />';
-				$message .= __( 'You need to manually authorize this payment in your <a target="_new" href="http://www.paypal.com">PayPal Account</a>', 'sliced-invoices' );
+				$message .= sprintf(
+					__( 'You need to manually authorize this payment in your <a target="_blank" href="%s">PayPal Account</a>', 'sliced-invoices' ),
+					'http://www.paypal.com'
+				);
 				$message .= '<br />';
-				$message .= __( 'Your PayPal Transaction ID is: ', 'sliced-invoices' ) . $payment_id .'</p>';
-				$message .= '</p>';
+				$message .= sprintf( __( 'Your PayPal Transaction ID is: %s', 'sliced-invoices' ), $payment_id );
 			}
-
+			
+			$message .= '</p>';
 			$message .= '<p>';
-			$message .= '<a href="' . apply_filters( 'sliced_get_the_link', get_permalink($id), $id ) . '">';
+			$message .= '<a href="' . apply_filters( 'sliced_get_the_link', get_permalink( $id ), $id ) . '">';
 			$message .= sprintf( __( 'Click here to return to %s', 'sliced-invoices' ), sliced_get_invoice_label() );
 			$message .= '</a>';
 			$message .= '</p>';
-
+			
 			/**
 			 * Update payment status
 			 */
