@@ -1933,11 +1933,11 @@ class Sliced_Admin {
 								$("#_sliced_client").html(''); // prevents browser freezing when we insert the new content
 								$("#_sliced_client").html(response);
 								tb_remove();
-								$('<span class="updated"><?php _e( 'New Client Successfully Added', 'sliced-invoices' ); ?></span>').insertAfter('select#_sliced_client');
+								$('<span class="updated"><?php esc_attr_e( 'New Client Successfully Added', 'sliced-invoices' ); ?></span>').insertAfter('select#_sliced_client');
 							} else {
 								$('.result-message').addClass('form-invalid error notice notice-error inline');
 								$('.result-message').show();
-								$('.result-message').html('<p><?php _e( 'Please check that all required fields are filled in.', 'sliced-invoices' ); ?></p>');
+								$('.result-message').html( '<p><?php esc_attr_e( 'Please check that all required fields are filled in.', 'sliced-invoices' ); ?></p>' );
 								$('.form-required').addClass('form-invalid');
 							}
 						});
@@ -1977,11 +1977,11 @@ class Sliced_Admin {
 								$("#_sliced_client").html(''); // prevents browser freezing when we insert the new content
 								$("#_sliced_client").html(response);
 								tb_remove();
-								$('<span class="updated"><?php _e( 'New Client Successfully Added', 'sliced-invoices' ); ?></span>').insertAfter('select#_sliced_client');
+								$('<span class="updated"><?php esc_attr_e( 'New Client Successfully Added', 'sliced-invoices' ); ?></span>').insertAfter('select#_sliced_client');
 							} else {
 								$('.result-message').addClass('form-invalid error notice notice-error inline');
 								$('.result-message').show();
-								$('.result-message').html('<p><?php _e( 'Please check that all required fields are filled in, and that this user does not already exist.', 'sliced-invoices' ); ?></p>');
+								$('.result-message').html( '<p><?php esc_attr_e( 'Please check that all required fields are filled in, and that this user does not already exist.', 'sliced-invoices' ); ?></p>' );
 								$('.form-required').addClass('form-invalid');
 							}
 						});
@@ -1995,7 +1995,7 @@ class Sliced_Admin {
 					$('a[href*="sliced-ajax-update-client"]').on('click',function(e){
 						var user_id = $('#_sliced_client.cmb2_select').val();
 						if ( ! user_id > '' ) {
-							alert( '<?php _e( 'No client selected', 'sliced-invoices' ); ?>' );
+							alert( '<?php esc_attr_e( 'No client selected', 'sliced-invoices' ); ?>' );
 							e.preventDefault();
 							e.stopImmediatePropagation();
 							return false;
@@ -2058,11 +2058,11 @@ class Sliced_Admin {
 								$("#_sliced_client").html(''); // prevents browser freezing when we insert the new content
 								$("#_sliced_client").html(response);
 								tb_remove();
-								$('<span class="updated"><?php _e( 'Client successfully updated', 'sliced-invoices' ); ?></span>').insertAfter('select#_sliced_client');
+								$('<span class="updated"><?php esc_attr_e( 'Client successfully updated', 'sliced-invoices' ); ?></span>').insertAfter('select#_sliced_client');
 							} else {
 								$('.result-message').addClass('form-invalid error notice notice-error inline');
 								$('.result-message').show();
-								$('.result-message').html('<p><?php _e( 'Please check that all required fields are filled in.', 'sliced-invoices' ); ?></p>');
+								$('.result-message').html('<p><?php esc_attr_e( 'Please check that all required fields are filled in.', 'sliced-invoices' ); ?></p>');
 								$('.form-required').addClass('form-invalid');
 							}
 						});
