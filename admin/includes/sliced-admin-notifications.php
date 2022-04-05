@@ -449,7 +449,8 @@ class Sliced_Notifications {
 		if( in_array( $type, $this->client_emails ) && $this->settings['bcc'] == 'on' ) {
 			$output .= 'Bcc: ' . $this->settings['from'] . "\r\n";
 		}
-		return $output;
+		
+		return apply_filters( 'sliced_get_email_headers', $output, $this->id, $type );
 	}
 
 
