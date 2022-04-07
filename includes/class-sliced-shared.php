@@ -152,7 +152,7 @@ class Sliced_Shared {
 		if ( ! $id ) {
 			$id = self::get_item_id();
 		}
-		$type = self::get_type();
+		$type = self::get_type( $id );
 		$filename = sanitize_file_name( strtolower( $type . '-' . sliced_get_prefix( $id ) . sliced_get_number( $id ) . sliced_get_suffix( $id ) ) );
 		return apply_filters( 'sliced_get_the_filename', $filename, $id );
 	}
