@@ -588,6 +588,9 @@ class Sliced_Payments {
 		/*
 		 * Do the appropriate action(s) upon quote acceptance
 		 */
+		do_action( 'sliced_invoices_client_before_accept_quote', $id );
+		
+		$new_post_id     = false;
 		$settings_quotes = get_option( 'sliced_quotes' );
 		
 		if (
@@ -635,7 +638,7 @@ class Sliced_Payments {
 		/*
 		 * The following applies to all accepted quote actions, including "do nothing"
 		 */
-		do_action( 'sliced_client_accepted_quote', $id );
+		do_action( 'sliced_client_accepted_quote', $id, $new_post_id );
 		
 		/*
 		 * Create and display the success message

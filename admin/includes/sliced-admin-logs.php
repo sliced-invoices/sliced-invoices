@@ -39,7 +39,7 @@ class Sliced_Logs {
 		// client accepted quote
 		add_action( 'sliced_client_accepted_quote', array( &$this, 'client_accepted_quote' ), 10, 1 );
 		add_action( 'sliced_client_accepted_quote', array( &$this, 'quote_to_invoice' ), 10, 1 );
-		add_action( 'sliced_manual_convert_quote_to_invoice', array( &$this, 'quote_to_invoice' ) );
+		add_action( 'sliced_invoices_admin_after_convert_quote_to_invoice', array( &$this, 'quote_to_invoice' ) );
 
 		// client makes a payment
 		add_action( 'sliced_payment_made', array( &$this, 'payment_made' ), 10, 3 );
