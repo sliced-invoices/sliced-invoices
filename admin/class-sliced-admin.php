@@ -1323,7 +1323,7 @@ class Sliced_Admin {
 		// okay, now do the appropriate tasks...
 		$new_post_id = Sliced_Shared::create_invoice_from_quote( $id );
 		
-		do_action( 'sliced_manual_convert_quote_to_invoice', $id );
+		do_action( 'sliced_manual_create_invoice_from_quote', $id, $new_post_id );
 		
 		// redirect to the edit invoice screen and add query args to display the success message
 		wp_redirect( add_query_arg(

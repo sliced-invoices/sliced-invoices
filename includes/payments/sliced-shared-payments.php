@@ -307,6 +307,18 @@ class Sliced_Payments {
 
 		</div>
 
+		<script type="text/javascript">
+			( function( $ ) {
+				$( document ).ready( function(){
+					
+					$( '.sliced_accept_quote_form_wrap form' ).on( 'submit', function(){
+						$( '#accept-quote' ).prop( 'disabled', true );
+					});
+					
+				});
+			} )( jQuery );
+		</script>
+
 		<?php
 
 	}
@@ -346,17 +358,21 @@ class Sliced_Payments {
 
 		<script type="text/javascript">
 			( function( $ ) {
-				$(document).ready(function(){
-					$('#decline-quote').prop("disabled", true);
-					$('#decline_quote_reason').on("keyup", action);
-
-					function action() {
-					   if($('#decline_quote_reason').val().length > 0) {
-						  $('#decline-quote').prop("disabled", false);
-					   }else {
-						  $('#decline-quote').prop("disabled", true);
-					   }
-					}
+				$( document ).ready( function(){
+					
+					$( '.sliced_decline_quote_form_wrap form' ).on( 'submit', function(){
+						$( '#decline-quote' ).prop( 'disabled', true );
+					});
+					
+					$( '#decline-quote' ).prop( 'disabled', true );
+					$( '#decline_quote_reason' ).on( 'change keyup', function(){
+						if ( $( '#decline_quote_reason' ).val().length > 0 ) {
+							$( '#decline-quote' ).prop( 'disabled', false );
+						} else {
+							$( '#decline-quote' ).prop( 'disabled', true );
+						}
+					});
+					
 				});
 			} )( jQuery );
 		</script>
