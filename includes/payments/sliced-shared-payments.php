@@ -395,7 +395,7 @@ class Sliced_Payments {
 		
 		$error = false;
 		
-		if ( has_term( 'accepted', 'quote_status', $id ) ) {
+		if ( has_term( 'accepted', 'quote_status', $id ) || get_post_type( $id ) === 'sliced_invoice' ) {
 			$error = 'accepted';
 		} elseif ( has_term( 'cancelled', 'quote_status', $id ) ) {
 			$error = 'cancelled';
@@ -513,7 +513,7 @@ class Sliced_Payments {
 		
 		$error = false;
 		
-		if ( has_term( 'accepted', 'quote_status', $id ) ) {
+		if ( has_term( 'accepted', 'quote_status', $id ) || get_post_type( $id ) === 'sliced_invoice' ) {
 			$error = 'already_accepted';
 		} elseif ( has_term( 'cancelled', 'quote_status', $id ) ) {
 			$error = 'cancelled';
@@ -572,186 +572,73 @@ class Sliced_Payments {
 		/*
 		 * Do the appropriate action(s) upon quote acceptance
 		 */
-		$quotes = get_option( 'sliced_quotes' );
-		$invoice = get_option( 'sliced_invoices' );
+		$settings_quotes = get_option( 'sliced_quotes' );
 		
-		if ( $quotes['accepted_quote_action'] === 'convert' || $quotes['accepted_quote_action'] === 'convert_send' || empty( $quotes['accepted_quote_action'] ) ) {
+		if (
+			$settings_quotes['accepted_quote_action'] === 'convert'
+			|| $settings_quotes['accepted_quote_action'] === 'convert_send'
+			|| empty( $settings_quotes['accepted_quote_action'] )
+		) {
 			
-			/*
-			 * Convert
-			 */
-			$new_slug = '';
-			$old_post = get_post( $id );
-			if ( $old_post ) {
-				$new_slug = sanitize_title( $old_post->post_title );
-			}
-			wp_update_post( array(
-				'ID' => $id,
-				'post_type' => 'sliced_invoice',
-				'post_name' => $new_slug,
-				'comment_status' => 'closed',
-			) );
-
-			/*
-			 * Update the appropriate post meta
-			 */
-			$number = sliced_get_next_invoice_number();
-			$payment = sliced_get_accepted_payment_methods();
-			update_post_meta( $id, '_sliced_invoice_terms', $invoice['terms'] );
-			update_post_meta( $id, '_sliced_invoice_created', time() );
-			update_post_meta( $id, '_sliced_invoice_number', $number );
-			update_post_meta( $id, '_sliced_invoice_prefix', sliced_get_invoice_prefix() );
-			update_post_meta( $id, '_sliced_invoice_suffix', sliced_get_invoice_suffix() );
-			update_post_meta( $id, '_sliced_number', sliced_get_invoice_prefix() . $number . sliced_get_invoice_suffix() );
-			update_post_meta( $id, '_sliced_payment_methods', array_keys($payment) );
-
-			delete_post_meta( $id, '_sliced_quote_created' );
-			delete_post_meta( $id, '_sliced_quote_number' );
-			delete_post_meta( $id, '_sliced_quote_prefix' );
-			delete_post_meta( $id, '_sliced_quote_suffix' );
-			delete_post_meta( $id, '_sliced_quote_terms' );
-
-			// update the invoice number
-			Sliced_Invoice::update_invoice_number( $id );
-
-			// Set the status as draft
-			wp_set_object_terms( $id, null, 'quote_status' ); // clear old status
-			Sliced_Invoice::set_as_draft( $id ); // set new status
+			// convert
+			Sliced_Shared::convert_quote_to_invoice( $id );
 			
 			// maybe send it
-			if ( $quotes['accepted_quote_action'] === 'convert_send' ) {
+			if ( $settings_quotes['accepted_quote_action'] === 'convert_send' ) {
 				$sliced_notifications = Sliced_Notifications::get_instance();
 				$sliced_notifications->send_the_invoice( $id );
 			}
-		
-		} elseif ( $quotes['accepted_quote_action'] === 'duplicate' || $quotes['accepted_quote_action'] === 'duplicate_send' ) {
-		
-			/*
-			 * Duplicate
-			 */
-			global $wpdb;
-		 
-			$post = get_post( $id );
-				
-			$args = array(
-				'comment_status' => 'closed',
-				'ping_status'    => $post->ping_status,
-				'post_author'    => $post->post_author,
-				'post_content'   => $post->post_content,
-				'post_excerpt'   => $post->post_excerpt,
-				'post_name'      => $post->post_name,
-				'post_parent'    => $post->post_parent,
-				'post_password'  => $post->post_password,
-				'post_status'    => 'publish',
-				'post_title'     => $post->post_title,
-				'post_type'      => 'sliced_invoice',
-				'to_ping'        => $post->to_ping,
-				'menu_order'     => $post->menu_order
-			);
-	 
-			$new_post_id = wp_insert_post( $args );
-	 
-			/*
-			 * get all current post terms and set them to the new post draft
-			 */
-			$taxonomies = get_object_taxonomies($post->post_type); // returns array of taxonomy names for post type, ex array("category", "post_tag");
-			foreach ($taxonomies as $taxonomy) {
-				$post_terms = wp_get_object_terms($id, $taxonomy, array('fields' => 'slugs'));
-				wp_set_object_terms($new_post_id, $post_terms, $taxonomy, false);
-			}
 			
-			// duplicate all post meta just in two SQL queries
-			$post_metas = $wpdb->get_results(
-				$wpdb->prepare(
-					"SELECT meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id=%d",
-					$id
-				)
-			);
-			if ( $post_metas && count( $post_metas ) ) {
-				$sql_query = "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES ";
-				$sql_values = array();
-				foreach ( $post_metas as $post_meta ) {
-					$meta_key = esc_sql( $post_meta->meta_key );
-					$meta_value = esc_sql( $post_meta->meta_value );
-					$sql_values[]= "($new_post_id, '$meta_key', '$meta_value')";
-				}
-				$sql_query .= implode( ',', $sql_values );
-				$wpdb->query( $sql_query );
-			}
+		} elseif (
+			$settings_quotes['accepted_quote_action'] === 'duplicate'
+			|| $settings_quotes['accepted_quote_action'] === 'duplicate_send'
+		) {
 			
-			/*
-			 * Update the appropriate post meta on the new post
-			 */
-			$number = sliced_get_next_invoice_number();
-			$payment = sliced_get_accepted_payment_methods();
-			update_post_meta( $new_post_id, '_sliced_invoice_terms', $invoice['terms'] );
-			update_post_meta( $new_post_id, '_sliced_invoice_created', time() );
-			update_post_meta( $new_post_id, '_sliced_invoice_number', $number );
-			update_post_meta( $new_post_id, '_sliced_invoice_prefix', sliced_get_invoice_prefix() );
-			update_post_meta( $new_post_id, '_sliced_invoice_suffix', sliced_get_invoice_suffix() );
-			update_post_meta( $new_post_id, '_sliced_number', sliced_get_invoice_prefix() . $number . sliced_get_invoice_suffix() );
-			update_post_meta( $new_post_id, '_sliced_payment_methods', array_keys($payment) );
-
-			delete_post_meta( $new_post_id, '_sliced_quote_created' );
-			delete_post_meta( $new_post_id, '_sliced_quote_number' );
-			delete_post_meta( $new_post_id, '_sliced_quote_prefix' );
-			delete_post_meta( $new_post_id, '_sliced_quote_suffix' );
-			delete_post_meta( $new_post_id, '_sliced_quote_terms' );
-
-			// update the invoice number and set as draft
-			Sliced_Invoice::update_invoice_number( $new_post_id );
-			Sliced_Invoice::set_as_draft( $new_post_id );
+			// duplicate
+			$new_post_id = Sliced_Shared::create_invoice_from_quote( $id );
 			
-			// make the quote as accepted
+			// mark the quote as accepted
 			wp_set_object_terms( $id, 'Accepted', 'quote_status' );
 			update_post_meta( $id, '_sliced_related_invoice_id', $new_post_id );
 			do_action( 'sliced_quote_status_update', $id, 'Accepted' );
 			
 			// maybe send it
-			if ( $quotes['accepted_quote_action'] === 'duplicate_send' ) {
+			if ( $settings_quotes['accepted_quote_action'] === 'duplicate_send' ) {
 				$sliced_notifications = Sliced_Notifications::get_instance();
 				$sliced_notifications->send_the_invoice( $new_post_id );
 			}
-		
+			
 		} else {
-		
-			/*
-			 * Do nothing... except mark as accepted
-			 */
-		
-			// make the quote as accepted
+			
+			// do nothing... just mark as accepted
 			wp_set_object_terms( $id, 'Accepted', 'quote_status' );
 			do_action( 'sliced_quote_status_update', $id, 'Accepted' );
-		
+			
 		}
 		
-
 		/*
 		 * The following applies to all accepted quote actions, including "do nothing"
 		 */
 		do_action( 'sliced_client_accepted_quote', $id );
-
 		
 		/*
 		 * Create and display the success message
 		 */
-		$quotes = get_option( 'sliced_quotes' );
-		if ( isset( $quotes['accepted_quote_message'] ) && $quotes['accepted_quote_message'] > '' ) {
-			$message = wp_kses_post( $quotes['accepted_quote_message'] );
+		if ( isset( $settings_quotes['accepted_quote_message'] ) && $settings_quotes['accepted_quote_message'] > '' ) {
+			$message = wp_kses_post( $settings_quotes['accepted_quote_message'] );
 		} else {
 			$message = '<h2>' . __( 'Success', 'sliced-invoices' ) .'</h2>';
 			$message .= '<p>';
 			$message .= sprintf( __( 'You have accepted the %s.<br>We will be in touch shortly.', 'sliced-invoices' ), sliced_get_quote_label() );
 			$message .= '</p>';
 		}
-
+		
 		$message = apply_filters( 'sliced_convert_quote_success_message', $message, $id );
-
+		
 		sliced_print_message( $id, $message, 'success' );
-
+		
 	}
-
-
+	
 	/**
 	 * Update bits and pieces after payment complete.
 	 *

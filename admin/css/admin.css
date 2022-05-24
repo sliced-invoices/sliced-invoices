@@ -886,7 +886,7 @@ body.post-type-sliced_quote > .select2-container--open {
   width: 120px;
 }
 .sliced .sliced-pdf-button {
-  margin: 0 5px 4px 0;
+  margin: 0 5px 0 0;
   padding: 0 6px 1px;
 }
 .sliced .sliced-email-button {

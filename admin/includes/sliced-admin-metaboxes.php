@@ -441,22 +441,6 @@ class Sliced_Metaboxes {
 
 		if ( isset( $_GET['post'] ) ) :
 
-			$info = new_cmb2_box( array(
-				'id'           => $prefix . 'convert',
-				'title'        => sprintf( __( 'Convert %s', 'sliced-invoices' ), sliced_get_quote_label() ),
-				'object_types' => array( 'sliced_quote' ), // Post type
-				'context'      => 'side',
-				'priority'     => 'default'
-			) );
-			$info->add_field( array(
-				'name'   => '',
-				'desc'   => '',
-				'id'     => $prefix . 'convert_quote',
-				'type'   => 'title',
-				'before' => '',
-				'after'  => array( 'Sliced_Admin', 'get_convert_invoice_button' ),
-			) );
-
 			$this->initiate_logs();
 
 			$info = new_cmb2_box( array(
@@ -919,8 +903,12 @@ class Sliced_Metaboxes {
 	 * @since   3.4.1
 	 */
 	public function add_to_publish_box() {
+		#region add_to_publish_box
 		
-		if ( get_post_status() === 'publish' ):
+		if ( get_post_status() !== 'publish' ) {
+			return;
+		}
+		
 		?>
 		<div class="misc-pub-section sliced-publish-box-buttons">
 			<span class="sliced-publish-box-label dashicons-before dashicons-sliced"> Sliced Invoices: </span>
@@ -931,8 +919,34 @@ class Sliced_Metaboxes {
 			?>
 		</div>
 		<?php
-		endif;
 		
+		$id = sliced_get_the_id();
+		$type = sliced_get_the_type();
+		
+		if ( $type === 'quote' && $id ) {
+			?>
+			<div class="misc-pub-section sliced-publish-box-buttons"><a id="sliced-invoices-convert-quote-to-invoice"
+				class="button ui-tip"
+				href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin.php?action=convert_quote_to_invoice&amp;post=' . $id ), 'convert_' . $id, 'sliced_convert_quote' ) ); ?>"
+				><span class="dashicons dashicons-arrow-right-alt"></span> <?php printf(
+					/* translators: %1s is a placeholder for the localized version of "Quote" (singular). %2s is a placeholder for the localized version of "Invoice" (singular). */
+					__( 'Convert %1s to %2s', 'sliced-invoices' ),
+					sliced_get_quote_label(),
+					sliced_get_invoice_label()
+				); ?></a></div>
+			<div class="misc-pub-section sliced-publish-box-buttons"><a id="sliced-invoices-create-invoice-from-quote"
+				class="button ui-tip"
+				href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin.php?action=create_invoice_from_quote&amp;post=' . $id ), 'create_' . $id, 'sliced_create_invoice' ) ); ?>"
+				><span class="dashicons dashicons-admin-page"></span> <?php printf(
+					/* translators: %1s is a placeholder for the localized version of "Invoice" (singular). %2s is a placeholder for the localized version of "Quote" (singular). */
+					__( 'Create new %1s from %2s', 'sliced-invoices' ),
+					sliced_get_invoice_label(),
+					sliced_get_quote_label()
+				); ?></a></div>
+			<?php
+		}
+		
+		#endregion add_to_publish_box
 	}
 	
 	

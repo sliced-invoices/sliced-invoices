@@ -382,8 +382,18 @@ class Sliced_Admin {
 			)
 		) );
 		wp_localize_script( $this->plugin_name, 'sliced_invoices_i18n', array(
-			/* translators: %1s is a placeholder for the localized version of "quote". %2s is a placeholder for the localized version of "invoice". */
-			'convert_quote'                 => sprintf( __( 'Are you sure you want to convert from %1s to %2s', 'sliced-invoices' ), sliced_get_quote_label(), sliced_get_invoice_label() ),
+			'convert_quote_to_invoice'      => sprintf(
+				/* translators: %1s is a placeholder for the localized version of "quote". %2s is a placeholder for the localized version of "invoice". */
+				__( 'Are you sure you want to convert this %1s to an %2s? This cannot be undone.', 'sliced-invoices' ),
+				sliced_get_quote_label(),
+				sliced_get_invoice_label()
+			),
+			'create_invoice_from_quote'     => sprintf(
+				/* translators: %1s is a placeholder for the localized version of "invoice". %2s is a placeholder for the localized version of "quote". */
+				__( 'Are you sure you want to create a new %1s from this %2s?', 'sliced-invoices' ),
+				sliced_get_invoice_label(),
+				sliced_get_quote_label()
+			),
 			'datepicker_clear'              => __( 'Clear', 'sliced-invoices' ),
 			'datepicker_close'              => __( 'Close', 'sliced-invoices' ),
 			'datepicker_dateFormat'         => $this->dateformat_PHP_to_jQueryUI( get_option( 'date_format' ) ),
@@ -935,14 +945,36 @@ class Sliced_Admin {
 				<p>' . __( 'Email was sent successfully.', 'sliced-invoices' ) . '</p>
 			</div>';
 		}
+		
 		/*
 		 * Converted quote to invoice notice
 		 */
-		if ( $pagenow == 'post.php' && isset($_GET['converted']) && $_GET['converted'] == 'invoice' ) {
+		if ( $pagenow === 'post.php' && isset( $_GET['converted'] ) && $_GET['converted'] === 'invoice' ) {
 			echo '<div class="updated">
-				<p>' . sprintf( __( 'Successfully converted %1s to %2s', 'sliced-invoices' ), sliced_get_quote_label(), sliced_get_invoice_label() ) . '</p>
+				<p>' . sprintf(
+					/* translators: %1s is a placeholder for the localized version of "quote". %2s is a placeholder for the localized version of "invoice". */
+					__( 'Successfully converted %1s to %2s', 'sliced-invoices' ),
+					sliced_get_quote_label(),
+					sliced_get_invoice_label()
+				) . '</p>
 			</div>';
 		}
+		
+		/*
+		 * Created new invoice from quote notice
+		 */
+		if ( $pagenow === 'post.php' && isset( $_GET['created_invoice_from'] ) && $_GET['created_invoice_from'] ) {
+			// $quote_id = intval( $_GET['created_invoice_from'] );
+			echo '<div class="updated">
+				<p>' . sprintf(
+					/* translators: %1s is a placeholder for the localized version of "invoice". %2s is a placeholder for the localized version of "quote". */
+					__( 'Successfully created new %1s from %2s', 'sliced-invoices' ),
+					sliced_get_invoice_label(),
+					sliced_get_quote_label()
+				) . '</p>
+			</div>';
+		}
+		
 		/*
 		 * Possible not compatible notices
 		 */
@@ -1097,33 +1129,6 @@ class Sliced_Admin {
 
 
 	/**
-	 * Convert from quote to invoice button.
-	 *
-	 * @since 	2.0.0
-	 */
-	public static function get_convert_invoice_button() {
-
-		// Only show in quotes
-		$type = sliced_get_the_type();
-		if ( $type !== 'quote' ) {
-			return;
-		}
-		
-		$id = sliced_get_the_id();
-		if ( ! $id ) {
-			return;
-		}
-
-		$output = admin_url( 'admin.php?action=convert_quote_to_invoice&amp;post=' . $id );
-
-		$button = '<a id="convert_quote" title="' . sprintf( __( 'Convert %1s to %2s', 'sliced-invoices' ), sliced_get_quote_label(), sliced_get_invoice_label() ) . '" class="button ui-tip" href="' . esc_url( wp_nonce_url( $output, 'convert', 'sliced_convert_quote' ) ) . '"><span class="dashicons dashicons-controls-repeat"></span> ' . sprintf( __( 'Convert to %s', 'sliced-invoices' ), sliced_get_invoice_label() ) . '</a>';
-
-		return $button;
-
-	}
-
-
-	/**
 	 * Work out the date format
 	 *
 	 * @since   2.0.0
@@ -1243,182 +1248,96 @@ class Sliced_Admin {
 
 
 	/**
-	 * Convert from quote to invoice action.
+	 * Handle admin "convert from quote to invoice" action.
 	 *
-	 * @version 3.8.17
-	 * @since 	2.0.0
+	 * @version 3.9.0
+	 * @since   2.0.0
 	 */
 	public function convert_quote_to_invoice() {
-
-		global $wpdb;
 		
 		// get original post ID
-		$id = isset( $_REQUEST['post'] ) ? intval( sanitize_text_field( $_REQUEST['post'] ) ) : false;
+		$id = isset( $_REQUEST['post'] ) ? intval( $_REQUEST['post'] ) : false;
 		if ( ! $id ) {
-			wp_die( 'No quote or invoice to convert!' );
+			wp_die( __( 'Error: quote not found.', 'sliced-invoices' ) );
 		}
 		
 		// verify the nonce
-		$nonce = isset( $_REQUEST['sliced_convert_quote'] ) ? $_REQUEST['sliced_convert_quote'] : false;
-		if ( ! wp_verify_nonce( $nonce, 'convert' ) ) {
-			wp_die( 'The link you followed has expired.' );
+		if (
+			! isset( $_REQUEST['sliced_convert_quote'] )
+			|| ! wp_verify_nonce( $_REQUEST['sliced_convert_quote'], 'convert_' . $id )
+		) {
+			wp_die( __( 'The link you followed has expired.', 'sliced-invoices' ) );
 		}
 		
 		// get the original post, verify it is a quote
 		$post = get_post( $id );
 		if ( ! $post || ! $post->post_type === 'sliced_quote' ) {
-			wp_die( 'Creation failed, could not find original quote: ' . $id );
+			wp_die( __( 'Error: quote not found.', 'sliced-invoices' ) );
 		}
 		
+		// okay, now do the appropriate tasks...
+		Sliced_Shared::convert_quote_to_invoice( $id );
 		
-		/*
-		 * Do the appropriate action(s) upon quote acceptance
-		 */
-		$quotes = get_option( 'sliced_quotes' );
-		$invoice = get_option( 'sliced_invoices' );
-		$new_post_id = false;
-		
-		if ( $quotes['accepted_quote_action'] === 'convert' || $quotes['accepted_quote_action'] === 'convert_send' || empty( $quotes['accepted_quote_action'] ) || ( isset( $_REQUEST['action'] ) && 'convert_quote_to_invoice' == $_REQUEST['action'] ) ) {
-			
-			/*
-			 * Convert
-			 */
-			$new_slug = '';
-			$old_post = get_post( $id );
-			if ( $old_post ) {
-				$new_slug = sanitize_title( $old_post->post_title );
-			}
-			wp_update_post( array(
-				'ID' => $id,
-				'post_type' => 'sliced_invoice',
-				'post_name' => $new_slug,
-				'comment_status' => 'closed',
-			) );
-
-			/*
-			 * Update the appropriate post meta
-			 */
-			$number = sliced_get_next_invoice_number();
-			$payment = sliced_get_accepted_payment_methods();
-			update_post_meta( $id, '_sliced_invoice_terms', $invoice['terms'] );
-			update_post_meta( $id, '_sliced_invoice_created', time() );
-			update_post_meta( $id, '_sliced_invoice_number', $number );
-			update_post_meta( $id, '_sliced_invoice_prefix', sliced_get_invoice_prefix() );
-			update_post_meta( $id, '_sliced_invoice_suffix', sliced_get_invoice_suffix() );
-			update_post_meta( $id, '_sliced_number', sliced_get_invoice_prefix() . $number . sliced_get_invoice_suffix() );
-			update_post_meta( $id, '_sliced_payment_methods', array_keys($payment) );
-
-			delete_post_meta( $id, '_sliced_quote_created' );
-			delete_post_meta( $id, '_sliced_quote_number' );
-			delete_post_meta( $id, '_sliced_quote_prefix' );
-			delete_post_meta( $id, '_sliced_quote_suffix' );
-			delete_post_meta( $id, '_sliced_quote_terms' );
-
-			// update the invoice number
-			Sliced_Invoice::update_invoice_number( $id );
-
-			// Set the status as draft
-			wp_set_object_terms( $id, null, 'quote_status' ); // clear old status
-			Sliced_Invoice::set_as_draft( $id ); // set new status
-		
-		} elseif ( $quotes['accepted_quote_action'] === 'duplicate' || $quotes['accepted_quote_action'] === 'duplicate_send' ) {
-		
-			/*
-			 * Duplicate
-			 */
-		 
-			$post = get_post( $id );
-				
-			$args = array(
-				'comment_status' => 'closed',
-				'ping_status'    => $post->ping_status,
-				'post_author'    => $post->post_author,
-				'post_content'   => $post->post_content,
-				'post_excerpt'   => $post->post_excerpt,
-				'post_name'      => $post->post_name,
-				'post_parent'    => $post->post_parent,
-				'post_password'  => $post->post_password,
-				'post_status'    => 'publish',
-				'post_title'     => $post->post_title,
-				'post_type'      => 'sliced_invoice',
-				'to_ping'        => $post->to_ping,
-				'menu_order'     => $post->menu_order
-			);
-	 
-			$new_post_id = wp_insert_post( $args );
-	 
-			/*
-			 * get all current post terms and set them to the new post draft
-			 */
-			$taxonomies = get_object_taxonomies($post->post_type); // returns array of taxonomy names for post type, ex array("category", "post_tag");
-			foreach ($taxonomies as $taxonomy) {
-				$post_terms = wp_get_object_terms($id, $taxonomy, array('fields' => 'slugs'));
-				wp_set_object_terms($new_post_id, $post_terms, $taxonomy, false);
-			}
-			
-			// duplicate post metas
-			$post_metas = $wpdb->get_results(
-				$wpdb->prepare(
-					"SELECT meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id=%d",
-					$id
-				)
-			);
-			if ( $post_metas && count( $post_metas ) ) {
-				$sql_query = "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES ";
-				$sql_values = array();
-				foreach ( $post_metas as $post_meta ) {
-					$meta_key = esc_sql( $post_meta->meta_key );
-					$meta_value = esc_sql( $post_meta->meta_value );
-					$sql_values[]= "($new_post_id, '$meta_key', '$meta_value')";
-				}
-				$sql_query .= implode( ',', $sql_values );
-				$wpdb->query( $sql_query );
-			}
-			
-			/*
-			 * Update the appropriate post meta on the new post
-			 */
-			$number = sliced_get_next_invoice_number();
-			$payment = sliced_get_accepted_payment_methods();
-			update_post_meta( $new_post_id, '_sliced_invoice_terms', $invoice['terms'] );
-			update_post_meta( $new_post_id, '_sliced_invoice_created', time() );
-			update_post_meta( $new_post_id, '_sliced_invoice_number', $number );
-			update_post_meta( $new_post_id, '_sliced_invoice_prefix', sliced_get_invoice_prefix() );
-			update_post_meta( $new_post_id, '_sliced_invoice_suffix', sliced_get_invoice_suffix() );
-			update_post_meta( $new_post_id, '_sliced_number', sliced_get_invoice_prefix() . $number . sliced_get_invoice_suffix() );
-			update_post_meta( $new_post_id, '_sliced_payment_methods', array_keys($payment) );
-
-			delete_post_meta( $new_post_id, '_sliced_quote_created' );
-			delete_post_meta( $new_post_id, '_sliced_quote_number' );
-			delete_post_meta( $new_post_id, '_sliced_quote_prefix' );
-			delete_post_meta( $new_post_id, '_sliced_quote_suffix' );
-			delete_post_meta( $new_post_id, '_sliced_quote_terms' );
-
-			// update the invoice number and set as draft
-			Sliced_Invoice::update_invoice_number( $new_post_id );
-			Sliced_Invoice::set_as_draft( $new_post_id );
-		
-		}
-		
-		
-		/*
-		 * The following applies to all accepted quote actions, including "do nothing"
-		 */
 		do_action( 'sliced_manual_convert_quote_to_invoice', $id );
 		
-
-		/*
-		 * redirect to the edit invoice screen and add query args to display the success message
-		 */
-		$redirect = add_query_arg( array( 'post' => ( $new_post_id ? $new_post_id : $id ), 'action' => 'edit', 'converted' => 'invoice' ), admin_url( 'post.php' ) );
-		wp_redirect( $redirect );
-
+		// redirect to the edit invoice screen and add query args to display the success message
+		wp_redirect( add_query_arg(
+			array(
+				'post'      => $id,
+				'action'    => 'edit',
+				'converted' => 'invoice',
+			),
+			admin_url( 'post.php' )
+		) );
 		exit;
-
+		
 	}
-
-
-
+	
+	/**
+	 * Handle admin "create invoice from quote" action.
+	 *
+	 * @since   3.9.0
+	 */
+	public function create_invoice_from_quote() {
+		
+		// get original post ID
+		$id = isset( $_REQUEST['post'] ) ? intval( $_REQUEST['post'] ) : false;
+		if ( ! $id ) {
+			wp_die( __( 'Error: quote not found.', 'sliced-invoices' ) );
+		}
+		
+		// verify the nonce
+		if (
+			! isset( $_REQUEST['sliced_create_invoice'] )
+			|| ! wp_verify_nonce( $_REQUEST['sliced_create_invoice'], 'create_' . $id )
+		) {
+			wp_die( __( 'The link you followed has expired.', 'sliced-invoices' ) );
+		}
+		
+		// get the original post, verify it is a quote
+		$post = get_post( $id );
+		if ( ! $post || ! $post->post_type === 'sliced_quote' ) {
+			wp_die( __( 'Error: quote not found.', 'sliced-invoices' ) );
+		}
+		
+		// okay, now do the appropriate tasks...
+		$new_post_id = Sliced_Shared::create_invoice_from_quote( $id );
+		
+		do_action( 'sliced_manual_convert_quote_to_invoice', $id );
+		
+		// redirect to the edit invoice screen and add query args to display the success message
+		wp_redirect( add_query_arg(
+			array(
+				'post'                 => $new_post_id,
+				'action'               => 'edit',
+				'created_invoice_from' => $id,
+			),
+			admin_url( 'post.php' )
+		) );
+		exit;
+		
+	}
+	
 	/**
 	 * Mark an invoice as overdue if it has unpaid as it's status.
 	 *

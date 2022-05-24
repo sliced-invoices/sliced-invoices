@@ -221,6 +221,7 @@ class Sliced_Invoices {
 		$this->loader->add_action( 'load-edit.php', $plugin_admin, 'export_csv' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'export_csv_full' );
 		$this->loader->add_filter( 'admin_action_convert_quote_to_invoice', $plugin_admin, 'convert_quote_to_invoice' );
+		$this->loader->add_filter( 'admin_action_create_invoice_from_quote', $plugin_admin, 'create_invoice_from_quote' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'set_published_date_as_created' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'set_number_for_search' );
 

@@ -2233,8 +2233,130 @@ class Sliced_Shared {
 		return ( $options );
 		
 	}
-
-
-
-
+	
+	/**
+	 * Convert a quote to an invoice.
+	 *
+	 * @since  3.9.0
+	 */
+	public static function convert_quote_to_invoice( $id ) {
+		
+		$settings_invoices = get_option( 'sliced_invoices' );
+		
+		// convert
+		$new_slug = '';
+		$old_post = get_post( $id );
+		if ( $old_post ) {
+			$new_slug = sanitize_title( $old_post->post_title );
+		}
+		wp_update_post( array(
+			'ID'             => $id,
+			'post_type'      => 'sliced_invoice',
+			'post_name'      => $new_slug,
+			'comment_status' => 'closed',
+		) );
+		
+		// update the appropriate post meta
+		$number  = sliced_get_next_invoice_number();
+		$payment = sliced_get_accepted_payment_methods();
+		update_post_meta( $id, '_sliced_invoice_terms', $settings_invoices['terms'] );
+		update_post_meta( $id, '_sliced_invoice_created', time() );
+		update_post_meta( $id, '_sliced_invoice_number', $number );
+		update_post_meta( $id, '_sliced_invoice_prefix', sliced_get_invoice_prefix() );
+		update_post_meta( $id, '_sliced_invoice_suffix', sliced_get_invoice_suffix() );
+		update_post_meta( $id, '_sliced_number', sliced_get_invoice_prefix() . $number . sliced_get_invoice_suffix() );
+		update_post_meta( $id, '_sliced_payment_methods', array_keys( $payment ) );
+		delete_post_meta( $id, '_sliced_quote_created' );
+		delete_post_meta( $id, '_sliced_quote_number' );
+		delete_post_meta( $id, '_sliced_quote_prefix' );
+		delete_post_meta( $id, '_sliced_quote_suffix' );
+		delete_post_meta( $id, '_sliced_quote_terms' );
+		
+		// update the invoice number
+		Sliced_Invoice::update_invoice_number( $id );
+		
+		// set the status as draft
+		wp_set_object_terms( $id, null, 'quote_status' ); // clear old status
+		Sliced_Invoice::set_as_draft( $id ); // set new status
+		
+	}
+	
+	/**
+	 * Create a new invoice from a quote.
+	 *
+	 * @since 	3.9.0
+	 */
+	public static function create_invoice_from_quote( $id ) {
+		global $wpdb;
+		
+		$settings_invoices = get_option( 'sliced_invoices' );
+		
+		// duplicate post
+		$post = get_post( $id );
+		$args = array(
+			'comment_status' => 'closed',
+			'ping_status'    => $post->ping_status,
+			'post_author'    => $post->post_author,
+			'post_content'   => $post->post_content,
+			'post_excerpt'   => $post->post_excerpt,
+			'post_name'      => $post->post_name,
+			'post_parent'    => $post->post_parent,
+			'post_password'  => $post->post_password,
+			'post_status'    => 'publish',
+			'post_title'     => $post->post_title,
+			'post_type'      => 'sliced_invoice',
+			'to_ping'        => $post->to_ping,
+			'menu_order'     => $post->menu_order
+		);
+		$new_post_id = wp_insert_post( $args );
+		
+		// get all current post terms and set them to the new post draft
+		$taxonomies = get_object_taxonomies( $post->post_type );
+		foreach ( $taxonomies as $taxonomy ) {
+			$post_terms = wp_get_object_terms( $id, $taxonomy, array( 'fields' => 'slugs' ) );
+			wp_set_object_terms( $new_post_id, $post_terms, $taxonomy, false );
+		}
+		
+		// duplicate post metas
+		$post_metas = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id=%d",
+				$id
+			)
+		);
+		if ( $post_metas && count( $post_metas ) ) {
+			$sql_query = "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) VALUES ";
+			$sql_values = array();
+			foreach ( $post_metas as $post_meta ) {
+				$meta_key = esc_sql( $post_meta->meta_key );
+				$meta_value = esc_sql( $post_meta->meta_value );
+				$sql_values[]= "($new_post_id, '$meta_key', '$meta_value')";
+			}
+			$sql_query .= implode( ',', $sql_values );
+			$wpdb->query( $sql_query );
+		}
+		
+		// update the appropriate post meta on the new post
+		$number  = sliced_get_next_invoice_number();
+		$payment = sliced_get_accepted_payment_methods();
+		update_post_meta( $new_post_id, '_sliced_invoice_terms', $settings_invoices['terms'] );
+		update_post_meta( $new_post_id, '_sliced_invoice_created', time() );
+		update_post_meta( $new_post_id, '_sliced_invoice_number', $number );
+		update_post_meta( $new_post_id, '_sliced_invoice_prefix', sliced_get_invoice_prefix() );
+		update_post_meta( $new_post_id, '_sliced_invoice_suffix', sliced_get_invoice_suffix() );
+		update_post_meta( $new_post_id, '_sliced_number', sliced_get_invoice_prefix() . $number . sliced_get_invoice_suffix() );
+		update_post_meta( $new_post_id, '_sliced_payment_methods', array_keys( $payment ) );
+		delete_post_meta( $new_post_id, '_sliced_quote_created' );
+		delete_post_meta( $new_post_id, '_sliced_quote_number' );
+		delete_post_meta( $new_post_id, '_sliced_quote_prefix' );
+		delete_post_meta( $new_post_id, '_sliced_quote_suffix' );
+		delete_post_meta( $new_post_id, '_sliced_quote_terms' );
+		
+		// update the invoice number and set as draft
+		Sliced_Invoice::update_invoice_number( $new_post_id );
+		Sliced_Invoice::set_as_draft( $new_post_id );
+		
+		return $new_post_id;
+	}
+	
 }

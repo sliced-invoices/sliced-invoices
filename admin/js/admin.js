@@ -705,19 +705,21 @@
 
     });
 
-    /**
-     * convert quote confirm
-     */
+	/**
+	 * special actions for quotes
+	 */
     $(function(){
-
-        $( "#convert_quote" ).click(function() {
-            if( ! confirm( sliced_invoices_i18n.convert_quote ) ) {
-                return false;
-            }
-        });
-
+		
+		$( '#sliced-invoices-convert-quote-to-invoice' ).click( function(){
+			return confirm( sliced_invoices_i18n.convert_quote_to_invoice );
+		});
+		
+		$( '#sliced-invoices-create-invoice-from-quote' ).click( function(){
+			return confirm( sliced_invoices_i18n.create_invoice_from_quote );
+		});
+		
     });
-
+	
     /**
      * stop recurring confirm
      */
