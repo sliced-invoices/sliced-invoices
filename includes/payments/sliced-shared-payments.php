@@ -293,7 +293,7 @@ class Sliced_Payments {
 				<form method="POST" action="<?php echo esc_url( get_permalink( (int)$payments['payment_page'] ) ) ?>">
 					<?php do_action( 'sliced_before_accept_quote_form_fields' ) ?>
 
-					<?php wp_nonce_field( 'sliced_invoices_accept_quote', 'sliced_client_accept_quote_nonce' ); ?>
+					<?php wp_nonce_field( 'sliced_invoices_accept_quote_' . get_the_ID(), 'sliced_client_accept_quote_nonce' ); ?>
 					<input type="hidden" name="sliced_accept_quote_id" id="sliced_accept_quote_id" value="<?php the_ID(); ?>">
 					<input type="submit" name="accept-quote" class="btn btn-success btn-lg" id="accept-quote" value="<?php printf( esc_html__( 'Accept %s', 'sliced-invoices' ), sliced_get_quote_label() ); ?>">
 
@@ -328,7 +328,7 @@ class Sliced_Payments {
 				<form method="POST" action="<?php echo esc_url( get_permalink( (int)$payments['payment_page'] ) ) ?>">
 					<?php do_action( 'sliced_before_decline_quote_form_fields' ) ?>
 
-					<?php wp_nonce_field( 'sliced_invoices_decline_quote', 'sliced_decline_quote_nonce' ); ?>
+					<?php wp_nonce_field( 'sliced_invoices_decline_quote_' . get_the_ID(), 'sliced_decline_quote_nonce' ); ?>
 
 					<input type="hidden" name="sliced_decline_quote_id" id="sliced_decline_quote_id" value="<?php the_ID(); ?>">
 					<p><?php _e( 'Reason for declining', 'sliced-invoices' ); ?><span class="sliced_form_field_required">*</span></p>
@@ -366,26 +366,91 @@ class Sliced_Payments {
 	}
 
 	/**
-	 * Decline the quote action..
+	 * Handle actions when client declines quote from frontend.
 	 *
+	 * @version 3.9.0
 	 * @since   2.0.0
 	 */
 	public function client_decline_quote() {
-
+		
 		/*
 		 * Do the checks
 		 */
-		if ( ! isset( $_POST['decline-quote'] ) )
+		if ( ! isset( $_POST['sliced_decline_quote_nonce'] ) ) {
 			return;
-
-		if ( ! isset( $_POST['sliced_decline_quote_id'] ) )
+		}
+		
+		if ( ! isset( $_POST['sliced_decline_quote_id'] ) ) {
 			return;
-
-		$id = intval( sanitize_text_field( $_POST['sliced_decline_quote_id'] ) );
-
-		if ( ! isset( $_POST['sliced_decline_quote_nonce'] ) || ! wp_verify_nonce( $_POST['sliced_decline_quote_nonce'], 'sliced_invoices_decline_quote') )
-			wp_die( "Ooops, something went wrong, please try again later." );
-
+		}
+		
+		$id = intval( $_POST['sliced_decline_quote_id'] );
+		
+		if ( 
+			! $id 
+			|| ! wp_verify_nonce( $_POST['sliced_decline_quote_nonce'], 'sliced_invoices_decline_quote_' . $id )
+		) {
+			wp_die( __( 'Oops, something went wrong, please try again later.', 'sliced-invoices' ) );
+		}
+		
+		$error = false;
+		
+		if ( has_term( 'accepted', 'quote_status', $id ) ) {
+			$error = 'accepted';
+		} elseif ( has_term( 'cancelled', 'quote_status', $id ) ) {
+			$error = 'cancelled';
+		} elseif ( has_term( 'declined', 'quote_status', $id ) ) {
+			$error = 'already_declined';
+		} elseif ( has_term( 'expired', 'quote_status', $id ) ) {
+			$error = 'expired';
+		}
+		
+		if ( $error ) {
+			$message = '<h2>' . __( 'Error', 'sliced-invoices' ) .'</h2>';
+			$message .= '<p>';
+			switch ( $error ) {
+				case 'accepted':
+					$message .= sprintf(
+						/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+						__( 'Sorry, this %s was already accepted. Please contact us for assistance.', 'sliced-invoices' ),
+						sliced_get_quote_label()
+					);
+					break;
+				case 'cancelled':
+					$message .= sprintf(
+						/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+						__( 'Sorry, this %s was cancelled. Please contact us for assistance.', 'sliced-invoices' ),
+						sliced_get_quote_label()
+					);
+					break;
+				case 'already_declined':
+					$message .= sprintf(
+						/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+						__( 'This %s has already been declined.', 'sliced-invoices' ),
+						sliced_get_quote_label()
+					);
+					break;
+				case 'expired':
+					$message .= sprintf(
+						/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+						__( 'Sorry, this %s has expired. Please contact us for assistance.', 'sliced-invoices' ),
+						sliced_get_quote_label()
+					);
+					break;
+			}
+			$message .= '<br />';
+			$message .= sprintf( '<a href="%s">', esc_url( sliced_get_the_link( $id ) ) );
+			$message .= sprintf(
+				/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+				__( 'Go back to %s', 'sliced-invoices' ),
+				sliced_get_quote_label()
+			);
+			$message .= '</a>';
+			$message .= '</p>';
+			sliced_print_message( $id, $message, 'error' );
+			return;
+		}
+		
 		/*
 		 * Add the reason to the database
 		 */
@@ -408,7 +473,7 @@ class Sliced_Payments {
 		} else {
 			$message = '<h2>' . __( 'Bummer', 'sliced-invoices' ) .'</h2>';
 			$message .= '<p>';
-			$message .= sprintf( wp_kses_post( 'You have declined the %s.<br>We will be in touch shortly.', 'sliced-invoices' ), sliced_get_quote_label() );
+			$message .= sprintf( __( 'You have declined the %s.<br>We will be in touch shortly.', 'sliced-invoices' ), sliced_get_quote_label() );
 			$message .= '</p>';
 		}
 
@@ -417,32 +482,92 @@ class Sliced_Payments {
 		sliced_print_message( $id, $message, 'failed' );
 
 	}
-
+	
 	/**
-	 * Convert from quote to invoice action, on the front end.
+	 * Handle actions when client accepts quote from frontend.
 	 *
-	 * @version 3.8.17
+	 * @version 3.9.0
 	 * @since   2.0.0
 	 */
 	public function client_accept_quote() {
-
+		
 		/*
 		 * Do the checks
 		 */
-		if ( ! isset( $_POST['accept-quote'] ) ) {
+		if ( ! isset( $_POST['sliced_client_accept_quote_nonce'] ) ) {
 			return;
 		}
-
+		
 		if ( ! isset( $_POST['sliced_accept_quote_id'] ) ) {
 			return;
 		}
-
-		$id = intval( sanitize_text_field( $_POST['sliced_accept_quote_id'] ) );
-
-		if ( ! isset( $_POST['sliced_client_accept_quote_nonce'] ) || ! wp_verify_nonce( $_POST['sliced_client_accept_quote_nonce'], 'sliced_invoices_accept_quote') ) {
-			wp_die( "Ooops, something went wrong, please try again later." );
+		
+		$id = intval( $_POST['sliced_accept_quote_id'] );
+		
+		if ( 
+			! $id 
+			|| ! wp_verify_nonce( $_POST['sliced_client_accept_quote_nonce'], 'sliced_invoices_accept_quote_' . $id )
+		) {
+			wp_die( __( 'Oops, something went wrong, please try again later.', 'sliced-invoices' ) );
 		}
 		
+		$error = false;
+		
+		if ( has_term( 'accepted', 'quote_status', $id ) ) {
+			$error = 'already_accepted';
+		} elseif ( has_term( 'cancelled', 'quote_status', $id ) ) {
+			$error = 'cancelled';
+		} elseif ( has_term( 'declined', 'quote_status', $id ) ) {
+			$error = 'declined';
+		} elseif ( has_term( 'expired', 'quote_status', $id ) ) {
+			$error = 'expired';
+		}
+		
+		if ( $error ) {
+			$message = '<h2>' . __( 'Error', 'sliced-invoices' ) .'</h2>';
+			$message .= '<p>';
+			switch ( $error ) {
+				case 'already_accepted':
+					$message .= sprintf(
+						/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+						__( 'This %s has already been accepted.', 'sliced-invoices' ),
+						sliced_get_quote_label()
+					);
+					break;
+				case 'cancelled':
+					$message .= sprintf(
+						/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+						__( 'Sorry, this %s was cancelled. Please contact us for assistance.', 'sliced-invoices' ),
+						sliced_get_quote_label()
+					);
+					break;
+				case 'declined':
+					$message .= sprintf(
+						/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+						__( 'Sorry, this %s was declined. Please contact us for assistance.', 'sliced-invoices' ),
+						sliced_get_quote_label()
+					);
+					break;
+				case 'expired':
+					$message .= sprintf(
+						/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+						__( 'Sorry, this %s has expired. Please contact us for assistance.', 'sliced-invoices' ),
+						sliced_get_quote_label()
+					);
+					break;
+			}
+			$message .= '<br />';
+			$message .= sprintf( '<a href="%s">', esc_url( sliced_get_the_link( $id ) ) );
+			$message .= sprintf(
+				/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+				__( 'Go back to %s', 'sliced-invoices' ),
+				sliced_get_quote_label()
+			);
+			$message .= '</a>';
+			$message .= '</p>';
+			sliced_print_message( $id, $message, 'error' );
+			return;
+		}
 		
 		/*
 		 * Do the appropriate action(s) upon quote acceptance
@@ -616,7 +741,7 @@ class Sliced_Payments {
 		} else {
 			$message = '<h2>' . __( 'Success', 'sliced-invoices' ) .'</h2>';
 			$message .= '<p>';
-			$message .= sprintf( wp_kses_post( 'You have accepted the %s.<br>We will be in touch shortly.', 'sliced-invoices' ), sliced_get_quote_label() );
+			$message .= sprintf( __( 'You have accepted the %s.<br>We will be in touch shortly.', 'sliced-invoices' ), sliced_get_quote_label() );
 			$message .= '</p>';
 		}
 
