@@ -27,19 +27,22 @@ function sliced_get_gateway_paypal_label() {
  * The Class.
  */
 class Sliced_Paypal {
-
+	
+	/** @var string Unique prefix for this gateway */
+	protected $prefix = 'sliced-paypal';
 
 	/**
 	 * Hook into the appropriate actions when the class is constructed.
 	 */
 	public function __construct() {
 		
-		add_filter( 'sliced_payment_option_fields', array( $this, 'add_options_fields') );
-		add_filter( 'sliced_register_payment_method', array( $this, 'add_payment_method') );
-		add_action( 'sliced_do_payment', array( $this, 'process_payment') );
-		add_action( 'sliced_do_payment', array( $this, 'payment_return'), 10 );
+		add_action( 'admin_head', array( $this, 'admin_inline_css' ) );
+		add_filter( 'sliced_payment_option_fields', array( $this, 'add_options_fields' ) );
+		add_filter( 'sliced_register_payment_method', array( $this, 'add_payment_method' ) );
+		add_action( 'sliced_do_payment', array( $this, 'process_payment' ) );
+		add_action( 'sliced_do_payment', array( $this, 'payment_return' ), 10 );
 		add_action( 'http_api_curl', array( $this, 'http_api_curl' ), 10, 3 );
-
+		
 	}
 
 
@@ -50,8 +53,14 @@ class Sliced_Paypal {
 	 * @since   2.0.0
 	 */
 	public function add_options_fields( $options ) {
-
-		// add fields to end of options array
+		
+		$options['fields'][] = array(
+			'name'       => __( 'Enable', 'sliced-invoices' ),
+			'desc'       => '',
+			'type'       => 'checkbox',
+			'id'         => 'paypal_enabled',
+			'before_row' => array( $this, 'settings_group_before' ),
+		);
 		$options['fields'][] = array(
 			'name'    => __( 'PayPal Currency', 'sliced-invoices' ),
 			'desc'    => sprintf( 
@@ -63,39 +72,57 @@ class Sliced_Paypal {
 			'type'    => 'text',
 			'id'      => 'paypal_currency',
 		);
-
 		$options['fields'][] = array(
-			'name' => __( 'PayPal API Username', 'sliced-invoices' ),
-			'desc' => __( 'You will find your API Username under "Profile" and then "Request API credentials".' , 'sliced-invoices' ),
+			'name' => __( 'LIVE API Username', 'sliced-invoices' ),
+			'desc' => __( 'The API Username from your live PayPal account, found under "Account Settings" / "API access" / "NVP/SOAP API integration" / "Manage API credentials".' , 'sliced-invoices' ),
 			'type' => 'text',
 			'id'   => 'paypal_username',
 		);
 		$options['fields'][] = array(
-			'name' => __( 'PayPal API Password', 'sliced-invoices' ),
-			'desc' => __( 'You will find your API Password under "Profile" and then "Request API credentials".' , 'sliced-invoices' ),
+			'name' => __( 'LIVE API Password', 'sliced-invoices' ),
+			'desc' => __( 'The API Password from your live PayPal account, found under "Account Settings" / "API access" / "NVP/SOAP API integration" / "Manage API credentials".' , 'sliced-invoices' ),
 			'type' => 'text',
 			'id'   => 'paypal_password',
 		);
 		$options['fields'][] = array(
-			'name' => __( 'PayPal Signature', 'sliced-invoices' ),
-			'desc' => __( 'You will find your Signature under "Profile" and then "Request API credentials".' , 'sliced-invoices' ),
+			'name' => __( 'LIVE API Signature', 'sliced-invoices' ),
+			'desc' => __( 'The API Signature from your live PayPal account, found under "Account Settings" / "API access" / "NVP/SOAP API integration" / "Manage API credentials".' , 'sliced-invoices' ),
 			'type' => 'text',
 			'id'   => 'paypal_signature',
 		);
 		$options['fields'][] = array(
-			'name'    => __( 'PayPal Mode', 'sliced-invoices' ),
-			'desc'    => sprintf(
+			'name' => __( 'SANDBOX API Username', 'sliced-invoices' ),
+			'desc' => __( 'The API Username from your sandbox PayPal account, found under "Account Settings" / "API access" / "NVP/SOAP API integration" / "Manage API credentials".' , 'sliced-invoices' ),
+			'type' => 'text',
+			'id'   => 'paypal_username_sandbox',
+		);
+		$options['fields'][] = array(
+			'name' => __( 'SANDBOX API Password', 'sliced-invoices' ),
+			'desc' => __( 'The API Password from your sandbox PayPal account, found under "Account Settings" / "API access" / "NVP/SOAP API integration" / "Manage API credentials".' , 'sliced-invoices' ),
+			'type' => 'text',
+			'id'   => 'paypal_password_sandbox',
+		);
+		$options['fields'][] = array(
+			'name' => __( 'SANDBOX API Signature', 'sliced-invoices' ),
+			'desc' => __( 'The API Signature from your sandbox PayPal account, found under "Account Settings" / "API access" / "NVP/SOAP API integration" / "Manage API credentials".' , 'sliced-invoices' ),
+			'type' => 'text',
+			'id'   => 'paypal_signature_sandbox',
+		);
+		$options['fields'][] = array(
+			'name'      => __( 'PayPal Mode', 'sliced-invoices' ),
+			'desc'      => sprintf(
 				/* translators: %s: URL */
 				__( 'Set to Sandbox for testing purposes (you must have a <a href="%s">Sandbox account</a> for this and be using the Sandbox API credentials).<br />Set to Live to accept payments from clients.', 'sliced-invoices' ),
-				'https://developer.paypal.com/docs/classic/lifecycle/ug_sandbox/'
+				'https://developer.paypal.com/developer/accounts'
 			),
-			'default' => 'Live',
-			'type'    => 'select',
-			'id'      => 'paypal_mode',
-			'options' => array(
+			'default'   => 'live',
+			'type'      => 'select',
+			'id'        => 'paypal_mode',
+			'options'   => array(
 				'sandbox' => 'Sandbox',
 				'live'    => 'Live',
-			)
+			),
+			'after_row' => array( $this, 'settings_group_after' ),
 		);
 
 		return $options;
@@ -109,16 +136,58 @@ class Sliced_Paypal {
 	 * @since   2.0.0
 	 */
 	public function add_payment_method( $pay_array ) {
-
-		$payments = get_option( 'sliced_payments' );
-
-		if ( ! empty( $payments['paypal_signature'] ) && ! empty( $payments['paypal_username'] ) && ! empty( $payments['paypal_password'] ) ) {
+		
+		$gateway = $this->gateway();
+		
+		if (
+			$gateway['enabled']
+			&& ! empty( $gateway['username'] )
+			&& ! empty( $gateway['password'] )
+			&& ! empty( $gateway['signature'] )
+		) {
 			$pay_array['paypal'] = 'PayPal';
 		}
 
 		return $pay_array;
 	}
 	
+	/**
+	 * Add inline css to admin area.
+	 *
+	 * @since 3.9.0
+	 */
+	public function admin_inline_css() {
+		
+		global $pagenow;
+		
+		if ( $pagenow === 'admin.php' && isset( $_GET['page'] ) && $_GET['page'] === 'sliced_invoices_settings' ) {
+			?>
+			<style type="text/css">
+				#<?php echo $this->prefix; ?>-settings-wrapper {
+				}
+				#<?php echo $this->prefix; ?>-settings-header {
+					background: #f8f8f8 none repeat scroll 0 0;
+					border: 1px solid #e5e5e5;
+					border-radius: 3px;
+					margin: 10px 20px;
+					padding: 15px 25px 15px 12px;
+				}
+				#<?php echo $this->prefix; ?>-settings-header th {
+					cursor: pointer;
+				}
+				#<?php echo $this->prefix; ?>-settings-header .row-toggle {
+					text-align: right;
+				}
+				#<?php echo $this->prefix; ?>-settings-header .row-title {
+					padding: 0 20px 0 20px;
+				}
+				#<?php echo $this->prefix; ?>-settings > td {
+					padding-left: 40px;
+				}
+			</style>
+			<?php
+		}
+	}
 	
 	/**
 	 * Cancel subscription invoice payments
@@ -164,13 +233,21 @@ class Sliced_Paypal {
 
 		$payments = get_option( 'sliced_payments' );
 		$gateway                 = array();
-		$gateway['mode']         = $payments['paypal_mode']; // sandbox or live
-		$gateway['currency']     = $payments['paypal_currency'];
-		$gateway['username']     = $payments['paypal_username']; //PayPal API Username
-		$gateway['password']     = $payments['paypal_password']; //Paypal API password
-		$gateway['signature']    = $payments['paypal_signature']; //Paypal API Signature
+		$gateway['enabled']      = isset( $payments['paypal_enabled'] ) && $payments['paypal_enabled'] === 'on' ? true : false;
+		$gateway['mode']         = isset( $payments['paypal_mode'] ) ? $payments['paypal_mode'] : 'live'; // sandbox or live
+		$gateway['currency']     = isset( $payments['paypal_currency'] ) ? $payments['paypal_currency'] : false;
 		$gateway['payment_page'] = esc_url( get_permalink( (int)$payments['payment_page'] ) ); //Point to process.php page
 		$gateway['cancel_page']  = esc_url( get_permalink( (int)$payments['payment_page'] ) ); //Cancel URL if user clicks cancel
+		
+		if ( $gateway['mode'] === 'sandbox' ) {
+			$gateway['username']  = isset( $payments['paypal_username_sandbox'] ) ? $payments['paypal_username_sandbox'] : false;
+			$gateway['password']  = isset( $payments['paypal_password_sandbox'] ) ? $payments['paypal_password_sandbox'] : false;
+			$gateway['signature'] = isset( $payments['paypal_signature_sandbox'] ) ? $payments['paypal_signature_sandbox'] : false;
+		} else {
+			$gateway['username']  = isset( $payments['paypal_username'] ) ? $payments['paypal_username'] : false;
+			$gateway['password']  = isset( $payments['paypal_password'] ) ? $payments['paypal_password'] : false;
+			$gateway['signature'] = isset( $payments['paypal_signature'] ) ? $payments['paypal_signature'] : false;
+		}
 
 		return $gateway;
 	}
@@ -740,6 +817,52 @@ class Sliced_Paypal {
 
 
 	}
-
-
+	
+	/**
+	 * Begins wrapper (collapsable) around gateway settings.
+	 *
+	 * @since 1.4.1
+	 */
+	public function settings_group_before() {
+		#region settings_group_before
+		?>
+		<table class="widefat" id="<?php echo $this->prefix; ?>-settings-wrapper">
+			<tr id="<?php echo $this->prefix; ?>-settings-header">
+				<th class="row-title"><h4><?php _e( 'PayPal Gateway', 'sliced-invoices' ); ?></h4></th>
+				<th class="row-toggle"><span class="dashicons dashicons-arrow-down" id="<?php echo $this->prefix; ?>-settings-toggle"></span></th>
+			</tr>
+			<tr id="<?php echo $this->prefix; ?>-settings" style="display:none;">
+				<td colspan="2">
+		<?php
+		#endregion settings_group_before
+	}
+	
+	/**
+	 * Ends wrapper (collapsable) around gateway settings.
+	 *
+	 * @since 1.4.1
+	 */
+	public function settings_group_after() {
+		#region settings_group_after
+		?>
+				</td>
+			</tr>
+		</table>
+		<script type="text/javascript">
+			jQuery( '#<?php echo $this->prefix; ?>-settings-header' ).click( function(){
+				var settingsElem = jQuery( '#<?php echo $this->prefix; ?>-settings' );
+				var toggleElem   = jQuery( '#<?php echo $this->prefix; ?>-settings-toggle' );
+				if ( jQuery( settingsElem ).is(':visible') ) {
+					jQuery( settingsElem ).slideUp();
+					jQuery( toggleElem ).removeClass( 'dashicons-arrow-up').addClass( 'dashicons-arrow-down' );
+				} else {
+					jQuery( settingsElem ).slideDown();
+					jQuery( toggleElem ).removeClass( 'dashicons-arrow-down').addClass( 'dashicons-arrow-up' );
+				}
+			});
+		</script>
+		<?php
+		#endregion settings_group_after
+	}
+	
 }

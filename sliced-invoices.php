@@ -20,7 +20,7 @@ if ( ! defined('ABSPATH') ) {
 }
 
 define( 'SLICED_VERSION', '3.8.17' );
-define( 'SLICED_DB_VERSION', '8' );
+define( 'SLICED_DB_VERSION', '9' );
 define( 'SLICED_PATH', plugin_dir_path( __FILE__ ) );
 
 
@@ -83,6 +83,7 @@ add_action( 'plugins_loaded', 'run_sliced_invoices' ); // wait until 'plugins_lo
  * ==============================================================================
  *
  * History:
+ * 2022-05-25 -- DB 9, for Sliced Invoices versions < 3.9.0
  * 2019-06-15 -- DB 8, for Sliced Invoices versions < 3.8.0
  * 2018-03-06 -- DB 7, for Sliced Invoices versions < 3.7.0
  * 2017-11-03 -- DB 6, for Sliced Invoices versions < 3.6.1
@@ -99,6 +100,13 @@ function sliced_invoices_db_update() {
 	if ( isset( $sliced_db_check['db_version'] ) && $sliced_db_check['db_version'] >= SLICED_DB_VERSION ) {
 		// all good
 		return;
+	}
+	
+	// upgrade from v8 to 9
+	if ( ! isset( $sliced_db_check['db_version'] ) || $sliced_db_check['db_version'] < 9 ) {
+		$payment_settings = get_option( 'sliced_payments' );
+		$payment_settings['paypal_enabled'] = 'on';
+		update_option( 'sliced_payments', $payment_settings );
 	}
 	
 	// upgrade from v7 to 8
