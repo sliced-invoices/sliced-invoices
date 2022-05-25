@@ -2575,36 +2575,37 @@ class Sliced_Admin {
 
 		$data_rows = array();
 
-		// Query the posts
-		$args 	= array (
-			'post_type'     => $post_type,
-			'posts_per_page'=> -1,
-			'post_status'   => 'publish',
-			);
-		$the_query = new WP_Query( apply_filters( 'sliced_export_csv_query', $args ) );
-
-		// Filter the query if they are active/
+		// Build our query args
+		$args = array (
+			'post_type'      => $post_type,
+			'posts_per_page' => -1,
+			'post_status'    => 'publish',
+		);
+		
 		if ( isset( $_GET['sliced_client'] ) && $_GET['sliced_client'] ) {
-			$the_query->query_vars['meta_query'] = array(
+			$args['meta_query'] = array(
 				array(
-					'key'      => '_sliced_client',
-					'value'    => intval( sanitize_text_field( $_GET['sliced_client'] ) ),
-				)
+					'key'   => '_sliced_client',
+					'value' => intval( sanitize_text_field( $_GET['sliced_client'] ) ),
+				),
 			);
 		}
-
-		if ( isset( $_GET['m'] ) && $_GET['m'] ) {
-			$date  = isset( $_GET['m'] ) ? sanitize_text_field( $_GET['m'] ) : null;
-			$year  = $date ? substr($date, 0, 4) : null;
-			$month = $date ? substr($date, -2) : null;
-			$the_query->query_vars['date_query'] = array(
+		
+		$date  = isset( $_GET['m'] ) ? sanitize_text_field( $_GET['m'] ) : null;
+		$year  = $date ? intval( substr( $date, 0, 4 ) ) : null;
+		$month = $date ? intval( substr( $date, -2 ) ) : null;
+		if ( $year && $month ) {
+			$args['date_query'] = array(
 				array(
 					'year'  => $year,
 					'month' => $month,
 				),
 			);
 		}
-
+		
+		// Query the posts
+		$the_query = new WP_Query( apply_filters( 'sliced_export_csv_query', $args ) );
+		
 		if ( $the_query->have_posts() ) :
 			while ( $the_query->have_posts() ) : $the_query->the_post();
 
