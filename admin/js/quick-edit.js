@@ -30,7 +30,7 @@ jQuery(function( $ ) {
 		var valid_i             = $sliced_inline_data.find( '.valid_i' ).text();
 		var valid_s             = $sliced_inline_data.find( '.valid_s' ).text();
         var order_number        = $sliced_inline_data.find( '.order_number ').text();
-        var terms               = $sliced_inline_data.find( '.terms' ).text();
+        var terms               = $sliced_inline_data.find( '.terms' ).html();
         var number              = $sliced_inline_data.find( '.number' ).text();
         var client              = $sliced_inline_data.find( '.client' ).text();
         var status              = $sliced_inline_data.find( '.status' ).text();

@@ -320,7 +320,7 @@ class Sliced_Quick_Edit {
 		$number       = isset( $_POST['sliced_number'] ) ? sanitize_text_field( $_POST['sliced_number'] ) : '';
 		$order_number = isset( $_POST['sliced_order_number'] ) ? sanitize_text_field( $_POST['sliced_order_number'] ) : '';
 		$status       = isset( $_POST['sliced_status'] ) ? sanitize_text_field( $_POST['sliced_status'] ) : '';
-		$terms        = isset( $_POST['sliced_terms'] ) ? sanitize_text_field( $_POST['sliced_terms'] ) : '';
+		$terms        = isset( $_POST['sliced_terms'] ) ? wp_kses_post( $_POST['sliced_terms'] ) : '';
 		$valid_d      = isset( $_POST['sliced_valid_d'] ) ? sanitize_text_field( $_POST['sliced_valid_d'] ) : '';
 		$valid_m      = isset( $_POST['sliced_valid_m'] ) ? sanitize_text_field( $_POST['sliced_valid_m'] ) : '';
 		$valid_Y      = isset( $_POST['sliced_valid_Y'] ) ? sanitize_text_field( $_POST['sliced_valid_Y'] ) : '';
