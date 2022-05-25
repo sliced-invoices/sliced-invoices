@@ -290,25 +290,25 @@
 		sliced_payments.tax_calc_method = $(this).val();
 		workOutTotals();
 	});
-
-    // add pre-defined items from select into the empty line item fields
-    $(document).on('change', 'select.pre_defined_products', function () {
-
-        var title   = $(this).find(':selected').data('title');
-        var price   = $(this).find(':selected').data('price');
-        var qty     = $(this).find(':selected').data('qty');
-        var desc    = $(this).find(':selected').data('desc');
-
-        var group   = $(this).parents('.cmb-repeatable-grouping');
-        var index   = group.data('iterator');
-
-        $('#_sliced_items_' + index + '_title').val( title );
-        $('#_sliced_items_' + index + '_amount').val( price );
-        $('#_sliced_items_' + index + '_qty').val( qty );
-        $('#_sliced_items_' + index + '_description').val( desc );
-
-     	workOutTotals();
-    });
+	
+	// add pre-defined items from select into the empty line item fields
+	$( document ).on( 'change', 'select.pre_defined_products', function(){
+		
+		var title = $( this ).find( ':selected' ).data( 'title' );
+		var price = $( this ).find( ':selected' ).data( 'price' );
+		var qty   = $( this ).find( ':selected' ).data( 'qty' );
+		var desc  = $( this ).find( ':selected' ).data( 'desc' );
+		
+		var group = $( this ).parents( '.cmb-repeatable-grouping' );
+		var index = group.data( 'iterator' );
+		
+		$( 'input[name="_sliced_items[' + index + '][title]"]' ).val( title );
+		$( 'input[name="_sliced_items[' + index + '][amount]"]' ).val( price );
+		$( 'input[name="_sliced_items[' + index + '][qty]"]' ).val( qty );
+		$( 'input[name="_sliced_items[' + index + '][description]"]' ).val( desc );
+		
+		workOutTotals();
+	});
 	
 	
 	/**
