@@ -301,282 +301,454 @@ class Sliced_Options {
 			)
 		) );
 		
+		// Quotes
 		$this->option_metabox[] = apply_filters( 'sliced_quote_option_fields', array(
 			'id'         => 'sliced_quotes',
-			'title'      => sprintf( __( '%s Settings', 'sliced-invoices' ), $quote_label ),
+			'title'      => sprintf(
+				/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+				__( '%s Settings', 'sliced-invoices' ),
+				$quote_label
+			),
 			'menu_title' => $quote_label_plural,
-			'desc'       => __( 'Here you will find all of the settings for ' . sprintf( __( '%s', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label_plural.'</span>' ), 'sliced-invoices' ),
+			'desc'       => sprintf(
+				/* translators: %s is a placeholder for the localized word "Quotes" (plural) */
+				__( 'Here you will find all the settings for %s.', 'sliced-invoices' ),
+				$quote_label_plural
+			),
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'quotes' ), ),
 			'show_names' => true,
 			'fields'     => array(
 				array(
-					'name'      => __( 'Prefix', 'sliced-invoices' ),
-					'desc'      => sprintf( __( 'Prefix before each %s number. Can be left blank if you don\'t need a prefix.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>' ),
-					'default'   => '',
-					'id'        => 'prefix',
-					'type'      => 'text',
+					'name'       => __( 'Prefix', 'sliced-invoices' ),
+					'desc'       => sprintf(
+						/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+						__( 'Prefix before each %s number. Can be left blank if you don\'t need a prefix.', 'sliced-invoices' ),
+						$quote_label
+					),
+					'default'    => '',
+					'id'         => 'prefix',
+					'type'       => 'text',
 				),
 				array(
-					'name'      => __( 'Suffix', 'sliced-invoices' ),
-					'desc'      => sprintf( __( 'Suffix after each %s number. Can be left blank if you don\'t need a suffix.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>' ),
-					'default'   => '',
-					'id'        => 'suffix',
-					'type'      => 'text',
+					'name'       => __( 'Suffix', 'sliced-invoices' ),
+					'desc'       => sprintf(
+						/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+						__( 'Suffix after each %s number. Can be left blank if you don\'t need a suffix.', 'sliced-invoices' ),
+						$quote_label
+					),
+					'default'    => '',
+					'id'         => 'suffix',
+					'type'       => 'text',
 				),
 				array(
-					'name'      => __( 'Auto Increment', 'sliced-invoices' ),
-					'desc'      => sprintf( __( 'Yes, increment %s numbers by one. Recommended.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>' ),
-					'id'        => 'increment',
-					'type'      => 'checkbox',
+					'name'       => __( 'Auto Increment', 'sliced-invoices' ),
+					'desc'       => sprintf(
+						/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+						__( 'Yes, increment %s numbers by one. Recommended.', 'sliced-invoices' ),
+						$quote_label
+					),
+					'id'         => 'increment',
+					'type'       => 'checkbox',
 				),
 				array(
-					'name'      => __( 'Next Number', 'sliced-invoices' ),
-					'desc'      => __( 'The next number to use for auto incrementing. Can use leading zeros.', 'sliced-invoices' ),
-					'default'   => '',
-					'id'        => 'number',
-					'type'      => 'text',
+					'name'       => __( 'Next Number', 'sliced-invoices' ),
+					'desc'       => __( 'The next number to use for auto incrementing. Can use leading zeros.', 'sliced-invoices' ),
+					'default'    => '',
+					'id'         => 'number',
+					'type'       => 'text',
 				),
 				array(
-					'name'      => sprintf( __( '%s Valid For', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label_plural.'</span>' ),
-					'desc'      => sprintf( __( 'Number of days each %1s is valid for. This will automatically set the date in the \'Valid Until\' field.<br>Can be overriden on individual %2s.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>', '<span class="i18n-multilingual-display">'.$quote_label_plural.'</span>' ),
-					'default'   => '',
-					'id'        => 'valid_until',
-					'type'      => 'text',
+					'name'       => sprintf(
+						/* translators: %s is a placeholder for the localized word "Quotes" (plural) */
+						__( '%s Valid For', 'sliced-invoices' ),
+						$quote_label_plural
+					),
+					'desc'       => sprintf(
+						/* translators: %1s is a placeholder for the word "Quote" (singular); %2s is a placeholder for "Quotes" (plural) */
+						__( 'Number of days each %1s is valid for. This will automatically set the date in the \'Valid Until\' field.<br>Can be overriden on individual %2s.', 'sliced-invoices' ),
+						$quote_label,
+						$quote_label_plural
+					),
+					'default'    => '',
+					'id'         => 'valid_until',
+					'type'       => 'text',
 					'attributes' => array(
-						'type' => 'number',
+						'type'        => 'number',
 						'placeholder' => '30',
 					)
 				),
 				array(
-					'name'      => __( 'Hide Adjust Field', 'sliced-invoices' ),
-					'desc'      => __( 'Yes, hide the Adjust field on line items, I won\'t need this field', 'sliced-invoices' ),
-					'id'        => 'adjustment',
-					'type'      => 'checkbox',
+					'name'       => __( 'Hide Adjust Field', 'sliced-invoices' ),
+					'desc'       => __( 'Yes, hide the Adjust field on line items, I won\'t need this field', 'sliced-invoices' ),
+					'id'         => 'adjustment',
+					'type'       => 'checkbox',
 				),
 				array(
-					'name'      => __( 'Terms & Conditions', 'sliced-invoices' ),
-					'desc'      => __( 'Terms and conditions displayed on the quote..<br>Can be overriden on individual quotes.', 'sliced-invoices' ),
-					'default'   => '',
-					'id'        => 'terms',
-					'type'      => 'textarea_small'
+					'name'       => __( 'Terms & Conditions', 'sliced-invoices' ),
+					'desc'       => sprintf(
+						/* translators: %1s is a placeholder for the word "Quote" (singular); %2s is a placeholder for "Quotes" (plural) */
+						__( 'Terms and conditions displayed on the %1s.<br>Can be overriden on individual %2s.', 'sliced-invoices' ),
+						$quote_label,
+						$quote_label_plural
+					),
+					'default'    => '',
+					'id'         => 'terms',
+					'type'       => 'textarea_small'
 				),
 				array(
-					'name'      => __( 'Footer', 'sliced-invoices' ),
-					'desc'      => sprintf( __( 'The footer will be displayed at the bottom of each %1s. Basic HTML is allowed.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$quote_label.'</span>' ),
-					'default'   => '',
-					'id'        => 'footer',
-					'type'      => 'textarea_small',
+					'name'       => __( 'Footer', 'sliced-invoices' ),
+					'desc'       => sprintf(
+						/* translators: %1s is a placeholder for the localized word "Quote" (singular) */
+						__( 'The footer will be displayed at the bottom of each %1s. Basic HTML is allowed.', 'sliced-invoices' ),
+						$quote_label
+					),
+					'default'    => '',
+					'id'         => 'footer',
+					'type'       => 'textarea_small',
 				),
 				array(
-					'name'      => __( 'Accept Quotes', 'sliced-invoices' ),
-					'id'        => 'accept_quote_title',
-					'type'      => 'title',
+					'name'       => sprintf(
+						/* translators: %s is a placeholder for the localized word "Quotes" (plural) */
+						__( 'Accepting %s', 'sliced-invoices' ),
+						$quote_label_plural
+					),
+					'id'         => 'accept_quote_title',
+					'type'       => 'title',
 				),
 				array(
-					'name'      => __( 'Accept Quote Button', 'sliced-invoices' ),
-					'desc'      => __( 'Yes, show the \'Accept Quote\' button on quotes.', 'sliced-invoices' ),
-					'id'        => 'accept_quote',
-					'type'      => 'checkbox',
+					'name'       => sprintf(
+						/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+						__( 'Accept %s Button', 'sliced-invoices' ),
+						$quote_label
+					),
+					'desc'       => sprintf(
+						/* translators: %1s is a placeholder for the word "Quote" (singular); %2s is a placeholder for "Quotes" (plural) */
+						__( 'Yes, show the "Accept %1s" button on %2s.', 'sliced-invoices' ),
+						$quote_label,
+						$quote_label_plural
+					),
+					'id'         => 'accept_quote',
+					'type'       => 'checkbox',
 				),
 				array(
-					'name'      => __( 'Accepted Quote Action', 'sliced-invoices' ),
-					'desc'      => __( 'Actions to perform automatically when client accepts quote.', 'sliced-invoices' ),
-					'id'        => 'accepted_quote_action',
-					'type'      => 'select',
-					'default'   => 'convert',
-					'options'   => array(
-						'convert'         => __( 'Convert quote to invoice', 'sliced-invoices' ),
-						'convert_send'    => __( 'Convert quote to invoice and send to client', 'sliced-invoices' ),
-						'duplicate'       => __( 'Create invoice, but keep quote', 'sliced-invoices' ),
-						'duplicate_send'  => __( 'Create invoice and send to client, but keep quote', 'sliced-invoices' ),
-						'do_nothing'      => __( 'Do nothing', 'sliced-invoices' ),
+					'name'       => sprintf(
+						/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+						__( 'Accepted %s Action', 'sliced-invoices' ),
+						$quote_label
+					),
+					'desc'       => sprintf(
+						/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+						__( 'Actions to perform automatically when client accepts a %s.', 'sliced-invoices' ),
+						$quote_label
+					),
+					'id'         => 'accepted_quote_action',
+					'type'       => 'select',
+					'default'    => 'convert',
+					'options'    => array(
+						'convert'        => sprintf(
+							/* translators: %1s is a placeholder for the word "Quote" (singular); %2s is a placeholder for "Invoice" (singular) */
+							__( 'Convert %1s to %2s', 'sliced-invoices' ),
+							$quote_label,
+							$invoice_label
+						),
+						'convert_send'   => sprintf(
+							/* translators: %1s is a placeholder for the word "Quote" (singular); %2s is a placeholder for "Invoice" (singular) */
+							__( 'Convert %1s to %2s and send to client', 'sliced-invoices' ),
+							$quote_label,
+							$invoice_label
+						),
+						'duplicate'      => sprintf(
+							/* translators: %1s is a placeholder for the word "Invoice" (singular); %2s is a placeholder for "Quote" (singular) */
+							__( 'Create new %1s, keep %2s as-is', 'sliced-invoices' ),
+							$invoice_label,
+							$quote_label
+						),
+						'duplicate_send' => sprintf(
+							/* translators: %1s is a placeholder for the word "Invoice" (singular); %2s is a placeholder for "Quote" (singular) */
+							__( 'Create new %1s and send to client, keep %2s as-is', 'sliced-invoices' ),
+							$invoice_label,
+							$quote_label
+						),
+						'do_nothing'     => __( 'Do nothing', 'sliced-invoices' ),
 					),
 				),
 				array(
-					'name'      => __( 'Accept Quote Text', 'sliced-invoices' ),
-					'desc'      => __( 'Text to add on the \'Accept Quote\' popup.<br />Should provide some indication to your client of what happens after accepting the quote.', 'sliced-invoices' ),
-					'default'   => '',
-					'id'        => 'accept_quote_text',
-					'type'      => 'textarea_small'
+					'name'       => sprintf(
+						/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+						__( 'Accept %s Text', 'sliced-invoices' ),
+						$quote_label
+					),
+					'desc'       => sprintf(
+						/* translators: %1s and %2s are placeholders for the localized word "Quote" (singular) */
+						__( 'Text to add on the "Accept %1s" popup. Basic HTML is allowed.<br>This should provide some indication to your client of what happens after accepting the %2s.', 'sliced-invoices' ),
+						$quote_label,
+						$quote_label
+					),
+					'default'    => '',
+					'id'         => 'accept_quote_text',
+					'type'       => 'textarea_small'
 				),
 				array(
-					'name'      => __( 'Accepted Quote Message', 'sliced-invoices' ),
-					'desc'      => __( 'Message to display if client accepts the quote.<br />Leave blank for the default message.', 'sliced-invoices' ),
-					'default'   => '',
-					'id'        => 'accepted_quote_message',
-					'type'      => 'textarea_small',
+					'name'       => sprintf(
+						/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+						__( 'Accepted %s Message', 'sliced-invoices' ),
+						$quote_label
+					),
+					'desc'       => sprintf(
+						/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+						__( 'Message to display if client accepts the %s. Basic HTML is allowed.<br>Leave blank for the default message.', 'sliced-invoices' ),
+						$quote_label
+					),
+					'default'    => '',
+					'id'         => 'accepted_quote_message',
+					'type'       => 'textarea_small',
 					'attributes' => array(
-						'placeholder' => 'Success, You have accepted the Quote. We will be in touch shortly.',
+						'placeholder' => sprintf(
+							/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+							__( 'You have accepted the %s.<br>We will be in touch shortly.', 'sliced-invoices' ),
+							$quote_label
+						),
 					)
 				),
 				array(
-					'name'      => __( 'Declined Quote Message', 'sliced-invoices' ),
-					'desc'      => __( 'Message to display if client declines the quote.<br />Leave blank for the default message.', 'sliced-invoices' ),
-					'default'   => '',
-					'id'        => 'declined_quote_message',
-					'type'      => 'textarea_small',
+					'name'       => sprintf(
+						/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+						__( 'Declined %s Message', 'sliced-invoices' ),
+						$quote_label
+					),
+					'desc'       => sprintf(
+						/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+						__( 'Message to display if client declines the %s. Basic HTML is allowed.<br>Leave blank for the default message.', 'sliced-invoices' ),
+						$quote_label
+					),
+					'default'    => '',
+					'id'         => 'declined_quote_message',
+					'type'       => 'textarea_small',
 					'attributes' => array(
-						'placeholder' => 'Bummer, you have declined the quote. We will be in touch shortly.',
+						'placeholder' => sprintf(
+							/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+							__( 'You have declined the %s.<br>We will be in touch shortly.', 'sliced-invoices' ),
+							$quote_label
+						),
 					)
 				),
 				array(
-					'name'      => __( 'Admin Notices', 'sliced-invoices' ),
-					'desc'      => sprintf(
+					'name'       => __( 'Admin Notices', 'sliced-invoices' ),
+					'desc'       => sprintf(
 						__( 'These settings allow you to choose which notices may be displayed in your WordPress Admin area. (Note: this is different from admin emails, which you can configure on the <a href="%s">Email Settings</a> tab.', 'sliced-invoices' ),
 						admin_url( 'admin.php?page=sliced_invoices_settings&tab=emails' )
 					),
-					'id'        => 'quote_admin_notices_title',
-					'type'      => 'title',
+					'id'         => 'quote_admin_notices_title',
+					'type'       => 'title',
 				),
 				array(
-					'name'      => __( 'Show me notices when', 'sliced-invoices' ),
-					'id'        => 'quote_admin_notices',
-					'type'    => 'multicheck',
-					'options' => array(
-						'quote_viewed' => 'Quote Viewed',
-						'quote_accepted' => 'Quote Accepted',
+					'name'       => __( 'Show me notices when', 'sliced-invoices' ),
+					'id'         => 'quote_admin_notices',
+					'type'       => 'multicheck',
+					'options'    => array(
+						'quote_viewed'   => sprintf(
+							/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+							__( '%s Viewed', 'sliced-invoices' ),
+							$quote_label
+						),
+						'quote_accepted' => sprintf(
+							/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+							__( '%s Accepted', 'sliced-invoices' ),
+							$quote_label
+						),
 					),
 				),
 				array(
-					'name'      => __( 'Template Design', 'sliced-invoices' ),
-					'desc'      => sprintf(
+					'name'       => __( 'Template Design', 'sliced-invoices' ),
+					'desc'       => sprintf(
 						__( 'For information on customizing your templates, please see our guide <a target="_blank" href="%s">here</a>.', 'sliced-invoices' ),
 						'https://slicedinvoices.com/support/quote-invoice-templates/?utm_source=Plugin&utm_medium=Quote-Design&utm_content=Support&utm_campaign=Free'
 					),
-					'id'        => 'quote_design_title',
-					'type'      => 'title',
+					'id'         => 'quote_design_title',
+					'type'       => 'title',
 				),
 				array(
-					'name'      => __( 'Template', 'sliced-invoices' ),
-					'id'        => 'template',
-					'type'      => 'radio',
-					'default'   => 'template1',
-					'options'   => apply_filters( 'sliced_quote_template_options', array(
+					'name'       => __( 'Template', 'sliced-invoices' ),
+					'id'         => 'template',
+					'type'       => 'radio',
+					'default'    => 'template1',
+					'options'    => apply_filters( 'sliced_quote_template_options', array(
 						'template1' => '<img src="' . plugin_dir_url( dirname( __FILE__ ) ) . '/img/template1.png" width="200" />',
 						'template2' => '<img src="' . plugin_dir_url( dirname( __FILE__ ) ) . '/img/template2.png" width="200" />',
 						'template3' => '<img src="' . plugin_dir_url( dirname( __FILE__ ) ) . '/img/template3.png" width="200" />',
 					) ),
 				),
 				array(
-					'name'      => __( 'Custom CSS', 'sliced-invoices' ),
-					'desc'      => __( 'Add custom CSS to your quotes', 'sliced-invoices' ),
-					'default'   => '',
-					'id'        => 'css',
-					'type'      => 'textarea_small',
+					'name'       => __( 'Custom CSS', 'sliced-invoices' ),
+					'desc'       => sprintf(
+						/* translators: %s is a placeholder for the localized word "Quotes" (plural) */
+						__( 'Add custom CSS to your %s', 'sliced-invoices' ),
+						$quote_label_plural
+					),
+					'default'    => '',
+					'id'         => 'css',
+					'type'       => 'textarea_small',
 				),
 			)
 		) );
 		
+		// Invoices
 		$this->option_metabox[] = apply_filters( 'sliced_invoice_option_fields', array(
 			'id'         => 'sliced_invoices',
-			'title'      => sprintf( __( '%s Settings', 'sliced-invoices' ), $invoice_label ),
+			'title'      => sprintf(
+				/* translators: %s is a placeholder for the localized word "Invoice" (singular) */
+				__( '%s Settings', 'sliced-invoices' ),
+				$invoice_label
+			),
 			'menu_title' => $invoice_label_plural,
-			'desc'       => __( 'Here you will find all of the settings for <span class="i18n-multilingual-display">' . sprintf( __( '%s', 'sliced-invoices' ), $invoice_label_plural ), 'sliced-invoices' ) . '</span>',
+			'desc'       => sprintf(
+				/* translators: %s is a placeholder for the localized word "Invoices" (plural) */
+				__( 'Here you will find all the settings for %s.', 'sliced-invoices' ),
+				$invoice_label_plural
+			),
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'invoices' ), ),
 			'show_names' => true,
 			'fields'     => array(
 				array(
-					'name'      => __( 'Prefix', 'sliced-invoices' ),
-					'desc'      => sprintf( __( 'Prefix before each %s number. Can be left blank if you don\'t need a prefix.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$invoice_label.'</span>' ),
-					'default'   => '',
-					'id'        => 'prefix',
-					'type'      => 'text',
+					'name'       => __( 'Prefix', 'sliced-invoices' ),
+					'desc'       => sprintf(
+						/* translators: %s is a placeholder for the localized word "Invoice" (singular) */
+						__( 'Prefix before each %s number. Can be left blank if you don\'t need a prefix.', 'sliced-invoices' ),
+						$invoice_label
+					),
+					'default'    => '',
+					'id'         => 'prefix',
+					'type'       => 'text',
 				),
 				array(
-					'name'      => __( 'Suffix', 'sliced-invoices' ),
-					'desc'      => sprintf( __( 'Suffix after each %s number. Can be left blank if you don\'t need a suffix.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$invoice_label.'</span>' ),
-					'default'   => '',
-					'id'        => 'suffix',
-					'type'      => 'text',
+					'name'       => __( 'Suffix', 'sliced-invoices' ),
+					'desc'       => sprintf(
+						/* translators: %s is a placeholder for the localized word "Invoice" (singular) */
+						__( 'Suffix after each %s number. Can be left blank if you don\'t need a suffix.', 'sliced-invoices' ),
+						$invoice_label
+					),
+					'default'    => '',
+					'id'         => 'suffix',
+					'type'       => 'text',
 				),
 				array(
-					'name'      => __( 'Auto Increment', 'sliced-invoices' ),
-					'desc'      => __( 'Yes, increment invoice numbers by one. Recommended.', 'sliced-invoices' ),
-					'id'        => 'increment',
-					'type'      => 'checkbox',
+					'name'       => __( 'Auto Increment', 'sliced-invoices' ),
+					'desc'       => sprintf(
+						/* translators: %s is a placeholder for the localized word "Invoice" (singular) */
+						__( 'Yes, increment %s numbers by one. Recommended.', 'sliced-invoices' ),
+						$invoice_label
+					),
+					'id'         => 'increment',
+					'type'       => 'checkbox',
 				),
 				array(
-					'name'      => __( 'Next Number', 'sliced-invoices' ),
-					'desc'      => __( 'The next number to use for auto incrementing. Can use leading zeros', 'sliced-invoices' ),
-					'default'   => '',
-					'id'        => 'number',
-					'type'      => 'text',
+					'name'       => __( 'Next Number', 'sliced-invoices' ),
+					'desc'       => __( 'The next number to use for auto incrementing. Can use leading zeros', 'sliced-invoices' ),
+					'default'    => '',
+					'id'         => 'number',
+					'type'       => 'text',
 				),
 				array(
-					'name'      => __( 'Due Date', 'sliced-invoices' ),
-					'desc'      => sprintf( __( 'Number of days each %1s is due after the created date. This will automatically set the date in the \'Due Date\' field.<br>Can be overriden on individual %2s.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$invoice_label.'</span>', '<span class="i18n-multilingual-display">'.$invoice_label_plural.'</span>' ),
-					'default'   => '',
-					'id'        => 'due_date',
-					'type'      => 'text',
+					'name'       => __( 'Due Date', 'sliced-invoices' ),
+					'desc'       => sprintf(
+						/* translators: %1s is a placeholder for the word "Invoice" (singular); %2s is a placeholder for "Invoices" (plural) */
+						__( 'Number of days each %1s is due after the created date. This will automatically set the date in the \'Due Date\' field.<br>Can be overriden on individual %2s.', 'sliced-invoices' ),
+						$invoice_label,
+						$invoice_label_plural
+					),
+					'default'    => '',
+					'id'         => 'due_date',
+					'type'       => 'text',
 					'attributes' => array(
-						'type' => 'number',
+						'type'        => 'number',
 						'placeholder' => '14',
 					)
 				),
 				array(
-					'name'      => __( 'Hide Adjust Field', 'sliced-invoices' ),
-					'desc'      => __( 'Yes, hide the Adjust field on line items, I won\'t need this field', 'sliced-invoices' ),
-					'id'        => 'adjustment',
-					'type'      => 'checkbox',
+					'name'       => __( 'Hide Adjust Field', 'sliced-invoices' ),
+					'desc'       => __( 'Yes, hide the Adjust field on line items, I won\'t need this field', 'sliced-invoices' ),
+					'id'         => 'adjustment',
+					'type'       => 'checkbox',
 				),
 				array(
-					'name'      => __( 'Terms & Conditions', 'sliced-invoices' ),
-					'desc'      => __( 'Terms and conditions displayed on the invoice.<br>Can be overriden on individual invoices.', 'sliced-invoices' ),
-					'default'   => '',
-					'id'        => 'terms',
-					'type'      => 'textarea_small'
+					'name'       => __( 'Terms & Conditions', 'sliced-invoices' ),
+					'desc'       => sprintf(
+						/* translators: %1s is a placeholder for the word "Invoice" (singular); %2s is a placeholder for "Invoices" (plural) */
+						__( 'Terms and conditions displayed on the %1s.<br>Can be overriden on individual %2s.', 'sliced-invoices' ),
+						$invoice_label,
+						$invoice_label_plural
+					),
+					'default'    => '',
+					'id'         => 'terms',
+					'type'       => 'textarea_small'
 				),
 				array(
-					'name'      => __( 'Footer', 'sliced-invoices' ),
-					'desc'      => sprintf( __( 'The footer will be displayed at the bottom of each %1s. Basic HTML is allowed.', 'sliced-invoices' ), '<span class="i18n-multilingual-display">'.$invoice_label.'</span>' ),
-					'default'   => '',
-					'id'        => 'footer',
-					'type'      => 'textarea_small',
+					'name'       => __( 'Footer', 'sliced-invoices' ),
+					'desc'       => sprintf(
+						/* translators: %1s is a placeholder for the localized word "Invoice" (singular) */
+						__( 'The footer will be displayed at the bottom of each %1s. Basic HTML is allowed.', 'sliced-invoices' ),
+						$invoice_label
+					),
+					'default'    => '',
+					'id'         => 'footer',
+					'type'       => 'textarea_small',
 				),
 				array(
-					'name'      => __( 'Admin Notices', 'sliced-invoices' ),
-					'desc'      => sprintf(
+					'name'       => __( 'Admin Notices', 'sliced-invoices' ),
+					'desc'       => sprintf(
 						__( 'These settings allow you to choose which notices may be displayed in your WordPress Admin area. (Note: this is different from admin emails, which you can configure on the <a href="%s">Email Settings</a> tab.', 'sliced-invoices' ),
 						admin_url( 'admin.php?page=sliced_invoices_settings&tab=emails' )
 					),
-					'id'        => 'invoice_admin_notices_title',
-					'type'      => 'title',
+					'id'         => 'invoice_admin_notices_title',
+					'type'       => 'title',
 				),
 				array(
-					'name'      => __( 'Show me notices when', 'sliced-invoices' ),
-					'id'        => 'invoice_admin_notices',
-					'type'      => 'multicheck',
-					'options'   => array(
-						'invoice_viewed' => 'Invoice Viewed',
-						'invoice_paid' => 'Invoice Paid',
+					'name'       => __( 'Show me notices when', 'sliced-invoices' ),
+					'id'         => 'invoice_admin_notices',
+					'type'       => 'multicheck',
+					'options'    => array(
+						'invoice_viewed' => sprintf(
+							/* translators: %s is a placeholder for the localized word "Invoice" (singular) */
+							__( '%s Viewed', 'sliced-invoices' ),
+							$invoice_label
+						),
+						'invoice_paid'   => sprintf(
+							/* translators: %s is a placeholder for the localized word "Invoice" (singular) */
+							__( '%s Paid', 'sliced-invoices' ),
+							$invoice_label
+						),
 					),
 				),
 				array(
-					'name'      => __( 'Template Design', 'sliced-invoices' ),
-					'desc'      => sprintf(
+					'name'       => __( 'Template Design', 'sliced-invoices' ),
+					'desc'       => sprintf(
 						__( 'For information on customizing your templates, please see our guide <a target="_blank" href="%s">here</a>.', 'sliced-invoices' ),
 						'https://slicedinvoices.com/support/quote-invoice-templates/?utm_source=Plugin&utm_medium=Invoice-Design&utm_content=Support&utm_campaign=Free'
 					),
-					'id'        => 'invoice_design_title',
-					'type'      => 'title',
+					'id'         => 'invoice_design_title',
+					'type'       => 'title',
 				),
 				array(
-					'name'      => __( 'Template', 'sliced-invoices' ),
-					'id'        => 'template',
-					'type'      => 'radio',
-					'default'   => 'template1',
-					'options'   => apply_filters( 'sliced_invoice_template_options', array(
+					'name'       => __( 'Template', 'sliced-invoices' ),
+					'id'         => 'template',
+					'type'       => 'radio',
+					'default'    => 'template1',
+					'options'    => apply_filters( 'sliced_invoice_template_options', array(
 						'template1' => '<img src="' . plugin_dir_url( dirname( __FILE__ ) ) . '/img/template1.png" width="200" />',
 						'template2' => '<img src="' . plugin_dir_url( dirname( __FILE__ ) ) . '/img/template2.png" width="200" />',
 						'template3' => '<img src="' . plugin_dir_url( dirname( __FILE__ ) ) . '/img/template3.png" width="200" />',
 					) ),
 				),
 				array(
-					'name'      => __( 'Custom CSS', 'sliced-invoices' ),
-					'desc'      => __( 'Add custom CSS to your invoices.', 'sliced-invoices' ),
-					'default'   => '',
-					'id'        => 'css',
-					'type'      => 'textarea_small',
+					'name'       => __( 'Custom CSS', 'sliced-invoices' ),
+					'desc'       => sprintf(
+						/* translators: %s is a placeholder for the localized word "Invoices" (plural) */
+						__( 'Add custom CSS to your %s', 'sliced-invoices' ),
+						$invoice_label_plural
+					),
+					'default'    => '',
+					'id'         => 'css',
+					'type'       => 'textarea_small',
 				),
 			)
 		) );

@@ -295,11 +295,26 @@ class Sliced_Columns {
 	public function pre_get_the_terms( $terms, $post_id, $taxonomy ) {
 		
 		if ( $taxonomy === 'invoice_status' || $taxonomy === 'quote_status' ) {
-		
-			$translate = get_option( 'sliced_translate' );
 			
-			foreach ( $terms as &$term ) {
-				$term->name = ( isset( $translate[$term->slug] ) && class_exists( 'Sliced_Translate' ) ) ? $translate[$term->slug] : __( ucfirst( $term->name ), 'sliced-invoices' );
+			if (
+				class_exists( 'Sliced_Translate' )
+				&& defined( 'SI_TRANSLATE_VERSION' )
+				&& version_compare( SI_TRANSLATE_VERSION, '2.0.0', '<' )
+			) {
+				// for backwards compatibility
+				$translate = get_option( 'sliced_translate' );
+				
+				foreach ( $terms as &$term ) {
+					$term->name = ( isset( $translate[$term->slug] ) && class_exists( 'Sliced_Translate' ) ) ? $translate[$term->slug] : __( ucfirst( $term->name ), 'sliced-invoices' );
+				}
+				
+			} else {
+				
+				// preferred way going forward
+				foreach ( $terms as &$term ) {
+					$term->name = __( ucfirst( $term->name ), 'sliced-invoices' );
+				}
+				
 			}
 			
 		}

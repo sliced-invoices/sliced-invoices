@@ -487,9 +487,12 @@ class Sliced_Payments {
 		if ( $quotes['declined_quote_message'] > '' ) {
 			$message = wp_kses_post( $quotes['declined_quote_message'] );
 		} else {
-			$message = '<h2>' . __( 'Bummer', 'sliced-invoices' ) .'</h2>';
 			$message .= '<p>';
-			$message .= sprintf( __( 'You have declined the %s.<br>We will be in touch shortly.', 'sliced-invoices' ), sliced_get_quote_label() );
+			$message .= sprintf(
+				/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+				__( 'You have declined the %s.<br>We will be in touch shortly.', 'sliced-invoices' ),
+				sliced_get_quote_label()
+			);
 			$message .= '</p>';
 		}
 
@@ -648,7 +651,11 @@ class Sliced_Payments {
 		} else {
 			$message = '<h2>' . __( 'Success', 'sliced-invoices' ) .'</h2>';
 			$message .= '<p>';
-			$message .= sprintf( __( 'You have accepted the %s.<br>We will be in touch shortly.', 'sliced-invoices' ), sliced_get_quote_label() );
+			$message .= sprintf(
+				/* translators: %s is a placeholder for the localized word "Quote" (singular) */
+				__( 'You have accepted the %s.<br>We will be in touch shortly.', 'sliced-invoices' ),
+				sliced_get_quote_label()
+			);
 			$message .= '</p>';
 		}
 		
