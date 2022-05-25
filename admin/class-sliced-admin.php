@@ -2347,6 +2347,13 @@ class Sliced_Admin {
 		}
 		
 		// duplicate post metas
+		$non_cloneable_post_metas = apply_filters( 'sliced_invoices_non_cloneable_post_metas', array(
+			'_sliced_log',
+			'_sliced_number',
+			'_sliced_payment',
+			'_sliced_invoice_email_sent',
+			'_sliced_quote_email_sent',
+		) );
 		$post_metas = $wpdb->get_results(
 			$wpdb->prepare(
 				"SELECT meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id=%d",
@@ -2359,24 +2366,32 @@ class Sliced_Admin {
 			foreach ( $post_metas as $post_meta ) {
 				$meta_key = esc_sql( $post_meta->meta_key );
 				$meta_value = esc_sql( $post_meta->meta_value );
-				$sql_values[]= "($new_post_id, '$meta_key', '$meta_value')";
+				if ( ! in_array( $meta_key, $non_cloneable_post_metas ) ) {
+					$sql_values[]= "($new_post_id, '$meta_key', '$meta_value')";
+				}
 			}
 			$sql_query .= implode( ',', $sql_values );
 			$wpdb->query( $sql_query );
 		}
-
+		
 		// increment the number
 		if ( $post->post_type === 'sliced_invoice' ) {
+			$prefix = get_post_meta( $new_post_id, '_sliced_invoice_prefix', true );
 			$number = sliced_get_next_invoice_number();
+			$suffix = get_post_meta( $new_post_id, '_sliced_invoice_suffix', true );
 			update_post_meta( $new_post_id, '_sliced_invoice_number', (string)$number );
+			update_post_meta( $new_post_id, '_sliced_number', $prefix . $number . $suffix );
 			Sliced_Invoice::update_invoice_number( $new_post_id );
 		}
 		if ( $post->post_type === 'sliced_quote' ) {
+			$prefix = get_post_meta( $new_post_id, '_sliced_quote_prefix', true );
 			$number = sliced_get_next_quote_number();
+			$suffix = get_post_meta( $new_post_id, '_sliced_quote_suffix', true );
 			update_post_meta( $new_post_id, '_sliced_quote_number', (string)$number );
+			update_post_meta( $new_post_id, '_sliced_number', $prefix . $number . $suffix );
 			Sliced_Quote::update_quote_number( $new_post_id );
 		}
-
+		
 		// finally, redirect to the current(ish) url
 		$current_url = admin_url( 'edit.php?post_type=' . $post->post_type . '' );
 		wp_redirect( $current_url );
