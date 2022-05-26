@@ -272,7 +272,7 @@ class Sliced_Columns {
 
 			case 'sliced_actions' :
 
-				$button = '<a target="_blank" title="' . __( 'View or download as a PDF (extension required)', 'sliced-invoices' ) . '" class="button ui-tip sliced-pdf-button" href="https://slicedinvoices.com/extensions/pdf-email?utm_campaign=Free&utm_medium=link&utm_source=plugin&utm_content=pdf-button"><span class="dashicons dashicons-media-default"></span></a>';
+				$button = '<a target="_blank" title="' . __( 'View or download as a PDF (extension required)', 'sliced-invoices' ) . '" class="button ui-tip sliced-pdf-button" href="https://slicedinvoices.com/extensions/pdf-email/?utm_source=pdf_button&utm_campaign=free&utm_medium=sliced_invoices"><span class="dashicons dashicons-media-default"></span></a>';
 
 				// $button .= '<br /><a target="_blank" href="https://slicedinvoices.com/extensions/pdf-email?utm_campaign=Free&utm_medium=link&utm_source=plugin&utm_content=extension-required"><span class="ui-tip description" title="">' . __( 'Extension Required ', 'sliced-invoices' ) . '</span></a>';
 

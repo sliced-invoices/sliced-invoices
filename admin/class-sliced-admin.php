@@ -1082,7 +1082,7 @@ class Sliced_Admin {
 	public function plugin_action_links( $links ) {
 
 		$links[] = '<a href="'. esc_url( get_admin_url( null, 'admin.php?page=sliced_invoices_settings' ) ) .'">' . __( 'Settings', 'sliced-invoices' ) . '</a>';
-		$links[] = '<a href="https://slicedinvoices.com/extensions/?utm_source=Plugin&utm_medium=Plugins-Page&utm_content=Extensions&utm_campaign=Free" target="_blank">' . __( 'Extensions', 'sliced-invoices' ) . '</a>';
+		$links[] = '<a href="https://slicedinvoices.com/extensions/?utm_source=plugins_page&utm_campaign=free&utm_medium=sliced_invoices" target="_blank">' . __( 'Extensions', 'sliced-invoices' ) . '</a>';
 		return $links;
 
 	}
@@ -1630,7 +1630,7 @@ class Sliced_Admin {
 
 				<div class="result-message"></div>
 
-				<p><span class="description"><?php printf( __( 'To create a new client, choose either an existing WordPress user to associate with the client, or create a new user.  For help see our support page about <a href="%s" target="_blank">Clients</a>.', 'sliced-invoices' ), 'https://slicedinvoices.com/support/clients/' ); ?></span></p>
+				<p><span class="description"><?php printf( __( 'To create a new client, choose either an existing WordPress user to associate with the client, or create a new user.  For help see our support page about <a href="%s" target="_blank">Clients</a>.', 'sliced-invoices' ), 'https://slicedinvoices.com/support/clients/?utm_source=add_client_modal&utm_campaign=free&utm_medium=sliced_invoices' ); ?></span></p>
 
 				<p><?php _e( 'Add new client from:', 'sliced-invoices' ); ?></p>
 				

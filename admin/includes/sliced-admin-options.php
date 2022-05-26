@@ -567,8 +567,9 @@ class Sliced_Options {
 				array(
 					'name'       => __( 'Template Design', 'sliced-invoices' ),
 					'desc'       => sprintf(
+						/* translators: %s: URL */
 						__( 'For information on customizing your templates, please see our guide <a target="_blank" href="%s">here</a>.', 'sliced-invoices' ),
-						'https://slicedinvoices.com/support/quote-invoice-templates/?utm_source=Plugin&utm_medium=Quote-Design&utm_content=Support&utm_campaign=Free'
+						'https://slicedinvoices.com/support/quote-invoice-templates/?utm_source=quote_settings_page_templates&utm_campaign=free&utm_medium=sliced_invoices'
 					),
 					'id'         => 'quote_design_title',
 					'type'       => 'title',
@@ -728,8 +729,9 @@ class Sliced_Options {
 				array(
 					'name'       => __( 'Template Design', 'sliced-invoices' ),
 					'desc'       => sprintf(
+						/* translators: %s: URL */
 						__( 'For information on customizing your templates, please see our guide <a target="_blank" href="%s">here</a>.', 'sliced-invoices' ),
-						'https://slicedinvoices.com/support/quote-invoice-templates/?utm_source=Plugin&utm_medium=Invoice-Design&utm_content=Support&utm_campaign=Free'
+						'https://slicedinvoices.com/support/quote-invoice-templates/?utm_source=invoice_settings_page_templates&utm_campaign=free&utm_medium=sliced_invoices'
 					),
 					'id'         => 'invoice_design_title',
 					'type'       => 'title',
@@ -821,12 +823,16 @@ class Sliced_Options {
 					)
 				),
 				array(
-					'name'      => __( 'Payment Page', 'sliced-invoices' ),
-					'desc'      => __( 'Choose a page to use for PayPal and other <a target="_blank" href="https://slicedinvoices.com/extensions/">available payment gateway</a> messages and other confirmations.<br>A blank page named Payment would be perfect.', 'sliced-invoices' ),
-					'default'   => $payments['payment_page'],
-					'type'      => 'select',
-					'id'        => 'payment_page',
-					'options'   => $this->get_the_pages(),
+					'name'       => __( 'Payment Page', 'sliced-invoices' ),
+					'desc'       => sprintf(
+						/* translators: %s: URL */
+						__( 'Choose a page to use for PayPal and other <a target="_blank" href="%s">available payment gateway</a> messages and other confirmations.<br>A blank page named Payment would be perfect.', 'sliced-invoices' ),
+						'https://slicedinvoices.com/extensions/?utm_source=payment_settings_page&utm_campaign=free&utm_medium=sliced_invoices'
+					),
+					'default'    => $payments['payment_page'],
+					'type'       => 'select',
+					'id'         => 'payment_page',
+					'options'    => $this->get_the_pages(),
 					'attributes' => array(
 						'required' => 'required',
 					)
@@ -1116,7 +1122,7 @@ class Sliced_Options {
 				. '<br /><br />' . sprintf(
 					/* translators: %s: URL */
 					__( '(PRO) The <a target="_blank" href="%s">PDF & Email Extension</a> adds a few extra options here for customizing emails.', 'sliced-invoices' ),
-					'https://slicedinvoices.com/extensions/pdf-email?utm_source=Plugin&utm_medium=Email-Settings-Page&utm_content=PDF-Email&utm_campaign=Free'
+					'https://slicedinvoices.com/extensions/pdf-email/?utm_source=email_settings_page&utm_campaign=free&utm_medium=sliced_invoices'
 				),
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'emails' ), ),
 			'show_names' => true,
@@ -1131,7 +1137,7 @@ class Sliced_Options {
 				. '<br /><br />' . sprintf(
 					/* translators: %s: URL */
 					__( '(PRO) The <a target="_blank" href="%s">PDF & Email Extension</a> is required for this feature.', 'sliced-invoices' ),
-					'https://slicedinvoices.com/extensions/pdf-email?utm_source=Plugin&utm_medium=PDF-Settings-Page&utm_content=PDF-Email&utm_campaign=Free'
+					'https://slicedinvoices.com/extensions/pdf-email/?utm_source=pdf_settings_page&utm_campaign=free&utm_medium=sliced_invoices'
 				),
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'emails' ), ),
 			'show_names' => true,
@@ -1146,7 +1152,7 @@ class Sliced_Options {
 				. '<br /><br />' . sprintf(
 					/* translators: %s: URL */
 					__( '(PRO) The <a target="_blank" href="%s">Easy Translate Extension</a> adds many more fields here, allowing you to translate every piece of text your client sees on your quotes and invoices.', 'sliced-invoices' ),
-					'https://slicedinvoices.com/extensions/easy-translate/?utm_source=Plugin&utm_medium=Translate-Settings-Page&utm_content=Easy-Translate&utm_campaign=Free'
+					'https://slicedinvoices.com/extensions/easy-translate/?utm_source=translate_settings_page&utm_campaign=free&utm_medium=sliced_invoices'
 				),
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'translate' ), ),
 			'show_names' => true,
@@ -1319,42 +1325,42 @@ class Sliced_Options {
 
 					<img style="margin:15px 0 5px;" src="' . plugin_dir_url( dirname( __FILE__ ) ) . '/img/sliced-invoices-logo.png" width="250" /><br>
 
-					<p style="clear: both;">Check out the <strong>free and premium extensions</strong> that are available for Sliced Invoices at the <a target="_blank" href="https://slicedinvoices.com/extensions/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Extensions&utm_campaign=Free" title="Opens in new window">extensions marketplace</a>.<br>
-						There are also <a target="_blank" href="https://slicedinvoices.com/bundles/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Bundles&utm_campaign=Free" title="Opens in new window">extension bundles</a> available where you can get our most popular plugins for one great price!</p>
+					<p style="clear: both;">Check out the <strong>free and premium extensions</strong> that are available for Sliced Invoices at the <a target="_blank" href="https://slicedinvoices.com/extensions/?utm_source=extras_page&utm_campaign=free&utm_medium=sliced_invoices&utm_content=extensions" title="Opens in new window">extensions marketplace</a>.<br>
+						There are also <a target="_blank" href="https://slicedinvoices.com/bundles/?utm_source=extras_page&utm_campaign=free&utm_medium=sliced_invoices&utm_content=bundles" title="Opens in new window">extension bundles</a> available where you can get our most popular plugins for one great price!</p>
 
 					<ul class="sliced-extras">
-					
-						<li><a target="_blank" href="https://slicedinvoices.com/extensions/2checkout-payment-gateway/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=2Checkout&utm_campaign=Free" title="Opens in new window">2Checkout Payment Gateway</a><br>
-						<span class="description">Accept credit card payments for your invoices securely by using the 2Checkout Payment Gateway.</span></li>
 
-						<li><a target="_blank" href="https://slicedinvoices.com/extensions/better-urls/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Better-URLs&utm_campaign=Free" title="Opens in new window">Better URL\'s</a><br>
+						<li><a target="_blank" href="https://slicedinvoices.com/extensions/better-urls/?utm_source=extras_page&utm_campaign=free&utm_medium=sliced_invoices&utm_content=better_urls" title="Opens in new window">Better URL\'s</a> (free!)<br>
 						<span class="description">Change the URL\'s of quotes and invoice to suit your business. Change it from \'sliced_invoice\' to \'bobs_invoice\' for example.</span></li>
 						
-						<li><a target="_blank" href="https://slicedinvoices.com/extensions/braintree-payment-gateway/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Braintree&utm_campaign=Free" title="Opens in new window">Braintree Payment Gateway</a><br>
+						<li><a target="_blank" href="https://slicedinvoices.com/extensions/braintree-payment-gateway/?utm_source=extras_page&utm_campaign=free&utm_medium=sliced_invoices&utm_content=braintree" title="Opens in new window">Braintree Payment Gateway</a><br>
 						<span class="description">The Braintree Payment Gateway extension allows you to accept credit card payments for your invoices securely.</span></li>
 						
-						<li><a target="_blank" href="https://slicedinvoices.com/extensions/client-area/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Client-Area&utm_campaign=Free" title="Opens in new window">Client Area</a><br>
+						<li><a target="_blank" href="https://slicedinvoices.com/extensions/client-area/?utm_source=extras_page&utm_campaign=free&utm_medium=sliced_invoices&utm_content=client_area" title="Opens in new window">Client Area</a><br>
 						<span class="description">A secure area for your clients to view, print and export their list of Quotes and Invoices as well as edit their business details.</span></li>
 
-						<li><a target="_blank" href="https://slicedinvoices.com/extensions/deposit-invoices/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Deposit-Invoices&utm_campaign=Free" title="Opens in new window">Deposit Invoices</a><br>
+						<li><a target="_blank" href="https://slicedinvoices.com/extensions/deposit-invoices/?utm_source=extras_page&utm_campaign=free&utm_medium=sliced_invoices&utm_content=deposit_invoices" title="Opens in new window">Deposit Invoices</a><br>
 						<span class="description">Easily create deposit invoices with the click of a button. </span></li>
 
-						<li><a target="_blank" href="https://slicedinvoices.com/extensions/easy-translate/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Easy-Translate&utm_campaign=Free" title="Opens in new window">Easy Translate</a><br>
+						<li><a target="_blank" href="https://slicedinvoices.com/extensions/easy-translate/?utm_source=extras_page&utm_campaign=free&utm_medium=sliced_invoices&utm_content=easy_translate" title="Opens in new window">Easy Translate</a><br>
 						<span class="description">Translate or modify the text that is displayed on the standard invoice and quote templates, without touching any code.</span></li>
+					
+						<li><a target="_blank" href="https://slicedinvoices.com/extensions/partial-payments/?utm_source=extras_page&utm_campaign=free&utm_medium=sliced_invoices&utm_content=partial_payments" title="Opens in new window">Partial Payments</a><br>
+						<span class="description">Allow your customers to make partial payments towards invoices.</span></li>
 
-						<li><a target="_blank" href="https://slicedinvoices.com/extensions/pdf-email/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=PDF-Email&utm_campaign=Free" title="Opens in new window">PDF & Email</a><br>
+						<li><a target="_blank" href="https://slicedinvoices.com/extensions/pdf-email/?utm_source=extras_page&utm_campaign=free&utm_medium=sliced_invoices&utm_content=pdf_email" title="Opens in new window">PDF & Email</a><br>
 						<span class="description">Print quotes and invoices to PDF, email direct to clients and style the HTML emails and notifications.</span></li>
 						
-						<li><a target="_blank" href="https://slicedinvoices.com/extensions/recurring-invoices/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Recurring-Invoices&utm_campaign=Free" title="Opens in new window">Recurring Invoices</a><br>
+						<li><a target="_blank" href="https://slicedinvoices.com/extensions/recurring-invoices/?utm_source=extras_page&utm_campaign=free&utm_medium=sliced_invoices&utm_content=recurring_invoices" title="Opens in new window">Recurring Invoices</a><br>
 						<span class="description">Easily create recurring invoices with the click of a button. </span></li>
 						
-						<li><a target="_blank" href="https://slicedinvoices.com/extensions/secure-invoices/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Secure-Invoices&utm_campaign=Free" title="Opens in new window">Secure Invoices</a><br>
+						<li><a target="_blank" href="https://slicedinvoices.com/extensions/secure-invoices/?utm_source=extras_page&utm_campaign=free&utm_medium=sliced_invoices&utm_content=secure_invoices" title="Opens in new window">Secure Invoices</a><br>
 						<span class="description">Secure your invoices and only allow access to people who have been sent a secure link.</span></li>
 
-						<li><a target="_blank" href="https://slicedinvoices.com/extensions/stripe-payment-gateway/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Stripe&utm_campaign=Free" title="Opens in new window">Stripe Payment Gateway</a><br>
+						<li><a target="_blank" href="https://slicedinvoices.com/extensions/stripe-payment-gateway/?utm_source=extras_page&utm_campaign=free&utm_medium=sliced_invoices&utm_content=stripe" title="Opens in new window">Stripe Payment Gateway</a><br>
 						<span class="description">The Stripe Payment Gateway extension allows you to accept credit card payments for your invoices securely.</span></li>
 						
-						<li><a target="_blank" href="https://slicedinvoices.com/extensions/subscription-invoices/?utm_source=Plugin&utm_medium=Extras-Page&utm_content=Subscription-Invoices&utm_campaign=Free" title="Opens in new window">Subscription Invoices</a><br>
+						<li><a target="_blank" href="https://slicedinvoices.com/extensions/subscription-invoices/?utm_source=extras_page&utm_campaign=free&utm_medium=sliced_invoices&utm_content=subscription_invoices" title="Opens in new window">Subscription Invoices</a><br>
 						<span class="description">This extension allows you to easily charge your clients with automatic recurring payments.</span></li>
 
 					</ul>
@@ -1369,7 +1375,11 @@ class Sliced_Options {
 			'id'         => 'sliced_licenses',
 			'title'      => __( 'Licenses', 'sliced-invoices' ),
 			'menu_title' => __( 'Licenses', 'sliced-invoices' ),
-			'desc'       => __( 'This page is where you enter any license keys for extensions you have purchased from <a target="_blank" href="https://slicedinvoices.com">Sliced Invoices</a>.', 'sliced-invoices' ),
+			'desc'       => sprintf(
+				/* translators: %s: URL */
+				__( 'This page is where you enter any license keys for extensions you have purchased from <a target="_blank" href="%s">Sliced Invoices</a>.', 'sliced-invoices' ),
+				'https://slicedinvoices.com/?utm_source=licenses_page&utm_campaign=free&utm_medium=sliced_invoices'
+			),
 			'show_on'    => array( 'key' => 'options-page', 'value' => array( 'licenses' ), ),
 			'show_names' => true,
 			'fields'     => array(
@@ -1377,19 +1387,33 @@ class Sliced_Options {
 					'name' => __( 'Instructions', 'sliced-invoices' ),
 					'id'   => 'licenses_instructions',
 					'type' => 'title',
-					'desc' => __( sprintf( 'Before you can enter your license keys here, you must install and activate the extensions first.  You can do this from your <a href="%s" target="_blank">Plugins</a> page.<br>'.
-						'For step-by-step instructions, please read our FAQ page <a href="https://slicedinvoices.com/question/install-activate-extensions/" target="_blank">How do I install and activate Sliced Invoices extensions?</a><br><br>'.
-						'Once your extensions are installed and activated, you can activate your license keys by doing the following:<br><br>'.
-						'1. Copy the license key for your extension(s) and paste it into the field(s) below <strong>and then hit Save.</strong><br>'.
-						'2. <strong>After</strong> hitting the Save button, you can now hit the <strong>Activate License</strong> button for your extension(s).<br>'.
-						'3. That\'s it!  Be sure to watch for any new updates for your extensions.<br><br>', admin_url( 'plugins.php' ) ), 'sliced-invoices' ),
+					'desc' => sprintf(
+							/* translators: %s: URL */
+							__( 'Before you can enter your license keys here, you must install and activate the extensions first.  You can do this from your <a href="%s" target="_blank">Plugins</a> page.', 'sliced-invoices' ),
+							admin_url( 'plugins.php' )
+						)
+						. '<br />'
+						. sprintf(
+							/* translators: %s: URL */
+							__( 'For step-by-step instructions, please read our FAQ page: <a href="%s" target="_blank">How do I install and activate Sliced Invoices extensions?</a>', 'sliced-invoices' ),
+							'https://slicedinvoices.com/question/install-activate-extensions/?utm_source=licenses_page&utm_campaign=free&utm_medium=sliced_invoices'
+						)
+						. '<br /><br />'
+						. __( 'Once your extensions are installed and activated, you can activate your license keys by doing the following:', 'sliced-invoices' )
+						. '<br /><br />'
+						. __( '1. Copy the license key for your extension(s) and paste it into the field(s) below <strong>and then hit Save.</strong>', 'sliced-invoices' ) . '<br />'
+						. __( '2. <strong>After</strong> hitting the Save button, you can now hit the <strong>Activate License</strong> button for your extension(s)', 'sliced-invoices' ) . '<br />'
+						. __( '3. That\'s it!  Be sure to watch for any new updates for your extensions', 'sliced-invoices' ) . '<br /><br />',
 				),
 				array(
 					'name' => __( 'Where can I find my license keys?', 'sliced-invoices' ),
 					'id'   => 'licenses_where_to_find',
 					'type' => 'title',
-					'desc' => __( 'You should have received a Purchase Receipt email that contains the license key for each extension you have purchased from Sliced Invoices.<br>'.
-						'If you have lost the email, you can login to your account at Sliced Invoices <a target="_blank" href="https://slicedinvoices.com/login/">here</a> to get your license key(s).<br><br>', 'sliced-invoices' ),
+					'desc' => sprintf(
+						/* translators: %s: URL */
+						__( 'You should have received a Purchase Receipt email that contains the license key for each extension you have purchased from Sliced Invoices.<br>If you have lost the email, you can login to your account at Sliced Invoices <a target="_blank" href="%s">here</a> to get your license key(s).', 'sliced-invoices' ) . '<br /><br />',
+						'https://slicedinvoices.com/login/?utm_source=licenses_page&utm_campaign=free&utm_medium=sliced_invoices'
+					),
 				),
 				array(
 					'name' => '',

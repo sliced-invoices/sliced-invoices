@@ -913,7 +913,7 @@ class Sliced_Metaboxes {
 		<div class="misc-pub-section sliced-publish-box-buttons">
 			<span class="sliced-publish-box-label dashicons-before dashicons-sliced"> Sliced Invoices: </span>
 			<?php
-			$button = '<a target="_blank" title="' . __( 'View or download as a PDF (extension required)', 'sliced-invoices' ) . '" class="button ui-tip sliced-pdf-button" href="https://slicedinvoices.com/extensions/pdf-email?utm_campaign=Free&utm_medium=link&utm_source=plugin&utm_content=pdf-button"><span class="dashicons dashicons-media-default"></span></a>';
+			$button = '<a target="_blank" title="' . __( 'View or download as a PDF (extension required)', 'sliced-invoices' ) . '" class="button ui-tip sliced-pdf-button" href="https://slicedinvoices.com/extensions/pdf-email/?utm_source=pdf_button&utm_campaign=free&utm_medium=sliced_invoices"><span class="dashicons dashicons-media-default"></span></a>';
 			$button = apply_filters( 'sliced_actions_column', $button );
 			echo $button;
 			?>

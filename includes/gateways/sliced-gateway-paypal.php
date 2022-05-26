@@ -74,37 +74,37 @@ class Sliced_Paypal {
 		);
 		$options['fields'][] = array(
 			'name' => __( 'LIVE API Username', 'sliced-invoices' ),
-			'desc' => __( 'The API Username from your live PayPal account, found under "Account Settings" / "API access" / "NVP/SOAP API integration" / "Manage API credentials".' , 'sliced-invoices' ),
+			'desc' => __( 'The API Username from your live PayPal account, found under "Account Settings" / "API access" / "NVP/SOAP API integration" / "Manage API credentials".', 'sliced-invoices' ),
 			'type' => 'text',
 			'id'   => 'paypal_username',
 		);
 		$options['fields'][] = array(
 			'name' => __( 'LIVE API Password', 'sliced-invoices' ),
-			'desc' => __( 'The API Password from your live PayPal account, found under "Account Settings" / "API access" / "NVP/SOAP API integration" / "Manage API credentials".' , 'sliced-invoices' ),
+			'desc' => __( 'The API Password from your live PayPal account, found under "Account Settings" / "API access" / "NVP/SOAP API integration" / "Manage API credentials".', 'sliced-invoices' ),
 			'type' => 'text',
 			'id'   => 'paypal_password',
 		);
 		$options['fields'][] = array(
 			'name' => __( 'LIVE API Signature', 'sliced-invoices' ),
-			'desc' => __( 'The API Signature from your live PayPal account, found under "Account Settings" / "API access" / "NVP/SOAP API integration" / "Manage API credentials".' , 'sliced-invoices' ),
+			'desc' => __( 'The API Signature from your live PayPal account, found under "Account Settings" / "API access" / "NVP/SOAP API integration" / "Manage API credentials".', 'sliced-invoices' ),
 			'type' => 'text',
 			'id'   => 'paypal_signature',
 		);
 		$options['fields'][] = array(
 			'name' => __( 'SANDBOX API Username', 'sliced-invoices' ),
-			'desc' => __( 'The API Username from your sandbox PayPal account, found under "Account Settings" / "API access" / "NVP/SOAP API integration" / "Manage API credentials".' , 'sliced-invoices' ),
+			'desc' => __( 'The API Username from your sandbox PayPal account, found under "Account Settings" / "API access" / "NVP/SOAP API integration" / "Manage API credentials".', 'sliced-invoices' ),
 			'type' => 'text',
 			'id'   => 'paypal_username_sandbox',
 		);
 		$options['fields'][] = array(
 			'name' => __( 'SANDBOX API Password', 'sliced-invoices' ),
-			'desc' => __( 'The API Password from your sandbox PayPal account, found under "Account Settings" / "API access" / "NVP/SOAP API integration" / "Manage API credentials".' , 'sliced-invoices' ),
+			'desc' => __( 'The API Password from your sandbox PayPal account, found under "Account Settings" / "API access" / "NVP/SOAP API integration" / "Manage API credentials".', 'sliced-invoices' ),
 			'type' => 'text',
 			'id'   => 'paypal_password_sandbox',
 		);
 		$options['fields'][] = array(
 			'name' => __( 'SANDBOX API Signature', 'sliced-invoices' ),
-			'desc' => __( 'The API Signature from your sandbox PayPal account, found under "Account Settings" / "API access" / "NVP/SOAP API integration" / "Manage API credentials".' , 'sliced-invoices' ),
+			'desc' => __( 'The API Signature from your sandbox PayPal account, found under "Account Settings" / "API access" / "NVP/SOAP API integration" / "Manage API credentials".', 'sliced-invoices' ),
 			'type' => 'text',
 			'id'   => 'paypal_signature_sandbox',
 		);
