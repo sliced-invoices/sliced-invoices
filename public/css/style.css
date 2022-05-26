@@ -260,6 +260,9 @@ a img {outline:none; border:none;}
 }
 
 /* Form specific */
+.sliced_form_field_required {
+	color: #790000;
+}
 .sliced_gateway_button {
     display: inline-block;
 	margin-bottom: 5px;

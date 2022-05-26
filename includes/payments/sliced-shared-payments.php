@@ -329,33 +329,37 @@ class Sliced_Payments {
 	 * @since   2.10
 	 */
 	public function create_decline_quote_popup() {
-
-		$payments = get_option( 'sliced_payments' );
+		#region create_decline_quote_popup
+		
+		$payments_settings       = get_option( 'sliced_payments' );
+		$quotes_settings         = get_option( 'sliced_quotes' );
+		$decline_reason_required = isset( $quotes_settings['decline_reason_required'] )
+			&& $quotes_settings['decline_reason_required'] === 'on' ? true : false;
+		
 		?>
-
-		<div id="sliced_decline_quote" style="display:none">
-
+		<div id="sliced_decline_quote" style="display: none;">
+			
 			<div class="sliced_decline_quote_form_wrap">
-
-				<form method="POST" action="<?php echo esc_url( get_permalink( (int)$payments['payment_page'] ) ) ?>">
+				
+				<form method="POST" action="<?php echo esc_url( get_permalink( (int)$payments_settings['payment_page'] ) ) ?>">
 					<?php do_action( 'sliced_before_decline_quote_form_fields' ) ?>
-
 					<?php wp_nonce_field( 'sliced_invoices_decline_quote_' . get_the_ID(), 'sliced_decline_quote_nonce' ); ?>
-
 					<input type="hidden" name="sliced_decline_quote_id" id="sliced_decline_quote_id" value="<?php the_ID(); ?>">
-					<p><?php _e( 'Reason for declining', 'sliced-invoices' ); ?><span class="sliced_form_field_required">*</span></p>
+					<p>
+						<?php _e( 'Reason for declining', 'sliced-invoices' ); ?>
+						<?php if ( $decline_reason_required ): ?> <span class="sliced_form_field_required">*</span><?php endif; ?>
+					</p>
 					<textarea name="decline_quote_reason" id="decline_quote_reason" cols="30" rows="5"></textarea>
 					<input type="submit" name="decline-quote" class="btn btn-danger btn-lg" id="decline-quote" value="<?php printf( esc_html__( 'Decline %s', 'sliced-invoices' ), sliced_get_quote_label() ); ?>">
-
 					<?php do_action( 'sliced_after_decline_quote_form_fields' ) ?>
 				</form>
-
+				
 				<?php do_action( 'sliced_after_decline_quote_form' ) ?>
-
+				
 			</div>
-
+			
 		</div>
-
+		
 		<script type="text/javascript">
 			( function( $ ) {
 				$( document ).ready( function(){
@@ -364,23 +368,25 @@ class Sliced_Payments {
 						$( '#decline-quote' ).prop( 'disabled', true );
 					});
 					
-					$( '#decline-quote' ).prop( 'disabled', true );
-					$( '#decline_quote_reason' ).on( 'change keyup', function(){
-						if ( $( '#decline_quote_reason' ).val().length > 0 ) {
-							$( '#decline-quote' ).prop( 'disabled', false );
-						} else {
-							$( '#decline-quote' ).prop( 'disabled', true );
-						}
-					});
+					<?php if ( $decline_reason_required ): ?>
+						$( '#decline-quote' ).prop( 'disabled', true );
+						$( '#decline_quote_reason' ).on( 'change keyup', function(){
+							if ( $( '#decline_quote_reason' ).val().length > 0 ) {
+								$( '#decline-quote' ).prop( 'disabled', false );
+							} else {
+								$( '#decline-quote' ).prop( 'disabled', true );
+							}
+						});
+					<?php endif; ?>
 					
 				});
 			} )( jQuery );
 		</script>
-
+		
 		<?php
-
+		#endregion create_decline_quote_popup
 	}
-
+	
 	/**
 	 * Handle actions when client declines quote from frontend.
 	 *

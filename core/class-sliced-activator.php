@@ -148,6 +148,7 @@ Your City AZ 12345',
 				'template'          => 'template1',
 				'accept_quote'      => 'on',
 				'accept_quote_text' => sprintf( __( '**Please Note: After accepting this %1s an %2s will be automatically generated. This will then become a legally binding contract.', 'sliced-invoices' ), 'Quote', 'Invoice' ),
+				'decline_reason_required' => 'on',
 			);
 
 			update_option('sliced_quotes', $quote_array);

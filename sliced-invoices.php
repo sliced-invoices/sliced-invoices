@@ -107,6 +107,9 @@ function sliced_invoices_db_update() {
 		$payment_settings = get_option( 'sliced_payments' );
 		$payment_settings['paypal_enabled'] = 'on';
 		update_option( 'sliced_payments', $payment_settings );
+		$quotes_settings = get_option( 'sliced_quotes' );
+		$quotes_settings['decline_reason_required'] = 'on';
+		update_option( 'sliced_quotes', $quotes_settings );
 	}
 	
 	// upgrade from v7 to 8

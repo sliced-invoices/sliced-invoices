@@ -511,6 +511,12 @@ class Sliced_Options {
 					)
 				),
 				array(
+					'name'       => __( 'Decline Reason Required', 'sliced-invoices' ),
+					'desc'       => __( 'Yes, make the "Reason for declining" field required.', 'sliced-invoices' ),
+					'id'         => 'decline_reason_required',
+					'type'       => 'checkbox',
+				),
+				array(
 					'name'       => sprintf(
 						/* translators: %s is a placeholder for the localized word "Quote" (singular) */
 						__( 'Declined %s Message', 'sliced-invoices' ),
