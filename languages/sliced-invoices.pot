@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Sliced Invoices\n"
-"POT-Creation-Date: 2022-02-10 18:35-0800\n"
+"POT-Creation-Date: 2022-05-26 18:10-0700\n"
 "PO-Revision-Date: 2017-01-15 20:46-0800\n"
 "Last-Translator: \n"
 "Language-Team: Sliced Invoices <info@slicedinvoices.com>\n"
@@ -20,342 +20,352 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: admin/class-sliced-admin.php:135 admin/class-sliced-admin.php:233
-#: admin/class-sliced-admin.php:1550
+#: admin/class-sliced-admin.php:136 admin/class-sliced-admin.php:235
+#: admin/class-sliced-admin.php:1545
 msgid "User ID:"
 msgstr ""
 
-#: admin/class-sliced-admin.php:386
+#: admin/class-sliced-admin.php:389
 #, php-format
-msgid "Are you sure you want to convert from %1s to %2s"
+msgid ""
+"Are you sure you want to convert this %1s to an %2s? This cannot be undone."
 msgstr ""
 
-#: admin/class-sliced-admin.php:387
+#: admin/class-sliced-admin.php:395
+#, php-format
+msgid "Are you sure you want to create a new %1s from this %2s?"
+msgstr ""
+
+#: admin/class-sliced-admin.php:399
 #: includes/vendor/cmb2/includes/CMB2_JS.php:177
 #: includes/vendor/cmb2/includes/CMB2_JS.php:222
 msgid "Clear"
 msgstr ""
 
-#: admin/class-sliced-admin.php:388
+#: admin/class-sliced-admin.php:400
 msgid "Close"
 msgstr ""
 
-#: admin/class-sliced-admin.php:390
+#: admin/class-sliced-admin.php:402
 #: includes/vendor/cmb2/includes/CMB2_JS.php:213
 msgid "Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday"
 msgstr ""
 
-#: admin/class-sliced-admin.php:391
+#: admin/class-sliced-admin.php:403
 #: includes/vendor/cmb2/includes/CMB2_JS.php:214
 msgid "Su, Mo, Tu, We, Th, Fr, Sa"
 msgstr ""
 
-#: admin/class-sliced-admin.php:392
+#: admin/class-sliced-admin.php:404
 #: includes/vendor/cmb2/includes/CMB2_JS.php:215
 msgid "Sun, Mon, Tue, Wed, Thu, Fri, Sat"
 msgstr ""
 
-#: admin/class-sliced-admin.php:393
+#: admin/class-sliced-admin.php:405
 #: includes/vendor/cmb2/includes/CMB2_JS.php:216
 msgid ""
 "January, February, March, April, May, June, July, August, September, "
 "October, November, December"
 msgstr ""
 
-#: admin/class-sliced-admin.php:394
+#: admin/class-sliced-admin.php:406
 #: includes/vendor/cmb2/includes/CMB2_JS.php:217
 msgid "Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec"
 msgstr ""
 
-#: admin/class-sliced-admin.php:395
+#: admin/class-sliced-admin.php:407
 #: includes/vendor/cmb2/includes/CMB2_JS.php:220
 msgid "Today"
 msgstr ""
 
-#: admin/class-sliced-admin.php:396
+#: admin/class-sliced-admin.php:408
 msgid "Create new client"
 msgstr ""
 
-#: admin/class-sliced-admin.php:398
+#: admin/class-sliced-admin.php:410
 msgid "Please enter %qty% or more characters"
 msgstr ""
 
-#: admin/class-sliced-admin.php:399
+#: admin/class-sliced-admin.php:411
 msgid "Please enter 1 or more characters"
 msgstr ""
 
-#: admin/class-sliced-admin.php:400
+#: admin/class-sliced-admin.php:412
 msgid "Loading more results&hellip;"
 msgstr ""
 
-#: admin/class-sliced-admin.php:402
+#: admin/class-sliced-admin.php:414
 msgid "You can only select %qty% items"
 msgstr ""
 
-#: admin/class-sliced-admin.php:403
+#: admin/class-sliced-admin.php:415
 msgid "You can only select 1 item"
 msgstr ""
 
-#: admin/class-sliced-admin.php:404
+#: admin/class-sliced-admin.php:416
 msgid "No matches found"
 msgstr ""
 
-#: admin/class-sliced-admin.php:405 admin/class-sliced-admin.php:1543
+#: admin/class-sliced-admin.php:417 admin/class-sliced-admin.php:1538
 msgid "Choose client"
 msgstr ""
 
-#: admin/class-sliced-admin.php:406
+#: admin/class-sliced-admin.php:418
 msgid "Searching&hellip;"
 msgstr ""
 
-#: admin/class-sliced-admin.php:511 admin/class-sliced-admin.php:515
-#: admin/class-sliced-admin.php:612 admin/class-sliced-admin.php:616
-#: admin/class-sliced-admin.php:692 admin/class-sliced-admin.php:784
+#: admin/class-sliced-admin.php:523 admin/class-sliced-admin.php:527
+#: admin/class-sliced-admin.php:624 admin/class-sliced-admin.php:628
+#: admin/class-sliced-admin.php:704 admin/class-sliced-admin.php:796
 #, php-format
 msgid "Add New %s"
 msgstr ""
 
-#: admin/class-sliced-admin.php:520 admin/class-sliced-admin.php:621
-#: admin/class-sliced-admin.php:705 admin/class-sliced-admin.php:797
+#: admin/class-sliced-admin.php:532 admin/class-sliced-admin.php:633
+#: admin/class-sliced-admin.php:717 admin/class-sliced-admin.php:809
 #, php-format
 msgid "Edit %s"
 msgstr ""
 
-#: admin/class-sliced-admin.php:527 admin/class-sliced-admin.php:628
+#: admin/class-sliced-admin.php:539 admin/class-sliced-admin.php:640
 #, php-format
 msgid "New %s"
 msgstr ""
 
-#: admin/class-sliced-admin.php:531 admin/class-sliced-admin.php:632
-#: admin/class-sliced-admin.php:715 admin/class-sliced-admin.php:807
+#: admin/class-sliced-admin.php:543 admin/class-sliced-admin.php:644
+#: admin/class-sliced-admin.php:727 admin/class-sliced-admin.php:819
 #, php-format
 msgid "No %s Found"
 msgstr ""
 
-#: admin/class-sliced-admin.php:535 admin/class-sliced-admin.php:636
+#: admin/class-sliced-admin.php:547 admin/class-sliced-admin.php:648
 #, php-format
 msgid "No %s Found in Trash"
 msgstr ""
 
-#: admin/class-sliced-admin.php:539 admin/class-sliced-admin.php:640
-#: admin/class-sliced-admin.php:723 admin/class-sliced-admin.php:815
+#: admin/class-sliced-admin.php:551 admin/class-sliced-admin.php:652
+#: admin/class-sliced-admin.php:735 admin/class-sliced-admin.php:827
 #, php-format
 msgid "Parent %s:"
 msgstr ""
 
-#: admin/class-sliced-admin.php:543 admin/class-sliced-admin.php:644
-#: admin/class-sliced-admin.php:731 admin/class-sliced-admin.php:823
+#: admin/class-sliced-admin.php:555 admin/class-sliced-admin.php:656
+#: admin/class-sliced-admin.php:743 admin/class-sliced-admin.php:835
 #, php-format
 msgid "Search %s"
 msgstr ""
 
-#: admin/class-sliced-admin.php:548 admin/class-sliced-admin.php:649
-#: admin/class-sliced-admin.php:744 admin/class-sliced-admin.php:836
+#: admin/class-sliced-admin.php:560 admin/class-sliced-admin.php:661
+#: admin/class-sliced-admin.php:756 admin/class-sliced-admin.php:848
 #, php-format
 msgid "View %s"
 msgstr ""
 
-#: admin/class-sliced-admin.php:673 admin/class-sliced-admin.php:765
-#: admin/class-sliced-admin.php:2630
-#: admin/includes/sliced-admin-metaboxes.php:340
-#: admin/includes/sliced-admin-metaboxes.php:497
-#: admin/includes/sliced-admin-metaboxes.php:673
+#: admin/class-sliced-admin.php:685 admin/class-sliced-admin.php:777
+#: admin/class-sliced-admin.php:2657
+#: admin/includes/sliced-admin-metaboxes.php:341
+#: admin/includes/sliced-admin-metaboxes.php:482
+#: admin/includes/sliced-admin-metaboxes.php:658
 #: admin/includes/sliced-admin-quick-edit.php:135
 msgid "Status"
 msgstr ""
 
-#: admin/class-sliced-admin.php:674 admin/class-sliced-admin.php:766
+#: admin/class-sliced-admin.php:686 admin/class-sliced-admin.php:778
 msgid "Statuses"
 msgstr ""
 
-#: admin/class-sliced-admin.php:696 admin/class-sliced-admin.php:788
+#: admin/class-sliced-admin.php:708 admin/class-sliced-admin.php:800
 #, php-format
 msgid "Add or remove %s"
 msgstr ""
 
-#: admin/class-sliced-admin.php:701 admin/class-sliced-admin.php:793
+#: admin/class-sliced-admin.php:713 admin/class-sliced-admin.php:805
 #, php-format
 msgid "Choose from most used %s"
 msgstr ""
 
-#: admin/class-sliced-admin.php:711 admin/class-sliced-admin.php:803
+#: admin/class-sliced-admin.php:723 admin/class-sliced-admin.php:815
 #, php-format
 msgid "New %s Name"
 msgstr ""
 
-#: admin/class-sliced-admin.php:719 admin/class-sliced-admin.php:811
+#: admin/class-sliced-admin.php:731 admin/class-sliced-admin.php:823
 #, php-format
 msgid "Parent %s"
 msgstr ""
 
-#: admin/class-sliced-admin.php:727 admin/class-sliced-admin.php:819
+#: admin/class-sliced-admin.php:739 admin/class-sliced-admin.php:831
 #, php-format
 msgid "Popular %s"
 msgstr ""
 
-#: admin/class-sliced-admin.php:735 admin/class-sliced-admin.php:827
+#: admin/class-sliced-admin.php:747 admin/class-sliced-admin.php:839
 #, php-format
 msgid "Separate %s with commas"
 msgstr ""
 
-#: admin/class-sliced-admin.php:740 admin/class-sliced-admin.php:832
+#: admin/class-sliced-admin.php:752 admin/class-sliced-admin.php:844
 #, php-format
 msgid "Update %s"
 msgstr ""
 
-#: admin/class-sliced-admin.php:868 admin/class-sliced-admin.php:888
+#: admin/class-sliced-admin.php:880 admin/class-sliced-admin.php:900
 msgctxt "a status which may be assigned to quotes & invoices"
 msgid "Draft"
 msgstr ""
 
-#: admin/class-sliced-admin.php:869
+#: admin/class-sliced-admin.php:881
 msgctxt "a status which may be assigned to quotes"
 msgid "Sent"
 msgstr ""
 
-#: admin/class-sliced-admin.php:870
+#: admin/class-sliced-admin.php:882
 msgctxt "a status which may be assigned to quotes"
 msgid "Accepted"
 msgstr ""
 
-#: admin/class-sliced-admin.php:871
+#: admin/class-sliced-admin.php:883
 msgctxt "a status which may be assigned to quotes"
 msgid "Declined"
 msgstr ""
 
-#: admin/class-sliced-admin.php:872 admin/class-sliced-admin.php:892
+#: admin/class-sliced-admin.php:884 admin/class-sliced-admin.php:904
 msgctxt "a status which may be assigned to quotes & invoices"
 msgid "Cancelled"
 msgstr ""
 
-#: admin/class-sliced-admin.php:873
+#: admin/class-sliced-admin.php:885
 msgctxt "a status which may be assigned to quotes"
 msgid "Expired"
 msgstr ""
 
-#: admin/class-sliced-admin.php:889
+#: admin/class-sliced-admin.php:901
 msgctxt "a status which may be assigned to invoices"
 msgid "Paid"
 msgstr ""
 
-#: admin/class-sliced-admin.php:890
+#: admin/class-sliced-admin.php:902
 msgctxt "a status which may be assigned to invoices"
 msgid "Unpaid"
 msgstr ""
 
-#: admin/class-sliced-admin.php:891
+#: admin/class-sliced-admin.php:903
 msgctxt "a status which may be assigned to invoices"
 msgid "Overdue"
 msgstr ""
 
-#: admin/class-sliced-admin.php:926
+#: admin/class-sliced-admin.php:938
 msgid "Settings saved successfully."
 msgstr ""
 
-#: admin/class-sliced-admin.php:935
+#: admin/class-sliced-admin.php:947
 #: admin/includes/sliced-admin-notifications.php:244
 msgid "Email was sent successfully."
 msgstr ""
 
-#: admin/class-sliced-admin.php:943
+#: admin/class-sliced-admin.php:958
 #, php-format
 msgid "Successfully converted %1s to %2s"
 msgstr ""
 
-#: admin/class-sliced-admin.php:954
+#: admin/class-sliced-admin.php:973
+#, php-format
+msgid "Successfully created new %1s from %2s"
+msgstr ""
+
+#: admin/class-sliced-admin.php:988
 msgid ""
 "Your WordPress version may not be compatible with the Sliced Invoices "
 "plugin. If you are having issues with the plugin, we recommend making a "
 "backup of your site and upgrading to the latest version of WordPress."
 msgstr ""
 
-#: admin/class-sliced-admin.php:959
+#: admin/class-sliced-admin.php:993
 msgid ""
 "Your PHP version may not be compatible with the Sliced Invoices plugin. We "
 "recommend contacting your server administrator and getting them to upgrade "
 "to a newer version of PHP."
 msgstr ""
 
-#: admin/class-sliced-admin.php:964
+#: admin/class-sliced-admin.php:998
 msgid ""
 "You do not have the cURL extension installed on your server. This extension "
 "is required for some tasks including PayPal payments. Please contact your "
 "server administrator to have them install this on your server."
 msgstr ""
 
-#: admin/class-sliced-admin.php:989 admin/class-sliced-admin.php:992
+#: admin/class-sliced-admin.php:1023 admin/class-sliced-admin.php:1026
 #, php-format
 msgid "%s updated."
 msgstr ""
 
-#: admin/class-sliced-admin.php:994
+#: admin/class-sliced-admin.php:1028
 #, php-format
 msgid "%1s restored to revision from %2s"
 msgstr ""
 
-#: admin/class-sliced-admin.php:995
+#: admin/class-sliced-admin.php:1029
 #, php-format
 msgid "%s published."
 msgstr ""
 
-#: admin/class-sliced-admin.php:996
+#: admin/class-sliced-admin.php:1030
 #, php-format
 msgid "%s saved."
 msgstr ""
 
-#: admin/class-sliced-admin.php:997
+#: admin/class-sliced-admin.php:1031
 #, php-format
 msgid "%s submitted."
 msgstr ""
 
-#: admin/class-sliced-admin.php:999
+#: admin/class-sliced-admin.php:1033
 #, php-format
 msgid "%s draft updated."
 msgstr ""
 
-#: admin/class-sliced-admin.php:1006
+#: admin/class-sliced-admin.php:1040
 msgid "View "
 msgstr ""
 
-#: admin/class-sliced-admin.php:1012
+#: admin/class-sliced-admin.php:1046
 msgid "Preview "
 msgstr ""
 
-#: admin/class-sliced-admin.php:1035 admin/class-sliced-admin.php:1038
+#: admin/class-sliced-admin.php:1069 admin/class-sliced-admin.php:1072
 #, php-format
 msgid "Enter %s title"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1052 admin/includes/sliced-admin-options.php:83
+#: admin/class-sliced-admin.php:1086 admin/includes/sliced-admin-options.php:85
 msgid "Settings"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1053
+#: admin/class-sliced-admin.php:1087
 msgid "Extensions"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1072
+#: admin/class-sliced-admin.php:1106
 #, php-format
 msgid ""
 "If you like <strong>Sliced Invoices</strong> please leave us a %s&#9733;"
 "&#9733;&#9733;&#9733;&#9733;%s rating. A huge thank you in advance!"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1119
-#, php-format
-msgid "Convert %1s to %2s"
+#: admin/class-sliced-admin.php:1332 admin/class-sliced-admin.php:1346
+#: admin/class-sliced-admin.php:1379 admin/class-sliced-admin.php:1393
+msgid "Error: quote not found."
 msgstr ""
 
-#: admin/class-sliced-admin.php:1119
-#, php-format
-msgid "Convert to %s"
+#: admin/class-sliced-admin.php:1340 admin/class-sliced-admin.php:1387
+msgid "The link you followed has expired."
 msgstr ""
 
-#: admin/class-sliced-admin.php:1590
+#: admin/class-sliced-admin.php:1586
 msgid "Choose user"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1642
+#: admin/class-sliced-admin.php:1638
 #, php-format
 msgid ""
 "To create a new client, choose either an existing WordPress user to "
@@ -363,246 +373,249 @@ msgid ""
 "page about <a href=\"%s\" target=\"_blank\">Clients</a>."
 msgstr ""
 
-#: admin/class-sliced-admin.php:1644
+#: admin/class-sliced-admin.php:1640
 msgid "Add new client from:"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1647
+#: admin/class-sliced-admin.php:1643
 msgid "Existing User"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1649 admin/class-sliced-admin.php:2222
-#: admin/class-sliced-admin.php:2265
+#: admin/class-sliced-admin.php:1645 admin/class-sliced-admin.php:2234
+#: admin/class-sliced-admin.php:2277
 msgid ""
 "Error: you do not have sufficient permissions to manage users.  Please "
 "contact an admin for assistance."
 msgstr ""
 
-#: admin/class-sliced-admin.php:1661
+#: admin/class-sliced-admin.php:1657
 msgid "Select Existing User:"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1675 admin/class-sliced-admin.php:1726
-#: admin/class-sliced-admin.php:1845
-#: admin/includes/sliced-admin-metaboxes.php:837
-#: admin/includes/sliced-admin-metaboxes.php:889
+#: admin/class-sliced-admin.php:1671 admin/class-sliced-admin.php:1714
+#: admin/class-sliced-admin.php:1839
+#: admin/includes/sliced-admin-metaboxes.php:822
+#: admin/includes/sliced-admin-metaboxes.php:874
 msgid "Business/Client Name"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1682 admin/class-sliced-admin.php:1733
-#: admin/class-sliced-admin.php:1852
-#: admin/includes/sliced-admin-metaboxes.php:843
-#: admin/includes/sliced-admin-metaboxes.php:895
-#: admin/includes/sliced-admin-options.php:282
+#: admin/class-sliced-admin.php:1678 admin/class-sliced-admin.php:1774
+#: admin/class-sliced-admin.php:1851
+#: admin/includes/sliced-admin-metaboxes.php:828
+#: admin/includes/sliced-admin-metaboxes.php:880
+#: admin/includes/sliced-admin-options.php:287
 msgid "Address"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1689 admin/class-sliced-admin.php:1740
-#: admin/class-sliced-admin.php:1859
-#: admin/includes/sliced-admin-metaboxes.php:852
-#: admin/includes/sliced-admin-metaboxes.php:904
+#: admin/class-sliced-admin.php:1685 admin/class-sliced-admin.php:1781
+#: admin/class-sliced-admin.php:1858
+#: admin/includes/sliced-admin-metaboxes.php:837
+#: admin/includes/sliced-admin-metaboxes.php:889
 msgid "Extra Info"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1697 admin/class-sliced-admin.php:1804
-#: admin/includes/sliced-admin-metaboxes.php:487
-#: admin/includes/sliced-admin-metaboxes.php:663
+#: admin/class-sliced-admin.php:1693 admin/class-sliced-admin.php:1802
+#: admin/includes/sliced-admin-metaboxes.php:472
+#: admin/includes/sliced-admin-metaboxes.php:648
 msgid "Add New Client"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1699 admin/class-sliced-admin.php:1806
-#: admin/class-sliced-admin.php:1882
+#: admin/class-sliced-admin.php:1695 admin/class-sliced-admin.php:1804
+#: admin/class-sliced-admin.php:1881
 msgid "Please wait..."
 msgstr ""
 
-#: admin/class-sliced-admin.php:1704
+#: admin/class-sliced-admin.php:1700
 msgid "Create New User"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1716 admin/class-sliced-admin.php:1835
-msgid "Username"
-msgstr ""
-
-#: admin/class-sliced-admin.php:1720 admin/class-sliced-admin.php:1839
+#: admin/class-sliced-admin.php:1720 admin/class-sliced-admin.php:1845
 msgid "E-mail"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1746 admin/class-sliced-admin.php:1865
-msgid "First Name"
+#: admin/class-sliced-admin.php:1725
+msgid "Username"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1750 admin/class-sliced-admin.php:1869
-msgid "Last Name"
-msgstr ""
-
-#: admin/class-sliced-admin.php:1754 admin/class-sliced-admin.php:1873
-#: admin/includes/sliced-admin-options.php:296
-msgid "Website"
-msgstr ""
-
-#: admin/class-sliced-admin.php:1761
+#: admin/class-sliced-admin.php:1732
 msgid "Password"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1762 admin/class-sliced-admin.php:1786
-#: admin/includes/sliced-admin-notifications.php:611
-#: admin/includes/sliced-admin-notifications.php:618
-#: admin/includes/sliced-admin-notifications.php:624
+#: admin/class-sliced-admin.php:1733 admin/class-sliced-admin.php:1757
+#: admin/includes/sliced-admin-notifications.php:612
+#: admin/includes/sliced-admin-notifications.php:619
+#: admin/includes/sliced-admin-notifications.php:625
 msgid "(required)"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1767
+#: admin/class-sliced-admin.php:1738
 msgid "Show password"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1773
+#: admin/class-sliced-admin.php:1744
 msgid "Hide password"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1775
+#: admin/class-sliced-admin.php:1746
 msgid "Hide"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1777
+#: admin/class-sliced-admin.php:1748
 msgid "Cancel password change"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1778
+#: admin/class-sliced-admin.php:1749
 msgid "Cancel"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1786
+#: admin/class-sliced-admin.php:1757
 msgid "Repeat Password"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1792
+#: admin/class-sliced-admin.php:1763
 msgid "Confirm Password"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1796
+#: admin/class-sliced-admin.php:1767
 msgid "Confirm use of weak password"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1816
+#: admin/class-sliced-admin.php:1787 admin/class-sliced-admin.php:1864
+msgid "First Name"
+msgstr ""
+
+#: admin/class-sliced-admin.php:1791 admin/class-sliced-admin.php:1868
+msgid "Last Name"
+msgstr ""
+
+#: admin/class-sliced-admin.php:1795 admin/class-sliced-admin.php:1872
+#: admin/includes/sliced-admin-options.php:301
+msgid "Website"
+msgstr ""
+
+#: admin/class-sliced-admin.php:1814
 msgid "Loading client info..."
 msgstr ""
 
-#: admin/class-sliced-admin.php:1823
+#: admin/class-sliced-admin.php:1821
 msgid "Edit a client here."
 msgstr ""
 
-#: admin/class-sliced-admin.php:1824
-msgid "NOTE: Username cannot be changed here."
+#: admin/class-sliced-admin.php:1823
+#, php-format
+msgid ""
+"NOTE: Usernames/password cannot be changed here. For that, go to your <a "
+"href=\"%s\">Users admin page</a>."
 msgstr ""
 
-#: admin/class-sliced-admin.php:1880
+#: admin/class-sliced-admin.php:1879
 msgid "Update User"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1936 admin/class-sliced-admin.php:1980
+#: admin/class-sliced-admin.php:1948 admin/class-sliced-admin.php:1992
 msgid "New Client Successfully Added"
 msgstr ""
 
-#: admin/class-sliced-admin.php:1940 admin/class-sliced-admin.php:2065
+#: admin/class-sliced-admin.php:1952 admin/class-sliced-admin.php:2077
 msgid "Please check that all required fields are filled in."
 msgstr ""
 
-#: admin/class-sliced-admin.php:1984
+#: admin/class-sliced-admin.php:1996
 msgid ""
 "Please check that all required fields are filled in, and that this user does "
 "not already exist."
 msgstr ""
 
-#: admin/class-sliced-admin.php:1998
+#: admin/class-sliced-admin.php:2010
 msgid "No client selected"
 msgstr ""
 
-#: admin/class-sliced-admin.php:2061
+#: admin/class-sliced-admin.php:2073
 msgid "Client successfully updated"
 msgstr ""
 
-#: admin/class-sliced-admin.php:2090 admin/class-sliced-admin.php:2164
+#: admin/class-sliced-admin.php:2102 admin/class-sliced-admin.php:2176
 msgid "Cheatin&#8217; uh?"
 msgstr ""
 
-#: admin/class-sliced-admin.php:2226 admin/class-sliced-admin.php:2269
+#: admin/class-sliced-admin.php:2238 admin/class-sliced-admin.php:2281
 msgid "Ooops, something went wrong, please try again later."
 msgstr ""
 
-#: admin/class-sliced-admin.php:2230 admin/class-sliced-admin.php:2273
+#: admin/class-sliced-admin.php:2242 admin/class-sliced-admin.php:2285
 msgid "No client selected."
 msgstr ""
 
-#: admin/class-sliced-admin.php:2237 admin/class-sliced-admin.php:2280
+#: admin/class-sliced-admin.php:2249 admin/class-sliced-admin.php:2292
 msgid ""
 "Error: you do not have sufficient permissions to edit this user. Please "
 "contact an admin for assistance."
 msgstr ""
 
-#: admin/class-sliced-admin.php:2339
+#: admin/class-sliced-admin.php:2351
 msgid "Clone this item"
 msgstr ""
 
-#: admin/class-sliced-admin.php:2339
+#: admin/class-sliced-admin.php:2351
 msgid "Clone"
 msgstr ""
 
-#: admin/class-sliced-admin.php:2468
+#: admin/class-sliced-admin.php:2495
 msgid "Add a pre-defined line item"
 msgstr ""
 
-#: admin/class-sliced-admin.php:2624 admin/includes/sliced-admin-columns.php:99
+#: admin/class-sliced-admin.php:2651 admin/includes/sliced-admin-columns.php:99
 msgid "Number"
 msgstr ""
 
-#: admin/class-sliced-admin.php:2625 admin/includes/sliced-admin-columns.php:98
+#: admin/class-sliced-admin.php:2652 admin/includes/sliced-admin-columns.php:98
 msgid "Title"
 msgstr ""
 
-#: admin/class-sliced-admin.php:2626
+#: admin/class-sliced-admin.php:2653
 #: admin/includes/sliced-admin-columns.php:100
-#: admin/includes/sliced-admin-metaboxes.php:487
-#: admin/includes/sliced-admin-metaboxes.php:663
+#: admin/includes/sliced-admin-metaboxes.php:472
+#: admin/includes/sliced-admin-metaboxes.php:648
 #: admin/includes/sliced-admin-quick-edit.php:116
 msgid "Client"
 msgstr ""
 
-#: admin/class-sliced-admin.php:2627
+#: admin/class-sliced-admin.php:2654
 msgid "Client Email"
 msgstr ""
 
-#: admin/class-sliced-admin.php:2628
+#: admin/class-sliced-admin.php:2655
 msgid "Client Address"
 msgstr ""
 
-#: admin/class-sliced-admin.php:2629
+#: admin/class-sliced-admin.php:2656
 msgid "Client Extra Info"
 msgstr ""
 
-#: admin/class-sliced-admin.php:2631
+#: admin/class-sliced-admin.php:2658
 #: admin/includes/sliced-admin-columns.php:116
 #: admin/includes/sliced-admin-quick-edit.php:157
 msgid "Created"
 msgstr ""
 
-#: admin/class-sliced-admin.php:2632
-#: admin/includes/sliced-admin-metaboxes.php:1208
-#: admin/includes/sliced-admin-options.php:1053
+#: admin/class-sliced-admin.php:2659
+#: admin/includes/sliced-admin-metaboxes.php:1223
+#: admin/includes/sliced-admin-options.php:1242
 #: includes/template-tags/sliced-tags-display-modules.php:170
 #: includes/template-tags/sliced-tags-display-modules.php:244
 #: includes/template-tags/sliced-tags-display-modules.php:343
 msgid "Sub Total"
 msgstr ""
 
-#: admin/class-sliced-admin.php:2633
-#: admin/includes/sliced-admin-options.php:689
-#: includes/class-sliced-shared.php:181
+#: admin/class-sliced-admin.php:2660
+#: admin/includes/sliced-admin-options.php:878
+#: includes/class-sliced-shared.php:182
 msgid "Tax"
 msgstr ""
 
-#: admin/class-sliced-admin.php:2634
+#: admin/class-sliced-admin.php:2661
 #: admin/includes/sliced-admin-columns.php:117
-#: admin/includes/sliced-admin-options.php:1071
+#: admin/includes/sliced-admin-options.php:1260
 #: includes/template-tags/sliced-tags-display-modules.php:141
 #: includes/template-tags/sliced-tags-display-modules.php:365
 msgid "Total"
@@ -629,20 +642,20 @@ msgid "Total: %s"
 msgstr ""
 
 #: admin/includes/sliced-admin-columns.php:275
-#: admin/includes/sliced-admin-metaboxes.php:928
+#: admin/includes/sliced-admin-metaboxes.php:917
 msgid "View or download as a PDF (extension required)"
 msgstr ""
 
-#: admin/includes/sliced-admin-columns.php:445
+#: admin/includes/sliced-admin-columns.php:460
 msgid "View all statuses"
 msgstr ""
 
-#: admin/includes/sliced-admin-columns.php:463
+#: admin/includes/sliced-admin-columns.php:478
 msgid "Export as CSV"
 msgstr ""
 
-#: admin/includes/sliced-admin-columns.php:682
-#: admin/includes/sliced-admin-options.php:263
+#: admin/includes/sliced-admin-columns.php:697
+#: admin/includes/sliced-admin-options.php:268
 msgid "Business"
 msgstr ""
 
@@ -709,7 +722,7 @@ msgid ""
 msgstr ""
 
 #: admin/includes/sliced-admin-help.php:75
-#: admin/includes/sliced-admin-metaboxes.php:130
+#: admin/includes/sliced-admin-metaboxes.php:131
 msgid "Line Items"
 msgstr ""
 
@@ -750,8 +763,8 @@ msgid ""
 msgstr ""
 
 #: admin/includes/sliced-admin-help.php:86
-#: admin/includes/sliced-admin-metaboxes.php:481
-#: admin/includes/sliced-admin-metaboxes.php:656
+#: admin/includes/sliced-admin-metaboxes.php:466
+#: admin/includes/sliced-admin-metaboxes.php:641
 #, php-format
 msgid "%s Details"
 msgstr ""
@@ -975,283 +988,289 @@ msgstr ""
 msgid "%1$s %2$s was viewed"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:104
-#: admin/includes/sliced-admin-metaboxes.php:197
+#: admin/includes/sliced-admin-metaboxes.php:105
+#: admin/includes/sliced-admin-metaboxes.php:198
 msgid "Description"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:138
+#: admin/includes/sliced-admin-metaboxes.php:139
 msgid "Item {#}"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:139
+#: admin/includes/sliced-admin-metaboxes.php:140
 msgid "Add Another Item"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:140
+#: admin/includes/sliced-admin-metaboxes.php:141
 msgid "Remove Item"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:146
+#: admin/includes/sliced-admin-metaboxes.php:147
 msgid "Qty"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:161
+#: admin/includes/sliced-admin-metaboxes.php:162
 msgid "Item Title"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:168
+#: admin/includes/sliced-admin-metaboxes.php:169
 msgid "Adjust (%)"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:182
+#: admin/includes/sliced-admin-metaboxes.php:183
 #, php-format
 msgid "Rate (%s)"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:182
-#: admin/includes/sliced-admin-metaboxes.php:310
+#: admin/includes/sliced-admin-metaboxes.php:183
+#: admin/includes/sliced-admin-metaboxes.php:311
 #, php-format
 msgid "Amount (%s)"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:201
+#: admin/includes/sliced-admin-metaboxes.php:202
 msgid "Brief description of the work carried out for this line item (optional)"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:208
+#: admin/includes/sliced-admin-metaboxes.php:209
 msgid "Taxable"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:251
+#: admin/includes/sliced-admin-metaboxes.php:252
 msgid "Fixed Amount"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:252
+#: admin/includes/sliced-admin-metaboxes.php:253
 msgid "Percentage"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:263
+#: admin/includes/sliced-admin-metaboxes.php:264
 msgid "Calculation Method:"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:266
+#: admin/includes/sliced-admin-metaboxes.php:267
 msgid "Before Tax"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:267
+#: admin/includes/sliced-admin-metaboxes.php:268
 msgid "After Tax"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:282
-#: admin/includes/sliced-admin-options.php:587
+#: admin/includes/sliced-admin-metaboxes.php:283
+#: admin/includes/sliced-admin-options.php:772
 msgid "Payments"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:291
+#: admin/includes/sliced-admin-metaboxes.php:292
 msgid "Payment {#}"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:292
+#: admin/includes/sliced-admin-metaboxes.php:293
 msgid "Add Another Payment"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:293
+#: admin/includes/sliced-admin-metaboxes.php:294
 msgid "Remove Payment"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:299
+#: admin/includes/sliced-admin-metaboxes.php:300
 msgid "Date"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:326
+#: admin/includes/sliced-admin-metaboxes.php:327
 msgid "Payment Method"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:333
+#: admin/includes/sliced-admin-metaboxes.php:334
 msgid "Payment ID"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:350
+#: admin/includes/sliced-admin-metaboxes.php:351
 msgid "Memo"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:375
-#: admin/includes/sliced-admin-metaboxes.php:404
-#: admin/includes/sliced-admin-options.php:357
-#: admin/includes/sliced-admin-options.php:523
+#: admin/includes/sliced-admin-metaboxes.php:376
+#: admin/includes/sliced-admin-metaboxes.php:405
+#: admin/includes/sliced-admin-options.php:392
+#: admin/includes/sliced-admin-options.php:686
 msgid "Terms & Conditions"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:446
-#, php-format
-msgid "Convert %s"
-msgstr ""
-
-#: admin/includes/sliced-admin-metaboxes.php:464
-#: admin/includes/sliced-admin-metaboxes.php:638
+#: admin/includes/sliced-admin-metaboxes.php:449
+#: admin/includes/sliced-admin-metaboxes.php:623
 #, php-format
 msgid "%s History"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:487
-#: admin/includes/sliced-admin-metaboxes.php:663
+#: admin/includes/sliced-admin-metaboxes.php:472
+#: admin/includes/sliced-admin-metaboxes.php:648
 msgid "Edit Client"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:513
-#: admin/includes/sliced-admin-metaboxes.php:689
+#: admin/includes/sliced-admin-metaboxes.php:498
+#: admin/includes/sliced-admin-metaboxes.php:674
 #: admin/includes/sliced-admin-quick-edit.php:102
 #: includes/payments/sliced-shared-payments.php:289
 #, php-format
 msgid "%s Number"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:527
-#: admin/includes/sliced-admin-metaboxes.php:539
-#: admin/includes/sliced-admin-metaboxes.php:709
-#: admin/includes/sliced-admin-metaboxes.php:721
+#: admin/includes/sliced-admin-metaboxes.php:512
+#: admin/includes/sliced-admin-metaboxes.php:524
+#: admin/includes/sliced-admin-metaboxes.php:694
+#: admin/includes/sliced-admin-metaboxes.php:706
 msgid "Created Date"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:551
-#: admin/includes/sliced-admin-metaboxes.php:560
+#: admin/includes/sliced-admin-metaboxes.php:536
+#: admin/includes/sliced-admin-metaboxes.php:545
 msgid "Valid Until Date"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:568
-#: admin/includes/sliced-admin-metaboxes.php:750
+#: admin/includes/sliced-admin-metaboxes.php:553
+#: admin/includes/sliced-admin-metaboxes.php:735
 msgid "Currency"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:575
-#: admin/includes/sliced-admin-metaboxes.php:757
-#: admin/includes/sliced-admin-options.php:586
+#: admin/includes/sliced-admin-metaboxes.php:560
+#: admin/includes/sliced-admin-metaboxes.php:742
+#: admin/includes/sliced-admin-options.php:771
 msgid "Payment Settings"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:578
-#: admin/includes/sliced-admin-metaboxes.php:760
-#: admin/includes/sliced-admin-options.php:593
+#: admin/includes/sliced-admin-metaboxes.php:563
+#: admin/includes/sliced-admin-metaboxes.php:745
+#: admin/includes/sliced-admin-options.php:778
 msgid "Currency Symbol"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:589
-#: admin/includes/sliced-admin-metaboxes.php:780
-#: admin/includes/sliced-admin-options.php:695
+#: admin/includes/sliced-admin-metaboxes.php:574
+#: admin/includes/sliced-admin-metaboxes.php:765
+#: admin/includes/sliced-admin-options.php:884
 msgid "Prices entered with tax"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:595
-#: admin/includes/sliced-admin-metaboxes.php:786
-#: admin/includes/sliced-admin-options.php:700
+#: admin/includes/sliced-admin-metaboxes.php:580
+#: admin/includes/sliced-admin-metaboxes.php:771
+#: admin/includes/sliced-admin-options.php:889
 msgid "Yes, I will enter prices inclusive of tax"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:596
-#: admin/includes/sliced-admin-metaboxes.php:787
-#: admin/includes/sliced-admin-options.php:701
+#: admin/includes/sliced-admin-metaboxes.php:581
+#: admin/includes/sliced-admin-metaboxes.php:772
+#: admin/includes/sliced-admin-options.php:890
 msgid "No, I will enter prices exclusive of tax"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:596
-#: admin/includes/sliced-admin-metaboxes.php:787
+#: admin/includes/sliced-admin-metaboxes.php:581
+#: admin/includes/sliced-admin-metaboxes.php:772
 msgid "(default)"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:599
-#: admin/includes/sliced-admin-metaboxes.php:790
-#: admin/includes/sliced-admin-options.php:688
+#: admin/includes/sliced-admin-metaboxes.php:584
+#: admin/includes/sliced-admin-metaboxes.php:775
+#: admin/includes/sliced-admin-options.php:877
 msgid "Tax Settings"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:602
-#: admin/includes/sliced-admin-metaboxes.php:793
+#: admin/includes/sliced-admin-metaboxes.php:587
+#: admin/includes/sliced-admin-metaboxes.php:778
 msgid "Tax Rate (%)"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:629
+#: admin/includes/sliced-admin-metaboxes.php:614
 msgid "<a target=\"_blank\" class=\"button\" href=\""
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:702
+#: admin/includes/sliced-admin-metaboxes.php:687
 #: admin/includes/sliced-admin-quick-edit.php:107
 #: includes/template-tags/sliced-tags-display-modules.php:76
 msgid "Order Number"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:733
-#: admin/includes/sliced-admin-metaboxes.php:742
-#: admin/includes/sliced-admin-options.php:506
+#: admin/includes/sliced-admin-metaboxes.php:718
+#: admin/includes/sliced-admin-metaboxes.php:727
+#: admin/includes/sliced-admin-options.php:664
 #: admin/includes/sliced-admin-quick-edit.php:220
 #: includes/template-tags/sliced-tags-display-modules.php:90
 msgid "Due Date"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:770
-#: admin/includes/sliced-admin-options.php:664
+#: admin/includes/sliced-admin-metaboxes.php:755
+#: admin/includes/sliced-admin-options.php:853
 msgid "Payment Methods"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:825
-#: admin/includes/sliced-admin-metaboxes.php:877
+#: admin/includes/sliced-admin-metaboxes.php:810
+#: admin/includes/sliced-admin-metaboxes.php:862
 msgid "Client Information"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:831
-#: admin/includes/sliced-admin-metaboxes.php:883
+#: admin/includes/sliced-admin-metaboxes.php:816
+#: admin/includes/sliced-admin-metaboxes.php:868
 msgid "Sliced Invoices Client"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:832
+#: admin/includes/sliced-admin-metaboxes.php:817
 msgid "Add a Business/Client Name below to activate this user as a Client."
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:890
+#: admin/includes/sliced-admin-metaboxes.php:875
 msgid "Adding a Business/Client Name will activate this user as a Client."
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:896
+#: admin/includes/sliced-admin-metaboxes.php:881
 msgid ""
 "Enter the address of the client. Format the Address any way you like. HTML "
 "is allowed."
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:905
+#: admin/includes/sliced-admin-metaboxes.php:890
 msgid ""
 "Any extra client info such as phone number or business number. HTML is "
 "allowed."
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:1203
+#: admin/includes/sliced-admin-metaboxes.php:934
+#: admin/includes/sliced-admin-options.php:455
+#, php-format
+msgid "Convert %1s to %2s"
+msgstr ""
+
+#: admin/includes/sliced-admin-metaboxes.php:943
+#, php-format
+msgid "Create new %1s from %2s"
+msgstr ""
+
+#: admin/includes/sliced-admin-metaboxes.php:1218
 #, php-format
 msgid "%s Totals"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:1218
-#: admin/includes/sliced-admin-options.php:1062
+#: admin/includes/sliced-admin-metaboxes.php:1233
+#: admin/includes/sliced-admin-options.php:1251
 #: includes/template-tags/sliced-tags-display-modules.php:270
 #: includes/template-tags/sliced-tags-display-modules.php:358
 msgid "Discount"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:1219
-#: admin/includes/sliced-admin-metaboxes.php:1231
+#: admin/includes/sliced-admin-metaboxes.php:1234
+#: admin/includes/sliced-admin-metaboxes.php:1246
 msgid "edit"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:1221
+#: admin/includes/sliced-admin-metaboxes.php:1236
 msgid "Apply"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:1230
-#: includes/invoice/class-sliced-invoice.php:259
+#: admin/includes/sliced-admin-metaboxes.php:1245
+#: includes/invoice/class-sliced-invoice.php:260
 #: includes/template-tags/sliced-tags-display-modules.php:280
 msgid "Paid"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:1239
-#: admin/includes/sliced-admin-options.php:1080
+#: admin/includes/sliced-admin-metaboxes.php:1254
+#: admin/includes/sliced-admin-options.php:1269
 #: includes/payments/sliced-shared-payments.php:179
 #: includes/template-tags/sliced-tags-display-modules.php:96
 #: includes/template-tags/sliced-tags-display-modules.php:290
@@ -1259,11 +1278,11 @@ msgstr ""
 msgid "Total Due"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:1292
+#: admin/includes/sliced-admin-metaboxes.php:1307
 msgid "Warning: duplicate quote number"
 msgstr ""
 
-#: admin/includes/sliced-admin-metaboxes.php:1298
+#: admin/includes/sliced-admin-metaboxes.php:1313
 msgid "Warning: duplicate invoice number"
 msgstr ""
 
@@ -1344,61 +1363,61 @@ msgstr ""
 msgid "%1s has made a payment for %2s on %3s %4s."
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:529
+#: admin/includes/sliced-admin-notifications.php:530
 msgid "Loading the email preview...."
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:611
+#: admin/includes/sliced-admin-notifications.php:612
 msgid "Send To"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:613
+#: admin/includes/sliced-admin-notifications.php:614
 msgid "Use comma to separate multiple recipients"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:618
-#: admin/includes/sliced-admin-options.php:758
-#: admin/includes/sliced-admin-options.php:793
-#: admin/includes/sliced-admin-options.php:828
-#: admin/includes/sliced-admin-options.php:873
+#: admin/includes/sliced-admin-notifications.php:619
+#: admin/includes/sliced-admin-options.php:947
+#: admin/includes/sliced-admin-options.php:982
+#: admin/includes/sliced-admin-options.php:1017
+#: admin/includes/sliced-admin-options.php:1062
 msgid "Subject"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:624
+#: admin/includes/sliced-admin-notifications.php:625
 msgid "Email Content"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:632
+#: admin/includes/sliced-admin-notifications.php:633
 msgid "Send The Email"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:786
+#: admin/includes/sliced-admin-notifications.php:787
 msgid "Email to client"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:815
+#: admin/includes/sliced-admin-notifications.php:816
 #, php-format
 msgid "Sent at %1$s on %2$s"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:818
+#: admin/includes/sliced-admin-notifications.php:819
 #, php-format
 msgid "Sent %s ago"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:852
+#: admin/includes/sliced-admin-notifications.php:853
 msgid "was"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:852
+#: admin/includes/sliced-admin-notifications.php:853
 msgid "is"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:947
+#: admin/includes/sliced-admin-notifications.php:948
 msgid "View this invoice online"
 msgstr ""
 
-#: admin/includes/sliced-admin-notifications.php:949
+#: admin/includes/sliced-admin-notifications.php:950
 msgid "View this quote online"
 msgstr ""
 
@@ -1409,139 +1428,139 @@ msgstr ""
 msgid "Sliced Invoices"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:140
+#: admin/includes/sliced-admin-options.php:145
 msgid "Sliced Invoices Settings"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:201
+#: admin/includes/sliced-admin-options.php:206
 msgid "General Settings"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:202
+#: admin/includes/sliced-admin-options.php:207
 msgid "General"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:203
+#: admin/includes/sliced-admin-options.php:208
 msgid "Just some general options."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:208
+#: admin/includes/sliced-admin-options.php:213
 msgid "Year Start"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:210
+#: admin/includes/sliced-admin-options.php:215
 msgid "The start date of the fiscal year"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:213
+#: admin/includes/sliced-admin-options.php:218
 msgid "01 Jan"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:214
+#: admin/includes/sliced-admin-options.php:219
 msgid "01 Feb"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:215
+#: admin/includes/sliced-admin-options.php:220
 msgid "01 Mar"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:216
+#: admin/includes/sliced-admin-options.php:221
 msgid "01 Apr"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:217
+#: admin/includes/sliced-admin-options.php:222
 msgid "01 May"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:218
+#: admin/includes/sliced-admin-options.php:223
 msgid "01 Jun"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:219
+#: admin/includes/sliced-admin-options.php:224
 msgid "01 Jul"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:220
+#: admin/includes/sliced-admin-options.php:225
 msgid "01 Aug"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:221
+#: admin/includes/sliced-admin-options.php:226
 msgid "01 Sep"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:222
+#: admin/includes/sliced-admin-options.php:227
 msgid "01 Oct"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:223
+#: admin/includes/sliced-admin-options.php:228
 msgid "01 Nov"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:224
+#: admin/includes/sliced-admin-options.php:229
 msgid "01 Dec"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:228
+#: admin/includes/sliced-admin-options.php:233
 msgid "Year End"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:230
+#: admin/includes/sliced-admin-options.php:235
 msgid "The end date of the fiscal year"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:233
+#: admin/includes/sliced-admin-options.php:238
 msgid "31 Jan"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:234
+#: admin/includes/sliced-admin-options.php:239
 msgid "28 Feb"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:235
+#: admin/includes/sliced-admin-options.php:240
 msgid "31 Mar"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:236
+#: admin/includes/sliced-admin-options.php:241
 msgid "30 Apr"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:237
+#: admin/includes/sliced-admin-options.php:242
 msgid "31 May"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:238
+#: admin/includes/sliced-admin-options.php:243
 msgid "30 Jun"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:239
+#: admin/includes/sliced-admin-options.php:244
 msgid "31 Jul"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:240
+#: admin/includes/sliced-admin-options.php:245
 msgid "31 Aug"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:241
+#: admin/includes/sliced-admin-options.php:246
 msgid "30 Sep"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:242
+#: admin/includes/sliced-admin-options.php:247
 msgid "31 Oct"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:243
+#: admin/includes/sliced-admin-options.php:248
 msgid "30 Nov"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:244
+#: admin/includes/sliced-admin-options.php:249
 msgid "31 Dec"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:248
+#: admin/includes/sliced-admin-options.php:253
 msgid "Pre-Defined Line Items"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:249
+#: admin/includes/sliced-admin-options.php:254
 msgid ""
 "Add 1 line item per line in this format: Qty | Title | Price | Description. "
 "Each field separated with a | symbol. <br>Price should be numbers only, no "
@@ -1549,222 +1568,252 @@ msgid ""
 "| symbol like so: 1 | Web Design | | Designing the web"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:262
+#: admin/includes/sliced-admin-options.php:267
 msgid "Business Settings"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:264
+#: admin/includes/sliced-admin-options.php:269
 #, php-format
 msgid "All of the Business Details below will be displayed on the %1s & %2s."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:269
+#: admin/includes/sliced-admin-options.php:274
 msgid "Logo"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:270
+#: admin/includes/sliced-admin-options.php:275
 msgid ""
 "Logo of your business. If no logo is added, the name of your business will "
 "be used instead."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:276
+#: admin/includes/sliced-admin-options.php:281
 msgid "Business Name"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:283
+#: admin/includes/sliced-admin-options.php:288
 msgid ""
 "Add your full address and format it anyway you like. Basic HTML is allowed."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:289
+#: admin/includes/sliced-admin-options.php:294
 msgid "Extra Business Info"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:290
+#: admin/includes/sliced-admin-options.php:295
 msgid ""
 "Extra business info such as Business Number, phone number or email address "
 "and format it anyway you like. Basic HTML is allowed.<br>You can add your "
 "VAT number or ABN here."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:306
-#: admin/includes/sliced-admin-options.php:472
+#: admin/includes/sliced-admin-options.php:314
+#: admin/includes/sliced-admin-options.php:612
 #, php-format
 msgid "%s Settings"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:308
-#: admin/includes/sliced-admin-options.php:474
+#: admin/includes/sliced-admin-options.php:320
+#: admin/includes/sliced-admin-options.php:618
 #, php-format
-msgid "%s"
+msgid "Here you will find all the settings for %s."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:308
-msgid "Here you will find all of the settings for "
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:313
-#: admin/includes/sliced-admin-options.php:479
+#: admin/includes/sliced-admin-options.php:327
+#: admin/includes/sliced-admin-options.php:625
 msgid "Prefix"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:314
-#: admin/includes/sliced-admin-options.php:480
+#: admin/includes/sliced-admin-options.php:330
+#: admin/includes/sliced-admin-options.php:628
 #, php-format
 msgid ""
 "Prefix before each %s number. Can be left blank if you don't need a prefix."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:320
-#: admin/includes/sliced-admin-options.php:486
+#: admin/includes/sliced-admin-options.php:338
+#: admin/includes/sliced-admin-options.php:636
 msgid "Suffix"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:321
-#: admin/includes/sliced-admin-options.php:487
+#: admin/includes/sliced-admin-options.php:341
+#: admin/includes/sliced-admin-options.php:639
 #, php-format
 msgid ""
 "Suffix after each %s number. Can be left blank if you don't need a suffix."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:327
-#: admin/includes/sliced-admin-options.php:493
+#: admin/includes/sliced-admin-options.php:349
+#: admin/includes/sliced-admin-options.php:647
 msgid "Auto Increment"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:328
+#: admin/includes/sliced-admin-options.php:352
+#: admin/includes/sliced-admin-options.php:650
 #, php-format
 msgid "Yes, increment %s numbers by one. Recommended."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:333
-#: admin/includes/sliced-admin-options.php:499
+#: admin/includes/sliced-admin-options.php:359
+#: admin/includes/sliced-admin-options.php:657
 msgid "Next Number"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:334
+#: admin/includes/sliced-admin-options.php:360
 msgid "The next number to use for auto incrementing. Can use leading zeros."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:340
+#: admin/includes/sliced-admin-options.php:368
 #, php-format
 msgid "%s Valid For"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:341
+#: admin/includes/sliced-admin-options.php:373
 #, php-format
 msgid ""
 "Number of days each %1s is valid for. This will automatically set the date "
 "in the 'Valid Until' field.<br>Can be overriden on individual %2s."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:351
-#: admin/includes/sliced-admin-options.php:517
+#: admin/includes/sliced-admin-options.php:386
+#: admin/includes/sliced-admin-options.php:680
 msgid "Hide Adjust Field"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:352
-#: admin/includes/sliced-admin-options.php:518
+#: admin/includes/sliced-admin-options.php:387
+#: admin/includes/sliced-admin-options.php:681
 msgid "Yes, hide the Adjust field on line items, I won't need this field"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:358
+#: admin/includes/sliced-admin-options.php:395
+#: admin/includes/sliced-admin-options.php:689
+#, php-format
 msgid ""
-"Terms and conditions displayed on the quote..<br>Can be overriden on "
-"individual quotes."
+"Terms and conditions displayed on the %1s.<br>Can be overriden on individual "
+"%2s."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:364
-#: admin/includes/sliced-admin-options.php:530
+#: admin/includes/sliced-admin-options.php:404
+#: admin/includes/sliced-admin-options.php:698
 msgid "Footer"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:365
-#: admin/includes/sliced-admin-options.php:531
+#: admin/includes/sliced-admin-options.php:407
+#: admin/includes/sliced-admin-options.php:701
 #, php-format
 msgid ""
 "The footer will be displayed at the bottom of each %1s. Basic HTML is "
 "allowed."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:371
-msgid "Accept Quotes"
+#: admin/includes/sliced-admin-options.php:417
+#, php-format
+msgid "Accepting %s"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:376
-msgid "Accept Quote Button"
+#: admin/includes/sliced-admin-options.php:426
+#, php-format
+msgid "Accept %s Button"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:377
-msgid "Yes, show the 'Accept Quote' button on quotes."
+#: admin/includes/sliced-admin-options.php:431
+#, php-format
+msgid "Yes, show the \"Accept %1s\" button on %2s."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:382
-msgid "Accepted Quote Action"
+#: admin/includes/sliced-admin-options.php:441
+#, php-format
+msgid "Accepted %s Action"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:383
-msgid "Actions to perform automatically when client accepts quote."
+#: admin/includes/sliced-admin-options.php:446
+#, php-format
+msgid "Actions to perform automatically when client accepts a %s."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:388
-msgid "Convert quote to invoice"
+#: admin/includes/sliced-admin-options.php:461
+#, php-format
+msgid "Convert %1s to %2s and send to client"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:389
-msgid "Convert quote to invoice and send to client"
+#: admin/includes/sliced-admin-options.php:467
+#, php-format
+msgid "Create new %1s, keep %2s as-is"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:390
-msgid "Create invoice, but keep quote"
+#: admin/includes/sliced-admin-options.php:473
+#, php-format
+msgid "Create new %1s and send to client, keep %2s as-is"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:391
-msgid "Create invoice and send to client, but keep quote"
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:392
+#: admin/includes/sliced-admin-options.php:477
 msgid "Do nothing"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:396
-msgid "Accept Quote Text"
+#: admin/includes/sliced-admin-options.php:483
+#, php-format
+msgid "Accept %s Text"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:397
+#: admin/includes/sliced-admin-options.php:488
+#, php-format
 msgid ""
-"Text to add on the 'Accept Quote' popup.<br />Should provide some indication "
-"to your client of what happens after accepting the quote."
+"Text to add on the \"Accept %1s\" popup. Basic HTML is allowed.<br>This "
+"should provide some indication to your client of what happens after "
+"accepting the %2s."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:403
-msgid "Accepted Quote Message"
+#: admin/includes/sliced-admin-options.php:499
+#, php-format
+msgid "Accepted %s Message"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:404
+#: admin/includes/sliced-admin-options.php:504
+#, php-format
 msgid ""
-"Message to display if client accepts the quote.<br />Leave blank for the "
-"default message."
+"Message to display if client accepts the %s. Basic HTML is allowed.<br>Leave "
+"blank for the default message."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:413
-msgid "Declined Quote Message"
+#: admin/includes/sliced-admin-options.php:513
+#: includes/payments/sliced-shared-payments.php:662
+#, php-format
+msgid "You have accepted the %s.<br>We will be in touch shortly."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:414
+#: admin/includes/sliced-admin-options.php:519
+msgid "Decline Reason Required"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:520
+msgid "Yes, make the \"Reason for declining\" field required."
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:527
+#, php-format
+msgid "Declined %s Message"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:532
+#, php-format
 msgid ""
-"Message to display if client declines the quote.<br />Leave blank for the "
-"default message."
+"Message to display if client declines the %s. Basic HTML is allowed."
+"<br>Leave blank for the default message."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:423
-#: admin/includes/sliced-admin-options.php:537
+#: admin/includes/sliced-admin-options.php:541
+#: includes/payments/sliced-shared-payments.php:499
+#, php-format
+msgid "You have declined the %s.<br>We will be in touch shortly."
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:547
+#: admin/includes/sliced-admin-options.php:709
 msgid "Admin Notices"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:425
-#: admin/includes/sliced-admin-options.php:539
+#: admin/includes/sliced-admin-options.php:549
+#: admin/includes/sliced-admin-options.php:711
 #, php-format
 msgid ""
 "These settings allow you to choose which notices may be displayed in your "
@@ -1772,53 +1821,56 @@ msgid ""
 "can configure on the <a href=\"%s\">Email Settings</a> tab."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:432
-#: admin/includes/sliced-admin-options.php:546
+#: admin/includes/sliced-admin-options.php:556
+#: admin/includes/sliced-admin-options.php:718
 msgid "Show me notices when"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:441
-#: admin/includes/sliced-admin-options.php:555
+#: admin/includes/sliced-admin-options.php:562
+#: admin/includes/sliced-admin-options.php:724
+#, php-format
+msgid "%s Viewed"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:567
+#, php-format
+msgid "%s Accepted"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:573
+#: admin/includes/sliced-admin-options.php:735
 msgid "Template Design"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:443
-#: admin/includes/sliced-admin-options.php:557
+#: admin/includes/sliced-admin-options.php:576
+#: admin/includes/sliced-admin-options.php:738
 #, php-format
 msgid ""
 "For information on customizing your templates, please see our guide <a "
 "target=\"_blank\" href=\"%s\">here</a>."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:450
-#: admin/includes/sliced-admin-options.php:564
+#: admin/includes/sliced-admin-options.php:583
+#: admin/includes/sliced-admin-options.php:745
 msgid "Template"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:461
-#: admin/includes/sliced-admin-options.php:575
+#: admin/includes/sliced-admin-options.php:594
+#: admin/includes/sliced-admin-options.php:756
 msgid "Custom CSS"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:462
-msgid "Add custom CSS to your quotes"
+#: admin/includes/sliced-admin-options.php:597
+#: admin/includes/sliced-admin-options.php:759
+#, php-format
+msgid "Add custom CSS to your %s"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:474
-msgid ""
-"Here you will find all of the settings for <span class=\"i18n-multilingual-"
-"display\">"
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:494
-msgid "Yes, increment invoice numbers by one. Recommended."
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:500
+#: admin/includes/sliced-admin-options.php:658
 msgid "The next number to use for auto incrementing. Can use leading zeros"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:507
+#: admin/includes/sliced-admin-options.php:667
 #, php-format
 msgid ""
 "Number of days each %1s is due after the created date. This will "
@@ -1826,200 +1878,195 @@ msgid ""
 "individual %2s."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:524
-msgid ""
-"Terms and conditions displayed on the invoice.<br>Can be overriden on "
-"individual invoices."
+#: admin/includes/sliced-admin-options.php:729
+#, php-format
+msgid "%s Paid"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:576
-msgid "Add custom CSS to your invoices."
-msgstr ""
-
-#: admin/includes/sliced-admin-options.php:588
+#: admin/includes/sliced-admin-options.php:773
 msgid "Here you will find all of the Payment related settings."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:602
+#: admin/includes/sliced-admin-options.php:787
 msgid "Currency Position"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:613
+#: admin/includes/sliced-admin-options.php:798
 msgid "Thousand Separator"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:624
+#: admin/includes/sliced-admin-options.php:809
 msgid "Decimal Separator"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:634
+#: admin/includes/sliced-admin-options.php:819
 msgid "Number of Decimals"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:646
+#: admin/includes/sliced-admin-options.php:831
 msgid "Payment Page"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:647
+#: admin/includes/sliced-admin-options.php:834
+#, php-format
 msgid ""
-"Choose a page to use for PayPal and other <a target=\"_blank\" href="
-"\"https://slicedinvoices.com/extensions/\">available payment gateway</a> "
-"messages and other confirmations.<br>A blank page named Payment would be "
-"perfect."
+"Choose a page to use for PayPal and other <a target=\"_blank\" href=\"%s"
+"\">available payment gateway</a> messages and other confirmations.<br>A "
+"blank page named Payment would be perfect."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:657
+#: admin/includes/sliced-admin-options.php:846
 msgid "Payment Page Footer"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:658
+#: admin/includes/sliced-admin-options.php:847
 msgid ""
 "The footer will be displayed at the bottom of the payment page. Basic HTML "
 "is allowed.<br>Use this to provide additional payment instructions, if "
 "desired."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:670
-#: includes/class-sliced-shared.php:646
+#: admin/includes/sliced-admin-options.php:859
+#: includes/class-sliced-shared.php:648
 msgid "Bank"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:670
-#: admin/includes/sliced-admin-options.php:677
+#: admin/includes/sliced-admin-options.php:859
+#: admin/includes/sliced-admin-options.php:866
 #, php-format
 msgid "Displayed on the %s"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:671
+#: admin/includes/sliced-admin-options.php:860
 msgid ""
 "Add your bank account details if you wish to allow direct bank deposits. "
 "HTML is allowed."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:677
+#: admin/includes/sliced-admin-options.php:866
 msgid "Generic Payment"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:678
+#: admin/includes/sliced-admin-options.php:867
 msgid ""
 "Set a generic message or include further instructions for the user on how to "
 "pay. HTML is allowed."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:690
+#: admin/includes/sliced-admin-options.php:879
 msgid "Here you will find all Tax-related settings."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:705
+#: admin/includes/sliced-admin-options.php:894
 msgid "Tax Percentage"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:706
+#: admin/includes/sliced-admin-options.php:895
 msgid "Default tax percentage. Set to 0 or leave blank for no tax."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:718
+#: admin/includes/sliced-admin-options.php:907
 msgid "Tax Name"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:719
+#: admin/includes/sliced-admin-options.php:908
 msgid "The name of the tax for your country/region. GST, VAT, Tax etc"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:732
+#: admin/includes/sliced-admin-options.php:921
 msgid "Email Address"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:733
+#: admin/includes/sliced-admin-options.php:922
 msgid ""
 "The email address to send and receive notifications (probably your business "
 "email)."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:739
+#: admin/includes/sliced-admin-options.php:928
 msgid "Email Name"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:740
+#: admin/includes/sliced-admin-options.php:929
 msgid ""
 "The name on emails to send and receive notifications (probably your business "
 "name)."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:746
+#: admin/includes/sliced-admin-options.php:935
 msgid "Bcc on Client Emails"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:747
+#: admin/includes/sliced-admin-options.php:936
 msgid ""
 "Yes, send myself a copy of all client emails (Bcc). Recommended.<br><span "
 "class=\"description\"><small>This ensures you have a copy of the email on "
 "record</small></span>"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:752
+#: admin/includes/sliced-admin-options.php:941
 msgid "Quote Available"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:759
-#: admin/includes/sliced-admin-options.php:794
-#: admin/includes/sliced-admin-options.php:829
-#: admin/includes/sliced-admin-options.php:874
+#: admin/includes/sliced-admin-options.php:948
+#: admin/includes/sliced-admin-options.php:983
+#: admin/includes/sliced-admin-options.php:1018
+#: admin/includes/sliced-admin-options.php:1063
 msgid "The subject of the email (wildcards are allowed)."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:765
-#: admin/includes/sliced-admin-options.php:800
-#: admin/includes/sliced-admin-options.php:835
-#: admin/includes/sliced-admin-options.php:880
+#: admin/includes/sliced-admin-options.php:954
+#: admin/includes/sliced-admin-options.php:989
+#: admin/includes/sliced-admin-options.php:1024
+#: admin/includes/sliced-admin-options.php:1069
 msgid "Content"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:766
-#: admin/includes/sliced-admin-options.php:801
-#: admin/includes/sliced-admin-options.php:836
-#: admin/includes/sliced-admin-options.php:881
+#: admin/includes/sliced-admin-options.php:955
+#: admin/includes/sliced-admin-options.php:990
+#: admin/includes/sliced-admin-options.php:1025
+#: admin/includes/sliced-admin-options.php:1070
 msgid "The content of the email (wildcards and HTML are allowed)."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:780
-#: admin/includes/sliced-admin-options.php:815
+#: admin/includes/sliced-admin-options.php:969
+#: admin/includes/sliced-admin-options.php:1004
 msgid "Button text"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:781
+#: admin/includes/sliced-admin-options.php:970
 msgid "The \"view this quote online\" button."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:787
+#: admin/includes/sliced-admin-options.php:976
 msgid "Invoice Available"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:816
+#: admin/includes/sliced-admin-options.php:1005
 msgid "The \"view this invoice online\" button."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:822
+#: admin/includes/sliced-admin-options.php:1011
 msgid "Payment Received"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:850
+#: admin/includes/sliced-admin-options.php:1039
 msgid "Payment Reminder"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:856
+#: admin/includes/sliced-admin-options.php:1045
 msgid "When to Send"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:857
+#: admin/includes/sliced-admin-options.php:1046
 msgid "Check when you would like payment reminders sent out."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:895
+#: admin/includes/sliced-admin-options.php:1084
 msgid "Wildcards For Emails"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:896
+#: admin/includes/sliced-admin-options.php:1085
 msgid ""
 "The following wildcards can be used in email subjects and email content:"
 "<br>\n"
@@ -2043,63 +2090,63 @@ msgid ""
 "\t\t\t\t\t"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:919
+#: admin/includes/sliced-admin-options.php:1108
 msgid "Footer Text"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:935
+#: admin/includes/sliced-admin-options.php:1124
 msgid "Email Settings"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:936
+#: admin/includes/sliced-admin-options.php:1125
 msgid "Emails"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:937
+#: admin/includes/sliced-admin-options.php:1126
 msgid "Here you will find all of the Email-related settings."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:940
+#: admin/includes/sliced-admin-options.php:1129
 #, php-format
 msgid ""
 "(PRO) The <a target=\"_blank\" href=\"%s\">PDF & Email Extension</a> adds a "
 "few extra options here for customizing emails."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:950
+#: admin/includes/sliced-admin-options.php:1139
 msgid "PDF Settings"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:951
+#: admin/includes/sliced-admin-options.php:1140
 msgid "PDF"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:952
+#: admin/includes/sliced-admin-options.php:1141
 msgid "Here you will find all of the PDF-related settings."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:955
+#: admin/includes/sliced-admin-options.php:1144
 #, php-format
 msgid ""
 "(PRO) The <a target=\"_blank\" href=\"%s\">PDF & Email Extension</a> is "
 "required for this feature."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:965
+#: admin/includes/sliced-admin-options.php:1154
 msgid "Translate Settings"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:966
+#: admin/includes/sliced-admin-options.php:1155
 msgid "Translate"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:967
+#: admin/includes/sliced-admin-options.php:1156
 msgid ""
 "Here you can translate strings into your own language, or simply change the "
 "text to suit your needs."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:970
+#: admin/includes/sliced-admin-options.php:1159
 #, php-format
 msgid ""
 "(PRO) The <a target=\"_blank\" href=\"%s\">Easy Translate Extension</a> adds "
@@ -2107,106 +2154,144 @@ msgid ""
 "client sees on your quotes and invoices."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:977
+#: admin/includes/sliced-admin-options.php:1166
 msgid "Quote Label"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:978
+#: admin/includes/sliced-admin-options.php:1167
 msgid ""
 "You can change this from Quote to Estimate or Proposal (or any other word "
 "you like)."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:987
+#: admin/includes/sliced-admin-options.php:1176
 msgid "Quote Label Plural"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:988
-#: admin/includes/sliced-admin-options.php:1008
+#: admin/includes/sliced-admin-options.php:1177
+#: admin/includes/sliced-admin-options.php:1197
 msgid "The plural of the above"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:997
+#: admin/includes/sliced-admin-options.php:1186
 msgid "Invoice Label"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:998
+#: admin/includes/sliced-admin-options.php:1187
 msgid ""
 "You can change this from Invoice to Tax Invoice (or any other word you like)."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1007
+#: admin/includes/sliced-admin-options.php:1196
 msgid "Invoice Label Plural"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1017
+#: admin/includes/sliced-admin-options.php:1206
 #: includes/template-tags/sliced-tags-display-modules.php:164
 msgid "Hrs/Qty"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1026
+#: admin/includes/sliced-admin-options.php:1215
 #: includes/template-tags/sliced-tags-display-modules.php:165
 msgid "Service"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1035
+#: admin/includes/sliced-admin-options.php:1224
 #: includes/template-tags/sliced-tags-display-modules.php:166
 msgid "Rate/Price"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1044
+#: admin/includes/sliced-admin-options.php:1233
 #: includes/template-tags/sliced-tags-display-modules.php:168
 msgid "Adjust"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1093
-#: admin/includes/sliced-admin-options.php:1094
+#: admin/includes/sliced-admin-options.php:1282
+#: admin/includes/sliced-admin-options.php:1283
 msgid "Extras"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1095
+#: admin/includes/sliced-admin-options.php:1284
 msgid "Just a page with some advertising and a cry for help ;-)"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1100
+#: admin/includes/sliced-admin-options.php:1289
 msgid "We'd Love Your Support"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1109
+#: admin/includes/sliced-admin-options.php:1298
 msgid "Sign up for our newsletter"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1137
+#: admin/includes/sliced-admin-options.php:1326
 msgid "Extend Sliced Invoices"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1192
-#: admin/includes/sliced-admin-options.php:1193
+#: admin/includes/sliced-admin-options.php:1381
+#: admin/includes/sliced-admin-options.php:1382
 msgid "Licenses"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1194
+#: admin/includes/sliced-admin-options.php:1385
+#, php-format
 msgid ""
 "This page is where you enter any license keys for extensions you have "
-"purchased from <a target=\"_blank\" href=\"https://slicedinvoices.com"
-"\">Sliced Invoices</a>."
+"purchased from <a target=\"_blank\" href=\"%s\">Sliced Invoices</a>."
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1199
+#: admin/includes/sliced-admin-options.php:1392
 msgid "Instructions"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1210
+#: admin/includes/sliced-admin-options.php:1397
+#, php-format
+msgid ""
+"Before you can enter your license keys here, you must install and activate "
+"the extensions first.  You can do this from your <a href=\"%s\" target="
+"\"_blank\">Plugins</a> page."
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:1403
+#, php-format
+msgid ""
+"For step-by-step instructions, please read our FAQ page: <a href=\"%s\" "
+"target=\"_blank\">How do I install and activate Sliced Invoices extensions?</"
+"a>"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:1407
+msgid ""
+"Once your extensions are installed and activated, you can activate your "
+"license keys by doing the following:"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:1409
+msgid ""
+"1. Copy the license key for your extension(s) and paste it into the field(s) "
+"below <strong>and then hit Save.</strong>"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:1410
+msgid ""
+"2. <strong>After</strong> hitting the Save button, you can now hit the "
+"<strong>Activate License</strong> button for your extension(s)"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:1411
+msgid "3. That's it!  Be sure to watch for any new updates for your extensions"
+msgstr ""
+
+#: admin/includes/sliced-admin-options.php:1414
 msgid "Where can I find my license keys?"
 msgstr ""
 
-#: admin/includes/sliced-admin-options.php:1213
+#: admin/includes/sliced-admin-options.php:1419
+#, php-format
 msgid ""
 "You should have received a Purchase Receipt email that contains the license "
 "key for each extension you have purchased from Sliced Invoices.<br>If you "
 "have lost the email, you can login to your account at Sliced Invoices <a "
-"target=\"_blank\" href=\"https://slicedinvoices.com/login/\">here</a> to get "
-"your license key(s).<br><br>"
+"target=\"_blank\" href=\"%s\">here</a> to get your license key(s)."
 msgstr ""
 
 #: admin/includes/sliced-admin-quick-edit.php:161
@@ -2350,35 +2435,35 @@ msgstr ""
 msgid "Export CSV"
 msgstr ""
 
-#: core/class-sliced-activator.php:150
+#: core/class-sliced-activator.php:151
 #, php-format
 msgid ""
 "**Please Note: After accepting this %1s an %2s will be automatically "
 "generated. This will then become a legally binding contract."
 msgstr ""
 
-#: includes/class-sliced-shared.php:649
+#: includes/class-sliced-shared.php:651
 msgid "Generic"
 msgstr ""
 
-#: includes/class-sliced-shared.php:662
+#: includes/class-sliced-shared.php:664
 msgid "Completed"
 msgstr ""
 
-#: includes/class-sliced-shared.php:663
+#: includes/class-sliced-shared.php:665
 msgid "Pending"
 msgstr ""
 
-#: includes/class-sliced-shared.php:664
+#: includes/class-sliced-shared.php:666
 msgid "Failed"
 msgstr ""
 
-#: includes/class-sliced-shared.php:665
+#: includes/class-sliced-shared.php:667
 msgid "Refunded"
 msgstr ""
 
-#: includes/class-sliced-shared.php:666
-#: includes/invoice/class-sliced-invoice.php:262
+#: includes/class-sliced-shared.php:668
+#: includes/invoice/class-sliced-invoice.php:263
 msgid "Cancelled"
 msgstr ""
 
@@ -2388,6 +2473,8 @@ msgstr ""
 
 #: includes/functions.php:100 includes/functions.php:108
 #: includes/functions.php:306 includes/functions.php:314
+#: includes/payments/sliced-shared-payments.php:431
+#: includes/payments/sliced-shared-payments.php:552
 msgid "Error"
 msgstr ""
 
@@ -2407,52 +2494,92 @@ msgstr ""
 msgid "Pay with PayPal"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:56
+#: includes/gateways/sliced-gateway-paypal.php:58
+msgid "Enable"
+msgstr ""
+
+#: includes/gateways/sliced-gateway-paypal.php:65
 msgid "PayPal Currency"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:59
+#: includes/gateways/sliced-gateway-paypal.php:68
 #, php-format
 msgid ""
 "3 letter code - <a href=\"%s\" target=\"_blank\">Full list of accepted "
 "currencies here</a>"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:68
-msgid "PayPal API Username"
+#: includes/gateways/sliced-gateway-paypal.php:76
+msgid "LIVE API Username"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:69
+#: includes/gateways/sliced-gateway-paypal.php:77
 msgid ""
-"You will find your API Username under \"Profile\" and then \"Request API "
+"The API Username from your live PayPal account, found under \"Account "
+"Settings\" / \"API access\" / \"NVP/SOAP API integration\" / \"Manage API "
 "credentials\"."
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:74
-msgid "PayPal API Password"
+#: includes/gateways/sliced-gateway-paypal.php:82
+msgid "LIVE API Password"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:75
+#: includes/gateways/sliced-gateway-paypal.php:83
 msgid ""
-"You will find your API Password under \"Profile\" and then \"Request API "
+"The API Password from your live PayPal account, found under \"Account "
+"Settings\" / \"API access\" / \"NVP/SOAP API integration\" / \"Manage API "
 "credentials\"."
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:80
-msgid "PayPal Signature"
-msgstr ""
-
-#: includes/gateways/sliced-gateway-paypal.php:81
-msgid ""
-"You will find your Signature under \"Profile\" and then \"Request API "
-"credentials\"."
-msgstr ""
-
-#: includes/gateways/sliced-gateway-paypal.php:86
-msgid "PayPal Mode"
+#: includes/gateways/sliced-gateway-paypal.php:88
+msgid "LIVE API Signature"
 msgstr ""
 
 #: includes/gateways/sliced-gateway-paypal.php:89
+msgid ""
+"The API Signature from your live PayPal account, found under \"Account "
+"Settings\" / \"API access\" / \"NVP/SOAP API integration\" / \"Manage API "
+"credentials\"."
+msgstr ""
+
+#: includes/gateways/sliced-gateway-paypal.php:94
+msgid "SANDBOX API Username"
+msgstr ""
+
+#: includes/gateways/sliced-gateway-paypal.php:95
+msgid ""
+"The API Username from your sandbox PayPal account, found under \"Account "
+"Settings\" / \"API access\" / \"NVP/SOAP API integration\" / \"Manage API "
+"credentials\"."
+msgstr ""
+
+#: includes/gateways/sliced-gateway-paypal.php:100
+msgid "SANDBOX API Password"
+msgstr ""
+
+#: includes/gateways/sliced-gateway-paypal.php:101
+msgid ""
+"The API Password from your sandbox PayPal account, found under \"Account "
+"Settings\" / \"API access\" / \"NVP/SOAP API integration\" / \"Manage API "
+"credentials\"."
+msgstr ""
+
+#: includes/gateways/sliced-gateway-paypal.php:106
+msgid "SANDBOX API Signature"
+msgstr ""
+
+#: includes/gateways/sliced-gateway-paypal.php:107
+msgid ""
+"The API Signature from your sandbox PayPal account, found under \"Account "
+"Settings\" / \"API access\" / \"NVP/SOAP API integration\" / \"Manage API "
+"credentials\"."
+msgstr ""
+
+#: includes/gateways/sliced-gateway-paypal.php:112
+msgid "PayPal Mode"
+msgstr ""
+
+#: includes/gateways/sliced-gateway-paypal.php:115
 #, php-format
 msgid ""
 "Set to Sandbox for testing purposes (you must have a <a href=\"%s\">Sandbox "
@@ -2460,61 +2587,65 @@ msgid ""
 "Live to accept payments from clients."
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:239
+#: includes/gateways/sliced-gateway-paypal.php:316
 msgid "Error processing payment: Invalid token."
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:276
+#: includes/gateways/sliced-gateway-paypal.php:353
 msgid "Payment has been cancelled."
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:278
+#: includes/gateways/sliced-gateway-paypal.php:355
 #, php-format
 msgid "<a href=\"%s\">Go back</a> and try again?"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:286
+#: includes/gateways/sliced-gateway-paypal.php:363
 msgid "This invoice has already been paid."
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:370
-#: includes/payments/sliced-shared-payments.php:617
+#: includes/gateways/sliced-gateway-paypal.php:447
+#: includes/payments/sliced-shared-payments.php:658
 msgid "Success"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:381
+#: includes/gateways/sliced-gateway-paypal.php:458
 msgid "Subscription has been activated!"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:383
-#: includes/gateways/sliced-gateway-paypal.php:390
-#: includes/gateways/sliced-gateway-paypal.php:402
+#: includes/gateways/sliced-gateway-paypal.php:460
+#: includes/gateways/sliced-gateway-paypal.php:467
+#: includes/gateways/sliced-gateway-paypal.php:479
 #, php-format
 msgid "Your PayPal Transaction ID is: %s"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:388
+#: includes/gateways/sliced-gateway-paypal.php:465
 msgid "Payment has been received!"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:395
+#: includes/gateways/sliced-gateway-paypal.php:472
 msgid "Transaction complete, however payment is still pending."
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:398
+#: includes/gateways/sliced-gateway-paypal.php:475
 #, php-format
 msgid ""
 "You need to manually authorize this payment in your <a target=\"_blank\" "
 "href=\"%s\">PayPal Account</a>"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:408
+#: includes/gateways/sliced-gateway-paypal.php:485
 #, php-format
 msgid "Click here to return to %s"
 msgstr ""
 
-#: includes/gateways/sliced-gateway-paypal.php:649
+#: includes/gateways/sliced-gateway-paypal.php:726
 msgid "There was an error with the form submission, please try again."
+msgstr ""
+
+#: includes/gateways/sliced-gateway-paypal.php:831
+msgid "PayPal Gateway"
 msgstr ""
 
 #: includes/payments/sliced-shared-payments.php:115
@@ -2561,7 +2692,7 @@ msgid "Accept %s"
 msgstr ""
 
 #: includes/payments/sliced-shared-payments.php:261
-#: includes/payments/sliced-shared-payments.php:336
+#: includes/payments/sliced-shared-payments.php:353
 #, php-format
 msgid "Decline %s"
 msgstr ""
@@ -2571,12 +2702,51 @@ msgstr ""
 msgid "%s Amount"
 msgstr ""
 
-#: includes/payments/sliced-shared-payments.php:334
+#: includes/payments/sliced-shared-payments.php:349
 msgid "Reason for declining"
 msgstr ""
 
-#: includes/payments/sliced-shared-payments.php:409
-msgid "Bummer"
+#: includes/payments/sliced-shared-payments.php:415
+#: includes/payments/sliced-shared-payments.php:536
+msgid "Oops, something went wrong, please try again later."
+msgstr ""
+
+#: includes/payments/sliced-shared-payments.php:437
+#, php-format
+msgid "Sorry, this %s was already accepted. Please contact us for assistance."
+msgstr ""
+
+#: includes/payments/sliced-shared-payments.php:444
+#: includes/payments/sliced-shared-payments.php:565
+#, php-format
+msgid "Sorry, this %s was cancelled. Please contact us for assistance."
+msgstr ""
+
+#: includes/payments/sliced-shared-payments.php:451
+#, php-format
+msgid "This %s has already been declined."
+msgstr ""
+
+#: includes/payments/sliced-shared-payments.php:458
+#: includes/payments/sliced-shared-payments.php:579
+#, php-format
+msgid "Sorry, this %s has expired. Please contact us for assistance."
+msgstr ""
+
+#: includes/payments/sliced-shared-payments.php:467
+#: includes/payments/sliced-shared-payments.php:588
+#, php-format
+msgid "Go back to %s"
+msgstr ""
+
+#: includes/payments/sliced-shared-payments.php:558
+#, php-format
+msgid "This %s has already been accepted."
+msgstr ""
+
+#: includes/payments/sliced-shared-payments.php:572
+#, php-format
+msgid "Sorry, this %s was declined. Please contact us for assistance."
 msgstr ""
 
 #: includes/template-tags/sliced-tags-display-modules.php:23
@@ -2706,20 +2876,20 @@ msgstr ""
 msgid "Invalid %1$s method: %2$s"
 msgstr ""
 
-#: includes/vendor/cmb2/includes/CMB2_Field.php:1438
+#: includes/vendor/cmb2/includes/CMB2_Field.php:1443
 msgid "Add Group"
 msgstr ""
 
-#: includes/vendor/cmb2/includes/CMB2_Field.php:1439
+#: includes/vendor/cmb2/includes/CMB2_Field.php:1444
 msgid "Remove Group"
 msgstr ""
 
-#: includes/vendor/cmb2/includes/CMB2_Field.php:1471
-#: includes/vendor/cmb2/includes/CMB2_Field.php:1475
+#: includes/vendor/cmb2/includes/CMB2_Field.php:1476
+#: includes/vendor/cmb2/includes/CMB2_Field.php:1480
 msgid "None"
 msgstr ""
 
-#: includes/vendor/cmb2/includes/CMB2_Field.php:1589
+#: includes/vendor/cmb2/includes/CMB2_Field.php:1594
 msgid "Sorry, this field does not have a cmb_id specified."
 msgstr ""
 
