@@ -118,8 +118,9 @@ class Sliced_Invoice {
 
 
 	/**
-	 * Get the post meta
+	 * Get the post meta.
 	 *
+	 * @version 3.9.0
 	 * @since   2.0.0
 	 */
 	private static function get_sliced_meta( $id = 0, $key = '', $single = true ) {

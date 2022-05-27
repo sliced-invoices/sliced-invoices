@@ -17,7 +17,7 @@ class Sliced_Deactivator {
 	 *
 	 * Things to do when the Sliced Invoices plugin is deactivated.
 	 *
-	 * @version 3.8.17
+	 * @version 3.9.0
 	 * @since   2.0.0
 	 */
 	public static function deactivate() {

@@ -7,7 +7,8 @@ if ( ! defined('ABSPATH') ) { exit; }
  *
  * This class defines all code necessary to run during the plugin's activation.
  *
- * @since      2.0.0
+ * @version 3.9.0
+ * @since   2.0.0
  */
 class Sliced_Activator {
 

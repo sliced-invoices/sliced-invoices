@@ -146,6 +146,7 @@ class Sliced_Shared {
 	/**
 	 * Get filename.
 	 *
+	 * @version 3.9.0
 	 * @since   2.0.0
 	 */
 	public static function get_filename( $id = 0 ) {
@@ -161,6 +162,7 @@ class Sliced_Shared {
 	/**
 	 * Get post meta.
 	 *
+	 * @version 3.9.0
 	 * @since   2.0.0
 	 */
 	private static function get_sliced_meta( $id = 0, $key = '', $single = true ) {
@@ -436,6 +438,7 @@ class Sliced_Shared {
 	/**
 	 * Get the line items totals.
 	 *
+	 * @version 3.9.0
 	 * @since   2.0.0
 	 */
 	public static function get_totals( $id ) {

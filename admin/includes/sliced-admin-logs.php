@@ -23,6 +23,8 @@ class Sliced_Logs {
 
 	/**
 	 * Hook into the appropriate actions when the class is constructed.
+	 * 
+	 * @version 3.9.0
 	 */
 	public function __construct() {
 

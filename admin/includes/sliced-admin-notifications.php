@@ -437,7 +437,9 @@ class Sliced_Notifications {
 
 	/**
 	 * Get email headers.
-	 *
+	 * 
+	 * @version 3.9.0
+	 * 
 	 * @return string
 	 */
 	public function get_the_headers( $type ) {
@@ -545,7 +547,7 @@ class Sliced_Notifications {
 	/**
 	 * Load the fields via AJAX for the post.
 	 *
-	 * @version 3.8.17
+	 * @version 3.9.0
 	 * @since   1.0.0
 	 */
 	public function sure_to_email() {

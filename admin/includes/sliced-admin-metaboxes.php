@@ -92,6 +92,7 @@ class Sliced_Metaboxes {
 	/**
 	 * Main section metaboxes
 	 *
+	 * @version 3.9.0
 	 * @since   2.0.0
 	 */
 	public function main_section() {
@@ -431,6 +432,7 @@ class Sliced_Metaboxes {
 	/**
 	 * Quote sidebar metaboxes
 	 *
+	 * @version 3.9.0
 	 * @since   2.0.0
 	 */
 	public function quote_side() {
@@ -900,6 +902,7 @@ class Sliced_Metaboxes {
 	/**
 	 * Add buttons in WP Publish metabox.
 	 *
+	 * @version 3.9.0
 	 * @since   3.4.1
 	 */
 	public function add_to_publish_box() {
@@ -1200,7 +1203,7 @@ class Sliced_Metaboxes {
 	/**
 	 * Generates the HTML for the totals box after the line items, in the admin invoice view.
 	 *
-	 * @version 3.x.x
+	 * @version 3.9.0
 	 * @since   <= 2.83
 	 */
 	public function display_the_line_totals() {

@@ -272,6 +272,7 @@ class Sliced_Payments {
 	/**
 	 * Accept Quote popup form
 	 *
+	 * @version 3.9.0
 	 * @since   2.10
 	 */
 	public function create_accept_quote_popup() {
@@ -326,6 +327,7 @@ class Sliced_Payments {
 	/**
 	 * Decline Quote popup form
 	 *
+	 * @version 3.9.0
 	 * @since   2.10
 	 */
 	public function create_decline_quote_popup() {

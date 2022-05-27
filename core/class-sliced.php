@@ -76,6 +76,7 @@ class Sliced_Invoices {
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
 	 *
+	 * @version 3.9.0
 	 * @since   2.0.0
 	 * @access   private
 	 */
@@ -175,7 +176,7 @@ class Sliced_Invoices {
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
-	 * @version 3.8.15
+	 * @version 3.9.0
 	 * @since   2.0.0
 	 */
 	private function define_admin_hooks() {

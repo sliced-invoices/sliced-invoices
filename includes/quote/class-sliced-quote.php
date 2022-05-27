@@ -109,10 +109,11 @@ class Sliced_Quote {
 
 
 	/**
-	  * Get the post meta
-	  *
-	  * @since   2.0.0
-	  */
+	 * Get the post meta.
+	 * 
+	 * @version 3.9.0
+	 * @since   2.0.0
+	 */
 	private static function get_sliced_meta( $id = 0, $key = '', $single = true ) {
 		if ( ! $id ) {
 			$id = Sliced_Shared::get_item_id();

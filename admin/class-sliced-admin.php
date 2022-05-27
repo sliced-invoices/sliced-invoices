@@ -51,6 +51,7 @@ class Sliced_Admin {
 	/**
 	 * Ajax handler to search existing clients
 	 *
+	 * @version 3.9.0
 	 * @since   3.8.0
 	 */
 	public function ajax_search_clients() {
@@ -146,6 +147,7 @@ class Sliced_Admin {
 	/**
 	 * Ajax handler to search existing users who are not clients
 	 *
+	 * @version 3.9.0
 	 * @since   3.8.0
 	 */
 	public function ajax_search_non_clients() {
@@ -354,6 +356,7 @@ class Sliced_Admin {
 	/**
 	 * Register the JavaScript for the admin area.
 	 *
+	 * @version 3.9.0
 	 * @since   2.0.0
 	 */
 	public function enqueue_scripts() {
@@ -921,7 +924,7 @@ class Sliced_Admin {
 	/**
 	 * Admin notices
 	 *
-	 * @version 3.8.15
+	 * @version 3.9.0
 	 * @since   2.0.0
 	 */
 	public function custom_admin_notices() {
@@ -1131,6 +1134,7 @@ class Sliced_Admin {
 	/**
 	 * Work out the date format
 	 *
+	 * @version 3.9.0
 	 * @since   2.0.0
 	 */
 	public static function work_out_date_format( $date ) {
@@ -1253,7 +1257,7 @@ class Sliced_Admin {
 	 * Fires on save_post before CMB2 has saved anything, to see if the payments field is dirty.
 	 * If so, it will fire maybe_mark_as_paid_step_2() after CMB2 has completed saving.
 	 *
-	 * @since 	3.?.?
+	 * @since 	3.9.0
 	 */
 	public function maybe_mark_as_paid( $post_id ) {
 		
@@ -1303,7 +1307,7 @@ class Sliced_Admin {
 	/**
 	 * Maybe mark invoice as paid (part 2 of 2).
 	 *
-	 * @since 	3.?.?
+	 * @since 	3.9.0
 	 */
 	public function maybe_mark_as_paid_step_2( $post_id ) {
 		
@@ -1509,7 +1513,8 @@ class Sliced_Admin {
 	/**
 	 * Get the list of clients for the metabox and for the client filter.
 	 *
-	 * @since 	2.0.0
+	 * @version 3.9.0
+	 * @since   2.0.0
 	 */
 	public static function get_clients() {
 
@@ -1552,7 +1557,8 @@ class Sliced_Admin {
 	/**
 	 * Get the list of users who are not yet clients, for the add client dialog box
 	 *
-	 * @since 	3.6.0
+	 * @version 3.9.0
+	 * @since   3.6.0
 	 */
 	public static function get_non_client_users() {
 
@@ -1594,7 +1600,7 @@ class Sliced_Admin {
 	/**
 	 * New client registration form. Hidden in the footer until required
 	 *
-	 * @version 3.8.16
+	 * @version 3.9.0
 	 * @since   2.0.0
 	 */
 	public function client_registration_form() {
@@ -2354,7 +2360,7 @@ class Sliced_Admin {
 	/**
 	 * Function creates post duplicate and redirects then to the edit post screen
 	 *
-	 * @version 3.8.17
+	 * @version 3.9.0
 	 * @since 	2.0.0
 	 */
 	public function duplicate_quote_invoice() {
@@ -2623,7 +2629,7 @@ class Sliced_Admin {
 	/**
 	 * Export to CSV (quick).
 	 *
-	 * @version 3.8.16
+	 * @version 3.9.0
 	 * @since   2.0.0
 	 */
 	public function export_csv() {

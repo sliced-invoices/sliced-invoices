@@ -288,8 +288,9 @@ class Sliced_Columns {
 	
 	
 	/**
-	 * Translate statuses
+	 * Translate statuses.
 	 *
+	 * @version 3.9.0
 	 * @since   3.3.2
 	 */
 	public function pre_get_the_terms( $terms, $post_id, $taxonomy ) {

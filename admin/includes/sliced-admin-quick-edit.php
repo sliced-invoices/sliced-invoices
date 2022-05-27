@@ -274,8 +274,9 @@ class Sliced_Quick_Edit {
 	
 
 	/**
-	 * Saving the data
+	 * Saving the data.
 	 *
+	 * @version 3.9.0
 	 * @since   2.0.0
 	 */
 	public function save_the_data( $post_id, $post ) {

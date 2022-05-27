@@ -49,7 +49,7 @@ class Sliced_Paypal {
 	/**
 	 * Add the options for this gateway to the admin payment settings.
 	 *
-	 * @version 3.8.17
+	 * @version 3.9.0
 	 * @since   2.0.0
 	 */
 	public function add_options_fields( $options ) {

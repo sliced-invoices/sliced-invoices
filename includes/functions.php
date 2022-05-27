@@ -87,8 +87,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  *                           // Optional. The invoice title.
  *         'title'           => 'Invoice for John Doe',
  *
- * @version 3.x.x
- * @since   3.x.x
+ * @version 3.9.0
+ * @since   3.9.0
  *
  * @return int $invoice_id The newly created invoice's ID.
  */
@@ -293,8 +293,8 @@ function sliced_invoices_create_invoice( $args ) {
  *
  *     );
  *
- * @version 3.x.x
- * @since   3.x.x
+ * @version 3.9.0
+ * @since   3.9.0
  *
  * @return int $quote_id The newly created quote's ID.
  */

@@ -69,7 +69,9 @@ class Sliced_Options {
 	}
 
 	/**
-	 * Add menu options page
+	 * Add menu options page.
+	 * 
+	 * @version 3.9.0
 	 * @since 0.1.0
 	 */
 	public function add_options_page() {
@@ -111,8 +113,11 @@ class Sliced_Options {
 
 
 	/**
-	 * Admin page markup. Mostly handled by CMB
-	 * @since  0.1.0
+	 * Admin page markup.
+	 * Mostly handled by CMB2.
+	 * 
+	 * @version 3.9.0
+	 * @since   0.1.0
 	 */
 	public function admin_page_display() {
 
@@ -176,10 +181,10 @@ class Sliced_Options {
 
 	/**
 	 * Defines the contents of the plugin settings pages.
-	 
+	 * 
 	 * @version 3.9.0
 	 * @since   0.1.0
-	 *
+	 * 
 	 * @return array
 	 */
 	public function option_fields() {
