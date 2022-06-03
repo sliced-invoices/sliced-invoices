@@ -205,24 +205,41 @@ class Sliced_Tools {
 		$invoices_opt = get_option('sliced_invoices');
 		$quotes_opt   = get_option('sliced_quotes');
 		$email_opt    = get_option('sliced_emails');
+		$pdf_opt      = get_option( 'sliced_pdf' );
 		
 		// mask sensitive info
-		$sensitive_infos = array(
+		$sensitive_infos = apply_filters( 'sliced_sysinfo_sensitive_infos', array(
+			'bank',
+			'generic_pay',
 			'paypal_username',
+			'paypal_username_sandbox',
 			'paypal_password',
+			'paypal_password_sandbox',
 			'paypal_signature',
+			'paypal_signature_sandbox',
 			'2checkout_account',
 			'2checkout_secret_word',
 			'2checkout_publishable_key',
 			'2checkout_private_key',
 			'2checkout_admin_api_username',
 			'2checkout_admin_api_password',
+			'authorize_net_live_id',
+			'authorize_net_live_key',
+			'authorize_net_live_signature',
+			'authorize_net_sandbox_id',
+			'authorize_net_sandbox_key',
+			'authorize_net_sandbox_signature',
 			'braintree_merchant_id',
 			'braintree_public_key',
 			'braintree_private_key',
+			'braintree_sandbox_merchant_id',
+			'braintree_sandbox_public_key',
+			'braintree_sandbox_private_key',
 			'stripe_secret',
+			'stripe_secret_test',
 			'stripe_publishable',
-		);
+			'stripe_publishable_test',
+		) );
 		foreach ( $sensitive_infos as $sensitive_info ) {
 			if ( isset( $payment_opt[$sensitive_info] ) ) {
 				$payment_opt[$sensitive_info] = empty( $payment_opt[$sensitive_info] ) ? '<not set>' : '<set>';
@@ -232,48 +249,56 @@ class Sliced_Tools {
 		$return .= "\n" . '/////-- Sliced Invoices Configuration' . "\n\n";
 		$return .= 'Version:                  ' . $plugin_data['Version'] . "\n";
 		$return .= "\n";
-		$return .= 'General Settings:         ' . "\n";
+		$return .= '== General Settings ==         ' . "\n";
 		foreach ($general_opt as $key => $value) {
 			if ( is_array( $value ) ) $value = implode( ', ', $value );
 			$return .= $key . ':					' . $value . "\n";
 		}
 		$return .= "\n";
-		$return .= 'Business Settings:         ' . "\n";
+		$return .= '== Business Settings ==         ' . "\n";
 		foreach ($business_opt as $key => $value) {
 			if ( is_array( $value ) ) $value = implode( ', ', $value );
 			$return .= $key . ':					' . $value . "\n";
 		}
 		$return .= "\n";
-		$return .= 'Payment Settings:         ' . "\n";
+		$return .= '== Payment Settings ==         ' . "\n";
 		foreach ($payment_opt as $key => $value) {
 			if ( is_array( $value ) ) $value = implode( ', ', $value );
 			$return .= $key . ':					' . $value . "\n";
 		}
 		$return .= "\n";
-		$return .= 'Tax Settings:         ' . "\n";
+		$return .= '== Tax Settings ==         ' . "\n";
 		foreach ($tax_opt as $key => $value) {
 			if ( is_array( $value ) ) $value = implode( ', ', $value );
 			$return .= $key . ':					' . $value . "\n";
 		}
 		$return .= "\n";
-		$return .= 'Invoices Settings:         ' . "\n";
+		$return .= '== Invoices Settings ==         ' . "\n";
 		foreach ($invoices_opt as $key => $value) {
 			if ( is_array( $value ) ) $value = implode( ', ', $value );
 			$return .= $key . ':					' . $value . "\n";
 		}
 		$return .= "\n";
-		$return .= 'Quotes Settings:         ' . "\n";
+		$return .= '== Quotes Settings ==         ' . "\n";
 		foreach ($quotes_opt as $key => $value) {
 			if ( is_array( $value ) ) $value = implode( ', ', $value );
 			$return .= $key . ':					' . $value . "\n";
 		}
 		$return .= "\n";
-		$return .= 'Email Settings:         ' . "\n";
+		$return .= '== Email Settings ==         ' . "\n";
 		foreach ($email_opt as $key => $value) {
 			if ( is_array( $value ) ) $value = implode( ', ', $value );
 			$return .= $key . ':					' . $value . "\n";
 		}
-
+		$return .= "\n";
+		$return .= '== PDF Settings ==         ' . "\n";
+		foreach ( $pdf_opt as $key => $value ) {
+			if ( is_array( $value ) ) $value = implode( ', ', $value );
+			$return .= $key . ':					' . $value . "\n";
+		}
+		
+		$return = apply_filters( 'sliced_sysinfo_after_sliced_config', $return );
+		
 		// sliced Templates
 		$dir = get_stylesheet_directory() . '/sliced';
 		if( is_dir( $dir ) ) {
