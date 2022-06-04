@@ -341,26 +341,27 @@ class Sliced_Shared {
 
 	/**
 	 * Get the raw number with a period as the decimal. For calculations.
-	 *
+	 * 
+	 * @version 3.9.1
 	 * @since   2.0.0
 	 */
 	public static function get_raw_number( $amount, $id = 0 ) {
 		
-		$currency   = sliced_get_currency_symbol( $id );
-		$amount     = str_replace( $currency, '', $amount );
+		$currency = sliced_get_currency_symbol( $id );
+		$amount   = str_replace( $currency, '', $amount );
 		
-		$thou_sep 	= sliced_get_thousand_seperator();
-	    $dec_sep 	= sliced_get_decimal_seperator();
-
-		$pieces 	= explode($dec_sep, $amount);
-		$whole 		= str_replace($thou_sep, '', $pieces[0] ); // whole
-		$decimals 	= isset( $pieces[1] ) ? $pieces[1] : '00'; // decimals
-
-		$amount 	= (float)$whole . '.' . $decimals;
-
-	    return apply_filters( 'sliced_get_raw_number', $amount, $id );
+		$thou_sep = sliced_get_thousand_seperator();
+		$dec_sep  = sliced_get_decimal_seperator();
+		
+		$pieces   = explode( $dec_sep, $amount );
+		$whole    = str_replace( $thou_sep, '', $pieces[0] );
+		$decimals = isset( $pieces[1] ) ? $pieces[1] : '00';
+		
+		$amount   = floatval( $whole . '.' . $decimals );
+		
+		return apply_filters( 'sliced_get_raw_number', $amount, $id );
 	}
-
+	
 	/**
 	 * Get the formatted number only.
 	 *

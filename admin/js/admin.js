@@ -305,7 +305,7 @@
 		$( 'input[name="_sliced_items[' + index + '][title]"]' ).val( title );
 		$( 'input[name="_sliced_items[' + index + '][amount]"]' ).val( price );
 		$( 'input[name="_sliced_items[' + index + '][qty]"]' ).val( qty );
-		$( 'input[name="_sliced_items[' + index + '][description]"]' ).val( desc );
+		$( 'textarea[name="_sliced_items[' + index + '][description]"]' ).val( desc );
 		
 		workOutTotals();
 	});
