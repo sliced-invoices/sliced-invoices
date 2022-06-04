@@ -5,7 +5,7 @@ Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf 
 Requires at least: 4.0
 Tested up to: 6.0
 Requires PHP: 5.5
-Stable tag: 3.9.0
+Stable tag: 3.9.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -176,6 +176,12 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 == Changelog ==
+= 3.9.1 =
+* UPDATE: German translation update (thanks to Thorsten Wollenhöfer).
+* UPDATE: Spanish translation update (thanks to Lolo Marchal).
+* FIX: pre-defined line items not populating description field since 3.9.0.
+* FIX: Sliced_Shared::get_raw_number() not always returning float.
+
 = 3.9.0 =
 * NEW: add "Create new Invoice from Quote" button on quote editing page; renamed existing "Convert to Invoice" button "Convert Quote to Invoice" for extra clarity.
 * NEW: add fields for both live and sandbox PayPal API keys (now you can store them together and easily switch with the "Gateway Mode" setting).

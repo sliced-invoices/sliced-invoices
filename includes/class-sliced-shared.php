@@ -341,7 +341,8 @@ class Sliced_Shared {
 
 	/**
 	 * Get the raw number with a period as the decimal. For calculations.
-	 *
+	 * 
+	 * @version 3.9.1
 	 * @since   2.0.0
 	 */
 	public static function get_raw_number( $amount, $id = 0 ) {

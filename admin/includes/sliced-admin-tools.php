@@ -101,14 +101,14 @@ class Sliced_Tools {
 	}
 
 
-
 	/**
-	 * Get system info
-	 *
-	 * @since       2.0
-	 * @access      public
-	 * @global      object $wpdb Used to query the database using the WordPress Database API
-	 * @return      string $return A string containing the info to output
+	 * Get system info.
+	 * 
+	 * @version 3.9.1
+	 * @since   2.0
+	 * 
+	 * @global  object $wpdb Used to query the database using the WordPress Database API
+	 * @return  string $return A string containing the info to output
 	 */
 	public function get_system_info() {
 		global $wpdb;
