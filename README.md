@@ -86,7 +86,7 @@ Our support is fantastic (check out the [reviews](https://wordpress.org/support/
 
 > <strong>Visit our website to find out more</strong>
 >
-> [Features](https://slicedinvoices.com/plugin-features/?utm_source=WordPress&utm_medium=Readme&utm_content=Features&utm_campaign=Free) | [Getting Started](https://slicedinvoices.com/support/getting-started/?utm_source=WordPress&utm_medium=Readme-FAQ&utm_content=Support&utm_campaign=Free) | [Extensions](https://slicedinvoices.com/extensions/?utm_source=WordPress&utm_medium=Readme&utm_content=Extensions&utm_campaign=Free) | [Bundles](https://slicedinvoices.com/bundles/?utm_source=WordPress&utm_medium=Readme&utm_content=Bundles&utm_campaign=Free) | [Try The Demo](https://slicedinvoices.com/demo/wp-admin/) | [FAQ](https://wordpress.org/plugins/sliced-invoices/faq/)
+> [Features](https://slicedinvoices.com/plugin-features/?utm_source=WordPress&utm_medium=Readme&utm_content=Features&utm_campaign=Free) | [Getting Started](https://slicedinvoices.com/support/getting-started/?utm_source=WordPress&utm_medium=Readme-FAQ&utm_content=Support&utm_campaign=Free) | [Extensions](https://slicedinvoices.com/extensions/?utm_source=WordPress&utm_medium=Readme&utm_content=Extensions&utm_campaign=Free) | [Bundles](https://slicedinvoices.com/bundles/?utm_source=WordPress&utm_medium=Readme&utm_content=Bundles&utm_campaign=Free) | [FAQ](https://wordpress.org/plugins/sliced-invoices/faq/)
 
 ## Installation
 1. Upload plugin to the `/wp-content/plugins/` directory
@@ -108,10 +108,6 @@ There is full documentation as well as a Getting Started guide at [our website](
 ### Where can I get help?
 
 For all support issues please [open a Support Ticket on our website](https://slicedinvoices.com/support-ticket/?utm_source=WordPress&utm_medium=Readme-FAQ&utm_content=support&utm_campaign=Free).
-
-### Is there a demo available?
-
-A demo of the plugin, including all extensions, is [available here](https://slicedinvoices.com/demo/wp-admin/?utm_source=WordPress&utm_medium=Readme&utm_content=Demo&utm_campaign=Free).
 
 ### Can I customize invoice and quote templates?
 
