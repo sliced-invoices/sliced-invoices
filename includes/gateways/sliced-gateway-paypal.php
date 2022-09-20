@@ -721,17 +721,19 @@ class Sliced_Paypal {
 			return;
 		}
 
+		
+		/*
+		 * Get the invoice ID and gateway
+		 */
+		$id         = intval( sanitize_text_field( $_POST['sliced_payment_invoice_id'] ) );
+		$gateway    = $this->gateway();
+		
 		// check the nonce
 		if( ! isset( $_POST['sliced_payment_nonce'] ) || ! wp_verify_nonce( $_POST['sliced_payment_nonce'], 'sliced_invoices_payment' ) ) {
 			sliced_print_message( $id, __( 'There was an error with the form submission, please try again.', 'sliced-invoices' ), 'failed' );
 			return;
 		}
 
-		/*
-		 * Get the invoice ID and gateway
-		 */
-		$id         = intval( sanitize_text_field( $_POST['sliced_payment_invoice_id'] ) );
-		$gateway    = $this->gateway();
 		$currency   = sliced_get_invoice_currency( $id );
 		$payment_data = '&METHOD=SetExpressCheckout'.
 			'&RETURNURL=' . urlencode( $gateway['payment_page'] ) .
