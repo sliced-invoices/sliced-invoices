@@ -294,7 +294,10 @@ class Sliced_Csv_Importer {
 		$post_type = $this->set_post_type( $options );
 		
 		$count = 1;
-		foreach ($csv_data as $csv) {
+
+		$csv_reverse = array_reverse( $csv->connect() );
+
+		foreach ( $csv_reverse as $csv ) {
 			if ( isset( $csv['__quote_title'] ) ) {
 				// this is a full quote export, bypass
 				return 'ok';
