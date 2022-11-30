@@ -617,6 +617,7 @@ class Sliced_Shared {
 
 		// save this for last
 		$totals['total_due'] = $totals['total'] - $totals['payments'];
+		$totals['total_due'] = self::get_formatted_number( $totals['total_due'] );
 
 		return $totals;
 
