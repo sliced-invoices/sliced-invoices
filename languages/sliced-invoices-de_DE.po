@@ -2608,7 +2608,7 @@ msgstr "Rückgezahlt"
 #: includes/class-sliced-shared.php:623
 #: includes/invoice/class-sliced-invoice.php:262
 msgid "Cancelled"
-msgstr "Gelöscht"
+msgstr "Storniert"
 
 #: includes/gateways/sliced-gateway-paypal.php:21
 msgid "Pay with PayPal"
