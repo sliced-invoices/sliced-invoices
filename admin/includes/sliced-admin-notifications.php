@@ -687,6 +687,7 @@ class Sliced_Notifications {
 				),
 			),
 		);
+		$args = apply_filters( 'sliced_invoices_check_for_reminder_args', $args );
 		$invoices = get_posts( $args );
 		if( ! $invoices )
 			return;
