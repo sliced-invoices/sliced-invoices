@@ -923,6 +923,7 @@ td.taxonomy-quote_status a[href*="accepted"] {
   color: #60AD5D;
 }
 td.taxonomy-invoice_status a[href*="unpaid"], .sliced .subsubsub a[href*="unpaid"],
+td.taxonomy-invoice_status a[href*="partially-paid"], .sliced .subsubsub a[href*="partially-paid"],
 td.taxonomy-quote_status a[href*="expired"], .sliced .subsubsub .expired a  {
   border-color: #ED904E;
   color: #ED904E;
