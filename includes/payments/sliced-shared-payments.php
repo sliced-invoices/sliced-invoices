@@ -348,7 +348,7 @@ class Sliced_Payments {
 					<?php wp_nonce_field( 'sliced_invoices_decline_quote_' . get_the_ID(), 'sliced_decline_quote_nonce' ); ?>
 					<input type="hidden" name="sliced_decline_quote_id" id="sliced_decline_quote_id" value="<?php the_ID(); ?>">
 					<p>
-						<?php _e( 'Reason for declining', 'sliced-invoices' ); ?>
+						<?php _e( '<strong>Reason for declining?</strong><br><br>We are sorry to hear our estimate isn\'t the perfect fit for you. Please let us know if there\'s anything you\'d like to discuss about it.', 'sliced-invoices' ); ?>
 						<?php if ( $decline_reason_required ): ?> <span class="sliced_form_field_required">*</span><?php endif; ?>
 					</p>
 					<textarea name="decline_quote_reason" id="decline_quote_reason" cols="30" rows="5"></textarea>
