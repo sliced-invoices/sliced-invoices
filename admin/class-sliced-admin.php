@@ -497,7 +497,6 @@ class Sliced_Admin {
 		$opts['publicly_querable']    = true;
 		$opts['query_var']            = true;
 		$opts['register_meta_box_cb'] = '';
-		$opts['rewrite']              = false;
 		$opts['show_in_admin_bar']    = true;
 		$opts['show_in_menu']         = true;
 		$opts['show_in_nav_menu']     = true;
@@ -598,7 +597,6 @@ class Sliced_Admin {
 		$opts['publicly_querable']    = true;
 		$opts['query_var']            = true;
 		$opts['register_meta_box_cb'] = '';
-		$opts['rewrite']              = false;
 		$opts['show_in_admin_bar']    = true;
 		$opts['show_in_menu']         = true;
 		$opts['show_in_nav_menu']     = true;
