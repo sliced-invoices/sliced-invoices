@@ -2608,7 +2608,7 @@ msgstr "Rückgezahlt"
 #: includes/class-sliced-shared.php:623
 #: includes/invoice/class-sliced-invoice.php:262
 msgid "Cancelled"
-msgstr "Gelöscht"
+msgstr "Storniert"
 
 #: includes/gateways/sliced-gateway-paypal.php:21
 msgid "Pay with PayPal"
@@ -2685,8 +2685,8 @@ msgid "Error processing the payment.<br> <a href=\""
 msgstr "Fehler beim Verarbeiten der Zahlung. <br> < a href =  \""
 
 #: includes/gateways/sliced-gateway-paypal.php:264
-msgid "Payment has been cancelled.<br> <a href=\""
-msgstr "Die Zahlung wurde storniert. <br> < a href =  \""
+msgid "Payment has been cancelled."
+msgstr "Die Zahlung wurde storniert."
 
 #: includes/gateways/sliced-gateway-paypal.php:270
 msgid "This invoice has already been paid."
@@ -2759,7 +2759,7 @@ msgstr "Sie haben diesen %s abgelehnt."
 #: includes/payments/sliced-shared-payments.php:248
 #, php-format
 msgid "This %s has been cancelled."
-msgstr "Dieser %s wurde gelöscht."
+msgstr "Dieser %s wurde storniert."
 
 #: includes/payments/sliced-shared-payments.php:252
 #, php-format

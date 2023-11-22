@@ -3,9 +3,9 @@ Contributors: SlicedInvoices
 Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce
 Requires at least: 4.0
-Tested up to: 6.0
+Tested up to: 6.4
 Requires PHP: 5.5
-Stable tag: 3.9.1
+Stable tag: 3.9.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,7 +85,7 @@ Our support is fantastic (check out the [reviews](https://wordpress.org/support/
 
 > <strong>Visit our website to find out more</strong>
 >
-> [Features](https://slicedinvoices.com/plugin-features/?utm_source=WordPress&utm_medium=Readme&utm_content=Features&utm_campaign=Free) | [Getting Started](https://slicedinvoices.com/support/getting-started/?utm_source=WordPress&utm_medium=Readme-FAQ&utm_content=Support&utm_campaign=Free) | [Extensions](https://slicedinvoices.com/extensions/?utm_source=WordPress&utm_medium=Readme&utm_content=Extensions&utm_campaign=Free) | [Bundles](https://slicedinvoices.com/bundles/?utm_source=WordPress&utm_medium=Readme&utm_content=Bundles&utm_campaign=Free) | [Try The Demo](https://slicedinvoices.com/demo/wp-admin/) | [FAQ](https://wordpress.org/plugins/sliced-invoices/faq/)
+> [Features](https://slicedinvoices.com/plugin-features/?utm_source=WordPress&utm_medium=Readme&utm_content=Features&utm_campaign=Free) | [Getting Started](https://slicedinvoices.com/support/getting-started/?utm_source=WordPress&utm_medium=Readme-FAQ&utm_content=Support&utm_campaign=Free) | [Extensions](https://slicedinvoices.com/extensions/?utm_source=WordPress&utm_medium=Readme&utm_content=Extensions&utm_campaign=Free) | [Bundles](https://slicedinvoices.com/bundles/?utm_source=WordPress&utm_medium=Readme&utm_content=Bundles&utm_campaign=Free) | [FAQ](https://wordpress.org/plugins/sliced-invoices/faq/)
 
 == Installation ==
 1. Upload plugin to the `/wp-content/plugins/` directory
@@ -107,10 +107,6 @@ There is full documentation as well as a Getting Started guide at [our website](
 = Where can I get help? =
 
 For all support issues please [open a Support Ticket on our website](https://slicedinvoices.com/support-ticket/?utm_source=WordPress&utm_medium=Readme-FAQ&utm_content=support&utm_campaign=Free).
-
-= Is there a demo available? =
-
-A demo of the plugin, including all extensions, is [available here](https://slicedinvoices.com/demo/wp-admin/?utm_source=WordPress&utm_medium=Readme&utm_content=Demo&utm_campaign=Free).
 
 = Can I customize invoice and quote templates? =
 
@@ -176,6 +172,12 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 == Changelog ==
+= 3.9.2 =
+* UPDATE: add filter `sliced_invoices_check_for_reminder_args`.
+* UPDATE: German translation update (thanks to Christian Högl).
+* UPDATE: minor CSS/styling updates (thanks to Dax Liniere).
+* FIX: PHP 8.1/8.2 notices.
+
 = 3.9.1 =
 * UPDATE: German translation update (thanks to Thorsten Wollenhöfer).
 * UPDATE: Spanish translation update (thanks to Lolo Marchal).

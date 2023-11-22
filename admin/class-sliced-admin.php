@@ -475,7 +475,7 @@ class Sliced_Admin {
 	/**
 	 * Register our custom post type 'sliced_quote'.
 	 *
-	 * @version 3.9.0
+	 * @version 3.9.2
 	 * @since   2.0.0
 	 */
 	public static function new_cpt_quote() {
@@ -497,7 +497,6 @@ class Sliced_Admin {
 		$opts['publicly_querable']    = true;
 		$opts['query_var']            = true;
 		$opts['register_meta_box_cb'] = '';
-		$opts['rewrite']              = false;
 		$opts['show_in_admin_bar']    = true;
 		$opts['show_in_menu']         = true;
 		$opts['show_in_nav_menu']     = true;
@@ -576,7 +575,7 @@ class Sliced_Admin {
 	/**
 	 * Register our custom post type 'sliced_quote'.
 	 *
-	 * @version 3.9.0
+	 * @version 3.9.2
 	 * @since   2.0.0
 	 */
 	public static function new_cpt_invoice() {
@@ -598,7 +597,6 @@ class Sliced_Admin {
 		$opts['publicly_querable']    = true;
 		$opts['query_var']            = true;
 		$opts['register_meta_box_cb'] = '';
-		$opts['rewrite']              = false;
 		$opts['show_in_admin_bar']    = true;
 		$opts['show_in_menu']         = true;
 		$opts['show_in_nav_menu']     = true;

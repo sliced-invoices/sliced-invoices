@@ -237,7 +237,7 @@ msgstr "Abgelehnt"
 #: admin/class-sliced-admin.php:884 admin/class-sliced-admin.php:904
 msgctxt "a status which may be assigned to quotes & invoices"
 msgid "Cancelled"
-msgstr "Abgebrochen"
+msgstr "Storniert"
 
 #: admin/class-sliced-admin.php:885
 msgctxt "a status which may be assigned to quotes"
@@ -2709,7 +2709,7 @@ msgstr "Rückgezahlt"
 #: includes/class-sliced-shared.php:668
 #: includes/invoice/class-sliced-invoice.php:263
 msgid "Cancelled"
-msgstr "Gelöscht"
+msgstr "Storniert"
 
 #: includes/functions.php:99
 msgid "Cannot create invoice: invalid client ID."
@@ -2860,7 +2860,7 @@ msgstr "Fehler bei der Verarbeitung der Zahlung: Ungültiges Token."
 
 #: includes/gateways/sliced-gateway-paypal.php:353
 msgid "Payment has been cancelled."
-msgstr "Die Zahlung wurde abgebrochen."
+msgstr "Die Zahlung wurde storniert."
 
 #: includes/gateways/sliced-gateway-paypal.php:355
 #, php-format
@@ -2944,7 +2944,7 @@ msgstr "Sie haben diesen %s abgelehnt."
 #: includes/payments/sliced-shared-payments.php:248
 #, php-format
 msgid "This %s has been cancelled."
-msgstr "Dieser %s wurde gelöscht."
+msgstr "Dieser %s wurde storniert."
 
 #: includes/payments/sliced-shared-payments.php:252
 #, php-format
