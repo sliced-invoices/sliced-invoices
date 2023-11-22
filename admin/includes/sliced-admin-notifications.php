@@ -198,7 +198,8 @@ class Sliced_Notifications {
 	/**
 	 * Send the quote or invoice using the email button.
 	 *
-	 * @since 1.0.0
+	 * @version 3.9.2
+	 * @since   1.0.0
 	 */
 	public function send_email() {
 	
@@ -254,6 +255,8 @@ class Sliced_Notifications {
 
 	/**
 	 * Get email subject.
+	 *
+	 * @version 3.9.2
 	 *
 	 * @return string
 	 */
@@ -387,6 +390,8 @@ class Sliced_Notifications {
 
 	/**
 	 * Get email content.
+	 *
+	 * @version 3.9.2
 	 *
 	 * @return string
 	 */
@@ -547,7 +552,7 @@ class Sliced_Notifications {
 	/**
 	 * Load the fields via AJAX for the post.
 	 *
-	 * @version 3.9.0
+	 * @version 3.9.2
 	 * @since   1.0.0
 	 */
 	public function sure_to_email() {
@@ -645,6 +650,8 @@ class Sliced_Notifications {
 	/**
 	 * Get email content.
 	 *
+	 * @version 3.9.2
+	 *
 	 * @return string
 	 */
 	public function get_preview_content( $type ) {
@@ -656,6 +663,8 @@ class Sliced_Notifications {
 
 	/**
 	 * Check the payment reminder dates and see if we need to send any reminders.
+	 *
+	 * @version 3.9.2
 	 *
 	 * @return string
 	 */

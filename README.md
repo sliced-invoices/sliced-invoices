@@ -4,9 +4,9 @@ Contributors: SlicedInvoices
 Donate link: http://slicedinvoices.com/  
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
-Tested up to: 6.0
+Tested up to: 6.4
 Requires PHP: 5.5
-Stable tag: 3.9.1
+Stable tag: 3.9.2
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -173,6 +173,12 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 ## Changelog
+##  3.9.2
+* UPDATE: add filter `sliced_invoices_check_for_reminder_args`.
+* UPDATE: German translation update (thanks to Christian Högl).
+* UPDATE: minor CSS/styling updates (thanks to Dax Liniere).
+* FIX: PHP 8.1/8.2 notices.
+
 ##  3.9.1
 * UPDATE: German translation update (thanks to Thorsten Wollenhöfer).
 * UPDATE: Spanish translation update (thanks to Lolo Marchal).
