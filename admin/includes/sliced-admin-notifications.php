@@ -243,7 +243,7 @@ class Sliced_Notifications {
 			<body class="wp-admin wp-core-ui sliced sliced-email-ajax-page">
 				<p><?php _e( 'Email was sent successfully.', 'sliced-invoices' ); ?></p>
 				<script type="text/javascript">
-					window.top.location.href = "<?php echo admin_url( "edit.php?post_type=sliced_${type}&email=sent" ); ?>";
+					window.top.location.href = "<?php echo admin_url( "edit.php?post_type=sliced_{$type}&email=sent" ); ?>";
 				</script>
 			</body>
 		</html>
@@ -261,10 +261,10 @@ class Sliced_Notifications {
 		// if we are sending a quote or an invoice manually
 		if( isset( $_POST['email_subject'] ) ) {
 			$output = sanitize_text_field( $_POST['email_subject'] );
-		} elseif ( isset( $this->settings["${type}_subject"] ) ) {
-			$output = $this->settings["${type}_subject"];
+		} elseif ( isset( $this->settings["{$type}_subject"] ) ) {
+			$output = $this->settings["{$type}_subject"];
 		} else {
-			$output = $this->admin_notification_subject( array("${type}_subject"), $this->id, array("${type}_subject") );
+			$output = $this->admin_notification_subject( array("{$type}_subject"), $this->id, array("{$type}_subject") );
 		}
 		return apply_filters( 'sliced_get_email_subject', $this->replace_wildcards( $output ), $this->id, $type );
 	}
@@ -396,10 +396,10 @@ class Sliced_Notifications {
 		// if we are sending a quote or an invoice manually
 		if( isset( $_POST['email_content'] ) ) {
 			$output .= wp_kses_post( wpautop( stripslashes( $this->replace_wildcards( $_POST['email_content'] ) ) ) );
-		} elseif ( isset( $this->settings["${type}_content"] ) ) {
-			$output .= wp_kses_post( wpautop( stripslashes( $this->replace_wildcards( $this->settings["${type}_content"] ) ) ) );
+		} elseif ( isset( $this->settings["{$type}_content"] ) ) {
+			$output .= wp_kses_post( wpautop( stripslashes( $this->replace_wildcards( $this->settings["{$type}_content"] ) ) ) );
 		} else {
-			$output .= wp_kses_post( wpautop( stripslashes( $this->replace_wildcards( $this->admin_notification_content( null, $this->id, array("${type}_content") ) ) ) ) );
+			$output .= wp_kses_post( wpautop( stripslashes( $this->replace_wildcards( $this->admin_notification_content( null, $this->id, array("{$type}_content") ) ) ) ) );
 		}
 
 		$output .= $this->get_email_footer();
@@ -568,9 +568,9 @@ class Sliced_Notifications {
 				break;
 			default:
 				$type      = sliced_get_the_type( $id );
-				$content   = $this->get_preview_content( "${type}_available" );
-				$subject   = $this->get_subject( "${type}_available" );
-				$recipient = $this->get_recipient( "${type}_available" );
+				$content   = $this->get_preview_content( "{$type}_available" );
+				$subject   = $this->get_subject( "{$type}_available" );
+				$recipient = $this->get_recipient( "{$type}_available" );
 				break;
 		}
 
@@ -648,7 +648,7 @@ class Sliced_Notifications {
 	 * @return string
 	 */
 	public function get_preview_content( $type ) {
-		$output = wp_kses_post( wpautop( $this->replace_wildcards( $this->settings["${type}_content"] ) ) );
+		$output = wp_kses_post( wpautop( $this->replace_wildcards( $this->settings["{$type}_content"] ) ) );
 		return wp_kses_post( wpautop( $this->replace_wildcards( $output ) ) );
 	}
 
