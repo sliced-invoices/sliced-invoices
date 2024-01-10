@@ -557,6 +557,11 @@ class Sliced_Notifications {
 	 */
 	public function sure_to_email() {
 
+		if ( ! current_user_can( 'manage_options' ) )
+			return;
+		if ( ! isset( $_GET['nonce'] ) || ! wp_verify_nonce( $_GET['nonce'], 'sliced_ajax_nonce' ) )
+			return;
+	
 		$id        = intval( sanitize_text_field( $_GET['id'] ) );
 		$template  = isset( $_GET['template'] ) ? sanitize_text_field( $_GET['template'] ) : 'default';
 		
