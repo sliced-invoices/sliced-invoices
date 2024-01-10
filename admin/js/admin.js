@@ -664,7 +664,8 @@
 		sliced_invoices.sliced_email_preview = function( id ){
 			sliced_invoices.sliced_email_preview_id = id;
 			var currentTime = new Date().valueOf();
-			$(sliced_invoices.sliced_email_cache.$previewDiv).append('<iframe id="sliced-preview-' + currentTime + '" src="' + ajaxurl + '?action=sliced_sure_to_email&id=' + id + '"></iframe>');
+			var nonce = sliced_invoices.ajax_nonce;
+			$(sliced_invoices.sliced_email_cache.$previewDiv).append('<iframe id="sliced-preview-' + currentTime + '" src="' + ajaxurl + '?action=sliced_sure_to_email&id=' + id + '&nonce=' + nonce + '"></iframe>');
 			$('#sliced-preview-'+currentTime).on( 'load', function() {
 				$(sliced_invoices.sliced_email_cache.$previewDiv).children('.sliced-email-preview-loading').remove();
 				$(sliced_invoices.sliced_email_cache.$previewDiv).children('.sliced-email-preview-menu').show();
@@ -692,7 +693,8 @@
 			$(sliced_invoices.sliced_email_cache.$previewDiv).html(sliced_invoices.sliced_email_cache.placeholder);
 			// load new preview
 			var currentTime = new Date().valueOf();
-			$(sliced_invoices.sliced_email_cache.$previewDiv).append('<iframe id="sliced-preview-' + currentTime + '" src="' + ajaxurl + '?action=sliced_sure_to_email&id=' + id + '&template=' + template + '"></iframe>');
+			var nonce = sliced_invoices.ajax_nonce;
+			$(sliced_invoices.sliced_email_cache.$previewDiv).append('<iframe id="sliced-preview-' + currentTime + '" src="' + ajaxurl + '?action=sliced_sure_to_email&id=' + id + '&template=' + template + '&nonce=' + nonce + '"></iframe>');
 			$('#sliced-preview-'+currentTime).on( 'load', function() {
 				$(sliced_invoices.sliced_email_cache.$previewDiv).children('.sliced-email-preview-loading').remove();
 				$(sliced_invoices.sliced_email_cache.$previewDiv).children('.sliced-email-preview-menu').show()
