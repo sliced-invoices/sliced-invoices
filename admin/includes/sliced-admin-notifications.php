@@ -43,6 +43,7 @@ class Sliced_Notifications {
 
 		$this->client_emails = array(
 			'invoice_available', // manually sent
+			'invoice_update_available', // manually sent			
 			'quote_available', // manually sent
 			'payment_received_client',
 			'payment_reminder',
@@ -96,6 +97,7 @@ class Sliced_Notifications {
 		// notifications sent
 		add_action( 'sliced_quote_available_email_sent', array( $this, 'quote_sent' ), 10, 1);
 		add_action( 'sliced_invoice_available_email_sent', array( $this, 'invoice_sent' ), 10, 1);
+		add_action( 'sliced_invoice_update_available_email_sent', array( $this, 'invoice_sent' ), 10, 1);		
 
 		//add_action( 'admin_init', array( $this, 'check_for_reminder_dates' ) );
 	}
@@ -166,7 +168,7 @@ class Sliced_Notifications {
 		$this->type = "invoice";
 		$this->send_mail( "invoice_available" );
 		do_action( "sliced_invoice_available_email_sent", $this->id );
-	}
+	}	
 
 	/**
 	 * Send the quote
@@ -214,6 +216,9 @@ class Sliced_Notifications {
 		$type     = sliced_get_the_type( $id );
 		
 		switch ( $template ) {
+			case 'invoice_update_available':
+				$this->invoice_update_available_content( $id );
+				break;
 			case 'payment_reminder':
 				$this->payment_reminder( $id );
 				break;
@@ -561,6 +566,11 @@ class Sliced_Notifications {
 		$template  = isset( $_GET['template'] ) ? sanitize_text_field( $_GET['template'] ) : 'default';
 		
 		switch ( $template ) {
+			case 'invoice_update':
+				$content   = $this->get_preview_content( "invoice_update" );
+				$subject   = $this->get_subject( "invoice_update" );
+				$recipient = $this->get_recipient( "invoice_update" );
+				break;			
 			case 'payment_reminder':
 				$content   = $this->get_preview_content( "payment_reminder" );
 				$subject   = $this->get_subject( "payment_reminder" );
