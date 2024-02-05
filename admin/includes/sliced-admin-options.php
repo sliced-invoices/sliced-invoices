@@ -1001,6 +1001,34 @@ class Sliced_Options {
 				),
 			),
 			array(
+				'name'      => __( 'Invoice Available', 'sliced-invoices' ),
+				'desc'      => 'Sent to the client manually, when you click the email button.',
+				'id'        => 'invoice_available_title',
+				'type'      => 'title',
+			),
+			array(
+				'name'      => __( 'Subject', 'sliced-invoices' ),
+				'desc'      => __( 'The subject of the email (wildcards are allowed).', 'sliced-invoices' ),
+				'default'   => '',
+				'type'      => 'text',
+				'id'        => 'invoice_available_subject',
+			),
+			array(
+				'name'      => __( 'Content', 'sliced-invoices' ),
+				'desc'      => __( 'The content of the email (wildcards and HTML are allowed).', 'sliced-invoices' ),
+				'type'      => 'wysiwyg',
+				'default'   => '',
+				'id'        => 'invoice_available_content',
+				'sanitization_cb' => false,
+				'options' => array(
+					'media_buttons' => false,
+					'textarea_rows' => get_option('default_post_edit_rows', 7),
+					'teeny' => true,
+					'tinymce' => true,
+					'quicktags' => true
+				),
+			),			
+			array(
 				'name'      => __( 'Button text', 'sliced-invoices' ),
 				'desc'      => __( 'The "view this invoice online" button.', 'sliced-invoices' ),
 				'default'   => '',
