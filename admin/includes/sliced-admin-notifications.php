@@ -548,15 +548,25 @@ class Sliced_Notifications {
 
 		<?php
 	}
-
+	
+	
 	/**
 	 * Load the fields via AJAX for the post.
 	 *
-	 * @version 3.9.2
+	 * @version 3.9.3
 	 * @since   1.0.0
 	 */
 	public function sure_to_email() {
-
+		
+		if ( ! current_user_can( 'manage_options' ) ) {
+			echo __( 'Error: insufficient permissions. Must be an administrator to send emails.', 'sliced-invoices' );
+			echo '<br /><br />';
+			return;
+		}
+		if ( ! isset( $_GET['nonce'] ) || ! wp_verify_nonce( $_GET['nonce'], 'sliced_ajax_nonce' ) ) {
+			return;
+		}
+		
 		$id        = intval( sanitize_text_field( $_GET['id'] ) );
 		$template  = isset( $_GET['template'] ) ? sanitize_text_field( $_GET['template'] ) : 'default';
 		

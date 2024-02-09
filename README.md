@@ -6,7 +6,7 @@ Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf 
 Requires at least: 4.0  
 Tested up to: 6.4
 Requires PHP: 5.5
-Stable tag: 3.9.2
+Stable tag: 3.9.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -173,6 +173,9 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 ## Changelog
+##  3.9.3
+* FIX: restrict access to sending emails to Adminstrator users only (thanks to Patchstack).  NOTE: Patchstack reported a vulnerability where existing users of any role could abuse an AJAX URL to send emails through Sliced Invoices.  To exploit this, the attacker would have to already have access to an existing user account and be logged in to do so -- no access was open to the general public.  Please note this is a theoretical vulnerability only -- we have no reports of any such attacks actually taking place in the real world.
+
 ##  3.9.2
 * UPDATE: add filter `sliced_invoices_check_for_reminder_args`.
 * UPDATE: German translation update (thanks to Christian Högl).
