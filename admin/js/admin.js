@@ -130,7 +130,7 @@
             var group = $(this).parents('.cmb-repeatable-grouping');
             var index = group.data('iterator');
 			
-	    	var qty = new Decimal( sliced_invoices.utils.rawNumber( $(group).find('#_sliced_items_' + index + '_qty').val() ) );
+		var qty = new Decimal( sliced_invoices.utils.rawNumber( $(group).find('[name="_sliced_items[' + index + '][qty]"]').val() ) );
 			var amt = new Decimal( sliced_invoices.utils.rawNumber( $(this).val() ) );
 			
 			// for historical reasons, the "adjust" field is named "tax" internally,
@@ -288,6 +288,10 @@
 	
 	$(document).on('change', '#_sliced_tax_calc_method', function() {
 		sliced_payments.tax_calc_method = $(this).val();
+		workOutTotals();
+	});
+
+	$(document).on('click', '.cmb-remove-group-row-button, .cmb-shift-rows', function () {
 		workOutTotals();
 	});
 	
