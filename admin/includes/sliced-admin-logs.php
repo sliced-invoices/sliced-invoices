@@ -516,7 +516,11 @@ class Sliced_Logs {
 						$message = sprintf( __( '%s was accepted by client.', 'sliced-invoices' ), sliced_get_quote_label() );
 						break;
 					case 'payment_made':
-						$message = sprintf( __( 'Payment was made via %s.', 'sliced-invoices' ), $log['gateway'] );
+						$message = sprintf(
+							__( 'Payment was initiated via %1s.', 'sliced-invoices' ) . ' (%2s)',
+							$log['gateway'],
+							$log['status']
+						);
 						break;
 					case 'marked_as_paid':
 						$message = sprintf( __( '%s was marked as Paid.', 'sliced-invoices' ), sliced_get_invoice_label() );
