@@ -130,15 +130,15 @@
             var group = $(this).parents('.cmb-repeatable-grouping');
             var index = group.data('iterator');
 			
-	    	var qty = new Decimal( sliced_invoices.utils.rawNumber( $(group).find('#_sliced_items_' + index + '_qty').val() ) );
+			var qty = new Decimal( sliced_invoices.utils.rawNumber( $( group ).find( '[name="_sliced_items[' + index + '][qty]"]' ).val() ) );
 			var amt = new Decimal( sliced_invoices.utils.rawNumber( $(this).val() ) );
 			
 			// for historical reasons, the "adjust" field is named "tax" internally,
 			// but it is unrelated to the actual tax field(s) in use today.
-            var adj = new Decimal( sliced_invoices.utils.rawNumber( $(group).find('#_sliced_items_' + index + '_tax').val() ) );
-            
-			var taxable = $(group).find('#_sliced_items_' + index + '_taxable').is(":checked");
-
+			var adj = new Decimal( sliced_invoices.utils.rawNumber( $( group ).find( '[name="_sliced_items[' + index + '][tax]"]' ).val() ) );
+			
+			var taxable = $( group ).find( '[name="_sliced_items[' + index + '][taxable]"]' ).is(":checked");
+			
             // work out the line totals and taxes/discounts
             var line_adj        = adj.equals( 0 ) ? adj : adj.div( 100 ); // 0.10
             var line_sub_total  = qty.times( amt ); // 100
@@ -288,6 +288,10 @@
 	
 	$(document).on('change', '#_sliced_tax_calc_method', function() {
 		sliced_payments.tax_calc_method = $(this).val();
+		workOutTotals();
+	});
+	
+	$( document ).on( 'click', '.cmb-remove-group-row-button, .cmb-shift-rows', function(){
 		workOutTotals();
 	});
 	
