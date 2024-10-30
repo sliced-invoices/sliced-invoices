@@ -2241,7 +2241,8 @@ class Sliced_Shared {
 	/**
 	 * Convert a quote to an invoice.
 	 *
-	 * @since  3.9.0
+	 * @version 3.9.4
+	 * @since   3.9.0
 	 */
 	public static function convert_quote_to_invoice( $id ) {
 		
@@ -2289,7 +2290,8 @@ class Sliced_Shared {
 	/**
 	 * Create a new invoice from a quote.
 	 *
-	 * @since 	3.9.0
+	 * @version 3.9.4
+	 * @since   3.9.0
 	 */
 	public static function create_invoice_from_quote( $id ) {
 		global $wpdb;

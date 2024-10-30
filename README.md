@@ -4,9 +4,9 @@ Contributors: SlicedInvoices
 Donate link: http://slicedinvoices.com/  
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
-Tested up to: 6.4
+Tested up to: 6.6
 Requires PHP: 5.5
-Stable tag: 3.9.3
+Stable tag: 3.9.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -173,6 +173,13 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 ## Changelog
+##  3.9.4
+* FIX: calculations on quote/invoice editing page not updating when a line item is removed.
+* FIX: make some missing strings in the "Email to client" popup translatable.
+* FIX: change wording in the "Invoice History" log to clarify whether a payment made was successful or failed.
+* UPDATE: automatically add due date when invoice converted from quote.
+* UPDATE: update .pot file for translations.
+
 ##  3.9.3
 * FIX: restrict access to sending emails to Adminstrator users only (thanks to Patchstack).  NOTE: Patchstack reported a vulnerability where existing users of any role could abuse an AJAX URL to send emails through Sliced Invoices.  To exploit this, the attacker would have to already have access to an existing user account and be logged in to do so -- no access was open to the general public.  Please note this is a theoretical vulnerability only -- we have no reports of any such attacks actually taking place in the real world.
 

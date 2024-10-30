@@ -469,7 +469,8 @@ class Sliced_Logs {
 	/**
 	 * Display the logs within the invoice or quote
 	 *
-	 * @since 2.20
+	 * @version 3.9.4
+	 * @since   2.20
 	 */
 	public function display_the_logs( $id ) {
 
