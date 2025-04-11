@@ -1289,7 +1289,7 @@ class Sliced_Admin {
 			}
 		}
 		foreach ( $payments_post as $key => $payment ) {
-			if ( ! is_int( $payment['date'] ) ) {
+			if ( isset( $payment['date'] ) && ! is_int( $payment['date'] ) ) {
 				$payments_post[ $key ]['date'] = strtotime( $payments_post[ $key ]['date'] );
 			}
 		}
