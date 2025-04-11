@@ -1255,7 +1255,8 @@ class Sliced_Admin {
 	 * Fires on save_post before CMB2 has saved anything, to see if the payments field is dirty.
 	 * If so, it will fire maybe_mark_as_paid_step_2() after CMB2 has completed saving.
 	 *
-	 * @since 	3.9.0
+	 * @version 3.9.5
+	 * @since   3.9.0
 	 */
 	public function maybe_mark_as_paid( $post_id ) {
 		
@@ -1289,7 +1290,7 @@ class Sliced_Admin {
 			}
 		}
 		foreach ( $payments_post as $key => $payment ) {
-			if ( ! is_int( $payment['date'] ) ) {
+			if ( isset( $payment['date'] ) && ! is_int( $payment['date'] ) ) {
 				$payments_post[ $key ]['date'] = strtotime( $payments_post[ $key ]['date'] );
 			}
 		}
