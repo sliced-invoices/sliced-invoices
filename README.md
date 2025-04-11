@@ -4,9 +4,9 @@ Contributors: SlicedInvoices
 Donate link: http://slicedinvoices.com/  
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
-Tested up to: 6.6
+Tested up to: 6.7
 Requires PHP: 5.5
-Stable tag: 3.9.4
+Stable tag: 3.9.5
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -99,7 +99,7 @@ Our support is fantastic (check out the [reviews](https://wordpress.org/support/
 ### Minimum System Requirements
 
 * WordPress 4.0 or newer
-* PHP version from 5.5 up to 8.0
+* PHP version from 5.5 up to 8.2
 
 ### Where can I find documentation?
 
@@ -173,6 +173,9 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 ## Changelog
+##  3.9.5
+* FIX: PHP warning (#207167).
+
 ##  3.9.4
 * FIX: calculations on quote/invoice editing page not updating when a line item is removed.
 * FIX: make some missing strings in the "Email to client" popup translatable.
