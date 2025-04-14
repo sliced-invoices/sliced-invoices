@@ -250,6 +250,12 @@ class Sliced_Options {
 					),
 				),
 				array(
+					'name'      => __( 'Hide Public visibility ', 'sliced-invoices' ),
+					'desc'      => __( 'Yes, hide the public visibility of invoices / quotes, It won\'t visible to public', 'sliced-invoices' ),
+					'id'        => 'publicvisibility',
+					'type'      => 'checkbox',
+				),
+				array(
 					'name'      => __( 'Pre-Defined Line Items', 'sliced-invoices' ),
 					'desc'      => __( 'Add 1 line item per line in this format: Qty | Title | Price | Description. Each field separated with a | symbol. <br>Price should be numbers only, no currency symbol.<br>If you prefer to have an item blank, you still need the | symbol like so: 1 | Web Design | | Designing the web', 'sliced-invoices' ),
 					'default'   => '',
