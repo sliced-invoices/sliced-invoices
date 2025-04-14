@@ -1,14 +1,9 @@
-sliced_title,sliced_description,sliced_author_id,sliced_number,sliced_created,sliced_due,sliced_valid,sliced_items,sliced_status,sliced_client_email,sliced_client_name,sliced_client_business,sliced_client_address,sliced_client_extra
-Very first,Anything can go in here,,,2015-12-31 20:00:12,,,"1|Test line item|Test description|60
-4|Test line items2||55
-2|Test 3 line item|Testing the descriptions|99",paid,dfsfdsfadsfasf@asdfadsfdsf.com,Bob Joness,Bobs Web Design,"123 Somewhere St
-Hollywood CA","Phone: 1234 123 554
-ABN: 44332 123 332"
-Second,,2,,,2018-01-01 14:00:00,,1|||45,unpaid,aaabbbccc@erer.com,bob’s name,,,
-third,,,,,,,1|Test line item|Test description|45,draft,fdfdsf@dfsdfsf.com,adsf,,,
-Title fourth,,,,2016-1-10 0:00:00,,,1|Test line item|Test description|45,overdue,ggghhhiii@erer.com,ggggggg,,,
-fifth,,,,,,,,,ggghhhiii@erer.com,ggggggg,,,
-,,,,,,,,,,,,,
-,,,,,,,,,,,,,
-,,,,,,,,,,,,,
-,,,,,,,,,,,,,
+﻿Number,Title,Client,"Client Email","Client Address","Client Extra Info",Status,Created,"Sub Total",Tax,Total
+INV-0004,"Title fourth",,fdfdsf@dfsdfsf.com,,,Overdue,"September 21, 2022",$210.00,$21.00,$231.00
+INV-0003,Third,,aaabbbccc@erer.com,,,Draft,"September 21, 2022",$105.00,$10.50,$115.50
+INV-0002,Second,,fdfdsf@dfsdfsf.com,,,Unpaid,"September 21, 2022",$45.00,$0.00,$45.00
+INV-0001,"Very first","Bobs Web Design",dfsfdsfadsfasf@asdfadsfdsf.com,"<p>123 Somewhere St<br />
+Hollywood CA</p>
+","<p>Phone: 1234 123 554<br />
+ABN: 44332 123 332</p>
+",Paid,"September 21, 2022",$525.80,$52.58,$578.38
