@@ -1639,7 +1639,7 @@ class Sliced_Admin {
 
 				<p><?php _e( 'Add new client from:', 'sliced-invoices' ); ?></p>
 				
-				<?php if ( current_user_can('create_users') ): ?>
+				<?php if ( current_user_can( 'create_users' ) ): ?>
 				<p><input type="radio" name="sliced_add_client_type" id="sliced_add_client_type_existing" value="existing" /> <label for="sliced_add_client_type_existing"><?php _e( 'Existing User', 'sliced-invoices' ); ?></label></p>
 				<?php else: ?>
 				<div class="notice notice-error inline"><p><?php _e( 'Error: you do not have sufficient permissions to manage users.  Please contact an admin for assistance.', 'sliced-invoices' ); ?></p></div>
@@ -1696,7 +1696,7 @@ class Sliced_Admin {
 
 				</form>
 				
-				<?php if ( current_user_can('create_users') ): ?>
+				<?php if ( current_user_can( 'create_users' ) ): ?>
 				<p><input type="radio" name="sliced_add_client_type" id="sliced_add_client_type_new" value="new" /> <label for="sliced_add_client_type_new"><?php _e( 'Create New User', 'sliced-invoices' ); ?></label></p>
 				<?php endif; ?>
 				
@@ -1784,15 +1784,15 @@ class Sliced_Admin {
 						</tr>
 
 						<tr class="form-field">
-							<th scope="row"><label for="first_name"><?php _e('First Name') ?> </label></th>
+							<th scope="row"><label for="first_name"><?php _e( 'First Name' ) ?> </label></th>
 							<td><input name="first_name" type="text" id="first_name" value="<?php echo esc_attr( $new_user_firstname ); ?>" /></td>
 						</tr>
 						<tr class="form-field">
-							<th scope="row"><label for="last_name"><?php _e('Last Name') ?> </label></th>
+							<th scope="row"><label for="last_name"><?php _e( 'Last Name' ) ?> </label></th>
 							<td><input name="last_name" type="text" id="last_name" value="<?php echo esc_attr( $new_user_lastname ); ?>" /></td>
 						</tr>
 						<tr class="form-field">
-							<th scope="row"><label for="url"><?php _e('Website') ?></label></th>
+							<th scope="row"><label for="url"><?php _e( 'Website' ) ?></label></th>
 							<td><input name="url" type="url" id="url" class="code" value="<?php echo esc_attr( $new_user_uri ); ?>" /></td>
 						</tr>
 
@@ -1842,7 +1842,7 @@ class Sliced_Admin {
 							</tr>
 							
 							<tr class="form-field form-required">
-								<th scope="row"><label for="email"><?php _e('E-mail'); ?>*</label></th>
+								<th scope="row"><label for="email"><?php _e( 'E-mail' ); ?>*</label></th>
 								<td><input name="user_email" type="email" value="" /></td>
 							</tr>
 
@@ -1861,15 +1861,15 @@ class Sliced_Admin {
 							</tr>
 
 							<tr class="form-field">
-								<th scope="row"><label for="first_name"><?php _e('First Name') ?> </label></th>
+								<th scope="row"><label for="first_name"><?php _e( 'First Name' ) ?> </label></th>
 								<td><input name="first_name" type="text" value="" /></td>
 							</tr>
 							<tr class="form-field">
-								<th scope="row"><label for="last_name"><?php _e('Last Name') ?> </label></th>
+								<th scope="row"><label for="last_name"><?php _e( 'Last Name' ) ?> </label></th>
 								<td><input name="last_name" type="text" value="" /></td>
 							</tr>
 							<tr class="form-field">
-								<th scope="row"><label for="url"><?php _e('Website') ?></label></th>
+								<th scope="row"><label for="url"><?php _e( 'Website' ) ?></label></th>
 								<td><input name="user_url" type="url" class="code" value="" /></td>
 							</tr>
 
@@ -2098,7 +2098,7 @@ class Sliced_Admin {
 		/*
 		 * Verify the nonce
 		 */
-		if ( ! current_user_can('create_users') )
+		if ( ! current_user_can( 'create_users' ) )
 			wp_die( __( 'Cheatin&#8217; uh?' ), 403 );
 
 		if( !isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'sliced-create-user' ) )
@@ -2172,7 +2172,7 @@ class Sliced_Admin {
 		/*
 		 * Verify the nonce
 		 */
-		if ( ! current_user_can('create_users') )
+		if ( ! current_user_can( 'create_users' ) )
 			wp_die( __( 'Cheatin&#8217; uh?' ), 403 );
 
 		if( !isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'sliced-update-user' ) )
@@ -2230,7 +2230,7 @@ class Sliced_Admin {
 	 */
 	public function get_client() {
 		
-		if ( ! current_user_can('create_users') ) {
+		if ( ! current_user_can( 'create_users' ) ) {
 			wp_die( __( 'Error: you do not have sufficient permissions to manage users.  Please contact an admin for assistance.', 'sliced-invoices' ), 403 );
 		}
 
@@ -2244,7 +2244,7 @@ class Sliced_Admin {
 		
 		$client = get_userdata( intval( $_GET['client_id'] ) );
 		
-		if ( ! current_user_can('manage_options') && user_can( $client->ID, 'manage_options' ) ) {
+		if ( ! current_user_can( 'manage_options' ) && user_can( $client->ID, 'manage_options' ) ) {
 			// don't allow non-admins to edit admins
 			wp_die( __( 'Error: you do not have sufficient permissions to edit this user. Please contact an admin for assistance.', 'sliced-invoices' ), 403 );
 		}
@@ -2273,7 +2273,7 @@ class Sliced_Admin {
 	 */
 	public function update_client() {
 		
-		if ( ! current_user_can('create_users') ) {
+		if ( ! current_user_can( 'create_users' ) ) {
 			wp_die( __( 'Error: you do not have sufficient permissions to manage users.  Please contact an admin for assistance.', 'sliced-invoices' ), 403 );
 		}
 
@@ -2287,7 +2287,7 @@ class Sliced_Admin {
 		
 		$client_id = intval( $_POST['client_id'] );
 		
-		if ( ! current_user_can('manage_options') && user_can( $client_id, 'manage_options' ) ) {
+		if ( ! current_user_can( 'manage_options' ) && user_can( $client_id, 'manage_options' ) ) {
 			// don't allow non-admins to edit admins
 			wp_die( __( 'Error: you do not have sufficient permissions to edit this user. Please contact an admin for assistance.', 'sliced-invoices' ), 403 );
 		}
@@ -2344,7 +2344,7 @@ class Sliced_Admin {
 	 */
 	public function duplicate_quote_invoice_link( $actions, $post ) {
 
-		if ( current_user_can('edit_posts') && ( $post->post_type == 'sliced_quote' || $post->post_type == 'sliced_invoice' ) ) {
+		if ( current_user_can( 'edit_posts' ) && ( $post->post_type == 'sliced_quote' || $post->post_type == 'sliced_invoice' ) ) {
 
 			$nonce  = wp_create_nonce( 'sliced_invoices_duplicate_quote_invoice-' . $post->ID );
 			$output = admin_url( 'admin.php?action=duplicate_quote_invoice&amp;post=' . $post->ID . '&amp;_wpnonce=' . $nonce );
