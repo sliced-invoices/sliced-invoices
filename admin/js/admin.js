@@ -113,7 +113,12 @@
 
 	// calculate the totals on the fly when editing or adding a quote or invoice
  	function workOutTotals(){
-
+		
+		// keep iterator values accurate 
+		$( '.cmb-repeatable-grouping' ).each( function( index ) {
+		    $( this ).attr( 'data-iterator', index ).data( 'iterator', index );
+		});
+		
 		sliced_invoices.totals = {
 			'sub_total':         new Decimal( 0 ),
 			'sub_total_taxable': new Decimal( 0 ),
