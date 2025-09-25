@@ -38,12 +38,15 @@ class Sliced_Options {
 
 	/**
 	 * Constructor
+	 * @version 3.9.6
 	 * @since 0.1.0
 	 */
 	public function __construct() {
 		// Set our title
-		$this->menu_title = __( 'Sliced Invoices', 'sliced-invoices' );
-		$this->title = __( 'Sliced Invoices', 'sliced-invoices' );
+		add_action( 'init', function() {
+			$this->menu_title = __( 'Sliced Invoices', 'sliced-invoices' );
+			$this->title = __( 'Sliced Invoices', 'sliced-invoices' );
+		});
 	}
 
 	/**
