@@ -1195,8 +1195,26 @@ class Sliced_Metaboxes {
 	public function display_logs() {
 		return $this->logs->display_the_logs( intval( sanitize_text_field( $_GET['post'] ) ) );
 	}
-
+	
+	/**
+	 * Get accepted payment method keys.
+	 *
+	 * @version 3.9.6
+	 * @since   <= 2.83
+	 *
+	 * @return array Accepted payment method keys.
+	 */
 	public function accepted_payment_method_keys() {
+		// If editing an existing Invoice and no payment methods meta is saved for it, default to none (so old invoices don't show methods as enabled).
+		$post_id = sliced_get_the_id();
+		if ( $post_id ) {
+			$methods = sliced_get_invoice_payment_methods( $post_id );
+			if ( empty( $methods ) ) {
+				return array();
+			}
+		}
+		
+		// For new Invoices, enable all accepted methods
 		return array_keys( sliced_get_accepted_payment_methods() );
 	}
 
