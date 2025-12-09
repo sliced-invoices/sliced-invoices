@@ -2343,19 +2343,27 @@ class Sliced_Admin {
 	 * @since 	2.0.0
 	 */
 	public function duplicate_quote_invoice_link( $actions, $post ) {
-
-		if ( current_user_can('edit_posts') && ( $post->post_type == 'sliced_quote' || $post->post_type == 'sliced_invoice' ) ) {
-
+		
+		if (
+			current_user_can( 'edit_posts' )
+			&& ( $post->post_type === 'sliced_quote' || $post->post_type === 'sliced_invoice' )
+		) {
+			
 			$nonce  = wp_create_nonce( 'sliced_invoices_duplicate_quote_invoice-' . $post->ID );
 			$output = admin_url( 'admin.php?action=duplicate_quote_invoice&amp;post=' . $post->ID . '&amp;_wpnonce=' . $nonce );
-			$actions['duplicate'] = '<a href="' . esc_url( $output ) . '" title="'. __( 'Clone this item', 'sliced-invoices' ) .'" rel="permalink">' . __( 'Clone', 'sliced-invoices' ) . '</a>';
-
+			$actions['duplicate'] = '<a href="' . esc_url( $output ) . '">'
+				. sprintf(
+					__( 'Copy to New %s', 'sliced-invoices' ),
+					sliced_get_label( $post->ID )
+				)
+				. '</a>';
+			
 		}
-
-		return $actions;
+		
+		return apply_filters( 'sliced_invoices_duplicate_quote_invoice_link', $actions, $post );
 	}
-
-
+	
+	
 	/**
 	 * Function creates post duplicate and redirects then to the edit post screen
 	 *
@@ -2363,7 +2371,6 @@ class Sliced_Admin {
 	 * @since 	2.0.0
 	 */
 	public function duplicate_quote_invoice() {
-
 		global $wpdb;
 		
 		if ( ! current_user_can( 'edit_posts' ) ) {
@@ -2373,26 +2380,22 @@ class Sliced_Admin {
 		// get original post ID
 		$post_id = isset( $_REQUEST['post'] ) ? intval( sanitize_text_field( $_REQUEST['post'] ) ) : false;
 		if ( ! $post_id ) {
-			wp_die( 'No quote or invoice to duplicate!' );
+			wp_die( __( 'Post ID not found.', 'sliced-invoices' ), 403 );
 		}
 		
 		// verify the nonce
 		$nonce = isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : false;
 		if ( ! wp_verify_nonce( $nonce, 'sliced_invoices_duplicate_quote_invoice-' . $post_id ) ) {
-			wp_die( 'The link you followed has expired.' );
+			wp_die( __( 'The link you followed has expired.', 'sliced-invoices' ), 403 );
 		}
 		
 		// get the original post, verify it is a quote or invoice
 		$post = get_post( $post_id );
 		if ( ! $post || ! in_array( $post->post_type, array( 'sliced_invoice', 'sliced_quote' ) ) ) {
-			wp_die( 'Creation failed, could not find original invoice or quote: ' . $post_id );
+			wp_die( __( 'Could not find original invoice or quote with ID: ' . $post_id, 'sliced-invoices' ), 403 );
 		}
 		
-		/*
-		 * create the post duplicate
-		 */
-		
-		// new post data array
+		// start building new post data
 		$args = array(
 			'comment_status' => $post->comment_status,
 			'ping_status'    => $post->ping_status,
@@ -2408,18 +2411,11 @@ class Sliced_Admin {
 			'to_ping'        => $post->to_ping,
 			'menu_order'     => $post->menu_order
 		);
-
+		
 		// insert the post by wp_insert_post() function
 		$new_post_id = wp_insert_post( $args );
-
-		// get all current post terms ad set them to the new post draft
-		$taxonomies = get_object_taxonomies($post->post_type); // returns array of taxonomy names for post type, ex array("category", "post_tag");
-		foreach ($taxonomies as $taxonomy) {
-			$post_terms = wp_get_object_terms($post_id, $taxonomy, array('fields' => 'slugs'));
-			wp_set_object_terms($new_post_id, $post_terms, $taxonomy, false);
-		}
 		
-		// duplicate post metas
+		// duplicate only relevant post metas
 		$non_cloneable_post_metas = apply_filters( 'sliced_invoices_non_cloneable_post_metas', array(
 			'_sliced_log',
 			'_sliced_number',
@@ -2439,7 +2435,10 @@ class Sliced_Admin {
 			foreach ( $post_metas as $post_meta ) {
 				$meta_key = esc_sql( $post_meta->meta_key );
 				$meta_value = esc_sql( $post_meta->meta_value );
-				if ( ! in_array( $meta_key, $non_cloneable_post_metas ) ) {
+				if (
+					substr( $meta_key, 0, 7 ) === '_sliced'
+					&& ! in_array( $meta_key, $non_cloneable_post_metas )
+				) {
 					$sql_values[]= "($new_post_id, '$meta_key', '$meta_value')";
 				}
 			}
@@ -2447,33 +2446,43 @@ class Sliced_Admin {
 			$wpdb->query( $sql_query );
 		}
 		
-		// increment the number
+		// make the appropriate adjustments
 		if ( $post->post_type === 'sliced_invoice' ) {
-			$prefix = get_post_meta( $new_post_id, '_sliced_invoice_prefix', true );
+			update_post_meta( $new_post_id, '_sliced_invoice_created', time() );
+			update_post_meta( $new_post_id, '_sliced_invoice_due', Sliced_Invoice::get_auto_due_date() );
+			$payment = sliced_get_accepted_payment_methods();
+			update_post_meta( $new_post_id, '_sliced_payment_methods', array_keys( $payment ) );
+			$prefix = get_post_meta( $post_id, '_sliced_invoice_prefix', true );
 			$number = sliced_get_next_invoice_number();
-			$suffix = get_post_meta( $new_post_id, '_sliced_invoice_suffix', true );
+			$suffix = get_post_meta( $post_id, '_sliced_invoice_suffix', true );
 			update_post_meta( $new_post_id, '_sliced_invoice_number', (string)$number );
+			update_post_meta( $new_post_id, '_sliced_invoice_prefix', $prefix ); 
+			update_post_meta( $new_post_id, '_sliced_invoice_suffix', $suffix );
 			update_post_meta( $new_post_id, '_sliced_number', $prefix . $number . $suffix );
 			Sliced_Invoice::update_invoice_number( $new_post_id );
+			Sliced_Invoice::set_as_draft( $new_post_id );
 		}
 		if ( $post->post_type === 'sliced_quote' ) {
-			$prefix = get_post_meta( $new_post_id, '_sliced_quote_prefix', true );
+			update_post_meta( $new_post_id, '_sliced_quote_created', time() );
+			update_post_meta( $new_post_id, '_sliced_quote_valid_until', Sliced_Quote::get_auto_valid_until_date() );
+			$prefix = get_post_meta( $post_id, '_sliced_quote_prefix', true );
 			$number = sliced_get_next_quote_number();
-			$suffix = get_post_meta( $new_post_id, '_sliced_quote_suffix', true );
+			$suffix = get_post_meta( $post_id, '_sliced_quote_suffix', true );
 			update_post_meta( $new_post_id, '_sliced_quote_number', (string)$number );
+			update_post_meta( $new_post_id, '_sliced_quote_prefix', $prefix ); 
+			update_post_meta( $new_post_id, '_sliced_quote_suffix', $suffix );
 			update_post_meta( $new_post_id, '_sliced_number', $prefix . $number . $suffix );
 			Sliced_Quote::update_quote_number( $new_post_id );
+			Sliced_Quote::set_as_draft( $new_post_id );
 		}
 		
 		// finally, redirect to the current(ish) url
-		$current_url = admin_url( 'edit.php?post_type=' . $post->post_type . '' );
+		$current_url = admin_url( 'edit.php?post_type=' . $post->post_type );
 		wp_redirect( $current_url );
 		exit;
-
 	}
-
-
-
+	
+	
 	/**
 	 * Get the pre-defined line items dropdown
 	 *
