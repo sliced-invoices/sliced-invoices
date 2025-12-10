@@ -494,7 +494,7 @@ class Sliced_Admin {
 		$opts['menu_icon']            = 'dashicons-sliced';
 		// $opts['menu_position']        = 99.3;
 		$opts['public']               = true;
-		$opts['publicly_querable']    = true;
+		$opts['publicly_queryable']   = true;
 		$opts['query_var']            = true;
 		$opts['register_meta_box_cb'] = '';
 		$opts['show_in_admin_bar']    = true;
@@ -594,7 +594,7 @@ class Sliced_Admin {
 		$opts['menu_icon']            = 'dashicons-sliced';
 		// $opts['menu_position']        = 99.4;
 		$opts['public']               = true;
-		$opts['publicly_querable']    = true;
+		$opts['publicly_queryable']   = true;
 		$opts['query_var']            = true;
 		$opts['register_meta_box_cb'] = '';
 		$opts['show_in_admin_bar']    = true;
@@ -685,7 +685,7 @@ class Sliced_Admin {
 		$plural = __( 'Statuses', 'sliced-invoices' );
 		
 		$opts['hierarchical']      = true;
-		$opts['public']            = true;
+		$opts['public']            = false;
 		$opts['query_var']         = 'quote_status';
 		$opts['show_admin_column'] = true;
 		$opts['show_in_nav_menus'] = false;
@@ -777,7 +777,7 @@ class Sliced_Admin {
 		$plural = __( 'Statuses', 'sliced-invoices' );
 		
 		$opts['hierarchical']      = true;
-		$opts['public']            = true;
+		$opts['public']            = false;
 		$opts['query_var']         = 'invoice_status';
 		$opts['show_admin_column'] = true;
 		$opts['show_in_nav_menus'] = false;
