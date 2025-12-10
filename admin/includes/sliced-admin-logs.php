@@ -500,40 +500,84 @@ class Sliced_Logs {
 				$by         = sprintf( __( 'by %s', 'sliced-invoices' ), $user_name );
 
 				// work out the type of log entry
-				switch ($log['type']) {
+				switch ( $log['type'] ) {
 					case 'invoice_created':
-						$message = sprintf( __( '%s was created.', 'sliced-invoices' ), sliced_get_invoice_label() );
+						$message = sprintf(
+							__( '%s was created.', 'sliced-invoices' ),
+							sliced_get_invoice_label()
+						);
+						break;
+					case 'invoice_created_from_quote':
+						$url = admin_url( 'post.php?post=' . $log['from_quote_id'] . '&action=edit' );
+						$message = sprintf(
+							/* translators: %1$s is a placeholder for the localized word "Invoice";
+							%2$s is a placeholder for the localized word "Quote";
+							%3$s is a placeholder for the quote number;
+							%4$s is a placeholder for the quote URL. */
+							__( '%1$s was created from %2$s <a href="%4$s">%3$s</a>.', 'sliced-invoices' ),
+							sliced_get_invoice_label(),
+							sliced_get_quote_label(),
+							$log['from_quote_number'],
+							esc_url( $url )
+						);
 						break;
 					case 'quote_created':
-						$message = sprintf( __( '%s was created.', 'sliced-invoices' ), sliced_get_quote_label() );
+						$message = sprintf(
+							__( '%s was created.', 'sliced-invoices' ),
+							sliced_get_quote_label()
+						);
 						break;
 					case 'status_update':
-						$message = sprintf( __( 'Status changed from %1s to %2s.', 'sliced-invoices' ), $log['from'], $log['to'] );
+						$message = sprintf(
+							__( 'Status changed from %1$s to %2$s.', 'sliced-invoices' ),
+							$log['from'],
+							$log['to']
+						);
 						break;
 					case 'client_declined_quote':
-						$message = sprintf( __( '%1s was declined. Reason: %2s', 'sliced-invoices' ), sliced_get_quote_label(), $log['reason'] );
+						$message = sprintf(
+							__( '%1$s was declined. Reason: %2$s', 'sliced-invoices' ),
+							sliced_get_quote_label(),
+							esc_html( $log['reason'] )
+						);
 						break;
 					case 'client_accepted_quote':
-						$message = sprintf( __( '%s was accepted by client.', 'sliced-invoices' ), sliced_get_quote_label() );
+						$message = sprintf(
+							__( '%s was accepted by client.', 'sliced-invoices' ),
+							sliced_get_quote_label()
+						);
 						break;
 					case 'payment_made':
 						$message = sprintf(
-							__( 'Payment was initiated via %1s.', 'sliced-invoices' ) . ' (%2s)',
+							__( 'Payment was initiated via %1$s.', 'sliced-invoices' ) . ' (%2$s)',
 							$log['gateway'],
 							$log['status']
 						);
 						break;
 					case 'marked_as_paid':
-						$message = sprintf( __( '%s was marked as Paid.', 'sliced-invoices' ), sliced_get_invoice_label() );
+						$message = sprintf(
+							__( '%s was marked as Paid.', 'sliced-invoices' ),
+							sliced_get_invoice_label()
+						);
 						break;
 					case 'quote_to_invoice':
-						$message = sprintf( __( 'Converted from %1s to %2s.', 'sliced-invoices' ), sliced_get_quote_label(), sliced_get_invoice_label() );
+						$message = sprintf(
+							__( 'Converted from %1$s to %2$s.', 'sliced-invoices' ),
+							sliced_get_quote_label(),
+							sliced_get_invoice_label()
+						);
 						break;
 					case 'quote_sent':
-						$message = sprintf( __( '%s was sent.', 'sliced-invoices' ), sliced_get_quote_label() );
+						$message = sprintf(
+							__( '%s was sent.', 'sliced-invoices' ),
+							sliced_get_quote_label()
+						);
 						break;
 					case 'invoice_sent':
-						$message = sprintf( __( '%s was sent.', 'sliced-invoices' ), sliced_get_invoice_label() );
+						$message = sprintf(
+							__( '%s was sent.', 'sliced-invoices' ),
+							sliced_get_invoice_label()
+						);
 						break;
 					case 'payment_reminder_sent':
 						$message = __( 'Payment reminder email was sent.', 'sliced-invoices' );
@@ -542,24 +586,26 @@ class Sliced_Logs {
 						$message = __( 'Payment received email was sent.', 'sliced-invoices' );
 						break;
 					case 'invoice_viewed':
-						$message = sprintf( __( '%s was viewed.', 'sliced-invoices' ), sliced_get_invoice_label() );
+						$message = sprintf(
+							__( '%s was viewed.', 'sliced-invoices' ),
+							sliced_get_invoice_label()
+						);
 						break;
 					case 'quote_viewed':
-						$message = sprintf( __( '%s was viewed.', 'sliced-invoices' ), sliced_get_quote_label() );
-						break;
-
-					default:
-						# code...
+						$message = sprintf(
+							__( '%s was viewed.', 'sliced-invoices' ),
+							sliced_get_quote_label()
+						);
 						break;
 				}
-
+				
 				$notes .= '<li class="note">';
-				$notes .= '<div class="note_content">' . esc_html( $message ) . '</div>';
-				$notes .= '<p class="meta">' . esc_html( $time_date ) . '<br>' . esc_html( $by );
+				$notes .= '<div class="note_content">' . $message . '</div>';
+				$notes .= '<p class="meta">' . $time_date . '<br />' . $by;
 				$notes .= ( $log['by'] === 0 && isset( $log['secured'] ) && $log['secured'] === 'yes' ? ', '.__( 'using the secure link', 'sliced-invoices' ) : '' );
 				$notes .= '</p>';
 				$notes .= '</li>';
-
+				
 			}
 
 			$notes .= '</ul>';
