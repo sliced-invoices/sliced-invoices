@@ -1304,8 +1304,37 @@ class Sliced_Admin {
 		}
 		
 	}
-
-
+	
+	
+	/**
+	 * Maybe renerate slug, if post_title changes and other conditions are met.
+	 *
+	 * @since 	x.x.x
+	 */
+	public function maybe_regenerate_slug( $post_id, $post_after, $post_before ) {
+		
+		if ( ! in_array( $post_before->post_type, array( 'sliced_invoice', 'sliced_quote' ) ) ) {
+			return;
+		}
+		
+		if (
+			$post_before->post_title !== $post_after->post_title                      // title changed...
+			&& $post_before->post_name === $post_after->post_name                     // ...and slug didn't...
+			&& ! (                                                                    // and it hasn't already been emailed out
+				$post_before->post_type === 'sliced_invoice' ?
+					get_post_meta( $post_id, '_sliced_invoice_email_sent', true ) :
+					get_post_meta( $post_id, '_sliced_quote_email_sent', true )
+			)
+		) {
+			wp_update_post( array(
+				'ID'        => $post_id,
+				'post_name' => sanitize_title( $post_after->post_title ),
+			) );
+		}
+		
+	}
+	
+	
 	/**
 	 * Handle admin "convert from quote to invoice" action.
 	 *

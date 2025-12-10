@@ -226,6 +226,7 @@ class Sliced_Invoices {
 		$this->loader->add_filter( 'wp_insert_post_data', $plugin_admin, 'set_published_date_as_created' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'set_number_for_search' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'maybe_mark_as_paid' );
+		$this->loader->add_action( 'post_updated', $plugin_admin, 'maybe_regenerate_slug', 10, 3 );
 
 		//$this->loader->add_filter( 'load-edit.php', $plugin_admin, 'mark_quote_expired' );
 		//$this->loader->add_filter( 'load-edit.php', $plugin_admin, 'mark_invoice_overdue' );
