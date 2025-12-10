@@ -2313,18 +2313,28 @@ class Sliced_Shared {
 			'post_title'     => $post->post_title,
 			'post_type'      => 'sliced_invoice',
 			'to_ping'        => $post->to_ping,
-			'menu_order'     => $post->menu_order
+			'menu_order'     => $post->menu_order,
+			'meta_input'     => array(
+				'_sliced_log' => array(
+					current_time( 'timestamp', 1 ) => array(
+						'type'              => 'invoice_created_from_quote',
+						'from_quote_id'     => $id,
+						'from_quote_number' => get_post_meta( $id, '_sliced_number', true ),
+						'by'                => get_current_user_id(),
+					),
+				),
+			),
 		);
 		$new_post_id = wp_insert_post( $args );
 		
-		// get all current post terms and set them to the new post draft
-		$taxonomies = get_object_taxonomies( $post->post_type );
-		foreach ( $taxonomies as $taxonomy ) {
-			$post_terms = wp_get_object_terms( $id, $taxonomy, array( 'fields' => 'slugs' ) );
-			wp_set_object_terms( $new_post_id, $post_terms, $taxonomy, false );
-		}
-		
-		// duplicate post metas
+		// duplicate only relevant post metas
+		$non_cloneable_post_metas = apply_filters( 'sliced_invoices_non_cloneable_post_metas', array(
+			'_sliced_log',
+			'_sliced_number',
+			'_sliced_payment',
+			'_sliced_invoice_email_sent',
+			'_sliced_quote_email_sent',
+		) );
 		$post_metas = $wpdb->get_results(
 			$wpdb->prepare(
 				"SELECT meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id=%d",
@@ -2337,7 +2347,12 @@ class Sliced_Shared {
 			foreach ( $post_metas as $post_meta ) {
 				$meta_key = esc_sql( $post_meta->meta_key );
 				$meta_value = esc_sql( $post_meta->meta_value );
-				$sql_values[]= "($new_post_id, '$meta_key', '$meta_value')";
+				if (
+					substr( $meta_key, 0, 7 ) === '_sliced'
+					&& ! in_array( $meta_key, $non_cloneable_post_metas )
+				) {
+					$sql_values[]= "($new_post_id, '$meta_key', '$meta_value')";
+				}
 			}
 			$sql_query .= implode( ',', $sql_values );
 			$wpdb->query( $sql_query );
