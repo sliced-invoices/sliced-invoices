@@ -38,6 +38,7 @@ class Sliced_Admin_Notices {
 		add_action( 'shutdown', array( __CLASS__, 'store_notices' ), 999 );
 
 		if ( current_user_can( 'manage_options' ) ) {
+			add_action( 'admin_notices', array( __CLASS__, 'maybe_show_review_suggestion' ) );
 			add_action( 'admin_print_styles', array( __CLASS__, 'add_notices' ) );
 		}
 		
@@ -285,6 +286,51 @@ class Sliced_Admin_Notices {
 			<p><?php printf( __( 'The plugin "Sliced Invoices Additional Tax" is out of date and not fully compatible with this version of Sliced Invoices. Please go to your %sPlugins page%s and update it now.', 'sliced-invoices' ), '<a href="' . esc_url( admin_url( 'plugins.php' ) ) . '">', '</a>' ); ?>
 			<br /><?php printf( __( '<strong>You have:</strong> Sliced Invoices Additional Tax version %s.', 'sliced-invoices' ), SI_ADD_TAX_VERSION ); ?>
 			<br /><?php _e( '<strong>Required:</strong> Sliced Invoices Additional Tax version 1.3.0 or newer', 'sliced-invoices' ); ?></p>
+		</div>
+		<?php
+	}
+	
+	
+	/**
+	 * Display review suggestion notice
+	 * 
+	 * @since 3.9.6
+	 */
+	public static function maybe_show_review_suggestion() {
+		
+		if ( get_option( 'sliced_admin_notice_review_suggestion' ) === '' ) {
+			return;
+		}
+		
+		if ( get_transient( 'sliced_hide_review_suggestion_notice' ) ) {
+			return;
+		}
+		
+		$activated = get_option( 'sliced_first_activated_time', false );
+		if ( ! $activated ) {
+			update_option( 'sliced_first_activated_time', time() );
+			return;
+		}
+		
+		if ( ( $activated + ( 7 * DAY_IN_SECONDS ) ) > time() ) {
+			return;
+		}
+		
+		$total_invoices = wp_count_posts( 'sliced_invoice' )->publish + wp_count_posts( 'sliced_quote' )->publish;
+		
+		if ( $total_invoices < 5 ) {
+			return;
+		}
+		
+		?>
+		<div class="notice notice-info sliced-message sliced-review-notice">
+			<a class="sliced-message-close notice-dismiss" href="<?php echo esc_url( wp_nonce_url( add_query_arg( array( 'sliced-hide-notice' => 'review_suggestion', 'sliced-dismiss' => 1 ) ), 'sliced_hide_notices_nonce', '_sliced_notice_nonce' ) ); ?>"><?php _e( 'Dismiss', 'sliced-invoices' ); ?></a>
+			<p><?php _e( 'Your feedback matters! If you\'re finding Sliced Invoices useful for your business, a quick review would mean a lot to us.', 'sliced-invoices' ); ?></p>
+			<p>
+				<a href="https://wordpress.org/support/plugin/sliced-invoices/reviews/?rate=5#new-post" target="_blank" rel="noopener noreferrer"><?php _e( 'Sure, I\'ll leave a review', 'sliced-invoices' ); ?></a><br>
+				<a href="<?php echo esc_url( wp_nonce_url( add_query_arg( array( 'sliced-hide-notice' => 'review_suggestion', 'sliced-hide-transient' => 30 * DAY_IN_SECONDS ) ), 'sliced_hide_notices_nonce', '_sliced_notice_nonce' ) ); ?>"><?php _e( 'Maybe later', 'sliced-invoices' ); ?></a><br>
+				<a href="<?php echo esc_url( wp_nonce_url( add_query_arg( array( 'sliced-hide-notice' => 'review_suggestion', 'sliced-dismiss' => 1 ) ), 'sliced_hide_notices_nonce', '_sliced_notice_nonce' ) ); ?>"><?php _e( 'I already did', 'sliced-invoices' ); ?></a>
+			</p>
 		</div>
 		<?php
 	}
