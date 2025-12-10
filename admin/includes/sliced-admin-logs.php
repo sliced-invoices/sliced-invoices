@@ -28,8 +28,8 @@ class Sliced_Logs {
 	 */
 	public function __construct() {
 
-		add_action( 'publish_sliced_invoice', array( &$this, 'create_invoice' ), 10, 2 );
-		add_action( 'publish_sliced_quote', array( &$this, 'create_quote' ), 10, 2 );
+		add_action( 'publish_sliced_invoice', array( $this, 'create_invoice' ), 10, 2 );
+		add_action( 'publish_sliced_quote', array( $this, 'create_quote' ), 10, 2 );
 
 		// status change
 		add_action( 'set_object_terms', array( &$this, 'status_change' ), 20, 6 );
@@ -175,64 +175,66 @@ class Sliced_Logs {
 	 * @since 2.20
 	 */
 	public function create_invoice( $id, $post ) {
-
-		if ( ! $id || ! isset( $id ) ) {
+		
+		if ( empty( $id ) ) {
 			return;
 		}
-
-		if ( ! $post || ! isset( $post ) ) {
+		
+		if ( empty( $post ) ) {
 			return;
 		}
-
-		// if the post is being updated, return
-		if ( $post->post_date != $post->post_modified ) {
-			return;
-		}
-			
-		// extra check to prevent duplicate entries
+		
 		$log = get_post_meta( $id, '_sliced_log', true );
-		if ( is_array( $log ) && count( $log ) > 0 ) {
+		
+		// invoice already created, return
+		if ( ! empty( $log ) ) {
 			return;
 		}
 		
 		$user_id = $this->identify_the_user();
-
+		
 		$meta_value = array(
 			'type' => 'invoice_created',
 			'by'   => $user_id,
 		);
-		$result = $this->update_log_meta( $id, $meta_value );
+		$this->update_log_meta( $id, $meta_value );
+		
 	}
-
+	
+	
 	/**
 	 * Quote creation
 	 *
 	 * @since 2.20
 	 */
 	public function create_quote( $id, $post ) {
-
-		if ( ! $id || ! isset( $id ) ) {
+		
+		if ( empty( $id ) ) {
 			return;
 		}
-
-		if ( ! $post || ! isset( $post ) ) {
+		
+		if ( empty( $post ) ) {
 			return;
 		}
-
-		// if the post is being updated, return
-		if ( $post->post_date != $post->post_modified ) {
+		
+		$log = get_post_meta( $id, '_sliced_log', true );
+		
+		// quote already created, return
+		if ( ! empty( $log ) ) {
 			return;
 		}
 		
 		$user_id = $this->identify_the_user();
-
+		
 		$meta_value = array(
 			'type' => 'quote_created',
 			'by'   => $user_id,
 		);
-		$result = $this->update_log_meta( $id, $meta_value );
+		$this->update_log_meta( $id, $meta_value );
+		
 	}
-
+	
+	
 	/**
 	 * Status change
 	 *
