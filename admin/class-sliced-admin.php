@@ -1172,22 +1172,20 @@ class Sliced_Admin {
 	 *
 	 * @since 	2.33
 	 */
-	public function set_published_date_as_created( $post_id ) {
+	public function set_published_date_as_created( $data ) {
 		
-		if ( ! $_POST ) {
-			return;
+		if ( empty( $_POST ) ) {
+			return $data;
 		}
 		
-		// If this is a revision, get real post ID
-		if ( $parent_id = wp_is_post_revision( $post_id ) ) {
-			$post_id = $parent_id;
+		if (
+			! isset( $data['post_type'] )
+			|| ! in_array( $data['post_type'], array( 'sliced_invoice', 'sliced_quote' ) )
+		) {
+			return $data;
 		}
 		
-		$type = sliced_get_the_type( $post_id );
-		
-		if ( ! in_array( $type, array( 'invoice', 'quote' ) ) ) {
-			return;
-		}
+		$type = $data['post_type'] === 'sliced_invoice' ? 'invoice' : 'quote';
 		
 		$created = false;
 		
@@ -1198,26 +1196,16 @@ class Sliced_Admin {
 		}
 		
 		if ( ! $created ) {
-			return;
+			return $data;
 		}
 		
-		// change the format if we have slashes
 		$created_utc   = $this->work_out_date_format( $created ); // parses whatever $created is into UTC time formatted "Y-m-d H:i:s"
 		$created_local = get_date_from_gmt( $created_utc, "Y-m-d H:i:s" ); // takes the above and converts it to local WordPress time
 		
-		// unhook this function so it doesn't loop infinitely
-		remove_action( 'save_post', array( $this, 'set_published_date_as_created' ) );
+		$data['post_date']     = $created_local;
+		$data['post_date_gmt'] = $created_utc;
 		
-		// update the post, which calls save_post again
-		wp_update_post( array(
-			'ID'            => $post_id,
-			'post_date'     => $created_local,
-			'post_date_gmt' => $created_utc,
-		) );
-		
-		// re-hook this function
-		add_action( 'save_post', array( $this, 'set_published_date_as_created' ) );
-		
+		return $data;
 	}
 	
 	
