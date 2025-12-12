@@ -178,6 +178,7 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 * NEW: automatically regenerate quote/invoice slug when changing quote/invoice title.
 * UPDATE: change "Create new Invoice from Quote" feature to follow similar logic as "Copy to New [Invoice/Quote]" feature.
 * UPDATE: add method `set_as_draft` to class `Sliced_Quote`.
+* UPDATE: add new hooks `sliced_invoices_converted_quote_to_invoice`, `sliced_invoices_created_invoice_from_quote`, and `sliced_invoices_duplicated_quote_invoice`.
 * UPDATE: exclude quotes and invoices from default WordPress sitemap.
 * UPDATE: update .pot file for translations.
 * FIX: duplicate log entries being created upon status changes.

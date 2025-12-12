@@ -2495,6 +2495,8 @@ class Sliced_Admin {
 			Sliced_Quote::set_as_draft( $new_post_id );
 		}
 		
+		do_action( 'sliced_invoices_duplicated_quote_invoice', $new_post_id, $post_id );
+		
 		// finally, redirect to the current(ish) url
 		$current_url = admin_url( 'edit.php?post_type=' . $post->post_type );
 		wp_redirect( $current_url );
