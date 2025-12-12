@@ -47,16 +47,20 @@ class Sliced_Public {
 	/**
 	 * Initialize the class and set its properties.
 	 *
+	 * @version 3.10.0
 	 * @since   2.0.0
 	 */
 	public function __construct() {
-
+		
 		$this->plugin_name = 'sliced-invoices';
 		$this->version = SLICED_VERSION;
 		
 		add_filter( 'comment_post_redirect', array( $this, 'redirect_after_comment_in_quote' ) );
 		add_filter( 'pre_comment_approved' , array( $this, 'auto_approve_comments_in_quote' ), '99', 2 );
-
+		
+		// Exclude Invoices and Quotes from WordPress sitemaps
+		add_filter( 'wp_sitemaps_post_types', array( $this, 'exclude_sliced_post_types_from_sitemap' ) );
+		
 	}
 	
 	// fix redirect after non-logged in user posts a comment to a quote (i.e. the client)
@@ -460,4 +464,16 @@ class Sliced_Public {
 
 	}
 
+	/**
+	 * Exclude invoices and quotes post types from WordPress sitemaps
+	 *
+	 * @since   3.10.0
+	 */
+	public function exclude_sliced_post_types_from_sitemap( $post_types ) {
+		unset( $post_types['sliced_invoice'] );
+		unset( $post_types['sliced_quote'] );
+		
+		return $post_types;
+	}
+	
 }

@@ -3,9 +3,9 @@ Contributors: SlicedInvoices
 Donate link: http://slicedinvoices.com/
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce
 Requires at least: 4.0
-Tested up to: 6.7
+Tested up to: 6.9
 Requires PHP: 5.5
-Stable tag: 3.9.5
+Stable tag: 3.10.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -172,6 +172,17 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 == Changelog ==
+= 3.10.0 =
+* NEW: replaced "Clone" feature with a more user friendly "Copy to New [Invoice/Quote]" feature. [See our blog post for more info](https://slicedinvoices.com/blog/new-features-sliced-invoices-v3-10-0-update/)
+* NEW: automatically regenerate quote/invoice slug when changing quote/invoice title.
+* UPDATE: change "Create new Invoice from Quote" feature to follow similar logic as "Copy to New [Invoice/Quote]" feature.
+* UPDATE: add method `set_as_draft` to class `Sliced_Quote`.
+* UPDATE: add new hooks `sliced_invoices_converted_quote_to_invoice`, `sliced_invoices_created_invoice_from_quote`, and `sliced_invoices_duplicated_quote_invoice`.
+* UPDATE: exclude quotes and invoices from default WordPress sitemap.
+* UPDATE: update .pot file for translations.
+* FIX: duplicate log entries being created upon status changes.
+* FIX: issue on invoice editing page where accepted payment methods checkboxes could show as being enabled when they're really not.
+
 = 3.9.5 =
 * FIX: PHP warning (#207167).
 
@@ -183,7 +194,7 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 * UPDATE: update .pot file for translations.
 
 = 3.9.3 =
-* FIX: restrict access to sending emails to Adminstrator users only (thanks to Patchstack).  NOTE: Patchstack reported a vulnerability where existing users of any role could abuse an AJAX URL to send emails through Sliced Invoices.  To exploit this, the attacker would have to already have access to an existing user account and be logged in to do so -- no access was open to the general public.  Please note this is a theoretical vulnerability only -- we have no reports of any such attacks actually taking place in the real world.
+* FIX: restrict access to sending emails to Adminstrator users only.
 
 = 3.9.2 =
 * UPDATE: add filter `sliced_invoices_check_for_reminder_args`.

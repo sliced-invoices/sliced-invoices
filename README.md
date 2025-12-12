@@ -4,9 +4,9 @@ Contributors: SlicedInvoices
 Donate link: http://slicedinvoices.com/  
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
-Tested up to: 6.7
+Tested up to: 6.9
 Requires PHP: 5.5
-Stable tag: 3.9.5
+Stable tag: 3.10.0
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -173,32 +173,43 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 ## Changelog
-##  3.9.5
+###  3.10.0
+* NEW: replaced "Clone" feature with a more user friendly "Copy to New [Invoice/Quote]" feature. [See our blog post for more info](https://slicedinvoices.com/blog/new-features-sliced-invoices-v3-10-0-update/)
+* NEW: automatically regenerate quote/invoice slug when changing quote/invoice title.
+* UPDATE: change "Create new Invoice from Quote" feature to follow similar logic as "Copy to New [Invoice/Quote]" feature.
+* UPDATE: add method `set_as_draft` to class `Sliced_Quote`.
+* UPDATE: add new hooks `sliced_invoices_converted_quote_to_invoice`, `sliced_invoices_created_invoice_from_quote`, and `sliced_invoices_duplicated_quote_invoice`.
+* UPDATE: exclude quotes and invoices from default WordPress sitemap.
+* UPDATE: update .pot file for translations.
+* FIX: duplicate log entries being created upon status changes.
+* FIX: issue on invoice editing page where accepted payment methods checkboxes could show as being enabled when they're really not.
+
+###  3.9.5
 * FIX: PHP warning (#207167).
 
-##  3.9.4
+###  3.9.4
 * FIX: calculations on quote/invoice editing page not updating when a line item is removed.
 * FIX: make some missing strings in the "Email to client" popup translatable.
 * FIX: change wording in the "Invoice History" log to clarify whether a payment made was successful or failed.
 * UPDATE: automatically add due date when invoice converted from quote.
 * UPDATE: update .pot file for translations.
 
-##  3.9.3
-* FIX: restrict access to sending emails to Adminstrator users only (thanks to Patchstack).  NOTE: Patchstack reported a vulnerability where existing users of any role could abuse an AJAX URL to send emails through Sliced Invoices.  To exploit this, the attacker would have to already have access to an existing user account and be logged in to do so -- no access was open to the general public.  Please note this is a theoretical vulnerability only -- we have no reports of any such attacks actually taking place in the real world.
+###  3.9.3
+* FIX: restrict access to sending emails to Adminstrator users only.
 
-##  3.9.2
+###  3.9.2
 * UPDATE: add filter `sliced_invoices_check_for_reminder_args`.
 * UPDATE: German translation update (thanks to Christian Högl).
 * UPDATE: minor CSS/styling updates (thanks to Dax Liniere).
 * FIX: PHP 8.1/8.2 notices.
 
-##  3.9.1
+###  3.9.1
 * UPDATE: German translation update (thanks to Thorsten Wollenhöfer).
 * UPDATE: Spanish translation update (thanks to Lolo Marchal).
 * FIX: pre-defined line items not populating description field since 3.9.0.
 * FIX: Sliced_Shared::get_raw_number() not always returning float.
 
-##  3.9.0
+###  3.9.0
 * NEW: add "Create new Invoice from Quote" button on quote editing page; renamed existing "Convert to Invoice" button "Convert Quote to Invoice" for extra clarity.
 * NEW: add fields for both live and sandbox PayPal API keys (now you can store them together and easily switch with the "Gateway Mode" setting).
 * NEW: add global functions `sliced_invoices_create_invoice` and `sliced_invoices_create_quote` for creating invoices/quotes programmatically.
@@ -224,78 +235,78 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 * FIX: issue with Quick Edit removing HTML formatting from Terms and Conditions field.
 * FIX: various minor translation issues; removed the word "Bummer". :(
 
-##  3.8.17
+###  3.8.17
 * FIX: commas incorrectly removed from "To" field in email preview window, whenever multiple email addresses filtered in.
 * FIX: second-order SQL injection vulnerability if an existing meta_key contains unsafe code (thanks to Wordfence).  NOTE: to exploit this, an attacker would need to first be logged in as an administator, and be able to insert a specially-crafted post meta containing malicious code.  There is no direct danger; this could only happen if someone already had access to your database, or if your site was already compromised by some other means.
 
-##  3.8.16
+###  3.8.16
 * FIX: browser freezing issue when adding new clients (if many clients exist).
 * FIX: CSV formula injection issue in "Export CSV" function (thanks to @Jörgson).
 * FIX: make sure all required fields are present when adding new user from "Add New Client" modal.
 * FIX: webhook-initiated requests triggering a false "Invoice Viewed" notice.
 * FIX: clear all admin notices upon plugin deactivation (some like invoice_viewed and quote_viewed were not being cleared).
 
-##  3.8.15
+###  3.8.15
 * FIX: conflict with Gravity Forms plugin >= v2.5.
 * FIX: PHP warning.
 
-##  3.8.14
+###  3.8.14
 * UPDATE: update Chart.js library.
 
-##  3.8.13
+###  3.8.13
 * FIX: change discount input field from type=number to type=text, because some browsers don't allow non-standard decimal separators to be entered (like commas).
 
-##  3.8.12
+###  3.8.12
 * FIX: issue with incorrect timestamps (causing a brand new invoice to show "published X hours ago", also causing deposit invoices to incorrectly show as "scheduled").
 
-##  3.8.11
+###  3.8.11
 * FIX: issue with duplicate "quote accepted" emails being sent.
 * FIX: missing invoice number in "quote accepted" email template.
 * FIX: PHP notice.
 * UPDATE: client dropdown search now includes searching by email address.
 
-##  3.8.10
+###  3.8.10
 * FIX: issue with non-standard decimal separators and tax calculation since last update (v3.8.9).
 
-##  3.8.9
+###  3.8.9
 * FIX: change tax rate field from type=number to type=text, because some browsers don't allow non-standard decimal separators to be entered (like commas).
 * FIX: "Missed Schedule" notice when editing future (not yet sent) Recurring Invoices.
 * UPDATE: add $url param to filter `sliced_invoices_request_data`.
 * UPDATE: performance enhancement -- make checking for duplicate invoice numbers much faster.
 * UPDATE: minor refactoring.
 
-##  3.8.8
+###  3.8.8
 * UPDATE: show email address in add new client search (makes it easier to find the right user).
 * UPDATE: minor CSS/styling updates.
 
-##  3.8.7
+###  3.8.7
 * FIX: add a check to prevent internal requests from triggering a "invoice viewed" or "quote viewed" notice.
 * FIX: issue where post_date is overwritten with current time after save_post (impacts recurring invoices, triggering a false "missed schedule" warning).
 * UPDATE: German translation update (thanks to Thorsten Wollenhöfer).
 * UPDATE: Russian translation update (thanks to Andrew Reva).
 
-##  3.8.6
+###  3.8.6
 * FIX: unable to send email to multiple addresses separated by commas (caused by v3.8.3).
 
-##  3.8.5
+###  3.8.5
 * FIX: "Failed to open file, aborting" error in csv importer.
 
-##  3.8.4
+###  3.8.4
 * UPDATE: updates required by wordpress.org.
 
-##  3.8.3
+###  3.8.3
 * SECURITY UPDATE: security updates per wordpress requirements.
 * FIX: conflict with elementor plugin.
 * UPDATE: minor CSS/styling updates.
 
-##  3.8.2
+###  3.8.2
 * FIX: allow saving empty due date / quote valid until date fields.
 * FIX: corrected "create new client" link.
 
-##  3.8.1
+###  3.8.1
 * FIX: backwards compatibility for selectWoo scripts (avoids conflict with plugins/themes that are still loading old versions of selectWoo, including Avada theme).
 
-##  3.8.0
+###  3.8.0
 * NEW: enhanced client dropdown box on quote/invoice editing pages.
 * NEW: changes to the way dates & timestamps are handled and stored. **** If you are using custom templates or custom coding with Sliced Invoices, you may need to update your code. [See our blog post for more info](https://slicedinvoices.com/blog/new-features-sliced-invoices-v3-8-0-update/) ****
 * NEW: Italian translation (thanks to Alessio Simone).
@@ -307,12 +318,12 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 * UPDATE: various i18n enhancements.
 * UPDATE: update .pot file for translations.
 
-##  3.7.5
+###  3.7.5
 * NEW: Add email footer text field to free plugin settings page (previously required paid PDF & Email extension).
 * NEW: Hungarian translation (thanks to Csaba Kardos).
 * UPDATE: update .pot file for translations.
 
-##  3.7.4
+###  3.7.4
 * FIX: fixed a few PHP warnings/notices.
 * FIX: German translation update (thanks @kratos78).
 * FIX: issue with custom CSS fields not allowing the '>' operator.
@@ -320,14 +331,14 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 * UPDATE: show button panel with "Clear" button in datepickers.
 * UPDATE: update .pot file for translations.
 
-##  3.7.3
+###  3.7.3
 * FIX: add .map for decimal.js (avoids browser console message in Safari).
 * FIX: minor CSS display issue.
 * FIX: PHP notice.
 * UPDATE: minor code refactoring/performance improvements.
 * UPDATE: update version of bundled CMB2 library.
 
-##  3.7.2
+###  3.7.2
 * FIX: issue with formatting settings (Settings page incorrectly overriding quote/invoice-specific settings).
 * FIX: issue with thickbox dimensions being ignored (minor styling issue).
 * UPDATE: add filter 'sliced_reporting_colors'.
@@ -336,11 +347,11 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 * UPDATE: some code refactoring.
 * UPDATE: update .pot file for translations.
 
-##  3.7.1
+###  3.7.1
 * FIX: issue with Woo Invoices quote display.
 * FIX: localization issue with subtotal decimal formatting.
 
-##  3.7.0
+###  3.7.0
 * NEW: add new Tax Settings tab; reorganize settings pages & menu slightly.
 * NEW: option to show prices inclusive of tax/VAT.
 * NEW: updated "Email to Client" window; you can now manually send "payment received" and "payment reminder" emails on demand.
@@ -358,23 +369,23 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 * UPDATE: various CSS/styling tweaks, textual changes, minor code refactoring.
 * UPDATE: update .pot file for translations.
 
-##  3.6.7
+###  3.6.7
 * FIX: issue with PayPal payments showing the wrong decimal separator (for example, currencies that use a comma "," instead of a period ".").
 
-##  3.6.6
+###  3.6.6
 * UPDATE: workaround for Sage-based themes that break our templates.
 * FIX: issue with "invoice viewed" and "quote viewed" admin notices not being displayed.
 
-##  3.6.5
+###  3.6.5
 * FIX: escaping of HTML entities in CSV export.
 * FIX: fix CSS fallback added in v3.6.4 to allow for smaller logos.
 
-##  3.6.4
+###  3.6.4
 * UPDATE: add CSS fallback in case logo is too large for email template.
 * UPDATE: add new actions 'sliced_invoice_viewed', 'sliced_quote_viewed'.
 * UPDATE: minor code refactoring.
 
-##  3.6.3
+###  3.6.3
 * FIX: change the way links are encoded in emails, to get around mailgun/sendgrid issues with ampersands (e.g. https://wordpress.org/support/topic/value-in-url-is-changing-to-038/).
 * FIX: get quote/invoice status by slug instead of by name.
 * FIX: increase priority on admin_body_class hook to avoid conflicts with plugins that misuse this filter (for example, avoids a conflict caused by the plugin "WP-CRM").
@@ -383,17 +394,17 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 * UPDATE: add new hook 'sliced_admin_col_after_quote_number'.
 * UPDATE: mask some sensitive info in the System Info File.
 
-##  3.6.2
+###  3.6.2
 * FIX: new translatable strings not reflecting changes.
 * FIX: only count completed payments in totals column.
 * FIX: PHP notice.
 
-##  3.6.1
+###  3.6.1
 * UPDATE: minor text change.
 * FIX: issue with showing more decimal places than allowed in settings.
 * FIX: don't show "Discount" line if it equals 0.00.
 
-##  3.6.0
+###  3.6.0
 * NEW: Payments section. This box allows you to see detailed payment history for each invoice, add memos to payments, or enter manual payments from the admin side.
 * NEW: Taxable checkbox. This allows you to specify whether a line item is taxable or not.  For example, if you have line items for both products and services on the same invoice and only want the products to be taxable, you can now check the "taxable" box just for those line items.
 * NEW: revamped "Add New Client" dialog box, adding option to select from existing users (without having to navigate away to WP Users page).
@@ -407,26 +418,26 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 * UPDATE: update .pot file.
 * UPDATE: various other performance updates, internal enhancements, code refactoring.
 
-##  3.5.4
+###  3.5.4
 * FIX: issue where "email to client" button stopped working after using Quick Edit feature, until page was reloaded.
 * UPDATE: additional checking to make sure the payment page (selected on the Payment Settings tab) exists, else trigger a warning notice.
 * UPDATE: minor textual update.
 * UPDATE: mobile styling improvements for payment page.
 * UPDATE: update .pot file.
 
-##  3.5.3
+###  3.5.3
 * FIX: extend admin search feature to include client fields (name, email, etc.).
 * FIX: JavaScript error in console.
 
-##  3.5.2
+###  3.5.2
 * FIX: issue with payment reminder emails showing currency symbol from global settings even if invoice is in a different currency.
 * FIX: JavaScript rounding issue in admin area invoice totals display.
 
-##  3.5.1
+###  3.5.1
 * FIX: display issue with WooCommerce invoices.
 * FIX: minor display issues.
 
-##  3.5.0
+###  3.5.0
 * NEW: Add quote/invoice views tracking feature (allows you to see the exact date and time your client viewed a quote or invoice).
 * NEW: Admin notices feature (intuitively alerts you if there are potential issues needing your attention).
 * NEW: French translation (thanks to WebMat - webmat.pro).
@@ -437,13 +448,13 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 * UPDATE: PayPal gateway IPN handling improvements.
 * UPDATE: Update .pot file.
 
-##  3.4.1
+###  3.4.1
 * NEW: Add "View PDF" (if available) and "Email to client" shortcuts on admin quote and invoice pages (same as the buttons on the quote/invoice listings pages).
 * FIX: issue with payment reminders sending twice in multisite situations.
 * FIX: issue with emailed PDFs not formatted correctly when sending multiple.
 * FIX: minor display issue.
 
-##  3.4.0
+###  3.4.0
 * NEW: Add suffix option for quote and invoice numbers.
 * NEW: Add "expired" status for quotes, and automatically change to "expired" once "Valid Until" date has passed.
 * NEW: Add filter 'sliced_get_email_recipient'.
@@ -453,7 +464,7 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 * UPDATE: Minor CSS updates.
 * UPDATE: Update .pot file.
 
-##  3.3.5
+###  3.3.5
 * NEW: add action 'sliced_pre_curl_exec'.
 * NEW: add filter 'sliced_print_message'.
 * FIX: fix error with payment reminders in PHP 7.1.
@@ -462,16 +473,16 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 * UPDATE: minor code cleanup, textual updates.
 * UPDATE: Update .pot file.
 
-##  3.3.4
+###  3.3.4
 * FIX: minor bug fix.
 
-##  3.3.3
+###  3.3.3
 * NEW: add filter 'sliced_quote_accept_decline_buttons'.
 * FIX: issue where accept/decline quote buttons continue to appear on quote after it's been accepted, allowing users to accept more than once.
 * FIX: issue with email preview window becoming blank if you close and reopen it.
 * FIX: compatibility issue with Layers theme.
 
-##  3.3.2
+###  3.3.2
 * FIX: fix "allowed memory exhausted" error in PHP 7.1.
 * FIX: "view invoice..." button blank in payment reminder emails.
 * FIX: fix PHP notice.
@@ -479,12 +490,12 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 * UPDATE: Terms and Conditions field no longer repeats on quote/invoice printouts, if printout longer than 1 page.
 * UPDATE: Update .pot file.
 
-##  3.3.1
+###  3.3.1
 * FIX: fix deprecated function in PHP 7.x.
 * UPDATE: minor CSS updates.
 * UPDATE: text in Extras section.
 
-##  3.3.0
+###  3.3.0
 * NEW: Change the way quote and invoice numbers are auto-incremented, allow duplicates with a warning.
 * NEW: Completely revamped PayPal gateway, adding support for IPN handling, subscriptions.
 * FIX: issue with unpaid invoices sometimes marked "overdue" prematurely.
@@ -496,28 +507,28 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 * UPDATE: removing $die argument from sliced_print_message().
 * UPDATE: Update .pot file.
 
-##  3.2.1
+###  3.2.1
 * FIX: issue where other plugins' custom columns inadvertently removed from Users admin page.
 * FIX: sort issue preventing auto-saved drafts from being displayed in admin pages.
 
-##  3.2.0
+###  3.2.0
 * NEW: new automatic actions to choose from when client accepts quote.
 * NEW: ability to edit clients directly from Edit Quote / Edit Invoice screens.
 * UPDATE: Add $type to filter sliced_email_attachment.
 * UPDATE: Update .pot file for future translations.
 
-##  3.1.3
+###  3.1.3
 * FIX: issue with Woo Invoices showing incorrect total in payment confirmation email.
 
-##  3.1.2
+###  3.1.2
 * FIX: issue with Woo Invoices tax and shipping not being charged through PayPal.
 * FIX: issue with template hooks not being loaded for emails sent via AJAX (i.e. from admin area).
 
-##  3.1.1
+###  3.1.1
 * FIX: issue with tax calculation when using comma as decimal separator.
 * UPDATE: Minor CSS update (add class 'sliced_form_field_required').
 
-##  3.1.0
+###  3.1.0
 * NEW: better streamlined payment process (removed payment popup and 2nd "Pay Now" button -- payment buttons now go straight to the payment page).
 * UPDATE: change PayPal gateway to allow guest checkout without PayPal account.
 * UPDATE: increase max length of Tax name field from 10 to 100 characters.
@@ -525,70 +536,70 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 * UPDATE: Minor textual update.
 * FIX: fix issue with filter 'sliced_invoice_totals_output' not being applied.
 
-##  3.0.1
+###  3.0.1
 * FIX: bug with email sending when admin BCC option is on.
 * UPDATE: Compatibility update with PDF & Emails Extension v1.3.0.
 * UPDATE: Minor CSS update (add class 'sliced-business-logo').
 * UPDATE: Minor textual update, code cleanup.
 
-##  3.0.0
+###  3.0.0
 * NEW: WordPress Multisite support (network activate).
 
-##  2.876
+###  2.876
 * FIX: issue with invoices incorrectly being assigned "overdue" status.
 * FIX: issue with logs showing incorrect statuses.
 * FIX: issue with sending emails to multiple recipients.
 * FIX: issue with "return to invoice" link after payment.
 * FIX: minor PHP strict standards fix.
 
-##  2.875
+###  2.875
 * NEW: ability to change currency setting on per-invoice basis, and process payments for multiple currencies through the same gateway.
 * NEW: ability to customize "view online" button in email templates.
 * UPDATE: add additional translatable fields (when using Easy Translate Extension).
 * FIX: minor CSS issue.
 
-##  2.874
+###  2.874
 * FIX: Compatibility issue with WP Slimstat plugin.
 * FIX: Timezone issue.
 * UPDATE: minor code cleanup, textual updates.
 
-##  2.873
+###  2.873
 * FIX: Quotes & Invoices not displaying in Admin Area when quote/invoice date contains non-English characters.
 * FIX: PayPal gateway issue with certain WooCommerce add-ons.
 
-##  2.872
+###  2.872
 * FIX: minor bug fixes.
 
-##  2.871
+###  2.871
 * FIX: issue with invalid links in automatic reminder emails.
 * FIX: minor sorting issue.
 
-##  2.87
+###  2.87
 * NEW: Ability to customize accepted quote message.
 * NEW: add support for qTranslate X (i18n multilingual).
 * UPDATE: Compatibility update with Easy Translate Extension v1.1.5.
 * FIX: Quotes/invoices being assigned wrong status in some cases.
 
-##  2.861
+###  2.861
 * FIX: minor fix for legacy PHP 5.3 support.
 
-##  2.86
+###  2.86
 * UPDATE: Compatibility update with Easy Translate Extension v1.1.4.
 * UPDATE: Compatibility update with PDF & Emails Extension v1.2.5.
 
-##  2.85
+###  2.85
 * NEW: Ability to customize the declined quote message.
 * FIX: fix redirect and permissions issue when clients add comments to a quote.
 * FIX: minor fix for legacy PHP 5.3 support.
 
-##  2.84
+###  2.84
 * UPDATE: Compatibility update with Recurring Invoices Extension v2.1.4.
 
-##  2.83
+###  2.83
 * FIX: Issue with sorting users by Business Name.
 * FIX: Issue with 'Decline Quote' reason not being sent in admin notification.
 
-## 2.82 
+### 2.82 
 * UPDATE: Include plugin updater class for extensions.
 
 ### 2.81

@@ -103,6 +103,7 @@ class Sliced_Help {
 	/**
 	 * Add contextual help to list view screens.
 	 *
+	 * @version 3.10.0
 	 * @since   2.0.0
 	 */
 	public function list_view_help() {
@@ -139,8 +140,13 @@ class Sliced_Help {
 						'<li>' . sprintf( __('<strong>Quick Edit</strong> provides inline access to the metadata of your %1s, allowing you to update the %2s details without leaving this screen.', 'sliced-invoices' ), sliced_get_label(), sliced_get_label() ) . '</li>' .
 						'<li>' . sprintf( __('<strong>Trash</strong> removes your %s from this list and places it in the trash, from which you can permanently delete it.', 'sliced-invoices' ), sliced_get_label() ) . '</li>' .
 						'<li>' . sprintf( __('<strong>View</strong> will take you to your live site to view the %s.', 'sliced-invoices' ), sliced_get_label() ) . '</li>' .
-						'<li>' . sprintf( __('<strong>Clone</strong> will clone (or duplicate) the %s. ', 'sliced-invoices' ), sliced_get_label() ) . '</li>' .
-					'</ul>'
+						'<li>' . sprintf(
+							__( '<strong>Copy to New %s</strong> will create a new %s with the same basic information as the original %s. ', 'sliced-invoices' ),
+							sliced_get_label(),
+							sliced_get_label(),
+							sliced_get_label() 
+						) . '</li>'
+					. '</ul>'
 			) );
 
 

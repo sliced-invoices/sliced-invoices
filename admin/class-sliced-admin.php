@@ -475,7 +475,7 @@ class Sliced_Admin {
 	/**
 	 * Register our custom post type 'sliced_quote'.
 	 *
-	 * @version 3.9.2
+	 * @version 3.10.0
 	 * @since   2.0.0
 	 */
 	public static function new_cpt_quote() {
@@ -494,7 +494,7 @@ class Sliced_Admin {
 		$opts['menu_icon']            = 'dashicons-sliced';
 		// $opts['menu_position']        = 99.3;
 		$opts['public']               = true;
-		$opts['publicly_querable']    = true;
+		$opts['publicly_queryable']   = true;
 		$opts['query_var']            = true;
 		$opts['register_meta_box_cb'] = '';
 		$opts['show_in_admin_bar']    = true;
@@ -575,7 +575,7 @@ class Sliced_Admin {
 	/**
 	 * Register our custom post type 'sliced_quote'.
 	 *
-	 * @version 3.9.2
+	 * @version 3.10.0
 	 * @since   2.0.0
 	 */
 	public static function new_cpt_invoice() {
@@ -594,7 +594,7 @@ class Sliced_Admin {
 		$opts['menu_icon']            = 'dashicons-sliced';
 		// $opts['menu_position']        = 99.4;
 		$opts['public']               = true;
-		$opts['publicly_querable']    = true;
+		$opts['publicly_queryable']   = true;
 		$opts['query_var']            = true;
 		$opts['register_meta_box_cb'] = '';
 		$opts['show_in_admin_bar']    = true;
@@ -675,7 +675,7 @@ class Sliced_Admin {
 	/**
 	 * Register our taxonomy 'quote_status'.
 	 *
-	 * @version 3.9.0
+	 * @version 3.10.0
 	 * @since   2.0.0
 	 */
 	public static function new_taxonomy_quote_status() {
@@ -685,7 +685,7 @@ class Sliced_Admin {
 		$plural = __( 'Statuses', 'sliced-invoices' );
 		
 		$opts['hierarchical']      = true;
-		$opts['public']            = true;
+		$opts['public']            = false;
 		$opts['query_var']         = 'quote_status';
 		$opts['show_admin_column'] = true;
 		$opts['show_in_nav_menus'] = false;
@@ -767,7 +767,7 @@ class Sliced_Admin {
 	/**
 	 * Register our taxonomy 'invoice_status'.
 	 *
-	 * @version 3.9.0
+	 * @version 3.10.0
 	 * @since   2.0.0
 	 */
 	public static function new_taxonomy_invoice_status() {
@@ -777,7 +777,7 @@ class Sliced_Admin {
 		$plural = __( 'Statuses', 'sliced-invoices' );
 		
 		$opts['hierarchical']      = true;
-		$opts['public']            = true;
+		$opts['public']            = false;
 		$opts['query_var']         = 'invoice_status';
 		$opts['show_admin_column'] = true;
 		$opts['show_in_nav_menus'] = false;
@@ -1170,24 +1170,23 @@ class Sliced_Admin {
 	/**
 	 * Set published date as created date
 	 *
-	 * @since 	2.33
+	 * @version 3.10.0
+	 * @since   2.33
 	 */
-	public function set_published_date_as_created( $post_id ) {
+	public function set_published_date_as_created( $data ) {
 		
-		if ( ! $_POST ) {
-			return;
+		if ( empty( $_POST ) ) {
+			return $data;
 		}
 		
-		// If this is a revision, get real post ID
-		if ( $parent_id = wp_is_post_revision( $post_id ) ) {
-			$post_id = $parent_id;
+		if (
+			! isset( $data['post_type'] )
+			|| ! in_array( $data['post_type'], array( 'sliced_invoice', 'sliced_quote' ) )
+		) {
+			return $data;
 		}
 		
-		$type = sliced_get_the_type( $post_id );
-		
-		if ( ! in_array( $type, array( 'invoice', 'quote' ) ) ) {
-			return;
-		}
+		$type = $data['post_type'] === 'sliced_invoice' ? 'invoice' : 'quote';
 		
 		$created = false;
 		
@@ -1198,26 +1197,16 @@ class Sliced_Admin {
 		}
 		
 		if ( ! $created ) {
-			return;
+			return $data;
 		}
 		
-		// change the format if we have slashes
 		$created_utc   = $this->work_out_date_format( $created ); // parses whatever $created is into UTC time formatted "Y-m-d H:i:s"
 		$created_local = get_date_from_gmt( $created_utc, "Y-m-d H:i:s" ); // takes the above and converts it to local WordPress time
 		
-		// unhook this function so it doesn't loop infinitely
-		remove_action( 'save_post', array( $this, 'set_published_date_as_created' ) );
+		$data['post_date']     = $created_local;
+		$data['post_date_gmt'] = $created_utc;
 		
-		// update the post, which calls save_post again
-		wp_update_post( array(
-			'ID'            => $post_id,
-			'post_date'     => $created_local,
-			'post_date_gmt' => $created_utc,
-		) );
-		
-		// re-hook this function
-		add_action( 'save_post', array( $this, 'set_published_date_as_created' ) );
-		
+		return $data;
 	}
 	
 	
@@ -1316,8 +1305,37 @@ class Sliced_Admin {
 		}
 		
 	}
-
-
+	
+	
+	/**
+	 * Maybe regenerate slug, if post_title changes and other conditions are met.
+	 *
+	 * @since   3.10.0
+	 */
+	public function maybe_regenerate_slug( $post_id, $post_after, $post_before ) {
+		
+		if ( ! in_array( $post_before->post_type, array( 'sliced_invoice', 'sliced_quote' ) ) ) {
+			return;
+		}
+		
+		if (
+			$post_before->post_title !== $post_after->post_title                      // title changed...
+			&& $post_before->post_name === $post_after->post_name                     // ...and slug didn't...
+			&& ! (                                                                    // and it hasn't already been emailed out
+				$post_before->post_type === 'sliced_invoice' ?
+					get_post_meta( $post_id, '_sliced_invoice_email_sent', true ) :
+					get_post_meta( $post_id, '_sliced_quote_email_sent', true )
+			)
+		) {
+			wp_update_post( array(
+				'ID'        => $post_id,
+				'post_name' => sanitize_title( $post_after->post_title ),
+			) );
+		}
+		
+	}
+	
+	
 	/**
 	 * Handle admin "convert from quote to invoice" action.
 	 *
@@ -2340,30 +2358,38 @@ class Sliced_Admin {
 	/**
 	 * Add the duplicate link to action list for post_row_actions
 	 *
-	 * @since 	2.0.0
+	 * @version 3.10.0
+	 * @since   2.0.0
 	 */
 	public function duplicate_quote_invoice_link( $actions, $post ) {
-
-		if ( current_user_can('edit_posts') && ( $post->post_type == 'sliced_quote' || $post->post_type == 'sliced_invoice' ) ) {
-
+		
+		if (
+			current_user_can( 'edit_posts' )
+			&& ( $post->post_type === 'sliced_quote' || $post->post_type === 'sliced_invoice' )
+		) {
+			
 			$nonce  = wp_create_nonce( 'sliced_invoices_duplicate_quote_invoice-' . $post->ID );
 			$output = admin_url( 'admin.php?action=duplicate_quote_invoice&amp;post=' . $post->ID . '&amp;_wpnonce=' . $nonce );
-			$actions['duplicate'] = '<a href="' . esc_url( $output ) . '" title="'. __( 'Clone this item', 'sliced-invoices' ) .'" rel="permalink">' . __( 'Clone', 'sliced-invoices' ) . '</a>';
-
+			$actions['duplicate'] = '<a href="' . esc_url( $output ) . '">'
+				. sprintf(
+					__( 'Copy to New %s', 'sliced-invoices' ),
+					sliced_get_label( $post->ID )
+				)
+				. '</a>';
+			
 		}
-
-		return $actions;
+		
+		return apply_filters( 'sliced_invoices_duplicate_quote_invoice_link', $actions, $post );
 	}
-
-
+	
+	
 	/**
 	 * Function creates post duplicate and redirects then to the edit post screen
 	 *
-	 * @version 3.9.0
-	 * @since 	2.0.0
+	 * @version 3.10.0
+	 * @since   2.0.0
 	 */
 	public function duplicate_quote_invoice() {
-
 		global $wpdb;
 		
 		if ( ! current_user_can( 'edit_posts' ) ) {
@@ -2373,26 +2399,22 @@ class Sliced_Admin {
 		// get original post ID
 		$post_id = isset( $_REQUEST['post'] ) ? intval( sanitize_text_field( $_REQUEST['post'] ) ) : false;
 		if ( ! $post_id ) {
-			wp_die( 'No quote or invoice to duplicate!' );
+			wp_die( __( 'Post ID not found.', 'sliced-invoices' ), 403 );
 		}
 		
 		// verify the nonce
 		$nonce = isset( $_REQUEST['_wpnonce'] ) ? $_REQUEST['_wpnonce'] : false;
 		if ( ! wp_verify_nonce( $nonce, 'sliced_invoices_duplicate_quote_invoice-' . $post_id ) ) {
-			wp_die( 'The link you followed has expired.' );
+			wp_die( __( 'The link you followed has expired.', 'sliced-invoices' ), 403 );
 		}
 		
 		// get the original post, verify it is a quote or invoice
 		$post = get_post( $post_id );
 		if ( ! $post || ! in_array( $post->post_type, array( 'sliced_invoice', 'sliced_quote' ) ) ) {
-			wp_die( 'Creation failed, could not find original invoice or quote: ' . $post_id );
+			wp_die( __( 'Could not find original invoice or quote with ID: ' . $post_id, 'sliced-invoices' ), 403 );
 		}
 		
-		/*
-		 * create the post duplicate
-		 */
-		
-		// new post data array
+		// start building new post data
 		$args = array(
 			'comment_status' => $post->comment_status,
 			'ping_status'    => $post->ping_status,
@@ -2408,18 +2430,11 @@ class Sliced_Admin {
 			'to_ping'        => $post->to_ping,
 			'menu_order'     => $post->menu_order
 		);
-
+		
 		// insert the post by wp_insert_post() function
 		$new_post_id = wp_insert_post( $args );
-
-		// get all current post terms ad set them to the new post draft
-		$taxonomies = get_object_taxonomies($post->post_type); // returns array of taxonomy names for post type, ex array("category", "post_tag");
-		foreach ($taxonomies as $taxonomy) {
-			$post_terms = wp_get_object_terms($post_id, $taxonomy, array('fields' => 'slugs'));
-			wp_set_object_terms($new_post_id, $post_terms, $taxonomy, false);
-		}
 		
-		// duplicate post metas
+		// duplicate only relevant post metas
 		$non_cloneable_post_metas = apply_filters( 'sliced_invoices_non_cloneable_post_metas', array(
 			'_sliced_log',
 			'_sliced_number',
@@ -2439,7 +2454,10 @@ class Sliced_Admin {
 			foreach ( $post_metas as $post_meta ) {
 				$meta_key = esc_sql( $post_meta->meta_key );
 				$meta_value = esc_sql( $post_meta->meta_value );
-				if ( ! in_array( $meta_key, $non_cloneable_post_metas ) ) {
+				if (
+					substr( $meta_key, 0, 7 ) === '_sliced'
+					&& ! in_array( $meta_key, $non_cloneable_post_metas )
+				) {
 					$sql_values[]= "($new_post_id, '$meta_key', '$meta_value')";
 				}
 			}
@@ -2447,33 +2465,45 @@ class Sliced_Admin {
 			$wpdb->query( $sql_query );
 		}
 		
-		// increment the number
+		// make the appropriate adjustments
 		if ( $post->post_type === 'sliced_invoice' ) {
-			$prefix = get_post_meta( $new_post_id, '_sliced_invoice_prefix', true );
+			update_post_meta( $new_post_id, '_sliced_invoice_created', time() );
+			update_post_meta( $new_post_id, '_sliced_invoice_due', Sliced_Invoice::get_auto_due_date() );
+			$payment = sliced_get_accepted_payment_methods();
+			update_post_meta( $new_post_id, '_sliced_payment_methods', array_keys( $payment ) );
+			$prefix = get_post_meta( $post_id, '_sliced_invoice_prefix', true );
 			$number = sliced_get_next_invoice_number();
-			$suffix = get_post_meta( $new_post_id, '_sliced_invoice_suffix', true );
+			$suffix = get_post_meta( $post_id, '_sliced_invoice_suffix', true );
 			update_post_meta( $new_post_id, '_sliced_invoice_number', (string)$number );
+			update_post_meta( $new_post_id, '_sliced_invoice_prefix', $prefix ); 
+			update_post_meta( $new_post_id, '_sliced_invoice_suffix', $suffix );
 			update_post_meta( $new_post_id, '_sliced_number', $prefix . $number . $suffix );
 			Sliced_Invoice::update_invoice_number( $new_post_id );
+			Sliced_Invoice::set_as_draft( $new_post_id );
 		}
 		if ( $post->post_type === 'sliced_quote' ) {
-			$prefix = get_post_meta( $new_post_id, '_sliced_quote_prefix', true );
+			update_post_meta( $new_post_id, '_sliced_quote_created', time() );
+			update_post_meta( $new_post_id, '_sliced_quote_valid_until', Sliced_Quote::get_auto_valid_until_date() );
+			$prefix = get_post_meta( $post_id, '_sliced_quote_prefix', true );
 			$number = sliced_get_next_quote_number();
-			$suffix = get_post_meta( $new_post_id, '_sliced_quote_suffix', true );
+			$suffix = get_post_meta( $post_id, '_sliced_quote_suffix', true );
 			update_post_meta( $new_post_id, '_sliced_quote_number', (string)$number );
+			update_post_meta( $new_post_id, '_sliced_quote_prefix', $prefix ); 
+			update_post_meta( $new_post_id, '_sliced_quote_suffix', $suffix );
 			update_post_meta( $new_post_id, '_sliced_number', $prefix . $number . $suffix );
 			Sliced_Quote::update_quote_number( $new_post_id );
+			Sliced_Quote::set_as_draft( $new_post_id );
 		}
 		
+		do_action( 'sliced_invoices_duplicated_quote_invoice', $new_post_id, $post_id );
+		
 		// finally, redirect to the current(ish) url
-		$current_url = admin_url( 'edit.php?post_type=' . $post->post_type . '' );
+		$current_url = admin_url( 'edit.php?post_type=' . $post->post_type );
 		wp_redirect( $current_url );
 		exit;
-
 	}
-
-
-
+	
+	
 	/**
 	 * Get the pre-defined line items dropdown
 	 *

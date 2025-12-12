@@ -2285,21 +2285,23 @@ class Sliced_Shared {
 		wp_set_object_terms( $id, null, 'quote_status' ); // clear old status
 		Sliced_Invoice::set_as_draft( $id ); // set new status
 		
+		do_action( 'sliced_invoices_converted_quote_to_invoice', $id );
+		
 	}
 	
 	/**
 	 * Create a new invoice from a quote.
 	 *
-	 * @version 3.9.4
+	 * @version 3.10.0
 	 * @since   3.9.0
 	 */
-	public static function create_invoice_from_quote( $id ) {
+	public static function create_invoice_from_quote( $quote_id ) {
 		global $wpdb;
 		
 		$settings_invoices = get_option( 'sliced_invoices' );
 		
 		// duplicate post
-		$post = get_post( $id );
+		$post = get_post( $quote_id );
 		$args = array(
 			'comment_status' => 'closed',
 			'ping_status'    => $post->ping_status,
@@ -2313,22 +2315,32 @@ class Sliced_Shared {
 			'post_title'     => $post->post_title,
 			'post_type'      => 'sliced_invoice',
 			'to_ping'        => $post->to_ping,
-			'menu_order'     => $post->menu_order
+			'menu_order'     => $post->menu_order,
+			'meta_input'     => array(
+				'_sliced_log' => array(
+					current_time( 'timestamp', 1 ) => array(
+						'type'              => 'invoice_created_from_quote',
+						'from_quote_id'     => $quote_id,
+						'from_quote_number' => get_post_meta( $quote_id, '_sliced_number', true ),
+						'by'                => get_current_user_id(),
+					),
+				),
+			),
 		);
-		$new_post_id = wp_insert_post( $args );
+		$invoice_id = wp_insert_post( $args );
 		
-		// get all current post terms and set them to the new post draft
-		$taxonomies = get_object_taxonomies( $post->post_type );
-		foreach ( $taxonomies as $taxonomy ) {
-			$post_terms = wp_get_object_terms( $id, $taxonomy, array( 'fields' => 'slugs' ) );
-			wp_set_object_terms( $new_post_id, $post_terms, $taxonomy, false );
-		}
-		
-		// duplicate post metas
+		// duplicate only relevant post metas
+		$non_cloneable_post_metas = apply_filters( 'sliced_invoices_non_cloneable_post_metas', array(
+			'_sliced_log',
+			'_sliced_number',
+			'_sliced_payment',
+			'_sliced_invoice_email_sent',
+			'_sliced_quote_email_sent',
+		) );
 		$post_metas = $wpdb->get_results(
 			$wpdb->prepare(
 				"SELECT meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id=%d",
-				$id
+				$quote_id
 			)
 		);
 		if ( $post_metas && count( $post_metas ) ) {
@@ -2337,7 +2349,12 @@ class Sliced_Shared {
 			foreach ( $post_metas as $post_meta ) {
 				$meta_key = esc_sql( $post_meta->meta_key );
 				$meta_value = esc_sql( $post_meta->meta_value );
-				$sql_values[]= "($new_post_id, '$meta_key', '$meta_value')";
+				if (
+					substr( $meta_key, 0, 7 ) === '_sliced'
+					&& ! in_array( $meta_key, $non_cloneable_post_metas )
+				) {
+					$sql_values[]= "($invoice_id, '$meta_key', '$meta_value')";
+				}
 			}
 			$sql_query .= implode( ',', $sql_values );
 			$wpdb->query( $sql_query );
@@ -2346,25 +2363,27 @@ class Sliced_Shared {
 		// update the appropriate post meta on the new post
 		$number  = sliced_get_next_invoice_number();
 		$payment = sliced_get_accepted_payment_methods();
-		update_post_meta( $new_post_id, '_sliced_invoice_terms', $settings_invoices['terms'] );
-		update_post_meta( $new_post_id, '_sliced_invoice_created', time() );
-		update_post_meta( $new_post_id, '_sliced_invoice_number', $number );
-		update_post_meta( $new_post_id, '_sliced_invoice_prefix', sliced_get_invoice_prefix() );
-		update_post_meta( $new_post_id, '_sliced_invoice_suffix', sliced_get_invoice_suffix() );
-		update_post_meta( $new_post_id, '_sliced_number', sliced_get_invoice_prefix() . $number . sliced_get_invoice_suffix() );
-		update_post_meta( $new_post_id, '_sliced_payment_methods', array_keys( $payment ) );
-		update_post_meta( $new_post_id, '_sliced_invoice_due', Sliced_Invoice::get_auto_due_date() );
-		delete_post_meta( $new_post_id, '_sliced_quote_created' );
-		delete_post_meta( $new_post_id, '_sliced_quote_number' );
-		delete_post_meta( $new_post_id, '_sliced_quote_prefix' );
-		delete_post_meta( $new_post_id, '_sliced_quote_suffix' );
-		delete_post_meta( $new_post_id, '_sliced_quote_terms' );
+		update_post_meta( $invoice_id, '_sliced_invoice_terms', $settings_invoices['terms'] );
+		update_post_meta( $invoice_id, '_sliced_invoice_created', time() );
+		update_post_meta( $invoice_id, '_sliced_invoice_number', $number );
+		update_post_meta( $invoice_id, '_sliced_invoice_prefix', sliced_get_invoice_prefix() );
+		update_post_meta( $invoice_id, '_sliced_invoice_suffix', sliced_get_invoice_suffix() );
+		update_post_meta( $invoice_id, '_sliced_number', sliced_get_invoice_prefix() . $number . sliced_get_invoice_suffix() );
+		update_post_meta( $invoice_id, '_sliced_payment_methods', array_keys( $payment ) );
+		update_post_meta( $invoice_id, '_sliced_invoice_due', Sliced_Invoice::get_auto_due_date() );
+		delete_post_meta( $invoice_id, '_sliced_quote_created' );
+		delete_post_meta( $invoice_id, '_sliced_quote_number' );
+		delete_post_meta( $invoice_id, '_sliced_quote_prefix' );
+		delete_post_meta( $invoice_id, '_sliced_quote_suffix' );
+		delete_post_meta( $invoice_id, '_sliced_quote_terms' );
 		
 		// update the invoice number and set as draft
-		Sliced_Invoice::update_invoice_number( $new_post_id );
-		Sliced_Invoice::set_as_draft( $new_post_id );
+		Sliced_Invoice::update_invoice_number( $invoice_id );
+		Sliced_Invoice::set_as_draft( $invoice_id );
 		
-		return $new_post_id;
+		do_action( 'sliced_invoices_created_invoice_from_quote', $invoice_id, $quote_id );
+		
+		return $invoice_id;
 	}
 	
 }

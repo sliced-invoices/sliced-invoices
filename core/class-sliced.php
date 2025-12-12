@@ -176,7 +176,7 @@ class Sliced_Invoices {
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
-	 * @version 3.9.0
+	 * @version 3.10.0
 	 * @since   2.0.0
 	 */
 	private function define_admin_hooks() {
@@ -223,9 +223,10 @@ class Sliced_Invoices {
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'export_csv_full' );
 		$this->loader->add_filter( 'admin_action_convert_quote_to_invoice', $plugin_admin, 'convert_quote_to_invoice' );
 		$this->loader->add_filter( 'admin_action_create_invoice_from_quote', $plugin_admin, 'create_invoice_from_quote' );
-		$this->loader->add_action( 'save_post', $plugin_admin, 'set_published_date_as_created' );
+		$this->loader->add_filter( 'wp_insert_post_data', $plugin_admin, 'set_published_date_as_created' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'set_number_for_search' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'maybe_mark_as_paid' );
+		$this->loader->add_action( 'post_updated', $plugin_admin, 'maybe_regenerate_slug', 10, 3 );
 
 		//$this->loader->add_filter( 'load-edit.php', $plugin_admin, 'mark_quote_expired' );
 		//$this->loader->add_filter( 'load-edit.php', $plugin_admin, 'mark_invoice_overdue' );

@@ -24,12 +24,12 @@ class Sliced_Logs {
 	/**
 	 * Hook into the appropriate actions when the class is constructed.
 	 * 
-	 * @version 3.9.0
+	 * @version 3.10.0
 	 */
 	public function __construct() {
 
-		add_action( 'publish_sliced_invoice', array( &$this, 'create_invoice' ), 10, 2 );
-		add_action( 'publish_sliced_quote', array( &$this, 'create_quote' ), 10, 2 );
+		add_action( 'publish_sliced_invoice', array( $this, 'create_invoice' ), 10, 2 );
+		add_action( 'publish_sliced_quote', array( $this, 'create_quote' ), 10, 2 );
 
 		// status change
 		add_action( 'set_object_terms', array( &$this, 'status_change' ), 20, 6 );
@@ -172,67 +172,71 @@ class Sliced_Logs {
 	/**
 	 * Invoice creation
 	 *
-	 * @since 2.20
+	 * @version 3.10.0
+	 * @since   2.20
 	 */
 	public function create_invoice( $id, $post ) {
-
-		if ( ! $id || ! isset( $id ) ) {
+		
+		if ( empty( $id ) ) {
 			return;
 		}
-
-		if ( ! $post || ! isset( $post ) ) {
+		
+		if ( empty( $post ) ) {
 			return;
 		}
-
-		// if the post is being updated, return
-		if ( $post->post_date != $post->post_modified ) {
-			return;
-		}
-			
-		// extra check to prevent duplicate entries
+		
 		$log = get_post_meta( $id, '_sliced_log', true );
-		if ( is_array( $log ) && count( $log ) > 0 ) {
+		
+		// invoice already created, return
+		if ( ! empty( $log ) ) {
 			return;
 		}
 		
 		$user_id = $this->identify_the_user();
-
+		
 		$meta_value = array(
 			'type' => 'invoice_created',
 			'by'   => $user_id,
 		);
-		$result = $this->update_log_meta( $id, $meta_value );
+		$this->update_log_meta( $id, $meta_value );
+		
 	}
-
+	
+	
 	/**
 	 * Quote creation
 	 *
-	 * @since 2.20
+	 * @version 3.10.0
+	 * @since   2.20
 	 */
 	public function create_quote( $id, $post ) {
-
-		if ( ! $id || ! isset( $id ) ) {
+		
+		if ( empty( $id ) ) {
 			return;
 		}
-
-		if ( ! $post || ! isset( $post ) ) {
+		
+		if ( empty( $post ) ) {
 			return;
 		}
-
-		// if the post is being updated, return
-		if ( $post->post_date != $post->post_modified ) {
+		
+		$log = get_post_meta( $id, '_sliced_log', true );
+		
+		// quote already created, return
+		if ( ! empty( $log ) ) {
 			return;
 		}
 		
 		$user_id = $this->identify_the_user();
-
+		
 		$meta_value = array(
 			'type' => 'quote_created',
 			'by'   => $user_id,
 		);
-		$result = $this->update_log_meta( $id, $meta_value );
+		$this->update_log_meta( $id, $meta_value );
+		
 	}
-
+	
+	
 	/**
 	 * Status change
 	 *
@@ -469,7 +473,7 @@ class Sliced_Logs {
 	/**
 	 * Display the logs within the invoice or quote
 	 *
-	 * @version 3.9.4
+	 * @version 3.10.0
 	 * @since   2.20
 	 */
 	public function display_the_logs( $id ) {
@@ -500,40 +504,84 @@ class Sliced_Logs {
 				$by         = sprintf( __( 'by %s', 'sliced-invoices' ), $user_name );
 
 				// work out the type of log entry
-				switch ($log['type']) {
+				switch ( $log['type'] ) {
 					case 'invoice_created':
-						$message = sprintf( __( '%s was created.', 'sliced-invoices' ), sliced_get_invoice_label() );
+						$message = sprintf(
+							__( '%s was created.', 'sliced-invoices' ),
+							sliced_get_invoice_label()
+						);
+						break;
+					case 'invoice_created_from_quote':
+						$url = admin_url( 'post.php?post=' . $log['from_quote_id'] . '&action=edit' );
+						$message = sprintf(
+							/* translators: %1$s is a placeholder for the localized word "Invoice";
+							%2$s is a placeholder for the localized word "Quote";
+							%3$s is a placeholder for the quote number;
+							%4$s is a placeholder for the quote URL. */
+							__( '%1$s was created from %2$s <a href="%4$s">%3$s</a>.', 'sliced-invoices' ),
+							sliced_get_invoice_label(),
+							sliced_get_quote_label(),
+							$log['from_quote_number'],
+							esc_url( $url )
+						);
 						break;
 					case 'quote_created':
-						$message = sprintf( __( '%s was created.', 'sliced-invoices' ), sliced_get_quote_label() );
+						$message = sprintf(
+							__( '%s was created.', 'sliced-invoices' ),
+							sliced_get_quote_label()
+						);
 						break;
 					case 'status_update':
-						$message = sprintf( __( 'Status changed from %1s to %2s.', 'sliced-invoices' ), $log['from'], $log['to'] );
+						$message = sprintf(
+							__( 'Status changed from %1$s to %2$s.', 'sliced-invoices' ),
+							$log['from'],
+							$log['to']
+						);
 						break;
 					case 'client_declined_quote':
-						$message = sprintf( __( '%1s was declined. Reason: %2s', 'sliced-invoices' ), sliced_get_quote_label(), $log['reason'] );
+						$message = sprintf(
+							__( '%1$s was declined. Reason: %2$s', 'sliced-invoices' ),
+							sliced_get_quote_label(),
+							esc_html( $log['reason'] )
+						);
 						break;
 					case 'client_accepted_quote':
-						$message = sprintf( __( '%s was accepted by client.', 'sliced-invoices' ), sliced_get_quote_label() );
+						$message = sprintf(
+							__( '%s was accepted by client.', 'sliced-invoices' ),
+							sliced_get_quote_label()
+						);
 						break;
 					case 'payment_made':
 						$message = sprintf(
-							__( 'Payment was initiated via %1s.', 'sliced-invoices' ) . ' (%2s)',
+							__( 'Payment was initiated via %1$s.', 'sliced-invoices' ) . ' (%2$s)',
 							$log['gateway'],
 							$log['status']
 						);
 						break;
 					case 'marked_as_paid':
-						$message = sprintf( __( '%s was marked as Paid.', 'sliced-invoices' ), sliced_get_invoice_label() );
+						$message = sprintf(
+							__( '%s was marked as Paid.', 'sliced-invoices' ),
+							sliced_get_invoice_label()
+						);
 						break;
 					case 'quote_to_invoice':
-						$message = sprintf( __( 'Converted from %1s to %2s.', 'sliced-invoices' ), sliced_get_quote_label(), sliced_get_invoice_label() );
+						$message = sprintf(
+							__( 'Converted from %1$s to %2$s.', 'sliced-invoices' ),
+							sliced_get_quote_label(),
+							sliced_get_invoice_label()
+						);
 						break;
 					case 'quote_sent':
-						$message = sprintf( __( '%s was sent.', 'sliced-invoices' ), sliced_get_quote_label() );
+						$message = sprintf(
+							__( '%s was sent.', 'sliced-invoices' ),
+							sliced_get_quote_label()
+						);
 						break;
 					case 'invoice_sent':
-						$message = sprintf( __( '%s was sent.', 'sliced-invoices' ), sliced_get_invoice_label() );
+						$message = sprintf(
+							__( '%s was sent.', 'sliced-invoices' ),
+							sliced_get_invoice_label()
+						);
 						break;
 					case 'payment_reminder_sent':
 						$message = __( 'Payment reminder email was sent.', 'sliced-invoices' );
@@ -542,24 +590,26 @@ class Sliced_Logs {
 						$message = __( 'Payment received email was sent.', 'sliced-invoices' );
 						break;
 					case 'invoice_viewed':
-						$message = sprintf( __( '%s was viewed.', 'sliced-invoices' ), sliced_get_invoice_label() );
+						$message = sprintf(
+							__( '%s was viewed.', 'sliced-invoices' ),
+							sliced_get_invoice_label()
+						);
 						break;
 					case 'quote_viewed':
-						$message = sprintf( __( '%s was viewed.', 'sliced-invoices' ), sliced_get_quote_label() );
-						break;
-
-					default:
-						# code...
+						$message = sprintf(
+							__( '%s was viewed.', 'sliced-invoices' ),
+							sliced_get_quote_label()
+						);
 						break;
 				}
-
+				
 				$notes .= '<li class="note">';
-				$notes .= '<div class="note_content">' . esc_html( $message ) . '</div>';
-				$notes .= '<p class="meta">' . esc_html( $time_date ) . '<br>' . esc_html( $by );
+				$notes .= '<div class="note_content">' . $message . '</div>';
+				$notes .= '<p class="meta">' . $time_date . '<br />' . $by;
 				$notes .= ( $log['by'] === 0 && isset( $log['secured'] ) && $log['secured'] === 'yes' ? ', '.__( 'using the secure link', 'sliced-invoices' ) : '' );
 				$notes .= '</p>';
 				$notes .= '</li>';
-
+				
 			}
 
 			$notes .= '</ul>';
