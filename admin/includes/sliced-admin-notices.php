@@ -294,9 +294,13 @@ class Sliced_Admin_Notices {
 	/**
 	 * Display review suggestion notice
 	 * 
-	 * @since 3.9.6
+	 * @since x.x.x
 	 */
 	public static function maybe_show_review_suggestion() {
+		
+		if ( ! Sliced_Shared::is_sliced_invoices_page() ) {
+			return;
+		}
 		
 		if ( get_option( 'sliced_admin_notice_review_suggestion' ) === '' ) {
 			return;
@@ -306,9 +310,9 @@ class Sliced_Admin_Notices {
 			return;
 		}
 		
-		$activated = get_option( 'sliced_first_activated_time', false );
+		$activated = get_option( 'sliced_invoices_first_activated_time', false );
 		if ( ! $activated ) {
-			update_option( 'sliced_first_activated_time', time() );
+			update_option( 'sliced_invoices_first_activated_time', time() );
 			return;
 		}
 		
@@ -316,9 +320,13 @@ class Sliced_Admin_Notices {
 			return;
 		}
 		
-		$total_invoices = wp_count_posts( 'sliced_invoice' )->publish + wp_count_posts( 'sliced_quote' )->publish;
-		
-		if ( $total_invoices < 5 ) {
+		$total_invoices = wp_count_posts( 'sliced_invoice' );
+		$total_quotes   = wp_count_posts( 'sliced_quote' );
+		$total_count    = (
+			( isset( $total_invoices->publish ) ? $total_invoices->publish : 0 )
+			+ ( isset( $total_quotes->publish ) ? $total_quotes->publish : 0 )
+		);
+		if ( $total_count < 5 ) {
 			return;
 		}
 		
