@@ -475,7 +475,7 @@ class Sliced_Admin {
 	/**
 	 * Register our custom post type 'sliced_quote'.
 	 *
-	 * @version 3.9.2
+	 * @version 3.10.0
 	 * @since   2.0.0
 	 */
 	public static function new_cpt_quote() {
@@ -575,7 +575,7 @@ class Sliced_Admin {
 	/**
 	 * Register our custom post type 'sliced_quote'.
 	 *
-	 * @version 3.9.2
+	 * @version 3.10.0
 	 * @since   2.0.0
 	 */
 	public static function new_cpt_invoice() {
@@ -675,7 +675,7 @@ class Sliced_Admin {
 	/**
 	 * Register our taxonomy 'quote_status'.
 	 *
-	 * @version 3.9.0
+	 * @version 3.10.0
 	 * @since   2.0.0
 	 */
 	public static function new_taxonomy_quote_status() {
@@ -767,7 +767,7 @@ class Sliced_Admin {
 	/**
 	 * Register our taxonomy 'invoice_status'.
 	 *
-	 * @version 3.9.0
+	 * @version 3.10.0
 	 * @since   2.0.0
 	 */
 	public static function new_taxonomy_invoice_status() {
@@ -1170,7 +1170,8 @@ class Sliced_Admin {
 	/**
 	 * Set published date as created date
 	 *
-	 * @since 	2.33
+	 * @version 3.10.0
+	 * @since   2.33
 	 */
 	public function set_published_date_as_created( $data ) {
 		
@@ -1307,9 +1308,9 @@ class Sliced_Admin {
 	
 	
 	/**
-	 * Maybe renerate slug, if post_title changes and other conditions are met.
+	 * Maybe regenerate slug, if post_title changes and other conditions are met.
 	 *
-	 * @since 	x.x.x
+	 * @since   3.10.0
 	 */
 	public function maybe_regenerate_slug( $post_id, $post_after, $post_before ) {
 		
@@ -2357,7 +2358,8 @@ class Sliced_Admin {
 	/**
 	 * Add the duplicate link to action list for post_row_actions
 	 *
-	 * @since 	2.0.0
+	 * @version 3.10.0
+	 * @since   2.0.0
 	 */
 	public function duplicate_quote_invoice_link( $actions, $post ) {
 		
@@ -2384,8 +2386,8 @@ class Sliced_Admin {
 	/**
 	 * Function creates post duplicate and redirects then to the edit post screen
 	 *
-	 * @version 3.9.0
-	 * @since 	2.0.0
+	 * @version 3.10.0
+	 * @since   2.0.0
 	 */
 	public function duplicate_quote_invoice() {
 		global $wpdb;

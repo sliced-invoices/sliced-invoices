@@ -1199,8 +1199,8 @@ class Sliced_Metaboxes {
 	/**
 	 * Get accepted payment method keys.
 	 *
-	 * @version 3.9.6
-	 * @since   <= 2.83
+	 * @version 3.10.0
+	 * @since   2.70
 	 *
 	 * @return array Accepted payment method keys.
 	 */
@@ -1217,7 +1217,8 @@ class Sliced_Metaboxes {
 		// For new Invoices, enable all accepted methods
 		return array_keys( sliced_get_accepted_payment_methods() );
 	}
-
+	
+	
 	/**
 	 * Generates the HTML for the totals box after the line items, in the admin invoice view.
 	 *

@@ -99,7 +99,7 @@ class Sliced_Quote {
 	/**
 	 * Change status to draft.
 	 *
-	 * @since   x.x.x
+	 * @since   3.10.0
 	 */
 	public static function set_as_draft( $id = 0 ) {
 		self::set_status( $id, 'draft' );

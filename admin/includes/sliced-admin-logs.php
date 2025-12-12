@@ -24,7 +24,7 @@ class Sliced_Logs {
 	/**
 	 * Hook into the appropriate actions when the class is constructed.
 	 * 
-	 * @version 3.9.0
+	 * @version 3.10.0
 	 */
 	public function __construct() {
 
@@ -172,7 +172,8 @@ class Sliced_Logs {
 	/**
 	 * Invoice creation
 	 *
-	 * @since 2.20
+	 * @version 3.10.0
+	 * @since   2.20
 	 */
 	public function create_invoice( $id, $post ) {
 		
@@ -205,7 +206,8 @@ class Sliced_Logs {
 	/**
 	 * Quote creation
 	 *
-	 * @since 2.20
+	 * @version 3.10.0
+	 * @since   2.20
 	 */
 	public function create_quote( $id, $post ) {
 		
@@ -471,7 +473,7 @@ class Sliced_Logs {
 	/**
 	 * Display the logs within the invoice or quote
 	 *
-	 * @version 3.9.4
+	 * @version 3.10.0
 	 * @since   2.20
 	 */
 	public function display_the_logs( $id ) {

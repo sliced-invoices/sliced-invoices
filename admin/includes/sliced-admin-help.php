@@ -103,6 +103,7 @@ class Sliced_Help {
 	/**
 	 * Add contextual help to list view screens.
 	 *
+	 * @version 3.10.0
 	 * @since   2.0.0
 	 */
 	public function list_view_help() {
