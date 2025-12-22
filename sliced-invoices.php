@@ -554,6 +554,34 @@ add_action( 'get_template_part_sliced-invoice-display', 'sliced_patch_for_sage_b
 add_action( 'get_template_part_sliced-quote-display', 'sliced_patch_for_sage_based_themes' );
 add_action( 'get_template_part_sliced-payment-display', 'sliced_patch_for_sage_based_themes' );
 
+// Patch for page builders (Elementor, Oxygen, etc.)
+function sliced_patch_for_page_builders( $template ) {
+	// Page builders can interfere with Sliced's blank invoice/quote/payment pages
+	// by injecting the templates. This removes all hooks when on Sliced pages.
+	
+	if ( ! Sliced_Shared::is_sliced_invoices_page() ) {
+		return $template;
+	}
+	
+	global $wp_filter;
+	$tag = 'template_include';
+	
+	if ( ! isset( $wp_filter[ $tag ] ) || ! is_object( $wp_filter[ $tag ] ) ) {
+		return $template;
+	}
+	
+	// Remove all template_include hooks with priority < 999
+	// (Sliced's own hooks run at 999 via single_template and page_template filters)
+	foreach ( $wp_filter[ $tag ]->callbacks as $priority => $callbacks ) {
+		if ( $priority < 999 ) {
+			unset( $wp_filter[ $tag ]->callbacks[ $priority ] );
+		}
+	}
+	
+	return $template;
+}
+add_filter( 'template_include', 'sliced_patch_for_page_builders', 1 );
+
 
 
 
