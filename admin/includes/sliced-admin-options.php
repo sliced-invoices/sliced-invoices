@@ -38,7 +38,7 @@ class Sliced_Options {
 
 	/**
 	 * Constructor
-	 * @version 3.9.6
+	 * @version 3.10.1
 	 * @since 0.1.0
 	 */
 	public function __construct() {
@@ -72,7 +72,7 @@ class Sliced_Options {
 	/**
 	 * Add menu options page.
 	 * 
-	 * @version 3.9.0
+	 * @version 3.10.1
 	 * @since 0.1.0
 	 */
 	public function add_options_page() {
