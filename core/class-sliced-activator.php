@@ -174,6 +174,9 @@ Your City AZ 12345',
 			$email['invoice_available_content'] = 'Hi %client_first_name%,
 
 							You have a new invoice available ( %number% ) which can be viewed at %link%.<br>';
+			$email['invoice_update_available_content'] = 'Hi %client_first_name%,
+
+							You have an updated invoice available ( %number% ) which can be viewed at %link%.<br>';			
 			$email['payment_received_client_content'] = 'Thanks for your payment, %client_first_name%.
 
 Your recent payment for %last_payment% on invoice %number% has been successful.<br>';
