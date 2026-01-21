@@ -656,6 +656,15 @@ class Sliced_Metaboxes {
 			),
 		) );
 		$info->add_field( array(
+			'name'       => __( 'BCC to (if emailed):', 'sliced-invoices' ),
+			'desc'       => __( 'Email address(es) to BCC when this invoice is emailed. Separate multiple addresses with commas.', 'sliced-invoices' ),
+			'id'         => $prefix . 'bcc_email',
+			'type'       => 'text',
+			'attributes' => array(
+				'placeholder' => 'email@example.com',
+			),
+		) );
+		$info->add_field( array(
 			'name'       => __( 'Status', 'sliced-invoices' ),
 			'desc'       => '',
 			'id'         => $prefix . 'invoice_status',
