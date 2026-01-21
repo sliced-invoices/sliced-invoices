@@ -453,8 +453,22 @@ class Sliced_Notifications {
 		$email_name = '"' . str_replace( '"', '', $this->settings['name'] ) . '"';
 		$output = 'From: ' . $email_name . ' <' . $this->settings['from'] . '>' . "\r\n";
 
-		if( in_array( $type, $this->client_emails ) && $this->settings['bcc'] == 'on' ) {
-			$output .= 'Bcc: ' . $this->settings['from'] . "\r\n";
+		$bcc_addresses = array();
+		
+		if( in_array( $type, $this->client_emails ) ) {
+			if( $this->settings['bcc'] == 'on' ) {
+				$bcc_addresses[] = $this->settings['from'];
+			}
+			
+			$invoice_bcc = get_post_meta( $this->id, '_sliced_bcc_email', true );
+			if( ! empty( $invoice_bcc ) ) {
+				$bcc_list = array_map( 'trim', explode( ',', $invoice_bcc ) );
+				$bcc_addresses = array_merge( $bcc_addresses, $bcc_list );
+			}
+			
+			if( ! empty( $bcc_addresses ) ) {
+				$output .= 'Bcc: ' . implode( ', ', array_unique( $bcc_addresses ) ) . "\r\n";
+			}
 		}
 		
 		return apply_filters( 'sliced_get_email_headers', $output, $this->id, $type );
