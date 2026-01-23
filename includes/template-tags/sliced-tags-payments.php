@@ -96,6 +96,26 @@ if ( ! function_exists( 'sliced_get_business_generic_payment' ) ) :
 endif;
 
 
+if ( ! function_exists( 'sliced_get_business_check' ) ) :
+
+	function sliced_get_business_check() {
+		$business = Sliced_Shared::get_business_details();
+		return apply_filters( 'sliced_get_business_check', $business['check'], $business );
+	}
+
+endif;
+
+
+if ( ! function_exists( 'sliced_get_business_cash' ) ) :
+
+	function sliced_get_business_cash() {
+		$business = Sliced_Shared::get_business_details();
+		return apply_filters( 'sliced_get_business_cash', $business['cash'], $business );
+	}
+
+endif;
+
+
 if ( ! function_exists( 'sliced_get_accepted_payment_methods' ) ) :
 
 	function sliced_get_accepted_payment_methods() {

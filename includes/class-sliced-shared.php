@@ -652,6 +652,12 @@ class Sliced_Shared {
         if ( ! empty( $payments['generic_pay'] ) ) {
             $pay_array['generic'] = __( 'Generic', 'sliced-invoices' );
         }
+		if ( ! empty( $payments['check'] ) ) {
+            $pay_array['check'] = __( 'Check', 'sliced-invoices' );
+        }
+        if ( ! empty( $payments['cash'] ) ) {
+            $pay_array['cash'] = __( 'Cash', 'sliced-invoices' );
+        }
         return apply_filters( 'sliced_register_payment_method', $pay_array );
     }
 
@@ -690,6 +696,8 @@ class Sliced_Shared {
 	        'website'			=> isset( $options['business']['website'] ) ? $options['business']['website'] : '',
 	        'bank'				=> isset( $options['payments']['bank'] ) ? $options['payments']['bank'] : '',
 	        'generic_pay'		=> isset( $options['payments']['generic_pay'] ) ? $options['payments']['generic_pay'] : '',
+			'check'				=> isset( $options['payments']['check'] ) ? $options['payments']['check'] : '',
+	        'cash'				=> isset( $options['payments']['cash'] ) ? $options['payments']['cash'] : '',
 	        'footer'			=> isset( $options['payments']['footer'] ) ? $options['payments']['footer'] : '',
 	    ) );
 
