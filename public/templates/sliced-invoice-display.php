@@ -97,7 +97,7 @@ do_action( 'sliced_before_invoice_display' ); ?><!doctype html>
 			</div>
 		</div><!-- END row -->
 
-		<?php if( sliced_is_payment_method( 'generic' ) || sliced_is_payment_method( 'bank' ) ) : ?>
+		<?php if( sliced_is_payment_method( 'generic' ) || sliced_is_payment_method( 'bank' ) || sliced_is_payment_method( 'check' ) || sliced_is_payment_method( 'cash' ) ) : ?>
 		<div class="row sliced-payments">
 			<div class="col-sm-12">
 				<?php if( sliced_is_payment_method( 'generic' ) ) : ?>
@@ -105,6 +105,12 @@ do_action( 'sliced_before_invoice_display' ); ?><!doctype html>
 				<?php endif; ?>
 				<?php if( sliced_is_payment_method( 'bank' ) ) : ?>
 					<div class="bank"><?php echo wpautop( sliced_get_business_bank() ); ?></div>
+				<?php endif; ?>
+				<?php if( sliced_is_payment_method( 'check' ) ) : ?>
+					<div class="check"><?php echo wpautop( sliced_get_business_check() ); ?></div>
+				<?php endif; ?>
+				<?php if( sliced_is_payment_method( 'cash' ) ) : ?>
+					<div class="cash"><?php echo wpautop( sliced_get_business_cash() ); ?></div>
 				<?php endif; ?>
 			</div>
 		</div><!-- END row -->

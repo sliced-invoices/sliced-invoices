@@ -68,7 +68,7 @@ class Sliced_Payments {
 
 		// remove the non online gateway payment methods
 		if( ! empty( $invoice_gateways[0] ) ) {
-			$gateways = array_diff( $invoice_gateways[0], array( 'bank', 'generic' ) );
+			$gateways = array_diff( $invoice_gateways[0], array( 'bank', 'generic', 'check', 'cash' ) );
 			foreach( $gateways as $index => $gateway ) {
 				if ( isset( $all_gateways[$gateway] ) ) {
 					$online_gateways[$gateway] = $all_gateways[$gateway];

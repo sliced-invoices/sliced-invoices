@@ -65,7 +65,7 @@ a {
 .sliced-payments h4 .fa {
   margin:0 5px 0 0;
 }
-.bank, .generic {
+.bank, .generic, .check, .cash {
   float:left;
   width:50%;
 }

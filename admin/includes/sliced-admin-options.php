@@ -869,6 +869,20 @@ class Sliced_Options {
 					'id'        => 'generic_pay',
 					'type'      => 'textarea_small',
 				),
+				array(
+					'name'      => __( 'Check Payment', 'sliced-invoices' ) . '<br><small>' . sprintf( __( 'Displayed on the %s', 'sliced-invoices' ), $invoice_label ) . '</small>',
+					'desc'      => __( 'Add instructions for paying by check. HTML is allowed.', 'sliced-invoices' ),
+					'default'   => '',
+					'id'        => 'check',
+					'type'      => 'textarea_small',
+				),
+				array(
+					'name'      => __( 'Cash Payment', 'sliced-invoices' ) . '<br><small>' . sprintf( __( 'Displayed on the %s', 'sliced-invoices' ), $invoice_label ) . '</small>',
+					'desc'      => __( 'Add instructions for paying by cash. HTML is allowed.', 'sliced-invoices' ),
+					'default'   => '',
+					'id'        => 'cash',
+					'type'      => 'textarea_small',
+				),
 			)
 		) );
 		

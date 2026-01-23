@@ -211,6 +211,8 @@ class Sliced_Tools {
 		$sensitive_infos = apply_filters( 'sliced_sysinfo_sensitive_infos', array(
 			'bank',
 			'generic_pay',
+			'check',
+			'cash',
 			'paypal_username',
 			'paypal_username_sandbox',
 			'paypal_password',
