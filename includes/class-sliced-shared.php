@@ -389,7 +389,8 @@ class Sliced_Shared {
 
 	    $symbol 	= sliced_get_currency_symbol( $id );
 	    $position 	= sliced_get_currency_position();
-	    $amount 	= self::get_formatted_number( $amount );
+	    $is_negative = ( $amount < 0 );
+	    $amount 	= self::get_formatted_number( abs( $amount ) );
 
 	    switch ($position) {
 	    	case 'left':
@@ -408,6 +409,10 @@ class Sliced_Shared {
 	    	default:
 	    		$formatted = $symbol . $amount;
 	    		break;
+	    }
+
+	    if ( $is_negative ) {
+	    	$formatted = '-' . $formatted;
 	    }
 
 	    return apply_filters( 'sliced_get_formatted_currency', $formatted );

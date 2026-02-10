@@ -72,7 +72,8 @@
 		// do the symbol position formatting
 		var formatted = 0;
 		var amount = new Decimal( amount );
-		amount = amount.toFixed( sliced_invoices.utils.decimals );
+		var isNegative = amount.lessThan( 0 );
+		amount = amount.abs().toFixed( sliced_invoices.utils.decimals );
 		switch (sliced_invoices.utils.position) {
 			case 'left':
 				formatted = sliced_invoices.utils.symbol + sliced_invoices.utils.formattedNumber( amount );
@@ -90,6 +91,11 @@
 				formatted = sliced_invoices.utils.symbol + sliced_invoices.utils.formattedNumber( amount );
 				break;
 		}
+
+		if ( isNegative ) {
+			formatted = '-' + formatted;
+		}
+
 		return formatted;
 	}
 	
@@ -146,7 +152,10 @@
             var line_total      = line_sub_total.plus( line_adj_amt ); // 110
 
             // display the calculated amount
-            $(this).parents('.cmb-type-text-money').find('.line_total').html( sliced_invoices.utils.formattedAmount( line_total.toNumber() ) );
+            $(this).parents('.cmb-type-text-money').find('.line_total')
+                .html( sliced_invoices.utils.formattedAmount( line_total.toNumber() ) )
+                .parent('.line_total_wrap')
+                .toggleClass( 'sliced-negative', line_total.lessThan( 0 ) );
             
 			sliced_invoices.totals.sub_total = sliced_invoices.totals.sub_total.plus( line_total );
 			if ( taxable ) {
