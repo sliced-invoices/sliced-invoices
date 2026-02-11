@@ -185,6 +185,33 @@ class Sliced_Shared {
 	}
 
 	/**
+	 * Get the discount name, with per-invoice/quote override.
+	 *
+	 * Uses the global "Discount" translation as the default, but allows
+	 * a per-invoice/quote override via _sliced_discount_name post meta.
+	 *
+	 * @since   3.x.x
+	 */
+	public static function get_discount_name( $id = 0 ) {
+		
+		if ( ! $id ) {
+			$id = Sliced_Shared::get_item_id( $id );
+		}
+
+		if ( $id ) {
+			$name = get_post_meta( $id, '_sliced_discount_name', true );
+			if ( $name ) {
+				return $name;
+			}
+		}
+
+		$translate = get_option( 'sliced_translate' );
+		$name      = isset( $translate['discount'] ) ? $translate['discount'] : __( 'Discount', 'sliced-invoices' );
+
+		return $name;
+	}
+
+	/**
 	 * Get the tax amount.
 	 *
 	 * @since   2.0.0

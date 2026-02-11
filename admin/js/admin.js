@@ -647,6 +647,7 @@
 		var $discountAdder = $( '#sliced-totals-discount-adder' );
 		$discountAdder.prepend( $( '#_sliced_discount' ).attr( 'type', 'text' ) );
 		$discountAdder.append( $( '#sliced_discount_type_wrapper' ).show() );
+		$discountAdder.append( $( '#_sliced_discount_name').closest( '.cmb-row' ).addClass( 'sliced-discount-name-row' ) );
 		$discountAdder.append( $( '#sliced_discount_tax_treatment_wrapper' ).show() );
 		
 		// update totals
