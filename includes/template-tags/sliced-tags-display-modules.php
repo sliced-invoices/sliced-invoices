@@ -267,7 +267,7 @@ if ( ! function_exists( 'sliced_display_invoice_totals' ) ) :
 					$discount = Sliced_Shared::get_formatted_currency( $totals['discounts'] );
 					?>
 					<tr class="row-discount">
-						<td class="rate"><?php echo ( isset( $translate['discount'] ) ? $translate['discount'] : __( 'Discount', 'sliced-invoices') ); ?></td>
+						<td class="rate"><?php echo esc_html( Sliced_Shared::get_discount_name() ); ?></td>
 						<td class="total"><span style="color:red;">-<?php echo esc_html( $discount ) ?></span></td>
 					</tr>
 					<?php
@@ -355,7 +355,7 @@ if ( ! function_exists( 'sliced_display_quote_totals' ) ) :
 					$discount = Sliced_Shared::get_formatted_currency( $totals['discounts'] );
 					?>
 					<tr class="row-discount">
-						<td class="rate"><?php echo ( isset( $translate['discount'] ) ? $translate['discount'] : __( 'Discount', 'sliced-invoices') ); ?></td>
+						<td class="rate"><?php echo esc_html( Sliced_Shared::get_discount_name() ); ?></td>
 						<td class="total"><span style="color:red;">-<?php echo esc_html( $discount ) ?></span></td>
 					</tr>
 					<?php

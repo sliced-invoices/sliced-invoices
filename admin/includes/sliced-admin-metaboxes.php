@@ -274,6 +274,15 @@ class Sliced_Metaboxes {
 			'before_row' => '<div id="sliced_discount_tax_treatment_wrapper" style="display: none;">',
 			'after_row'  => '</div>',
 		) );
+		$line_items->add_field( array(
+			'id'         => '_sliced_discount_name',
+			'name'       => __( 'Discount Name:', 'sliced-invoices' ),
+			'after_field'=> '<p class="cmb2-metabox-description">' . __( 'Overrides the global discount label for this invoice/quote only.', 'sliced-invoices' ) . '</p>',
+			'type'       => 'text_small',
+			'attributes' => array(
+				'class' => 'sliced_discount',
+			),
+		) );
 		
 		do_action( 'sliced_after_line_items_totals', $line_items_group_id, $line_items );
 		
@@ -1251,7 +1260,7 @@ class Sliced_Metaboxes {
 		
 		$output .= apply_filters(
 			'sliced_admin_display_totals_discounts',
-			'<div class="discounts"><span class="aligntop">' . __( 'Discount', 'sliced-invoices' ) . '</span>
+			'<div class="discounts"><span class="aligntop">' . esc_html( Sliced_Shared::get_discount_name() ) . '</span>
 				<a id="sliced-totals-discounts-edit" href="#"><small>' . __( 'edit', 'sliced-invoices' ) . '</small></a>
 				<div id="sliced-totals-discount-adder" style="display: none;">
 					<button type="button" class="button">' . __( 'Apply', 'sliced-invoices' ) . '</button>
