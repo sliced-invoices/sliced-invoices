@@ -732,6 +732,13 @@ class Sliced_Metaboxes {
 			'default'     => Sliced_Invoice::get_auto_due_date(),
 			'sanitization_cb' => array( $this, 'date_sanitization_end_of_day' ),
 		) );
+		// checkbox to mark invoice as due on receipt instead of a specific date.
+		$info->add_field( array(
+			'name'        => __( 'On receipt', 'sliced-invoices' ),
+			'desc'        => __( 'Display "Due on receipt" on the invoice instead of a due date.', 'sliced-invoices' ),
+			'id'          => $prefix . 'invoice_due_on_receipt',
+			'type'        => 'checkbox',
+		) );
 		$info->add_field( array(
 			'name'       => __( 'Currency', 'sliced-invoices' ),
 			'desc'       => '',

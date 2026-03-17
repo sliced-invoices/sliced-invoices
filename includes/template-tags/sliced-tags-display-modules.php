@@ -85,7 +85,12 @@ if ( ! function_exists( 'sliced_display_invoice_details' ) ) :
 					</tr>
 				<?php endif; ?>
 
-				<?php if( sliced_get_invoice_due() ) : ?>
+				<?php if ( get_post_meta( get_the_ID(), '_sliced_invoice_due_on_receipt', true ) ) : ?>
+					<tr>
+						<td><?php _e( 'Due Date', 'sliced-invoices' ) ?></td>
+						<td><?php _e( 'Due on receipt', 'sliced-invoices' ); ?></td>
+					</tr>
+				<?php elseif ( sliced_get_invoice_due() ) : ?>
 					<tr>
 						<td><?php _e( 'Due Date', 'sliced-invoices' ) ?></td>
 						<td><?php echo Sliced_Shared::get_local_date_i18n_from_timestamp( sliced_get_invoice_due() ); ?></td>
