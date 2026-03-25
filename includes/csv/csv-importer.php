@@ -148,6 +148,8 @@ class Sliced_Csv_Importer {
 				<li><strong>'sliced_due'</strong> - invoice due date</li>
 				<li><strong>'sliced_valid'</strong> - quote valid until date</li>
 				<li><strong>'sliced_items'</strong> - individual line items</li>
+				<li><strong>'sliced_invoice_terms'</strong> - terms &amp; conditions for the invoice</li>
+				<li><strong>'sliced_payment_methods'</strong> - accepted payment methods, comma-separated gateway keys (eg. paypal,stripe)</li>
 				<li><strong>'sliced_status'</strong> - invoice or quote status. ie sent, unpaid, paid, overdue. Defaults to Draft if left blank</li>
 				<li><strong>'sliced_client_email'</strong> - email of the client (required)</li>
 				<li><strong>'sliced_client_name'</strong> - name of the client (only use if client does not already exist)</li>
@@ -564,7 +566,21 @@ class Sliced_Csv_Importer {
 				if( $k == 'sliced_valid' && !empty($v) ) {
 					add_post_meta( $id, '_' . $post_type . '_valid', strtotime($v) );
 				}
-
+				if( $k == 'sliced_invoice_terms' && !empty($v) ) {
+					add_post_meta( $id, '_sliced_invoice_terms', wpautop( convert_chars( $v ) ) );
+				}
+			
+			}
+			
+			if( !empty( $data['sliced_payment_methods'] ) ) {
+				// the payment methods (comma-separated gateway keys, e.g. "paypal,stripe")
+				$methods          = array_map( 'trim', explode( ',', $data['sliced_payment_methods'] ) );
+				$methods          = array_filter( $methods ); // remove any empty values
+				$accepted_methods = array_keys( sliced_get_accepted_payment_methods() );
+				$methods          = array_values( array_intersect( $methods, $accepted_methods ) ); // only keep accepted methods
+				if( !empty( $methods ) ) {
+					add_post_meta( $id, '_sliced_payment_methods', $methods );
+				}
 			}
 
 			if( !empty( $data['sliced_items'] ) ) {
