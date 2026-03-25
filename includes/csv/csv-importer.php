@@ -566,6 +566,7 @@ class Sliced_Csv_Importer {
 				if( $k == 'sliced_valid' && !empty($v) ) {
 					add_post_meta( $id, '_' . $post_type . '_valid', strtotime($v) );
 				}
+				
 				if( $k == 'sliced_invoice_terms' && !empty($v) ) {
 					add_post_meta( $id, '_sliced_invoice_terms', wpautop( convert_chars( $v ) ) );
 				}
