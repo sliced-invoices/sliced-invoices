@@ -789,6 +789,12 @@ class Sliced_Metaboxes {
 			),
 			'after_row' => array( $this, 'collapsible_group_after' ),
 		) );
+		$info->add_field( array(
+			'name'       => __( 'Private Note (Admin Only)', 'sliced-invoices' ),
+			'desc'       => __( 'Private notes for your team. Clients cannot see this field.', 'sliced-invoices' ),
+			'id'         => $prefix . 'invoice_private_note',
+			'type'       => 'textarea_small',
+		) );
 
 	}
 
