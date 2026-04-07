@@ -492,6 +492,7 @@ class Sliced_Payments {
 		 * Create and display the success message
 		 */
 		$quotes = get_option( 'sliced_quotes' );
+		$message = '';
 		if ( $quotes['declined_quote_message'] > '' ) {
 			$message = wp_kses_post( $quotes['declined_quote_message'] );
 		} else {
