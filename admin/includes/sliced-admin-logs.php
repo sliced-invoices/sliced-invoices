@@ -57,68 +57,47 @@ class Sliced_Logs {
 		add_action( 'shutdown', array( &$this, 'views_logger' ) );
 		
 	}
-
-
+	
+	
 	/**
-	 * Send a quote
+	 * Log when new quote email sent
 	 *
 	 * @since 2.21
 	 */
 	public function quote_sent( $id ) {
-
-		if ( ! $id || ! isset( $id ) ) {
+		
+		if ( empty( $id ) ) {
 			return;
 		}
-
-		/*
-		$post = get_post( $id );
-
-		if( ! $post || ! isset( $post ) )
-			return;
-
-		// if the post is being updated, return
-		if( $post->post_date != $post->post_modified )
-			return;
-		*/
 		
-		$user_id = $this->identify_the_user();
-
-		$meta_value = array(
-			'type'      => 'quote_sent',
-			'by'        => $user_id,
+		$log_entry = array(
+			'type'  => 'quote_sent',
+			'by'    => $this->identify_the_user(),
+			'email' => Sliced_Notifications::get_instance()->last_email,
 		);
-		$result = $this->update_log_meta( $id, $meta_value );
+		
+		$this->update_log_meta( $id, $log_entry );
 	}
-
+	
+	
 	/**
-	 * Send an invoice
+	 * Log when new invoice email sent
 	 *
 	 * @since 2.21
 	 */
 	public function invoice_sent( $id ) {
-
-		if ( ! $id || ! isset( $id ) ) {
+		
+		if ( empty( $id ) ) {
 			return;
 		}
-
-		/*
-		$post = get_post( $id );
-
-		if( ! $post || ! isset( $post ) )
-			return;
-
-		// if the post is being updated, return
-		//if( $post->post_date != $post->post_modified )
-			//return;
-		*/
-			
-		$user_id = $this->identify_the_user();
-
-		$meta_value = array(
-			'type'      => 'invoice_sent',
-			'by'        => $user_id,
+		
+		$log_entry = array(
+			'type'  => 'invoice_sent',
+			'by'    => $this->identify_the_user(),
+			'email' => Sliced_Notifications::get_instance()->last_email,
 		);
-		$result = $this->update_log_meta( $id, $meta_value );
+		
+		$this->update_log_meta( $id, $log_entry );
 	}
 	
 	
@@ -128,29 +107,29 @@ class Sliced_Logs {
 	 * @since 3.7.0
 	 */
 	public function payment_reminder_sent( $id ) {
-
-		if ( ! $id || ! isset( $id ) ) {
+		
+		if ( empty( $id ) ) {
 			return;
 		}
-
-		$user_id = $this->identify_the_user();
 		
-		$meta_value = array(
-			'type'      => 'payment_reminder_sent',
-			'by'        => $user_id,
+		$log_entry = array(
+			'type'  => 'payment_reminder_sent',
+			'by'    => $this->identify_the_user(),
+			'email' => Sliced_Notifications::get_instance()->last_email,
 		);
-		$result = $this->update_log_meta( $id, $meta_value );
+		
+		$this->update_log_meta( $id, $log_entry );
 	}
 	
 	
 	/**
-	 * Log when payment reminder email sent
+	 * Log when payment received email sent
 	 *
 	 * @since 3.7.0
 	 */
 	public function payment_received_sent( $id, $status ) {
-
-		if ( ! $id || ! isset( $id ) ) {
+		
+		if ( empty( $id ) ) {
 			return;
 		}
 		
@@ -158,17 +137,17 @@ class Sliced_Logs {
 		if ( $status !== 'manual' ) {
 			return;
 		}
-
-		$user_id = $this->identify_the_user();
 		
-		$meta_value = array(
-			'type'      => 'payment_received_sent',
-			'by'        => $user_id,
+		$log_entry = array(
+			'type'  => 'payment_received_sent',
+			'by'    => $this->identify_the_user(),
+			'email' => Sliced_Notifications::get_instance()->last_email,
 		);
-		$result = $this->update_log_meta( $id, $meta_value );
+		
+		$this->update_log_meta( $id, $log_entry );
 	}
 	
-
+	
 	/**
 	 * Invoice creation
 	 *
@@ -480,6 +459,7 @@ class Sliced_Logs {
 
 		$log_meta = $this->get_log_meta( $id, true );
 		$notes = null;
+		$popups = '';
 		
 		if( $log_meta ) {
 		
@@ -603,6 +583,23 @@ class Sliced_Logs {
 						break;
 				}
 				
+				if ( ! empty( $log['email'] ) ) {
+					$message .= ' '
+						. '<a class="thickbox" href="#TB_inline?width=760&height=650&inlineId=sliced-logs-email-' . $time . '">'
+						. __( 'View Email', 'sliced-invoices' )
+						. '</a>';
+					$popups .= '<div id="sliced-logs-email-' . $time . '" style="display: none;">'
+						. '<div><br />'
+						. "Date: $the_date $the_time<br />"
+						. "{$log['email']['headers']}<br />"
+						. "To: {$log['email']['to']}<br />"
+						. "Subject: {$log['email']['subject']}<br /><br />"
+						. '<iframe srcdoc="' . esc_attr( $log['email']['content'] ) . '" style="width: 100%" height="450"></iframe><br /><br />'
+						. ( empty( $log['email']['attachments'] ) ? '' : 'Attachment: <a href="' . str_replace( wp_upload_dir()['basedir'], wp_upload_dir()['baseurl'], $log['email']['attachments'] ) . '" target="_blank">' . pathinfo( $log['email']['attachments'] )['filename'] . '</a><br /><br />' )
+						. '</div>'
+						. '</div>';
+				}
+				
 				$notes .= '<li class="note">';
 				$notes .= '<div class="note_content">' . $message . '</div>';
 				$notes .= '<p class="meta">' . $time_date . '<br />' . $by;
@@ -616,8 +613,7 @@ class Sliced_Logs {
 
 		}
 
-		return $notes;
-
+		return $notes . $popups;
 	}
 
 

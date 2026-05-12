@@ -33,7 +33,9 @@ class Sliced_Notifications {
 	public $settings;
 
 	public $colors;
-
+	
+	public $last_email = array();
+	
 	/**
 	 * Hook into the appropriate actions when the class is constructed.
 	 */
@@ -510,8 +512,17 @@ class Sliced_Notifications {
 		$attachments = $this->get_attachments( $type );
 
 		foreach ( $recipients_array as $to ) {
-			$send = wp_mail( $to, $subject, $content, $headers, $attachments );
+			$result = wp_mail( $to, $subject, $content, $headers, $attachments );
 		}
+		
+		$this->last_email = array(
+			'headers'     => $headers,
+			'to'          => $recipients,
+			'subject'     => $subject,
+			'content'     => $content,
+			'attachments' => $attachments,
+			'result'      => $result,
+		);
 
 		remove_filter( 'wp_mail_content_type', array( $this, 'set_email_type' ) );
 
