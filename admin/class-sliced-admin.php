@@ -1936,7 +1936,7 @@ class Sliced_Admin {
 					});
 					
 					// Update existing user
-					$('#sliced-update-user-submit').click( function(event) {
+					$('#sliced-update-user').on( 'submit', function(event) {
 						
 						if (event.preventDefault) {
 							event.preventDefault();
@@ -1948,7 +1948,7 @@ class Sliced_Admin {
 						$('.indicator').show();
 						$('.result-message').hide();
 						
-						data = {
+						var data = {
 							action:                    'sliced-update-user',
 							user_id:                   $('#sliced_update_user_user').val(),
 							nonce:                     $('#_wpnonce_sliced-update-user').val(),
@@ -1970,12 +1970,17 @@ class Sliced_Admin {
 								$('.result-message').html( '<p><?php esc_attr_e( 'Please check that all required fields are filled in.', 'sliced-invoices' ); ?></p>' );
 								$('.form-required').addClass('form-invalid');
 							}
+						}).fail( function() {
+							$('.indicator').hide();
+							$('.result-message').addClass('form-invalid error notice notice-error inline');
+							$('.result-message').show();
+							$('.result-message').html( '<p><?php esc_attr_e( 'Something went wrong. Please try again.', 'sliced-invoices' ); ?></p>' );
 						});
 						
 					});
 					
 					// Create new user
-					$('#sliced-create-user-submit').click( function(event) {
+					$('#sliced-create-user').on( 'submit', function(event) {
 						
 						if (event.preventDefault) {
 							event.preventDefault();
@@ -1987,7 +1992,7 @@ class Sliced_Admin {
 						$('.indicator').show();
 						$('.result-message').hide();
 
-						data = {
+						var data = {
 							action:     'sliced-create-user',
 							nonce:      $('#_wpnonce_sliced-create-user').val(),
 							user_login: $('#user_login').val(),
@@ -2014,6 +2019,11 @@ class Sliced_Admin {
 								$('.result-message').html( '<p><?php esc_attr_e( 'Please check that all required fields are filled in, and that this user does not already exist.', 'sliced-invoices' ); ?></p>' );
 								$('.form-required').addClass('form-invalid');
 							}
+						}).fail( function() {
+							$('.indicator').hide();
+							$('.result-message').addClass('form-invalid error notice notice-error inline');
+							$('.result-message').show();
+							$('.result-message').html( '<p><?php esc_attr_e( 'Something went wrong. Please try again.', 'sliced-invoices' ); ?></p>' );
 						});
 
 					});
@@ -2056,7 +2066,7 @@ class Sliced_Admin {
 						});  
 					});
 					 
-					$('#sliced-update-client-submit').click( function(event) {
+					$('#sliced-update-client').on( 'submit', function(event) {
 					
 						if (event.preventDefault) {
 							event.preventDefault();
@@ -2068,7 +2078,7 @@ class Sliced_Admin {
 						$('.indicator').show();
 						$('.result-message').hide();
 						
-						data = {
+						var data = {
 							action:                    'sliced-update-client',
 							client_id:                 $('#_sliced_client.cmb2_select').val(),
 							nonce:                     $('#_wpnonce_sliced-update-client').val(),
@@ -2095,6 +2105,11 @@ class Sliced_Admin {
 								$('.result-message').html('<p><?php esc_attr_e( 'Please check that all required fields are filled in.', 'sliced-invoices' ); ?></p>');
 								$('.form-required').addClass('form-invalid');
 							}
+						}).fail( function() {
+							$('.indicator').hide();
+							$('.result-message').addClass('form-invalid error notice notice-error inline');
+							$('.result-message').show();
+							$('.result-message').html( '<p><?php esc_attr_e( 'Something went wrong. Please try again.', 'sliced-invoices' ); ?></p>' );
 						});
 
 					});
