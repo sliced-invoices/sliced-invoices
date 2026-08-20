@@ -281,12 +281,22 @@
 		sliced_invoices.totals.total_due = sliced_invoices.totals.total.minus( sliced_invoices.totals.payments );
 		
 		// display
-		$( "#_sliced_line_items #sliced_sub_total" ).html( sliced_invoices.utils.formattedAmount( sliced_invoices.totals.sub_total.toNumber() ) );
-		$( "#_sliced_line_items #sliced_tax" ).html( sliced_invoices.utils.formattedAmount( sliced_invoices.totals.tax.toNumber() ) );
-		$( "#_sliced_line_items #sliced_payments" ).html( '-' + sliced_invoices.utils.formattedAmount( sliced_invoices.totals.payments.toNumber() ) );
-		$( "#_sliced_line_items #sliced_discounts" ).html( '-' + sliced_invoices.utils.formattedAmount( sliced_invoices.totals.discounts.toNumber() ) );
-		$( "#_sliced_line_items #sliced_total" ).html( sliced_invoices.utils.formattedAmount( sliced_invoices.totals.total_due.toNumber() ) );
-		$( "input#_sliced_totals_for_ordering" ).val( sliced_invoices.utils.formattedAmount( sliced_invoices.totals.total_due.toNumber() ) );
+		$( '#_sliced_line_items #sliced_sub_total' )
+			.html( sliced_invoices.utils.formattedAmount( sliced_invoices.totals.sub_total.toNumber() ) )
+			.toggleClass( 'sliced-negative', sliced_invoices.totals.sub_total.lessThan( 0 ) );
+		$( '#_sliced_line_items #sliced_tax' )
+			.html( sliced_invoices.utils.formattedAmount( sliced_invoices.totals.tax.toNumber() ) )
+			.toggleClass( 'sliced-negative', sliced_invoices.totals.tax.lessThan( 0 ) );
+		$( '#_sliced_line_items #sliced_payments' )
+			.html( '-' + sliced_invoices.utils.formattedAmount( sliced_invoices.totals.payments.toNumber() ) )
+			.toggleClass( 'sliced-negative', sliced_invoices.totals.payments.lessThan( 0 ) );
+		$( '#_sliced_line_items #sliced_discounts' )
+			.html( '-' + sliced_invoices.utils.formattedAmount( sliced_invoices.totals.discounts.toNumber() ) )
+			.toggleClass( 'sliced-negative', sliced_invoices.totals.discounts.lessThan( 0 ) );
+		$( '#_sliced_line_items #sliced_total' )
+			.html( sliced_invoices.utils.formattedAmount( sliced_invoices.totals.total_due.toNumber() ) )
+			.toggleClass( 'sliced-negative', sliced_invoices.totals.total_due.lessThan( 0 ) );
+		$( 'input#_sliced_totals_for_ordering' ).val( sliced_invoices.utils.formattedAmount( sliced_invoices.totals.total_due.toNumber() ) );
 		
 	};
 	

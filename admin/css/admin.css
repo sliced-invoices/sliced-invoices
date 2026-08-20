@@ -525,7 +525,8 @@ body.post-type-sliced_quote > .select2-container--open {
 	display: inline-block;
 }
 .sliced .sliced_totals .discounts #sliced_discounts,
-.sliced .sliced_totals .payments #sliced_payments {
+.sliced .sliced_totals .payments #sliced_payments,
+.sliced .sliced_totals .sliced-negative {
 	color: red;
 }
 #sliced-totals-discount-adder {
