@@ -152,7 +152,12 @@ endif;
 
 
 if ( ! function_exists( 'sliced_display_line_items' ) ) :
-
+	
+	/*
+	 * Displays Line Items section of Quote/Invoice template.
+	 *
+	 * @version 3.10.1
+	 */
 	function sliced_display_line_items() {
 	
 		$shared = new Sliced_Shared;
@@ -182,7 +187,7 @@ if ( ! function_exists( 'sliced_display_line_items' ) ) :
 					
 					$qty = isset( $item['qty'] ) ? $item['qty'] : 0;
 					$amt = isset( $item['amount'] ) ? $shared->get_raw_number( $item['amount'] ) : 0;
-					$tax = isset( $item['tax'] ) ? $shared->get_raw_number( $item['tax'] ) : '0.00';
+					$tax = isset( $item['tax'] ) ? $shared->get_raw_number( $item['tax'] ) : 0;
 					$line_total = $shared->get_line_item_sub_total( $shared->get_raw_number( $qty ), $amt, $tax );
 					
 					$output .= '<tr class="row_' . $class . ' sliced-item">
@@ -194,7 +199,7 @@ if ( ! function_exists( 'sliced_display_line_items' ) ) :
 					$output .= '</td>
 						<td class="rate">' . $shared->get_formatted_currency( $amt ) . '</td>';
 					if ( sliced_hide_adjust_field() === false) {
-						$output .= '<td class="adjust">' . sprintf( __( '%s%%' ), $tax ) . '</td>';
+						$output .= '<td class="adjust">' . sprintf( __( '%s%%' ), $shared->get_formatted_number( $tax ) ) . '</td>';
 					}
 					$output .= '<td class="total">' . $shared->get_formatted_currency( $line_total ) . '</td>
 						</tr>';
@@ -217,7 +222,12 @@ endif;
 
 
 if ( ! function_exists( 'sliced_display_invoice_totals' ) ) :
-
+	
+	/*
+	 * Displays Totals section of Invoice template.
+	 *
+	 * @version 3.10.1
+	 */
 	function sliced_display_invoice_totals() {
 	
 		$translate = get_option( 'sliced_translate' );
@@ -268,7 +278,7 @@ if ( ! function_exists( 'sliced_display_invoice_totals' ) ) :
 					?>
 					<tr class="row-discount">
 						<td class="rate"><?php echo ( isset( $translate['discount'] ) ? $translate['discount'] : __( 'Discount', 'sliced-invoices') ); ?></td>
-						<td class="total"><span style="color:red;">-<?php echo esc_html( $discount ) ?></span></td>
+						<td class="total">-<?php echo esc_html( $discount ) ?></td>
 					</tr>
 					<?php
 				}
@@ -278,7 +288,7 @@ if ( ! function_exists( 'sliced_display_invoice_totals' ) ) :
 					?>
 					<tr class="row-paid">
 						<td class="rate"><?php _e( 'Paid', 'sliced-invoices' ) ?></td>
-						<td class="total"><span style="color:red;">-<?php echo esc_html( $paid ) ?></span></td>
+						<td class="total">-<?php echo esc_html( $paid ) ?></td>
 					</tr>
 					<?php
 				}
@@ -315,7 +325,12 @@ if ( ! function_exists( 'sliced_display_invoice_totals' ) ) :
 endif;
 
 if ( ! function_exists( 'sliced_display_quote_totals' ) ) :
-
+	
+	/*
+	 * Displays Totals section of Quote template.
+	 *
+	 * @version 3.10.1
+	 */
 	function sliced_display_quote_totals() {
 	
 		$translate = get_option( 'sliced_translate' );
@@ -356,7 +371,7 @@ if ( ! function_exists( 'sliced_display_quote_totals' ) ) :
 					?>
 					<tr class="row-discount">
 						<td class="rate"><?php echo ( isset( $translate['discount'] ) ? $translate['discount'] : __( 'Discount', 'sliced-invoices') ); ?></td>
-						<td class="total"><span style="color:red;">-<?php echo esc_html( $discount ) ?></span></td>
+						<td class="total">-<?php echo esc_html( $discount ) ?></td>
 					</tr>
 					<?php
 				}

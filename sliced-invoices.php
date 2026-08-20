@@ -4,12 +4,12 @@
  * Plugin Name:       Sliced Invoices
  * Plugin URI:        http://slicedinvoices.com/
  * Description:       Create professional Quotes & Invoices that clients can pay for online.
- * Version:           3.10.0
+ * Version:           3.10.1
  * Author:            Sliced Invoices
  * Author URI:        http://slicedinvoices.com/
  * Text Domain:       sliced-invoices
  * Domain Path:       /languages
- * Copyright:         © 2025 Sliced Software, LLC. All rights reserved.
+ * Copyright:         © 2026 Sliced Software, LLC. All rights reserved.
  * License:           GPLv2
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SLICED_VERSION', '3.10.0' );
+define( 'SLICED_VERSION', '3.10.1' );
 define( 'SLICED_DB_VERSION', '9' );
 define( 'SLICED_PATH', plugin_dir_path( __FILE__ ) );
 
@@ -506,17 +506,17 @@ if ( class_exists( 'Sliced_Discounts_And_Partial_Payment' ) ) {
 	add_action( 'init', 'sliced_no_dapp', 9 );
 }
 
-// Patch for Sage-based themes
-function sliced_patch_for_sage_based_themes() {
-	// The following is our own solution to the problem of Sage-based themes
-	// which force their own "wrapper", injecting code into our templates where
-	// it is not wanted, breaking them.
-	// i.e.: https://discourse.roots.io/t/single-template-filter-from-plugins/6637
+// Patch for page builders (Elementor, Oxygen, etc.)
+function sliced_patch_for_page_builders() {
+	// Page builders can interfere with Sliced's invoice/quote/payment pages
+	// by injecting their templates, overwriting ours.
+	// This patch removes all outside template hooks, when on Sliced pages only.
+	// This patch also takes care of what our "Patch for Sage-based themes" 
+	// used to do, all in one shot.
 	global $wp_filter;
 	$tag = 'template_include';
-	$priority = 99;
 	if ( ! isset( $wp_filter[ $tag ] ) ) {
-		return FALSE;
+		return;
 	}
 	if ( is_object( $wp_filter[ $tag ] ) && isset( $wp_filter[ $tag ]->callbacks ) ) {
 		$fob       = $wp_filter[ $tag ];
@@ -524,35 +524,34 @@ function sliced_patch_for_sage_based_themes() {
 	} else {
 		$callbacks = &$wp_filter[ $tag ];
 	}
-	if ( ! isset( $callbacks[ $priority ] ) || empty( $callbacks[ $priority ] ) ) {
-		return FALSE;
-	}
-	foreach ( (array) $callbacks[ $priority ] as $filter_id => $filter ) {
-		if ( ! isset( $filter['function'] ) || ! is_array( $filter['function'] ) ) {
+	foreach ( (array) $callbacks as $priority => $callback ) {
+		// Remove all template_include hooks with priority < 999
+		// (Sliced's own hooks run at 999 via single_template and page_template filters)
+		if ( $priority > 999 ) {
 			continue;
 		}
-		if ( $filter['function'][1] !== 'wrap' ) {
-			continue;
-		}
-		if ( isset( $fob ) ) {
-			$fob->remove_filter( $tag, $filter['function'], $priority );
-		} else {
-			unset( $callbacks[ $priority ][ $filter_id ] );
-			if ( empty( $callbacks[ $priority ] ) ) {
-				unset( $callbacks[ $priority ] );
+		foreach ( (array) $callback as $filter_id => $filter ) {
+			if ( ! empty( $filter_id ) && strpos( $filter_id, 'sliced_' ) === 0 ) {
+				continue;
 			}
-			if ( empty( $callbacks ) ) {
-				$callbacks = array();
+			if ( isset( $fob ) ) {
+				$fob->remove_filter( $tag, $filter['function'], $priority );
+			} else {
+				unset( $callbacks[ $priority ][ $filter_id ] );
+				if ( empty( $callbacks[ $priority ] ) ) {
+					unset( $callbacks[ $priority ] );
+				}
+				if ( empty( $callbacks ) ) {
+					$callbacks = array();
+				}
+				unset( $GLOBALS['merged_filters'][ $tag ] );
 			}
-			unset( $GLOBALS['merged_filters'][ $tag ] );
 		}
-		return TRUE;
 	}
-	return FALSE;
 }
-add_action( 'get_template_part_sliced-invoice-display', 'sliced_patch_for_sage_based_themes' );
-add_action( 'get_template_part_sliced-quote-display', 'sliced_patch_for_sage_based_themes' );
-add_action( 'get_template_part_sliced-payment-display', 'sliced_patch_for_sage_based_themes' );
+add_action( 'get_template_part_sliced-invoice-display', 'sliced_patch_for_page_builders' );
+add_action( 'get_template_part_sliced-quote-display', 'sliced_patch_for_page_builders' );
+add_action( 'get_template_part_sliced-payment-display', 'sliced_patch_for_page_builders' );
 
 
 

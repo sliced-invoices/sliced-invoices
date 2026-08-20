@@ -51,7 +51,7 @@
 		return output;
 	}
 	
-
+	
 	// formats number into users format
 	sliced_invoices.utils.formattedNumber = function (nStr) {
 		var num = nStr.split('.');
@@ -65,14 +65,15 @@
 		}
 		return x1 + x2;
 	}
-
-
+	
+	
 	// format the amounts
-	sliced_invoices.utils.formattedAmount = function (amount) {
+	sliced_invoices.utils.formattedAmount = function ( amount ) {
 		// do the symbol position formatting
 		var formatted = 0;
 		var amount = new Decimal( amount );
-		amount = amount.toFixed( sliced_invoices.utils.decimals );
+		var isNegative = amount.lessThan( 0 );
+		amount = amount.abs().toFixed( sliced_invoices.utils.decimals );
 		switch (sliced_invoices.utils.position) {
 			case 'left':
 				formatted = sliced_invoices.utils.symbol + sliced_invoices.utils.formattedNumber( amount );
@@ -90,11 +91,14 @@
 				formatted = sliced_invoices.utils.symbol + sliced_invoices.utils.formattedNumber( amount );
 				break;
 		}
+		if ( isNegative ) {
+			formatted = '-' + formatted;
+		}
 		return formatted;
 	}
 	
-
-    /**
+	
+	/**
 	 * Totals
 	 */
 	function setupNewLine( $newRow ){
@@ -102,18 +106,25 @@
 		var lastRow = $($newRow.target).children('.cmb-repeatable-grouping').last();
 		
 		// clear line total
-        $(lastRow).find('.line_total').html( sliced_invoices.utils.formattedAmount(0) );
+		$( lastRow ).find( '.line_total' ).html( sliced_invoices.utils.formattedAmount( 0 ) );
 		
 		// set checkbox defaults
-		$(lastRow).find('input[type="checkbox"]').attr('checked',true);
-
-    };
-    $(document).on( 'cmb2_add_row', setupNewLine );
-
-
+		$( lastRow ).find( 'input[type="checkbox"]' ).attr( 'checked', true );
+		
+	};
+	$(document).on( 'cmb2_add_row', setupNewLine );
+	
+	
 	// calculate the totals on the fly when editing or adding a quote or invoice
- 	function workOutTotals(){
-
+	function workOutTotals(){
+		
+		// keep iterator values accurate 
+		$( '.cmb-repeatable-group' ).each( function() {
+			$( this ).find( '.cmb-repeatable-grouping' ).each( function( index ) {
+				$( this ).attr( 'data-iterator', index ).data( 'iterator', index );
+			});
+		});
+		
 		sliced_invoices.totals = {
 			'sub_total':         new Decimal( 0 ),
 			'sub_total_taxable': new Decimal( 0 ),
@@ -123,12 +134,12 @@
 			'total':             new Decimal( 0 ),
 			'total_due':         new Decimal( 0 )
 		};
-
-        // work out the line item totals
-        $('.sliced input.item_amount').each( function() {
-
-            var group = $(this).parents('.cmb-repeatable-grouping');
-            var index = group.data('iterator');
+		
+		// work out the line item totals
+		$( '.sliced input.item_amount' ).each( function() {
+			
+			var group = $( this ).parents( '.cmb-repeatable-grouping' );
+			var index = group.data( 'iterator' );
 			
 			var qty = new Decimal( sliced_invoices.utils.rawNumber( $( group ).find( '[name="_sliced_items[' + index + '][qty]"]' ).val() ) );
 			var amt = new Decimal( sliced_invoices.utils.rawNumber( $(this).val() ) );
@@ -139,21 +150,24 @@
 			
 			var taxable = $( group ).find( '[name="_sliced_items[' + index + '][taxable]"]' ).is(":checked");
 			
-            // work out the line totals and taxes/discounts
-            var line_adj        = adj.equals( 0 ) ? adj : adj.div( 100 ); // 0.10
-            var line_sub_total  = qty.times( amt ); // 100
-            var line_adj_amt    = line_sub_total.times( line_adj ); // 10
-            var line_total      = line_sub_total.plus( line_adj_amt ); // 110
-
-            // display the calculated amount
-            $(this).parents('.cmb-type-text-money').find('.line_total').html( sliced_invoices.utils.formattedAmount( line_total.toNumber() ) );
-            
+			// work out the line totals and taxes/discounts
+			var line_adj        = adj.equals( 0 ) ? adj : adj.div( 100 ); // 0.10
+			var line_sub_total  = qty.times( amt ); // 100
+			var line_adj_amt    = line_sub_total.times( line_adj ); // 10
+			var line_total      = line_sub_total.plus( line_adj_amt ); // 110
+			
+			// display the calculated amount
+			$(this).parents('.cmb-type-text-money').find('.line_total')
+				.html( sliced_invoices.utils.formattedAmount( line_total.toNumber() ) )
+				.parent( '.line_total_wrap' )
+				.toggleClass( 'sliced-negative', line_total.lessThan( 0 ) );
+			
 			sliced_invoices.totals.sub_total = sliced_invoices.totals.sub_total.plus( line_total );
 			if ( taxable ) {
 				sliced_invoices.totals.sub_total_taxable = sliced_invoices.totals.sub_total_taxable.plus( line_total );
 			}
-
-	    });
+			
+		});
 		
 		// add discounts, if any (part 1 of 2 -- before tax)
 		var discountValue = sliced_invoices.utils.rawNumber( $( '#_sliced_discount' ).val() );
@@ -175,14 +189,14 @@
 			}
 		}
 		
-        // add tax, if any
+		// add tax, if any
 		var tax_percentage = new Decimal( 0 );
-        if ( sliced_payments.tax != 0 ) {
+		if ( sliced_payments.tax != 0 ) {
 			tax_percentage = new Decimal( sliced_payments.tax ); // don't filter it here. tax_percentage is saved as a real number internally.  The on.change handler already converts any formatted number to a real one.
 			tax_percentage = tax_percentage.div( 100 );
 		}
 		
-        if ( ! tax_percentage.equals( 0 ) ) {
+		if ( ! tax_percentage.equals( 0 ) ) {
 			if ( sliced_payments.tax_calc_method === 'inclusive' ) {
 				// europe:
 				var tax_percentage_1 = tax_percentage.plus( 1 );
@@ -194,9 +208,9 @@
 				sliced_invoices.totals.tax = sliced_invoices.totals.sub_total_taxable.times( tax_percentage ).toDecimalPlaces( sliced_invoices.utils.decimals );
 				sliced_invoices.totals.total = sliced_invoices.totals.sub_total.plus( sliced_invoices.totals.tax );
 			}
-        } else {
-            sliced_invoices.totals.total = sliced_invoices.totals.sub_total;
-        }
+		} else {
+			sliced_invoices.totals.total = sliced_invoices.totals.sub_total;
+		}
 		
 		// add discounts, if any (part 2 of 2 -- after tax)
 		if ( $( 'input[name="_sliced_discount_tax_treatment"]:checked' ).val() !== 'before' ) {
@@ -211,19 +225,19 @@
 		}
 		
 		// work out the payments totals
-        $('.sliced input.payment_amount').each( function() {
-
-            var group = $(this).parents('.cmb-repeatable-grouping');
-            var index = group.data('iterator');
+		$( '.sliced input.payment_amount' ).each( function() {
 			
-	    	var amt = new Decimal( sliced_invoices.utils.rawNumber( $(this).val() ) );
-			var status = $(group).find('#_sliced_payment_' + index + '_status').val();
+			var group = $( this ).parents( '.cmb-repeatable-grouping' );
+			var index = group.data( 'iterator' );
 			
-            if ( status === 'success' ) {
+			var amt = new Decimal( sliced_invoices.utils.rawNumber( $( this ).val() ) );
+			var status = $( group ).find( '.payment_status' ).first().val();
+			
+			if ( status === 'success' ) {
 				sliced_invoices.totals.payments = sliced_invoices.totals.payments.plus( amt );
 			}
-
-	    });
+			
+		});
 		
 		// execute hooks from external add-ons, if any
 		$(sliced_invoices.hooks.sliced_invoice_totals).each( function( key, val ) {
@@ -267,15 +281,25 @@
 		sliced_invoices.totals.total_due = sliced_invoices.totals.total.minus( sliced_invoices.totals.payments );
 		
 		// display
-        $("#_sliced_line_items #sliced_sub_total").html( sliced_invoices.utils.formattedAmount( sliced_invoices.totals.sub_total.toNumber() ) );
-        $("#_sliced_line_items #sliced_tax").html( sliced_invoices.utils.formattedAmount( sliced_invoices.totals.tax.toNumber() ) );
-        $("#_sliced_line_items #sliced_payments").html( '-' + sliced_invoices.utils.formattedAmount( sliced_invoices.totals.payments.toNumber() ) );
-		$("#_sliced_line_items #sliced_discounts").html( '-' + sliced_invoices.utils.formattedAmount( sliced_invoices.totals.discounts.toNumber() ) );
-		$("#_sliced_line_items #sliced_total").html( sliced_invoices.utils.formattedAmount( sliced_invoices.totals.total_due.toNumber() ) );
-        $("input#_sliced_totals_for_ordering").val( sliced_invoices.utils.formattedAmount( sliced_invoices.totals.total_due.toNumber() ) );
-
-    };
-
+		$( '#_sliced_line_items #sliced_sub_total' )
+			.html( sliced_invoices.utils.formattedAmount( sliced_invoices.totals.sub_total.toNumber() ) )
+			.toggleClass( 'sliced-negative', sliced_invoices.totals.sub_total.lessThan( 0 ) );
+		$( '#_sliced_line_items #sliced_tax' )
+			.html( sliced_invoices.utils.formattedAmount( sliced_invoices.totals.tax.toNumber() ) )
+			.toggleClass( 'sliced-negative', sliced_invoices.totals.tax.lessThan( 0 ) );
+		$( '#_sliced_line_items #sliced_payments' )
+			.html( '-' + sliced_invoices.utils.formattedAmount( sliced_invoices.totals.payments.toNumber() ) )
+			.toggleClass( 'sliced-negative', sliced_invoices.totals.payments.lessThan( 0 ) );
+		$( '#_sliced_line_items #sliced_discounts' )
+			.html( '-' + sliced_invoices.utils.formattedAmount( sliced_invoices.totals.discounts.toNumber() ) )
+			.toggleClass( 'sliced-negative', sliced_invoices.totals.discounts.lessThan( 0 ) );
+		$( '#_sliced_line_items #sliced_total' )
+			.html( sliced_invoices.utils.formattedAmount( sliced_invoices.totals.total_due.toNumber() ) )
+			.toggleClass( 'sliced-negative', sliced_invoices.totals.total_due.lessThan( 0 ) );
+		$( 'input#_sliced_totals_for_ordering' ).val( sliced_invoices.utils.formattedAmount( sliced_invoices.totals.total_due.toNumber() ) );
+		
+	};
+	
 	// bind events
 	$(document).on('keyup change', '.sliced_discount, .sliced input.item_amount, .sliced input.item_qty, .sliced input.item_tax, .sliced input.item_taxable, .sliced select.pre_defined_products, .sliced input.payment_amount, .sliced select.payment_status', function () {
 		workOutTotals();
@@ -636,12 +660,12 @@
 			}
 		});
 	});
-
-
-    /**
-     * on page load
-     */
-    $(function(){
+	
+	
+	/**
+	 * on page load
+	 */
+	$(function(){
 		
 		// move hidden inputs where they need to be (CMB2 workaround)
 		var $discountAdder = $( '#sliced-totals-discount-adder' );
@@ -652,15 +676,15 @@
 		// update totals
 		workOutTotals();
 		
-    });
-
-
-    /**
-     * email preview
-     */
-    $(function(){
-
-    	sliced_invoices.sliced_email_cache = {};
+	});
+	
+	
+	/**
+	 * email preview
+	 */
+	$(function(){
+		
+		sliced_invoices.sliced_email_cache = {};
 		sliced_invoices.sliced_email_cache.$previewDiv = $('.sliced-email-preview');
 		sliced_invoices.sliced_email_cache.placeholder = $(sliced_invoices.sliced_email_cache.$previewDiv).html();
 		
@@ -708,13 +732,13 @@
 				$(this).show();
 			});
 		};
-
-    });
-
+		
+	});
+	
 	/**
 	 * special actions for quotes
 	 */
-    $(function(){
+	$(function(){
 		
 		$( '#sliced-invoices-convert-quote-to-invoice' ).click( function(){
 			return confirm( sliced_invoices_i18n.convert_quote_to_invoice );
@@ -724,20 +748,19 @@
 			return confirm( sliced_invoices_i18n.create_invoice_from_quote );
 		});
 		
-    });
+	});
 	
-    /**
-     * stop recurring confirm
-     */
-    $(function(){
-
-        $( "#stop_recurring" ).click(function() {
-            if( ! confirm( sliced_stop_recurring.stop_recurring ) ) {
-                return false;
-            }
-        });
-
-    });
-
+	/**
+	 * stop recurring confirm
+	 */
+	$(function(){
+		
+		$( "#stop_recurring" ).click(function() {
+			if( ! confirm( sliced_stop_recurring.stop_recurring ) ) {
+				return false;
+			}
+		});
+		
+	});
 
 })( jQuery );

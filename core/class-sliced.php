@@ -161,13 +161,16 @@ class Sliced_Invoices {
 	 * Uses the Sliced_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
+	 * @version 3.10.1
 	 * @since   2.0.0
 	 */
 	private function set_locale() {
 
 		$plugin_i18n = new Sliced_i18n();
 		$plugin_i18n->set_domain( $this->get_plugin_name() );
-		$plugin_i18n->load_plugin_textdomain();
+		
+		// Load translations on 'init' hook 
+		$this->loader->add_action( 'init', $plugin_i18n, 'load_plugin_textdomain' );
 
 	}
 

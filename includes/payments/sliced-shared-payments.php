@@ -392,7 +392,7 @@ class Sliced_Payments {
 	/**
 	 * Handle actions when client declines quote from frontend.
 	 *
-	 * @version 3.9.0
+	 * @version 3.10.1
 	 * @since   2.0.0
 	 */
 	public function client_decline_quote() {
@@ -492,6 +492,7 @@ class Sliced_Payments {
 		 * Create and display the success message
 		 */
 		$quotes = get_option( 'sliced_quotes' );
+		$message = '';
 		if ( $quotes['declined_quote_message'] > '' ) {
 			$message = wp_kses_post( $quotes['declined_quote_message'] );
 		} else {

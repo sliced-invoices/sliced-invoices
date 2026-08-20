@@ -379,41 +379,47 @@ class Sliced_Shared {
 		
 	    return apply_filters( 'sliced_get_formatted_number', $formatted );
 	}
-
+	
+	
 	/**
 	 * Get the complete formatted currency.
 	 *
+	 * @version 3.10.1
 	 * @since   2.0.0
 	 */
 	public static function get_formatted_currency( $amount, $id = 0 ) {
-
-	    $symbol 	= sliced_get_currency_symbol( $id );
-	    $position 	= sliced_get_currency_position();
-	    $amount 	= self::get_formatted_number( $amount );
-
-	    switch ($position) {
-	    	case 'left':
-	    		$formatted = $symbol . $amount;
-	    		break;
-	    	case 'right':
-	    		$formatted = $amount . $symbol;
-	    		break;
-	    	case 'left_space':
-	    		$formatted = $symbol . ' ' . $amount;
-	    		break;
-	    	case 'right_space':
-	    		$formatted = $amount . ' ' . $symbol;
-	    		break;
-
-	    	default:
-	    		$formatted = $symbol . $amount;
-	    		break;
-	    }
-
-	    return apply_filters( 'sliced_get_formatted_currency', $formatted );
+		
+		$symbol 	 = sliced_get_currency_symbol( $id );
+		$position 	 = sliced_get_currency_position();
+		$is_negative = ( $amount < 0 );
+		$amount 	 = self::get_formatted_number( abs( $amount ) );
+		
+		switch ($position) {
+			case 'left':
+				$formatted = $symbol . $amount;
+				break;
+			case 'right':
+				$formatted = $amount . $symbol;
+				break;
+			case 'left_space':
+				$formatted = $symbol . ' ' . $amount;
+				break;
+			case 'right_space':
+				$formatted = $amount . ' ' . $symbol;
+				break;
+			default:
+				$formatted = $symbol . $amount;
+				break;
+		}
+		
+		if ( $is_negative ) {
+			$formatted = '-' . $formatted;
+		}
+		
+		return apply_filters( 'sliced_get_formatted_currency', $formatted );
 	}
-
-
+	
+	
 	/**
 	 * Get the line items.
 	 *

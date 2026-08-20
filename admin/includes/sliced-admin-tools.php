@@ -104,7 +104,7 @@ class Sliced_Tools {
 	/**
 	 * Get system info.
 	 * 
-	 * @version 3.9.1
+	 * @version 3.10.1
 	 * @since   2.0
 	 * 
 	 * @global  object $wpdb Used to query the database using the WordPress Database API
@@ -198,14 +198,14 @@ class Sliced_Tools {
 		// sliced configuration
 		$plugin_data = get_plugin_data( SLICED_PATH . 'sliced-invoices.php', false );
 		// database settings
-		$general_opt  = get_option('sliced_general');
-		$business_opt = get_option('sliced_business');
-		$payment_opt  = get_option('sliced_payments');
-		$tax_opt      = get_option('sliced_tax');
-		$invoices_opt = get_option('sliced_invoices');
-		$quotes_opt   = get_option('sliced_quotes');
-		$email_opt    = get_option('sliced_emails');
-		$pdf_opt      = get_option( 'sliced_pdf' );
+		$general_opt  = get_option( 'sliced_general',  array() );
+		$business_opt = get_option( 'sliced_business', array() );
+		$payment_opt  = get_option( 'sliced_payments', array() );
+		$tax_opt      = get_option( 'sliced_tax',      array() );
+		$invoices_opt = get_option( 'sliced_invoices', array() );
+		$quotes_opt   = get_option( 'sliced_quotes',   array() );
+		$email_opt    = get_option( 'sliced_emails',   array() );
+		$pdf_opt      = get_option( 'sliced_pdf',      array() );
 		
 		// mask sensitive info
 		$sensitive_infos = apply_filters( 'sliced_sysinfo_sensitive_infos', array(

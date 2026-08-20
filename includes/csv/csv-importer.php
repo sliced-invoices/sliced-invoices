@@ -416,7 +416,12 @@ class Sliced_Csv_Importer {
 		return $post_type;
 	}
 	
-
+	
+	/*
+	 * add_the_status.
+	 *
+	 * @version 3.10.1
+	 */
 	function add_the_status( $id, $data, $post_type ) {
 
 		$status = array();
@@ -457,9 +462,9 @@ class Sliced_Csv_Importer {
 			// source is manual file
 			$taxonomy = str_replace( 'sliced_', '', $post_type ) . '_status';
 			if ( ! empty( $data['sliced_status'] ) ) {
-				$status = term_exists( trim( strtolower( convert_chars($data['sliced_status'] ) ) ), $taxonomy );
-				if ( $status !== 0 && $status !== null ) {
-					$status[] = (int)$status['term_id'];
+				$result = term_exists( trim( strtolower( convert_chars($data['sliced_status'] ) ) ), $taxonomy );
+				if ( $result !== 0 && $result !== null ) {
+					$status[] = (int)$result['term_id'];
 				} else {
 					$status = array( 'draft' );
 				}
