@@ -38,12 +38,13 @@ class Sliced_Options {
 
 	/**
 	 * Constructor
+	 * @version 3.10.1
 	 * @since 0.1.0
 	 */
 	public function __construct() {
 		// Set our title
-		$this->menu_title = __( 'Sliced Invoices', 'sliced-invoices' );
-		$this->title = __( 'Sliced Invoices', 'sliced-invoices' );
+		$this->menu_title = 'Sliced Invoices';
+		$this->title = 'Sliced Invoices';
 	}
 
 	/**
@@ -71,11 +72,15 @@ class Sliced_Options {
 	/**
 	 * Add menu options page.
 	 * 
-	 * @version 3.9.0
+	 * @version 3.10.1
 	 * @since 0.1.0
 	 */
 	public function add_options_page() {
-
+		
+		// Override with translated titles (runs on admin_menu hook, after init)
+		$this->menu_title = __( 'Sliced Invoices', 'sliced-invoices' );
+		$this->title = __( 'Sliced Invoices', 'sliced-invoices' );
+		
 		$option_tabs = self::option_fields();
 		
 		// Link admin menu to first tab
