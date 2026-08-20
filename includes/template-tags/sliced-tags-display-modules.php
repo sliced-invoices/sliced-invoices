@@ -268,7 +268,7 @@ if ( ! function_exists( 'sliced_display_invoice_totals' ) ) :
 					?>
 					<tr class="row-discount">
 						<td class="rate"><?php echo ( isset( $translate['discount'] ) ? $translate['discount'] : __( 'Discount', 'sliced-invoices') ); ?></td>
-						<td class="total"><span style="color:red;">-<?php echo esc_html( $discount ) ?></span></td>
+						<td class="total">-<?php echo esc_html( $discount ) ?></td>
 					</tr>
 					<?php
 				}
@@ -278,7 +278,7 @@ if ( ! function_exists( 'sliced_display_invoice_totals' ) ) :
 					?>
 					<tr class="row-paid">
 						<td class="rate"><?php _e( 'Paid', 'sliced-invoices' ) ?></td>
-						<td class="total"><span style="color:red;">-<?php echo esc_html( $paid ) ?></span></td>
+						<td class="total">-<?php echo esc_html( $paid ) ?></td>
 					</tr>
 					<?php
 				}

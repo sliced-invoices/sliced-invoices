@@ -451,6 +451,9 @@ body.post-type-sliced_quote > .select2-container--open {
 .sliced #_sliced_items_repeat .cmb-type-text-money .line_total_wrap  .currency_symbol {
   float: none;
 }
+.sliced #_sliced_items_repeat .cmb-type-text-money .line_total_wrap.sliced-negative .line_total {
+	color: red;
+}
 .sliced #_sliced_items_repeat .cmb-type-checkbox .cmb-td input {
   float: none;
   margin: 10px auto !important;
@@ -522,7 +525,8 @@ body.post-type-sliced_quote > .select2-container--open {
 	display: inline-block;
 }
 .sliced .sliced_totals .discounts #sliced_discounts,
-.sliced .sliced_totals .payments #sliced_payments {
+.sliced .sliced_totals .payments #sliced_payments,
+.sliced .sliced_totals .sliced-negative {
 	color: red;
 }
 #sliced-totals-discount-adder {
