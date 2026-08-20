@@ -121,8 +121,10 @@
  	function workOutTotals(){
 		
 		// keep iterator values accurate 
-		$( '.cmb-repeatable-grouping' ).each( function( index ) {
-		    $( this ).attr( 'data-iterator', index ).data( 'iterator', index );
+		$( '.cmb-repeatable-group' ).each( function() {
+			$( this ).find( '.cmb-repeatable-grouping' ).each( function( index ) {
+				$( this ).attr( 'data-iterator', index ).data( 'iterator', index );
+			});
 		});
 		
 		sliced_invoices.totals = {
@@ -226,12 +228,11 @@
 		
 		// work out the payments totals
         $('.sliced input.payment_amount').each( function() {
-
+			
             var group = $(this).parents('.cmb-repeatable-grouping');
             var index = group.data('iterator');
-			
 	    	var amt = new Decimal( sliced_invoices.utils.rawNumber( $(this).val() ) );
-			var status = $(group).find('#_sliced_payment_' + index + '_status').val();
+			var status = $( group ).find( '.payment_status' ).first().val();
 			
             if ( status === 'success' ) {
 				sliced_invoices.totals.payments = sliced_invoices.totals.payments.plus( amt );
