@@ -4,9 +4,9 @@ Contributors: SlicedInvoices
 Donate link: http://slicedinvoices.com/  
 Tags: invoice, invoicing, invioce, pdf invoice, quote, pdf quote, estimate, pdf estimate, billing, bills, paypal, bill clients, invoice clients, email invoice, invoice online, recurring invoice, recurring billing, invoice generator, invoice system, accounting, ecommerce  
 Requires at least: 4.0  
-Tested up to: 6.9
+Tested up to: 7.1
 Requires PHP: 5.5
-Stable tag: 3.10.0
+Stable tag: 3.10.1
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -173,6 +173,15 @@ There is a Portable Object Template (.POT) available in the "/languages" directo
 
 
 ## Changelog
+###  3.10.1
+* FIX: "Add New Client" modal inadvertently triggering Leave Page warning (thanks to Brett Cable).
+* FIX: repeatable iterator values breaking when line items moved & inconsistent formatting in Adjust field (thanks to Dax Liniere).
+* FIX: inconsistent formatting of negative amounts (e.g. minus sign after currency symbol vs before).
+* FIX: issue with CSV importer creating unwanted statuses.
+* FIX: patch for page builders (Elementor, Oxygen, etc.) conflicting with Sliced's own templates.
+* FIX: PHP 8 warning/notice.
+* FIX: load_textdomain notice.
+
 ###  3.10.0
 * NEW: replaced "Clone" feature with a more user friendly "Copy to New [Invoice/Quote]" feature. [See our blog post for more info](https://slicedinvoices.com/blog/new-features-sliced-invoices-v3-10-0-update/)
 * NEW: automatically regenerate quote/invoice slug when changing quote/invoice title.

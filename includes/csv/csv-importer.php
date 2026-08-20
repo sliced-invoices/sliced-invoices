@@ -416,7 +416,12 @@ class Sliced_Csv_Importer {
 		return $post_type;
 	}
 	
-
+	
+	/*
+	 * add_the_status.
+	 *
+	 * @version 3.10.1
+	 */
 	function add_the_status( $id, $data, $post_type ) {
 
 		$status = array();

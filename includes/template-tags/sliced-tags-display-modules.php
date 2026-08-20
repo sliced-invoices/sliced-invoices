@@ -152,7 +152,12 @@ endif;
 
 
 if ( ! function_exists( 'sliced_display_line_items' ) ) :
-
+	
+	/*
+	 * Displays Line Items section of Quote/Invoice template.
+	 *
+	 * @version 3.10.1
+	 */
 	function sliced_display_line_items() {
 	
 		$shared = new Sliced_Shared;
@@ -217,7 +222,12 @@ endif;
 
 
 if ( ! function_exists( 'sliced_display_invoice_totals' ) ) :
-
+	
+	/*
+	 * Displays Totals section of Invoice template.
+	 *
+	 * @version 3.10.1
+	 */
 	function sliced_display_invoice_totals() {
 	
 		$translate = get_option( 'sliced_translate' );
@@ -315,7 +325,12 @@ if ( ! function_exists( 'sliced_display_invoice_totals' ) ) :
 endif;
 
 if ( ! function_exists( 'sliced_display_quote_totals' ) ) :
-
+	
+	/*
+	 * Displays Totals section of Quote template.
+	 *
+	 * @version 3.10.1
+	 */
 	function sliced_display_quote_totals() {
 	
 		$translate = get_option( 'sliced_translate' );

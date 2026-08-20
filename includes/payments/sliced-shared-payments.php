@@ -392,7 +392,7 @@ class Sliced_Payments {
 	/**
 	 * Handle actions when client declines quote from frontend.
 	 *
-	 * @version 3.9.0
+	 * @version 3.10.1
 	 * @since   2.0.0
 	 */
 	public function client_decline_quote() {

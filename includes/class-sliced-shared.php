@@ -384,6 +384,7 @@ class Sliced_Shared {
 	/**
 	 * Get the complete formatted currency.
 	 *
+	 * @version 3.10.1
 	 * @since   2.0.0
 	 */
 	public static function get_formatted_currency( $amount, $id = 0 ) {

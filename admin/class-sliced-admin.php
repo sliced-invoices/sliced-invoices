@@ -1213,6 +1213,7 @@ class Sliced_Admin {
 	/**
 	 * Set quote/invoice number for search
 	 *
+	 * @version 3.10.1
 	 * @since 	3.7.0
 	 */
 	public function set_number_for_search( $post_id ) {
@@ -1621,7 +1622,7 @@ class Sliced_Admin {
 	/**
 	 * New client registration form. Hidden in the footer until required
 	 *
-	 * @version 3.9.0
+	 * @version 3.10.1
 	 * @since   2.0.0
 	 */
 	public function client_registration_form() {
@@ -2183,7 +2184,7 @@ class Sliced_Admin {
 	/**
 	 * Action to add new client (as new user)
 	 *
-	 * @version 3.8.16
+	 * @version 3.10.1
 	 * @since   2.0.0
 	 */
 	public function create_user() {
@@ -2265,7 +2266,8 @@ class Sliced_Admin {
 	/**
 	 * Action to add new client (as existing user)
 	 *
-	 * @since 	3.6.0
+	 * @version 3.10.1
+	 * @since   3.6.0
 	 */
 	public function update_user() {
 		
@@ -2380,7 +2382,8 @@ class Sliced_Admin {
 	/**
 	 * Action to edit an existing client
 	 *
-	 * @since 	3.2.0
+	 * @version 3.10.1
+	 * @since   3.2.0
 	 */
 	public function update_client() {
 		

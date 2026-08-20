@@ -104,7 +104,7 @@ class Sliced_Tools {
 	/**
 	 * Get system info.
 	 * 
-	 * @version 3.9.1
+	 * @version 3.10.1
 	 * @since   2.0
 	 * 
 	 * @global  object $wpdb Used to query the database using the WordPress Database API
