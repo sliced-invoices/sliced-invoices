@@ -1233,6 +1233,10 @@ class Sliced_Admin {
 		
 		$number_for_search = $prefix . $number . $suffix;
 		
+		if ( ! $number_for_search ) {
+			return;
+		}
+		
 		update_post_meta( $post_id, '_sliced_number', $number_for_search );
 		
 	}
