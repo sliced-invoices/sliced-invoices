@@ -452,7 +452,7 @@ body.post-type-sliced_quote > .select2-container--open {
   float: none;
 }
 .sliced #_sliced_items_repeat .cmb-type-text-money .line_total_wrap.sliced-negative .line_total {
-  color: #c00;
+	color: red;
 }
 .sliced #_sliced_items_repeat .cmb-type-checkbox .cmb-td input {
   float: none;
