@@ -182,7 +182,7 @@ if ( ! function_exists( 'sliced_display_line_items' ) ) :
 					
 					$qty = isset( $item['qty'] ) ? $item['qty'] : 0;
 					$amt = isset( $item['amount'] ) ? $shared->get_raw_number( $item['amount'] ) : 0;
-					$tax = isset( $item['tax'] ) ? $shared->get_raw_number( $item['tax'] ) : '0.00';
+					$tax = isset( $item['tax'] ) ? $shared->get_raw_number( $item['tax'] ) : 0;
 					$line_total = $shared->get_line_item_sub_total( $shared->get_raw_number( $qty ), $amt, $tax );
 					
 					$output .= '<tr class="row_' . $class . ' sliced-item">
@@ -194,7 +194,7 @@ if ( ! function_exists( 'sliced_display_line_items' ) ) :
 					$output .= '</td>
 						<td class="rate">' . $shared->get_formatted_currency( $amt ) . '</td>';
 					if ( sliced_hide_adjust_field() === false) {
-						$output .= '<td class="adjust">' . sprintf( __( '%s%%' ), $tax ) . '</td>';
+						$output .= '<td class="adjust">' . sprintf( __( '%s%%' ), $shared->get_formatted_number( $tax ) ) . '</td>';
 					}
 					$output .= '<td class="total">' . $shared->get_formatted_currency( $line_total ) . '</td>
 						</tr>';
