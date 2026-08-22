@@ -159,36 +159,68 @@ class Sliced_Reports {
 
 
 	/**
+	 * Get the site's configured timezone.
+	 *
+	 * Includes a fallback for WordPress versions before wp_timezone() was added.
+	 *
+	 * @return DateTimeZone
+	 */
+	private function get_site_timezone() {
+		if ( function_exists( 'wp_timezone' ) ) {
+			return wp_timezone();
+		}
+
+		$timezone_string = get_option( 'timezone_string' );
+		if ( $timezone_string ) {
+			return new DateTimeZone( $timezone_string );
+		}
+
+		$offset  = (float) get_option( 'gmt_offset', 0 );
+		$hours   = (int) $offset;
+		$minutes = (int) round( abs( $offset - $hours ) * 60 );
+
+		return new DateTimeZone( sprintf( '%s%02d:%02d', $offset < 0 ? '-' : '+', abs( $hours ), $minutes ) );
+	}
+
+
+	/**
 	 * Setup the fiscal year.
 	 *
 	 * @since   2.0.0
 	 */
-	private function get_fiscal_year() {
+	private function get_fiscal_year( $period_ago = 0 ) {
 
-		$general = get_option( 'sliced_general' );
+		$general          = get_option( 'sliced_general', array() );
+		$tz               = $this->get_site_timezone();
+		$now              = new DateTimeImmutable( 'now', $tz );
+		$year_month_start = isset( $general['year_start'] ) ? (int) $general['year_start'] : 1;
+		$year_month_end   = isset( $general['year_end'] ) ? (int) $general['year_end'] : 12;
 
-		// for the overview sections
-		$current_month  = date( 'm' );
-		$current_year   = date( 'Y' );
+		if ( $year_month_start < 1 || $year_month_start > 12 ) { $year_month_start = 1; }
+		if ( $year_month_end < 1 || $year_month_end > 12 ) { $year_month_end = 12; }
 
-		// working out the fiscal year
-		$year_month_start   = $general['year_start'];
-		$year_month_end     = $general['year_end'];
-
-		$start_year         = strtotime( date( 'Y-'. $year_month_start .'-01 00:00:00' ) ); // 2015-07-01
-		$end_year           = strtotime( date( 'Y-'. $year_month_end .'-t 23:59:59' ) ); // 2015-06-31
-
-		if( $current_month <= $year_month_start ) {
-			$start_year = strtotime( date( 'Y-'. $year_month_start .'-01 00:00:00', strtotime( '-1 year' ) ) ); // 2015-07-01
+		$start_year_number = (int) $now->format( 'Y' );
+		if ( (int) $now->format( 'n' ) < $year_month_start ) {
+			$start_year_number--;
 		}
+		$start_year_number += (int) $period_ago;
+		$end_year_number = $year_month_end < $year_month_start
+			? $start_year_number + 1
+			: $start_year_number;
 
-		if( $current_month >= $year_month_end ) {
-			$end_year   = strtotime( date( 'Y-'. $year_month_end .'-t 23:59:59', strtotime('+1 year'))); // 2015-06-31
-		}
+		$start = new DateTimeImmutable(
+			sprintf( '%04d-%02d-01 00:00:00', $start_year_number, $year_month_start ),
+			$tz
+		);
+		$end = new DateTimeImmutable(
+			sprintf( '%04d-%02d-01 00:00:00', $end_year_number, $year_month_end ),
+			$tz
+		);
+		$end = $end->modify( 'last day of this month 23:59:59' );
 
 		return array(
-			'start_year'    => $start_year,
-			'end_year'      => $end_year,
+			'start_year' => $start->getTimestamp(),
+			'end_year'   => $end->getTimestamp(),
 		);
 
 	}
@@ -203,36 +235,27 @@ class Sliced_Reports {
 
 		switch ( $time ) {
 			case 'year':
-				$fiscal   = $this->get_fiscal_year();
+				$fiscal   = $this->get_fiscal_year( $period_ago );
 				$start    = $fiscal['start_year'];
 				$end      = $fiscal['end_year'];
 				break;
 			case 'month': // gets current month start and finish
-				$start  = strtotime( date( 'Y-m-01' ) );
-				$end    = strtotime( date( 'Y-m-t' ) );
+				$tz    = $this->get_site_timezone();
+				$dt    = new DateTimeImmutable( 'first day of this month 00:00:00', $tz );
+				$dt    = $dt->modify( sprintf( '%+d months', (int) $period_ago ) );
+				$start = $dt->getTimestamp();
+				$end   = $dt->modify( 'last day of this month 23:59:59' )->getTimestamp();
 				break;
 			case 'week':
-				$start  = strtotime( 'this week' );
-				$end    = strtotime( '+6 days', $start );
+				$tz    = $this->get_site_timezone();
+				$dt    = new DateTimeImmutable( 'monday this week 00:00:00', $tz );
+				$dt    = $dt->modify( sprintf( '%+d weeks', (int) $period_ago ) );
+				$start = $dt->getTimestamp();
+				$end   = $dt->modify( 'sunday this week 23:59:59' )->getTimestamp();
 				break;
 			default:
-				break;
+				return array();
 		}
-
-		if( $period_ago != 0 ) {
-			$start  = strtotime( $period_ago . $time, $start );
-			$end    = strtotime( $period_ago . $time, $end );
-			if ( $time == 'month' ) {
-				$month  = date( 'm' ) + (int)$period_ago; // Numeric representation of a month, with leading zeros
-				$days   = cal_days_in_month(CAL_GREGORIAN, date( 'm', $start) , date( 'Y', $start));
-				$end    = strtotime( date( date( 'Y', $start) . '-' . date( 'm', $start) . '-' . $days . '' ) );
-
-			}
-		}
-
-		// adding the times to start and end to ensure we get the full days
-		$start = strtotime( date('Y-m-d 00:00:00', $start ) );
-		$end   = strtotime( date('Y-m-d 23:59:59', $end ) );
 
 		$args = array(
 			'post_type' => 'sliced_' . $type,
@@ -318,15 +341,15 @@ class Sliced_Reports {
 				<li class="label">
 					<?php sprintf( __( 'Total %s', 'sliced-invoices' ), sliced_get_invoice_label_plural() ) ?>
 				</li>
-				<li class="number"><span><?php _e( 'Year to Date:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $this_year['total'] ) ?></li>
-				<li class="number"><span><?php _e( 'This Month:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $this_month['total'] ) ?></li>
-				<li class="number"><span><?php _e( 'This Week:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $this_week['total'] ) ?></li>
+				<li class="number"><span><?php _e( 'Sent Year to Date:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $this_year['total'] ) ?></li>
+				<li class="number"><span><?php _e( 'Sent This Month:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $this_month['total'] ) ?></li>
+				<li class="number"><span><?php _e( 'Sent This Week:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $this_week['total'] ) ?></li>
 
 			</ul>
 			<ul class="invoices">
-				<li class="number"><span><?php _e( 'Last Year:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $last_year['total'] ) ?></li>
-				<li class="number"><span><?php _e( 'Last Month:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $last_month['total'] ) ?></li>
-				<li class="number"><span><?php _e( 'Last Week:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $last_week['total'] ) ?></li>
+				<li class="number"><span><?php _e( 'Sent Last Year:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $last_year['total'] ) ?></li>
+				<li class="number"><span><?php _e( 'Sent Last Month:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $last_month['total'] ) ?></li>
+				<li class="number"><span><?php _e( 'Sent Last Week:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $last_week['total'] ) ?></li>
 
 			</ul>
 		</div>
@@ -363,15 +386,15 @@ class Sliced_Reports {
 				<li class="label">
 					<?php sprintf( __( 'Outstanding %s', 'sliced-invoices' ), sliced_get_quote_label_plural() ) ?>
 				</li>
-				<li class="number"><span><?php _e( 'Year to Date:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $this_year['total'] ) ?></li>
-				<li class="number"><span><?php _e( 'This Month:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $this_month['total'] ) ?></li>
-				<li class="number"><span><?php _e( 'This Week:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $this_week['total'] ) ?></li>
+				<li class="number"><span><?php _e( 'Sent Year to Date:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $this_year['total'] ) ?></li>
+				<li class="number"><span><?php _e( 'Sent This Month:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $this_month['total'] ) ?></li>
+				<li class="number"><span><?php _e( 'Sent This Week:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $this_week['total'] ) ?></li>
 			</ul>
 
 			<ul class="quotes">
-				<li class="number"><span><?php _e( 'Last Year:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $last_year['total'] ) ?></li>
-				<li class="number"><span><?php _e( 'Last Month:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $last_month['total'] ) ?></li>
-				<li class="number"><span><?php _e( 'Last Week:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $last_week['total'] ) ?></li>
+				<li class="number"><span><?php _e( 'Sent Last Year:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $last_year['total'] ) ?></li>
+				<li class="number"><span><?php _e( 'Sent Last Month:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $last_month['total'] ) ?></li>
+				<li class="number"><span><?php _e( 'Sent Last Week:', 'sliced-invoices' ) ?></span> <?php echo esc_html( $last_week['total'] ) ?></li>
 			</ul>
 
 		</div>
