@@ -283,6 +283,10 @@ class Sliced_Reports {
 		if( $the_query->posts ) :
 			foreach ( $the_query->posts as $post ) {
 				if ( $type === 'invoice' ) {
+					$subscription_status = get_post_meta( $post->ID, '_sliced_subscription_status', true );
+					if ( $subscription_status && $subscription_status !== 'receipt' && get_post_meta( $post->ID, '_sliced_subscription_receipts', true ) ) {
+						continue;
+					}
 					$total[$post->ID] = sliced_get_invoice_total_raw( $post->ID );
 				}
 				if ( $type === 'quote' ) {
