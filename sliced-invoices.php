@@ -65,11 +65,11 @@ require SLICED_PATH . 'core/class-sliced.php';
 function run_sliced_invoices() {
 			
 	// fix for bad update version
-	if ( ! defined( 'SI_STRIPE_VERSION' ) ) {
-		define( 'SI_STRIPE_VERSION', '2.0.1' );
+	if ( ! defined( 'SI_STRIPE_VERSION' ) && defined( 'SLICED_INVOICES_STRIPE_VERSION' ) ) {
+		define( 'SI_STRIPE_VERSION', SLICED_INVOICES_STRIPE_VERSION );
 	}
-	if ( ! defined( 'SI_STRIPE_FILE' ) ) {
-		define( 'SI_STRIPE_FILE', 'sliced-invoices-stripe' );
+	if ( ! defined( 'SI_STRIPE_FILE' ) && defined( 'SLICED_INVOICES_STRIPE_FILE' ) ) {
+		define( 'SI_STRIPE_FILE', SLICED_INVOICES_STRIPE_FILE );
 	}
 	// 2019-06-15 SLICED_TIMEZONE may be removed in the near future
 	// it is currently used by the following extensions: Subscription Invoices
