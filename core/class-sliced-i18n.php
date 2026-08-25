@@ -37,8 +37,6 @@ class Sliced_i18n {
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);
 
-		do_action( 'sliced_loaded' );
-
 	}
 
 	/**

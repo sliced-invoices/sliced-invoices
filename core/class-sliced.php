@@ -59,7 +59,9 @@ class Sliced_Invoices {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-
+		
+		do_action( 'sliced_loaded' );
+		
 	}
 
 
