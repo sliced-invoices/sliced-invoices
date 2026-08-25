@@ -63,7 +63,14 @@ require SLICED_PATH . 'core/class-sliced.php';
  * @since   2.0.0
  */
 function run_sliced_invoices() {
-	
+			
+	// fix for bad update version
+	if ( ! defined( 'SI_STRIPE_VERSION' ) ) {
+		define( 'SI_STRIPE_VERSION', '2.0.1' );
+	}
+	if ( ! defined( 'SI_STRIPE_FILE' ) ) {
+		define( 'SI_STRIPE_FILE', 'sliced-invoices-stripe' );
+	}
 	// 2019-06-15 SLICED_TIMEZONE may be removed in the near future
 	// it is currently used by the following extensions: Subscription Invoices
 	// use Sliced_Shared::get_local_timezone() instead
