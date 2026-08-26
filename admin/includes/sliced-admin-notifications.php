@@ -81,6 +81,13 @@ class Sliced_Notifications {
 		add_action( 'wp_ajax_sliced_sure_to_email', array( $this, 'sure_to_email' ) );
 		add_action( 'wp_ajax_sliced-send-email', array( $this, 'send_email' ) );
 
+		// Bulk send action
+		add_filter( 'bulk_actions-edit-sliced_invoice', array( $this, 'add_bulk_send' ) );
+		add_filter( 'bulk_actions-edit-sliced_quote', array( $this, 'add_bulk_send' ) );
+		add_filter( 'handle_bulk_actions-edit-sliced_invoice', array( $this, 'bulk_send_emails' ), 10, 3 );
+		add_filter( 'handle_bulk_actions-edit-sliced_quote', array( $this, 'bulk_send_emails' ), 10, 3 );
+		add_action( 'admin_notices', array( $this, 'bulk_send_notice' ) );
+
 		// send notifications
 		// may remove these... need to come up with something better.
 		add_action( 'sliced_send_payment_notification', array( $this, 'payment_received_client'), 9, 2 );
@@ -843,6 +850,65 @@ class Sliced_Notifications {
 		}
 
 		return $sent_text;
+	}
+
+
+	/**
+	 * Add "Send Email" to the bulk actions dropdown.
+	 *
+	 * @since 3.x.x
+	 */
+	public function add_bulk_send( $bulk_actions ) {
+		$bulk_actions['sliced_bulk_send'] = __( 'Send Email', 'sliced-invoices' );
+		return $bulk_actions;
+	}
+
+
+	/**
+	 * Send emails in bulk for the selected quotes and invoices.
+	 *
+	 * @since 3.x.x
+	 */
+	public function bulk_send_emails( $redirect_url, $action, $post_ids ) {
+
+		if ( $action !== 'sliced_bulk_send' ) {
+			return $redirect_url;
+		}
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return $redirect_url;
+		}
+
+		foreach ( $post_ids as $post_id ) {
+			if ( sliced_get_the_type( $post_id ) === 'invoice' ) {
+				$this->send_the_invoice( $post_id );
+			} else {
+				$this->send_the_quote( $post_id );
+			}
+		}
+
+		$redirect_url = remove_query_arg( 'sliced_bulk_sent', $redirect_url );
+		$redirect_url = add_query_arg( 'sliced_bulk_sent', count( $post_ids ), $redirect_url );
+
+		return $redirect_url;
+	}
+
+
+	/**
+	 * Show an admin notice after a bulk send completes.
+	 *
+	 * @since 3.x.x
+	 */
+	public function bulk_send_notice() {
+
+		if ( ! isset( $_REQUEST['sliced_bulk_sent'] ) ) {
+			return;
+		}
+
+		if ( intval( $_REQUEST['sliced_bulk_sent'] ) > 0 ) {
+			echo '<div class="notice notice-success is-dismissible"><p>' . __( 'Emails sent successfully.', 'sliced-invoices' ) . '</p></div>';
+		}
+
 	}
 
 
