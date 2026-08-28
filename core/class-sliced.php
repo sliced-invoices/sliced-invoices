@@ -238,6 +238,8 @@ class Sliced_Invoices {
 		
 		$this->loader->add_action( 'sliced_invoices_hourly_tasks', $plugin_admin, 'sliced_invoices_hourly_tasks' );
 
+		$this->loader->add_action( 'wp_dashboard_setup', $plugin_admin, 'add_dashboard_widgets' );
+		
 	}
 
 	/**

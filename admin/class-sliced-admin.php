@@ -3118,8 +3118,145 @@ class Sliced_Admin {
 		}
 		
 	}
-	
-	
+
+
+	/**
+	 * Register Sliced dashboard widgets.
+	 *
+	 * @since   3.x.x
+	 */
+	public function add_dashboard_widgets() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		wp_add_dashboard_widget(
+			'sliced_unpaid_summary',
+			__( 'Sliced Invoices - Unpaid &amp; Overdue', 'sliced-invoices' ),
+			array( $this, 'dashboard_widget_unpaid_summary' )
+		);
+
+		wp_add_dashboard_widget(
+			'sliced_recent_activity',
+			__( 'Sliced Invoices - Recent Activity', 'sliced-invoices' ),
+			array( $this, 'dashboard_widget_recent_activity' )
+		);
+
+	}
+
+
+	/**
+	 * Unpaid invoices summary widget.
+	 *
+	 * @since   3.x.x
+	 */
+	public function dashboard_widget_unpaid_summary() {
+
+		$statuses = array( 'unpaid', 'overdue' );
+		$counts   = array();
+		$totals   = array();
+
+		foreach ( $statuses as $status ) {
+			$ids = get_posts( array(
+				'post_type'      => 'sliced_invoice',
+				'post_status'    => 'publish',
+				'posts_per_page' => -1,
+				'fields'         => 'ids',
+				'tax_query'      => array(
+					array(
+						'taxonomy' => 'invoice_status',
+						'field'    => 'slug',
+						'terms'    => $status,
+					),
+				),
+			) );
+
+			$counts[ $status ] = count( $ids );
+			$sum = 0;
+			foreach ( $ids as $id ) {
+				$sum += (float) sliced_get_invoice_total_raw( $id );
+			}
+			$totals[ $status ] = $sum;
+		}
+
+		$total = $totals['unpaid'] + $totals['overdue'];
+		$unpaid_url  = admin_url( 'edit.php?post_type=sliced_invoice&invoice_status=unpaid' );
+		$overdue_url = admin_url( 'edit.php?post_type=sliced_invoice&invoice_status=overdue' );
+
+		?>
+			<table class="widefat striped" style="border:none;">
+				<tbody>
+					<tr>
+						<td><a href="<?php echo esc_url( $unpaid_url ) ?>"><?php _e( 'Unpaid', 'sliced-invoices' ) ?></a></td>
+						<td style="text-align:right;"><?php echo $counts['unpaid'] ?></td>
+						<td style="text-align:right;"><?php echo Sliced_Shared::get_formatted_currency( $totals['unpaid'] ) ?></td>
+					</tr>
+					<tr>
+						<td><a href="<?php echo esc_url( $overdue_url ) ?>"><?php _e( 'Overdue', 'sliced-invoices' ) ?></a></td>
+						<td style="text-align:right;"><?php echo $counts['overdue'] ?></td>
+						<td style="text-align:right;"><?php echo Sliced_Shared::get_formatted_currency( $totals['overdue'] ) ?></td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th style="text-align:left;"><?php _e( 'Total Outstanding', 'sliced-invoices' ) ?></th>
+						<th></th>
+						<th style="text-align:right;"><?php echo Sliced_Shared::get_formatted_currency( $total ) ?></th>
+					</tr>
+				</tfoot>
+			</table>
+		<?php
+	}
+
+
+	/**
+	 * Recent activity widget.
+	 *
+	 * @since   3.x.x
+	 */
+	public function dashboard_widget_recent_activity() {
+
+		$recent = get_posts( array(
+			'post_type'      => array( 'sliced_invoice', 'sliced_quote' ),
+			'post_status'    => 'publish',
+			'posts_per_page' => 8,
+			'orderby'        => 'modified',
+			'order'          => 'DESC',
+		) );
+
+		if ( empty( $recent ) ) {
+			echo '<p>' . __( 'No recent activity.', 'sliced-invoices' ) . '</p>';
+			return;
+		}
+
+		?>
+			<table class="widefat striped" style="border:none;">
+			<?php foreach ( $recent as $post ) :
+				$type   = $post->post_type;
+				$number = $type === 'sliced_invoice' ? sliced_get_invoice_number( $post->ID ) : sliced_get_quote_number( $post->ID );
+				$terms  = wp_get_post_terms( $post->ID, $type === 'sliced_invoice' ? 'invoice_status' : 'quote_status' );
+				$status = ! empty( $terms ) ? $terms[0]->name : '';
+				$label  = $type === 'sliced_invoice' ? sliced_get_invoice_label() : sliced_get_quote_label();
+				$client = sliced_get_client_business( $post->ID );
+				if ( ! $client ) {
+					$client = trim( sliced_get_client_first_name( $post->ID ) . ' ' . sliced_get_client_last_name( $post->ID ) );
+				}
+			?>
+				<tr>
+					<td>
+						<a href="<?php echo esc_url( get_edit_post_link( $post->ID ) ) ?>"><strong><?php echo $label . ' ' . $number ?></strong></a>
+						<?php if ( $client ) : ?> &mdash; <?php echo $client ?><?php endif ?>
+					</td>
+					<td style="text-align:right; font-size:11px;"><?php echo $status ?></td>
+					<td style="text-align:right; font-size:11px;"><?php echo get_the_modified_date( get_option( 'date_format' ), $post ) ?></td>
+				</tr>
+			<?php endforeach ?>
+			</table>
+		<?php
+	}
+
+
 	/**
 	 * Handle hourly tasks as needed
 	 *
