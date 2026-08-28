@@ -587,7 +587,12 @@
 						var id = "#" + inst.id.replace(/\\\\/g, "\\");
 						$.datepicker._clearDate(id);
 						$.datepicker._hideDatepicker();
-					} 
+					},
+					today: function () {
+						var id = "#" + inst.id.replace(/\\\\/g, "\\");
+						$( id ).datepicker( 'setDate', new Date() );
+						$.datepicker._hideDatepicker();
+					}
 				};
 				if (handler[this.getAttribute("data-handler")]) {
 					$(this).bind(this.getAttribute("data-event"), handler[this.getAttribute("data-handler")]);
