@@ -234,3 +234,27 @@ if ( ! function_exists( 'sliced_hide_adjust_field' ) ) :
 	}
 
 endif;
+
+
+
+
+	$invoices = get_option( 'sliced_general' );
+		if ( isset( $invoices['publicvisibility'] ) && $invoices['publicvisibility'] == 'on' ) {
+			
+		    add_action('template_redirect', 'slice_for_loggedin');
+
+	    		function slice_for_loggedin() {
+            		global $post;
+                	if ($post->post_type == 'sliced_invoice'|| $post->post_type == 'sliced_quote') {
+                    		if (!is_user_logged_in()) {
+                    		global $wp_query;
+                     		$wp_query->posts = [];
+                     		$wp_query->post = null;
+                     		$wp_query->set_404();
+                     		status_header(404);
+                     		nocache_headers();
+                    		}
+              		  }
+            		}
+			
+	    	}
