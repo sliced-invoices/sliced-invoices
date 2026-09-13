@@ -260,7 +260,9 @@ class Sliced_Csv_Importer {
 		$imported = 0;
 		$skipped = 0;
 		
-		foreach ($csv->connect() as $csv) {
+		$csv_reverse = array_reverse( $csv->connect() );
+
+		foreach ($csv_reverse as $csv) {
 			if ($post_id = $this->create_post( $csv, $options )) {
 				$this->update_number( $post_id, $options );
 				$imported++;
