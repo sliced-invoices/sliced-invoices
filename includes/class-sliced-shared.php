@@ -719,7 +719,7 @@ class Sliced_Shared {
 	 *
 	 * @since   2.0.0
 	 */
-	public static function get_client_data( $id ) {
+	public static function get_client_data( $id = 0 ) {
 	    $client_data = get_userdata( self::get_client_id( $id ) );
 		return $client_data;
 	}
