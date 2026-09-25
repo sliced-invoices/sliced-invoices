@@ -1211,6 +1211,36 @@ class Sliced_Admin {
 	
 	
 	/**
+	 * Set client details in quote/invoice
+	 *
+	 * @version 3.11.0
+	 * @since   3.11.0
+	 */
+	public function set_client_details( $post_id ) {
+		
+		if ( ! $_POST ) {
+			return;
+		}
+		
+		$type = sliced_get_the_type( $post_id );
+		
+		if ( ! $type ) {
+			return;
+		}
+		
+		$client_id = isset( $_POST['_sliced_client'] ) ? intval( $_POST['_sliced_client'] ) : 0;
+		
+		if ( ! $client_id ) {
+			return;
+		}
+		
+		$client_details = Sliced_Shared::get_client_details( 0, $client_id );
+		update_post_meta( $post_id, '_sliced_client_details', $client_details );
+		
+	}
+	
+	
+	/**
 	 * Set quote/invoice number for search
 	 *
 	 * @version 3.10.1
