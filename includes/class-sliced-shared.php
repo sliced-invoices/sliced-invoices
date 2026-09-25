@@ -715,10 +715,11 @@ class Sliced_Shared {
 
 	/**
 	 * Get the data of the client.
+	 * DEPRECATED AS OF v3.11.0 -- function no longer used by Sliced and may be removed in the future.
 	 *
 	 * @since   2.0.0
 	 */
-	public static function get_client_data( $id = 0 ) {
+	public static function get_client_data( $id ) {
 	    $client_data = get_userdata( self::get_client_id( $id ) );
 		return $client_data;
 	}
@@ -726,17 +727,35 @@ class Sliced_Shared {
 	/**
 	 * Get the client details.
 	 *
+	 * Gets the client details either by $post_id (default) or $client_id.  If neither ID is
+	 * provided, will attempt to find $post_id automatically.
+	 *
+	 * @version 3.11.0
 	 * @since   2.0.0
 	 */
-	public static function get_client_details( $id = 0 ) {
-
-		$client = apply_filters( 'sliced_client_data', self::get_client_data( $id ) );
-		//DG note: this is not used here --    $id     = apply_filters( 'sliced_client_id', self::get_client_id( $id ) );
-
+	public static function get_client_details( $post_id = 0, $client_id = 0 ) {
+		
+		if ( ! $client_id ) {
+			
+			// if no $client_id is provided, we first check if there are client details attached to the quote/invoice
+			$client_details = get_post_meta( $post_id ? $post_id : self::get_item_id() , '_sliced_client_details', true );
+			
+			// if there are, return those immediately
+			if ( $client_details ) {
+				return apply_filters( 'sliced_client_details', $client_details );
+			}
+			
+			// otherwise, look up the $client_id from the $post_id, and we'll go on...
+			$client_id = self::get_client_id( $post_id ); // if $post_id is 0, get_client_id() will find it by calling get_item_id() 
+			
+		}
+		
+		$client = apply_filters( 'sliced_client_data', get_userdata( $client_id ) );
+		
 		if ( ! $client ) {
 			return;
 		}
-
+		
 		return apply_filters( 'sliced_client_details', array(
 			'id'         => $client->ID,
 			'first_name' => isset( $client->first_name ) ? $client->first_name : '',
@@ -747,7 +766,7 @@ class Sliced_Shared {
 			'website'    => isset( $client->data->user_url ) ? $client->data->user_url :  $client->user_url,
 			'email'      => isset( $client->data->user_email ) ? $client->data->user_email :  $client->user_email,
 		) );
-
+		
 	}
 
 
