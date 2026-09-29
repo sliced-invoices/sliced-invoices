@@ -121,7 +121,7 @@ class Sliced_Csv_Importer {
 			<h2 style="font-size:1.5em">Instructions</h2>
 			<h3>Line Items</h3>
 			<p>To get a dollar value on your invoice or quotes, you need to fill in the 'sliced_items' field which will then add the line items. This field uses the pipe symbol "|" as a seperator. The format for this field is qty|title|description|amount. You can leave title and description blank but you still need to use the seperators like so qty|||amount.
-			There should be only one line item per line (pressing alt+enter in a cell will create a new line).</p>
+			There should be only one line item per line (pressing alt+enter in a cell will create a new line). For a multi-line line item description, use <code>\n</code> within the description field.</p>
 			<p><strong>Example:</strong></p>
 <pre>
 2|Web design|Designing the new site|120
@@ -517,12 +517,13 @@ class Sliced_Csv_Importer {
 						$qty    = ! empty($qty) ? trim( $qty ) : '1';
 						$title  = trim( $title );
 						$desc   = trim( $desc );
+						$desc   = str_replace( array( '\n', '{nl}' ), "\n", $desc );
 						$amount = ! empty($amount) ? trim( $amount ) : '0';
 
 						$items_array[] = array(
 							'qty'           => esc_html( $qty ),
 							'title'         => esc_html( $title ),
-							'description'   => esc_html( $desc ),
+							'description'   => wp_kses_post( $desc ),
 							'amount'        => esc_html( $amount ),
 						);
 					}
@@ -583,12 +584,13 @@ class Sliced_Csv_Importer {
 						$qty    = ! empty($qty) ? trim( $qty ) : '1';
 						$title  = trim( $title );
 						$desc   = trim( $desc );
+						$desc   = str_replace( array( '\n', '{nl}' ), "\n", $desc );
 						$amount = ! empty($amount) ? trim( $amount ) : '0';
 
 						$items_array[] = array(
 							'qty'           => esc_html( $qty ),
 							'title'         => esc_html( $title ),
-							'description'   => esc_html( $desc ),
+							'description'   => wp_kses_post( $desc ),
 							'amount'        => esc_html( $amount ),
 						);
 					}
