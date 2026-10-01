@@ -452,12 +452,36 @@ class Sliced_Notifications {
 		// make sure the From name it's properly quoted, remove any extra double quotes from inside
 		$email_name = '"' . str_replace( '"', '', $this->settings['name'] ) . '"';
 		$output = 'From: ' . $email_name . ' <' . $this->settings['from'] . '>' . "\r\n";
+		$cc_recipient = $this->get_cc_recipient( $type );
+		if ( $cc_recipient ) {
+			$output .= 'Cc: ' . $cc_recipient . "\r\n";
+		}
 
 		if( in_array( $type, $this->client_emails ) && $this->settings['bcc'] == 'on' ) {
 			$output .= 'Bcc: ' . $this->settings['from'] . "\r\n";
 		}
 		
 		return apply_filters( 'sliced_get_email_headers', $output, $this->id, $type );
+	}
+
+
+	/**
+	 * Get saved additional recipients for client notifications, with an optional
+	 * override for the current manual send.
+	 *
+	 * @param string $type Notification type.
+	 * @return string
+	 */
+	public function get_cc_recipient( $type ) {
+		$output = '';
+		if ( in_array( $type, $this->client_emails, true ) ) {
+			$output = get_user_meta( sliced_get_client_id( $this->id ), '_sliced_client_additional_emails', true );
+			if ( isset( $_POST['client_cc'] ) ) {
+				$output = sanitize_text_field( wp_unslash( $_POST['client_cc'] ) );
+			}
+		}
+
+		return apply_filters( 'sliced_get_email_cc_recipient', $output, $this->id, $type );
 	}
 
 
@@ -509,8 +533,14 @@ class Sliced_Notifications {
 		$headers = $this->get_the_headers( $type );
 		$attachments = $this->get_attachments( $type );
 
-		foreach ( $recipients_array as $to ) {
-			$send = wp_mail( $to, $subject, $content, $headers, $attachments );
+		// Send a single message when CC is present, so additional recipients and
+		// the admin BCC do not receive a copy for every primary recipient.
+		if ( preg_match( '/^Cc:/mi', $headers ) ) {
+			$send = wp_mail( $recipients_array, $subject, $content, $headers, $attachments );
+		} else {
+			foreach ( $recipients_array as $to ) {
+				$send = wp_mail( $to, $subject, $content, $headers, $attachments );
+			}
 		}
 
 		remove_filter( 'wp_mail_content_type', array( $this, 'set_email_type' ) );
@@ -569,23 +599,27 @@ class Sliced_Notifications {
 		
 		$id        = intval( sanitize_text_field( $_GET['id'] ) );
 		$template  = isset( $_GET['template'] ) ? sanitize_text_field( $_GET['template'] ) : 'default';
+		$this->id = $id;
 		
 		switch ( $template ) {
 			case 'payment_reminder':
 				$content   = $this->get_preview_content( "payment_reminder" );
 				$subject   = $this->get_subject( "payment_reminder" );
 				$recipient = $this->get_recipient( "payment_reminder" );
+				$cc_recipient = $this->get_cc_recipient( 'payment_reminder' );
 				break;
 			case 'payment_received':
 				$content   = $this->get_preview_content( "payment_received_client" );
 				$subject   = $this->get_subject( "payment_received_client" );
 				$recipient = $this->get_recipient( "payment_received_client" );
+				$cc_recipient = $this->get_cc_recipient( 'payment_received_client' );
 				break;
 			default:
 				$type      = sliced_get_the_type( $id );
 				$content   = $this->get_preview_content( "{$type}_available" );
 				$subject   = $this->get_subject( "{$type}_available" );
 				$recipient = $this->get_recipient( "{$type}_available" );
+				$cc_recipient = $this->get_cc_recipient( "{$type}_available" );
 				break;
 		}
 
@@ -629,6 +663,13 @@ class Sliced_Notifications {
 									<label for="client_email"><?php _e('Send To', 'sliced-invoices' ); ?> <span class="description"><?php _e('(required)'); ?></span></label>
 									<input name="client_email" type="text" id="client_email" value="<?php echo esc_attr( $recipient ); ?>" aria-required="true" autocapitalize="none" autocorrect="off" />
 									<p class="description"><?php _e('Use comma to separate multiple recipients', 'sliced-invoices' ); ?></p>
+								</td>
+							</tr>
+							<tr class="form-field">
+								<td>
+									<label for="client_cc"><?php _e( 'Additional Email Recipients', 'sliced-invoices' ); ?></label>
+									<input name="client_cc" type="email" multiple id="client_cc" value="<?php echo esc_attr( $cc_recipient ); ?>" autocapitalize="none" autocorrect="off" />
+									<p class="description"><?php _e( 'Separate multiple email addresses with commas. These recipients will automatically receive all client emails.', 'sliced-invoices' ); ?></p>
 								</td>
 							</tr>
 							<tr class="form-field form-required">

@@ -3225,3 +3225,11 @@ msgstr ""
 #. Description of the plugin/theme
 msgid "Create professional Quotes & Invoices that clients can pay for online."
 msgstr ""
+
+#: admin/class-sliced-admin.php admin/includes/sliced-admin-metaboxes.php admin/includes/sliced-admin-notifications.php
+msgid "Additional Email Recipients"
+msgstr ""
+
+#: admin/class-sliced-admin.php admin/includes/sliced-admin-metaboxes.php admin/includes/sliced-admin-notifications.php
+msgid "Separate multiple email addresses with commas. These recipients will automatically receive all client emails."
+msgstr ""

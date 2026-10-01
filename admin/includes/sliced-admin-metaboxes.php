@@ -826,6 +826,16 @@ class Sliced_Metaboxes {
 			'type' => 'text',
 		) );
 		$cmb_user->add_field( array(
+			'name'       => __( 'Additional Email Recipients', 'sliced-invoices' ),
+			'desc'       => __( 'Separate multiple email addresses with commas. These recipients will automatically receive all client emails.', 'sliced-invoices' ),
+			'id'         => $prefix . 'additional_emails',
+			'type'       => 'text',
+			'attributes' => array(
+				'type'     => 'email',
+				'multiple' => 'multiple',
+			),
+		) );
+		$cmb_user->add_field( array(
 			'name'       => __( 'Address', 'sliced-invoices' ),
 			'desc'       => '',
 			'id'         => $prefix . 'address',
@@ -876,6 +886,16 @@ class Sliced_Metaboxes {
 			'desc' => __( 'Adding a Business/Client Name will activate this user as a Client.', 'sliced-invoices' ),
 			'id'   => $prefix . 'business',
 			'type' => 'text',
+		) );
+		$cmb_user->add_field( array(
+			'name'       => __( 'Additional Email Recipients', 'sliced-invoices' ),
+			'desc'       => __( 'Separate multiple email addresses with commas. These recipients will automatically receive all client emails.', 'sliced-invoices' ),
+			'id'         => $prefix . 'additional_emails',
+			'type'       => 'text',
+			'attributes' => array(
+				'type'     => 'email',
+				'multiple' => 'multiple',
+			),
 		) );
 		$cmb_user->add_field( array(
 			'name'       => __( 'Address', 'sliced-invoices' ),

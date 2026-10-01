@@ -1697,6 +1697,14 @@ class Sliced_Admin {
 						</tr>
 
 						<tr class="form-field">
+							<th scope="row"><label for="_sliced_client_additional_emails"><?php _e( 'Additional Email Recipients', 'sliced-invoices' ); ?></label></th>
+							<td>
+								<input name="_sliced_client_additional_emails" type="email" multiple value="" />
+								<p class="description"><?php _e( 'Separate multiple email addresses with commas. These recipients will automatically receive all client emails.', 'sliced-invoices' ); ?></p>
+							</td>
+						</tr>
+
+						<tr class="form-field">
 							<th scope="row">
 								<label for="_sliced_client_address"><?php _e( 'Address', 'sliced-invoices' ); ?></label>
 							</th><td>
@@ -1742,6 +1750,14 @@ class Sliced_Admin {
 						<tr class="form-field form-required">
 							<th scope="row"><label for="email"><?php _e( 'E-mail' ); ?>*</label></th>
 							<td><input name="email" type="email" id="email" value="<?php echo esc_attr( $new_user_email ); ?>" /></td>
+						</tr>
+
+						<tr class="form-field">
+							<th scope="row"><label for="_sliced_client_additional_emails"><?php _e( 'Additional Email Recipients', 'sliced-invoices' ); ?></label></th>
+							<td>
+								<input name="_sliced_client_additional_emails" type="email" multiple value="" />
+								<p class="description"><?php _e( 'Separate multiple email addresses with commas. These recipients will automatically receive all client emails.', 'sliced-invoices' ); ?></p>
+							</td>
 						</tr>
 
 						<tr class="form-field form-required">
@@ -1870,6 +1886,14 @@ class Sliced_Admin {
 							</tr>
 
 							<tr class="form-field">
+								<th scope="row"><label for="_sliced_client_additional_emails"><?php _e( 'Additional Email Recipients', 'sliced-invoices' ); ?></label></th>
+								<td>
+									<input name="_sliced_client_additional_emails" type="email" multiple value="" />
+									<p class="description"><?php _e( 'Separate multiple email addresses with commas. These recipients will automatically receive all client emails.', 'sliced-invoices' ); ?></p>
+								</td>
+							</tr>
+
+							<tr class="form-field">
 								<th scope="row">
 									<label for="_sliced_client_address"><?php _e( 'Address', 'sliced-invoices' ); ?></label>
 								</th><td>
@@ -1958,6 +1982,7 @@ class Sliced_Admin {
 							user_id:                   $('#sliced_update_user_user').val(),
 							nonce:                     $('#_wpnonce_sliced-update-user').val(),
 							_sliced_client_business:   $('#sliced-update-user input[name="_sliced_client_business"]').val(),
+							_sliced_client_additional_emails: $('#sliced-update-user input[name="_sliced_client_additional_emails"]').val(),
 							_sliced_client_address:    $('#sliced-update-user textarea[name="_sliced_client_address"]').val(),
 							_sliced_client_extra_info: $('#sliced-update-user textarea[name="_sliced_client_extra_info"]').val()
 						};
@@ -2025,6 +2050,7 @@ class Sliced_Admin {
 							business:   $('#sliced-create-user input[name="_sliced_client_business"]').val(),
 							address:    $('#sliced-create-user textarea[name="_sliced_client_address"]').val(),
 							extra_info: $('#sliced-create-user textarea[name="_sliced_client_extra_info"]').val(),
+							additional_emails: $('#sliced-create-user input[name="_sliced_client_additional_emails"]').val(),
 						};
 
 						$.post( ajaxurl, data, function( response ) {
@@ -2121,6 +2147,7 @@ class Sliced_Admin {
 							nonce:                     $('#_wpnonce_sliced-update-client').val(),
 							user_login:                $('#sliced-update-client input[name="user_login"]').val(),
 							user_email:                $('#sliced-update-client input[name="user_email"]').val(),
+							_sliced_client_additional_emails: $('#sliced-update-client input[name="_sliced_client_additional_emails"]').val(),
 							first_name:                $('#sliced-update-client input[name="first_name"]').val(),
 							last_name:                 $('#sliced-update-client input[name="last_name"]').val(),
 							user_url:                  $('#sliced-update-client input[name="user_url"]').val(),
@@ -2182,6 +2209,24 @@ class Sliced_Admin {
 
 
 	/**
+	 * Validate and normalize a comma-separated list of additional client emails.
+	 *
+	 * @param string $value Email addresses.
+	 * @return string
+	 */
+	private function sanitize_additional_emails( $value ) {
+		$valid_emails = array();
+		foreach ( explode( ',', wp_unslash( $value ) ) as $email ) {
+			$email = sanitize_email( trim( $email ) );
+			if ( is_email( $email ) ) {
+				$valid_emails[] = $email;
+			}
+		}
+		return implode( ',', $valid_emails );
+	}
+
+
+	/**
 	 * Action to add new client (as new user)
 	 *
 	 * @version 3.10.1
@@ -2234,6 +2279,7 @@ class Sliced_Admin {
 		
 			update_user_meta( $user_id, 'show_admin_bar_front', 'false' );
 			update_user_meta( $user_id, '_sliced_client_business', sanitize_text_field( $_POST['business'] ) );
+			update_user_meta( $user_id, '_sliced_client_additional_emails', $this->sanitize_additional_emails( isset( $_POST['additional_emails'] ) ? $_POST['additional_emails'] : '' ) );
 			update_user_meta( $user_id, '_sliced_client_address', wp_kses_post( $_POST['address'] ) );
 			update_user_meta( $user_id, '_sliced_client_extra_info', wp_kses_post( $_POST['extra_info'] ) );
 			
@@ -2307,6 +2353,7 @@ class Sliced_Admin {
 			
 			update_user_meta( $user_id, 'show_admin_bar_front', 'false' );
 			update_user_meta( $user_id, '_sliced_client_business', sanitize_text_field( $_POST['_sliced_client_business'] ) );
+			update_user_meta( $user_id, '_sliced_client_additional_emails', $this->sanitize_additional_emails( isset( $_POST['_sliced_client_additional_emails'] ) ? $_POST['_sliced_client_additional_emails'] : '' ) );
 			update_user_meta( $user_id, '_sliced_client_address', wp_kses_post( $_POST['_sliced_client_address'] ) );
 			update_user_meta( $user_id, '_sliced_client_extra_info', wp_kses_post( $_POST['_sliced_client_extra_info'] ) );
 			
@@ -2365,6 +2412,7 @@ class Sliced_Admin {
 		$return = array(
 			'user_login'                => $client->user_login,
 			'user_email'                => $client->user_email,
+			'_sliced_client_additional_emails' => get_user_meta( $client->ID, '_sliced_client_additional_emails', true ),
 			'first_name'                => $client->first_name,
 			'last_name'                 => $client->last_name,
 			'user_url'                  => $client->user_url,
@@ -2441,6 +2489,7 @@ class Sliced_Admin {
 		if( ! is_wp_error( $user_id ) ) {
 			
 			update_user_meta( $client_id, '_sliced_client_business', sanitize_text_field( $_POST['_sliced_client_business'] ) );
+			update_user_meta( $client_id, '_sliced_client_additional_emails', $this->sanitize_additional_emails( isset( $_POST['_sliced_client_additional_emails'] ) ? $_POST['_sliced_client_additional_emails'] : '' ) );
 			update_user_meta( $client_id, '_sliced_client_address', wp_kses_post( $_POST['_sliced_client_address'] ) );
 			update_user_meta( $client_id, '_sliced_client_extra_info', wp_kses_post( $_POST['_sliced_client_extra_info'] ) );
 
