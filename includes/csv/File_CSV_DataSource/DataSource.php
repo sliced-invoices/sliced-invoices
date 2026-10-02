@@ -2146,7 +2146,7 @@ class File_CSV_DataSource
 
         $res = fopen($this->_filename, 'r');
 
-        while ($keys = fgetcsv($res, $l, $d, $e)) {
+        while ($keys = fgetcsv($res, $l, $d, $e, '\\')) {
 
             if ($c == 0) {
                 $this->headers = $keys;
