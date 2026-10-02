@@ -16,6 +16,8 @@ class Sliced_Csv_Importer {
 		'sliced_due'             => null,
 		'sliced_valid'           => null,
 		'sliced_items'           => null, // recommended
+		'sliced_invoice_terms'   => null,
+		'sliced_payment_methods' => null,
 		'sliced_status'          => null, // recommended
 		'sliced_client_email'    => null, // required
 		'sliced_client_name'     => null, // recommended
