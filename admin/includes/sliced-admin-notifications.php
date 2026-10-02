@@ -497,7 +497,7 @@ class Sliced_Notifications {
 
 		$recipients = $this->get_recipient( $type );
 
-		$recipients_array = str_getcsv( $recipients );
+		$recipients_array = str_getcsv( $recipients, ',', '"', '\\' );
 		foreach ( $recipients_array as $k => $v ) {
 			if ( strpos($v,',') !== false ) {
 				$recipients_array[$k] = '"'.str_replace( ' <', '" <', $v );

@@ -610,6 +610,7 @@ class Sliced_Reports {
 						tooltipTitleFontSize: 13,
 						tooltipYPadding: 10,
 						tooltipXPadding: 15,
+						<?php // phpcs:ignore PHPCompatibility.Miscellaneous.RemovedAlternativePHPTags.MaybeASPOpenTagFound ?>
 						multiTooltipTemplate: " <%=datasetLabel%> : <?php echo $shared->get_currency_symbol(null) ?><%= value %> ",
 					}
 				});

@@ -391,7 +391,6 @@ class Sliced_Tools {
 
 		// PHP configs... now we're getting to the important stuff
 		$return .= "\n" . '/////-- PHP Configuration' . "\n\n";
-		$return .= 'Safe Mode:                ' . ( ini_get( 'safe_mode' ) ? 'Enabled' : 'Disabled' . "\n" );
 		$return .= 'Memory Limit:             ' . ini_get( 'memory_limit' ) . "\n";
 		$return .= 'Upload Max Size:          ' . ini_get( 'upload_max_filesize' ) . "\n";
 		$return .= 'Post Max Size:            ' . ini_get( 'post_max_size' ) . "\n";
