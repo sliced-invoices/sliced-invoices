@@ -579,9 +579,11 @@ class Sliced_Csv_Importer {
 				$methods          = array_filter( $methods ); // remove any empty values
 				$accepted_methods = array_keys( sliced_get_accepted_payment_methods() );
 				$methods          = array_values( array_intersect( $methods, $accepted_methods ) ); // only keep accepted methods
-				if( !empty( $methods ) ) {
-					add_post_meta( $id, '_sliced_payment_methods', $methods );
-				}
+			} else {
+				$methods = array_keys( sliced_get_accepted_payment_methods() );
+			}
+			if( !empty( $methods ) ) {
+				add_post_meta( $id, '_sliced_payment_methods', $methods );
 			}
 
 			if( !empty( $data['sliced_items'] ) ) {
